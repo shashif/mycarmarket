@@ -1,0 +1,271 @@
+<!-- =========================================
+MyCarMarket
+Version: v0.3.0 - Sell Your Car Page
+File: core/templates/core/sell_car.html
+========================================= -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sell Your Car - MyCarMarket Australia</title>
+
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f6f8; margin: 0; padding: 0; }
+
+        .navbar {
+            background: #111827;
+            color: white;
+            padding: 18px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 22px;
+            font-weight: bold;
+        }
+
+        .nav-links a:hover { color: #93c5fd; }
+
+        .hero {
+            background: linear-gradient(135deg, #111827, #1f2937);
+            color: white;
+            padding: 70px 60px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 44px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #d1d5db;
+        }
+
+        .container {
+            width: 90%;
+            margin: 40px auto;
+        }
+
+        .section-title {
+            font-size: 30px;
+            color: #111827;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin: 35px 0;
+        }
+
+        .step-card {
+            background: white;
+            padding: 28px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .step-number {
+            background: #2563eb;
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .benefits {
+            background: white;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            margin: 40px 0;
+        }
+
+        .benefit-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .benefit-item {
+            background: #f9fafb;
+            padding: 18px;
+            border-radius: 12px;
+            font-weight: bold;
+            color: #374151;
+        }
+
+        .cta {
+            background: #111827;
+            color: white;
+            padding: 45px;
+            border-radius: 18px;
+            text-align: center;
+            margin: 45px 0;
+        }
+
+        .cta h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .cta p {
+            color: #d1d5db;
+            font-size: 18px;
+        }
+
+        .cta a {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .note-box {
+            background: #fff7ed;
+            border-left: 5px solid #f59e0b;
+            padding: 18px;
+            border-radius: 10px;
+            margin-top: 25px;
+            color: #92400e;
+        }
+
+        .footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 900px) {
+            .steps,
+            .benefit-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navbar {
+                padding: 18px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links a {
+                margin: 0 8px;
+                font-size: 14px;
+            }
+
+            .hero {
+                padding: 50px 20px;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .container {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <a href="{% url 'home' %}" class="logo">🚗 MyCarMarket</a>
+
+    <div class="nav-links">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'car_list' %}">Buy Cars</a>
+        <a href="{% url 'sell_car' %}">Sell Car</a>
+        <a href="#">Dealers</a>
+        <a href="#">Contact</a>
+    </div>
+</div>
+
+<div class="hero">
+    <h1>Sell Your Car With MyCarMarket</h1>
+    <p>Reach buyers across Australia and list your vehicle with confidence.</p>
+</div>
+
+<div class="container">
+
+    <h2 class="section-title">How It Works</h2>
+
+    <div class="steps">
+        <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Add Your Car Details</h3>
+            <p>Enter make, model, year, price, kilometres, location and seller information.</p>
+        </div>
+
+        <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Upload Photos</h3>
+            <p>Add clear car images so buyers can view your vehicle properly.</p>
+        </div>
+
+        <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Get Buyer Interest</h3>
+            <p>Buyers can view your listing and contact you when the enquiry system is added.</p>
+        </div>
+    </div>
+
+    <div class="benefits">
+        <h2 class="section-title">Why Sell With Us?</h2>
+
+        <div class="benefit-grid">
+            <div class="benefit-item">✅ Simple car listing process</div>
+            <div class="benefit-item">✅ Private sellers and dealers welcome</div>
+            <div class="benefit-item">✅ Searchable by make, model, price and state</div>
+            <div class="benefit-item">✅ Professional marketplace-style car pages</div>
+            <div class="benefit-item">✅ Featured listing support</div>
+            <div class="benefit-item">✅ Built for the Australian car market</div>
+        </div>
+
+        <div class="note-box">
+            Listing form is coming in the next major version. For now, cars are added from the admin panel.
+        </div>
+    </div>
+
+    <div class="cta">
+        <h2>Ready to List Your Car?</h2>
+        <p>The public listing form will be added soon. Until then, listings can be added from the admin dashboard.</p>
+        <a href="{% url 'car_list' %}">Browse Current Cars</a>
+    </div>
+
+</div>
+
+<div class="footer">
+    <p>© 2026 MyCarMarket Australia. All rights reserved.</p>
+</div>
+
+</body>
+</html>

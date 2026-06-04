@@ -1,0 +1,521 @@
+<!-- =========================================
+MyCarMarket
+Version: v0.3.5.2 - Hide Seller Email Phone
+File: vehicles/templates/vehicles/car_detail.html
+========================================= -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ car.title }} - MyCarMarket</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #111827;
+        }
+
+        .navbar {
+            background: #111827;
+            color: white;
+            padding: 18px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 22px;
+            font-weight: bold;
+        }
+
+        .nav-links a:hover {
+            color: #93c5fd;
+        }
+
+        .container {
+            width: 90%;
+            margin: 35px auto;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        .main-image {
+            width: 100%;
+            max-height: 520px;
+            object-fit: contain;
+            background: white;
+            border-radius: 16px;
+            margin-bottom: 18px;
+        }
+
+        .no-main-image {
+            height: 350px;
+            background: #e5e7eb;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+            font-weight: bold;
+            margin-bottom: 18px;
+        }
+
+        .thumbs {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .thumbs img {
+            width: 100%;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        h1 {
+            margin-top: 0;
+            font-size: 34px;
+        }
+
+        .price {
+            color: #059669;
+            font-size: 34px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .detail-box {
+            background: #f9fafb;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .detail-box strong {
+            display: block;
+            color: #6b7280;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .description {
+            line-height: 1.7;
+            margin-top: 25px;
+        }
+
+        .seller-box {
+            margin-bottom: 25px;
+        }
+
+        .seller-info {
+            background: #f9fafb;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+
+        .seller-safe-note {
+            background: #eff6ff;
+            color: #1e40af;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .form-control {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 13px;
+            border-radius: 10px;
+            border: 1px solid #d1d5db;
+            margin-bottom: 14px;
+            font-size: 15px;
+            font-family: Arial, sans-serif;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 180px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #1d4ed8;
+        }
+
+        .success-message {
+            background: #dcfce7;
+            color: #166534;
+            padding: 14px;
+            border-radius: 12px;
+            margin-bottom: 18px;
+            font-weight: bold;
+        }
+
+        .similar-section {
+            margin-top: 35px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            margin-bottom: 18px;
+        }
+
+        .similar-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+        }
+
+        .similar-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+
+        .similar-image-wrap {
+            height: 180px;
+            background: #f3f4f6;
+            position: relative;
+        }
+
+        .similar-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .similar-no-image {
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+            font-weight: bold;
+        }
+
+        .similar-content {
+            padding: 15px;
+        }
+
+        .similar-price {
+            color: #059669;
+            font-size: 21px;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .similar-title {
+            font-weight: bold;
+            color: #111827;
+            margin-bottom: 10px;
+            line-height: 1.35;
+        }
+
+        .similar-meta {
+            color: #4b5563;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .similar-btn {
+            display: block;
+            background: #2563eb;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @media (max-width: 1100px) {
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .similar-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .navbar {
+                padding: 18px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links a {
+                margin: 0 8px;
+                font-size: 14px;
+            }
+
+            .container {
+                width: 95%;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .thumbs {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .similar-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <a href="{% url 'home' %}" class="logo">🚗 MyCarMarket</a>
+
+    <div class="nav-links">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'car_list' %}">Buy Cars</a>
+        <a href="#">Sell Car</a>
+        <a href="#">Dealers</a>
+        <a href="#">Contact</a>
+    </div>
+</div>
+
+<div class="container">
+
+    <a href="{% url 'car_list' %}" class="back-link">← Back to Cars</a>
+
+    <div class="detail-grid">
+
+        <div>
+            <div class="card">
+                {% if images %}
+                    {% with images.first as first_image %}
+                        <img src="{{ first_image.image.url }}" class="main-image" alt="{{ car.title }}">
+                    {% endwith %}
+                {% else %}
+                    <div class="no-main-image">No Image Available</div>
+                {% endif %}
+
+                {% if images %}
+                    <div class="thumbs">
+                        {% for image in images %}
+                            <img src="{{ image.image.url }}" alt="{{ car.title }}">
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="card" style="margin-top:25px;">
+                <h1>{{ car.title }}</h1>
+
+                <div class="price">${{ car.price }}</div>
+
+                <div class="details-grid">
+                    <div class="detail-box">
+                        <strong>Make</strong>
+                        {{ car.make }}
+                    </div>
+
+                    <div class="detail-box">
+                        <strong>Model</strong>
+                        {{ car.model }}
+                    </div>
+
+                    <div class="detail-box">
+                        <strong>Year</strong>
+                        {{ car.year }}
+                    </div>
+
+                    <div class="detail-box">
+                        <strong>Kilometres</strong>
+                        {{ car.kilometres }} km
+                    </div>
+
+                    <div class="detail-box">
+                        <strong>Transmission</strong>
+                        {{ car.transmission|default:"Not specified" }}
+                    </div>
+
+                    <div class="detail-box">
+                        <strong>Fuel Type</strong>
+                        {{ car.fuel_type|default:"Not specified" }}
+                    </div>
+
+                    <div class="detail-box">
+                        <strong>Body Type</strong>
+                        {{ car.body_type|default:"Not specified" }}
+                    </div>
+
+                    <div class="detail-box">
+                        <strong>Location</strong>
+                        {{ car.location|default:"Not specified" }}
+                    </div>
+                </div>
+
+                <div class="description">
+                    <h2>Description</h2>
+                    <p>{{ car.description|linebreaks }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="card seller-box">
+                <h2>Seller Details</h2>
+
+                <div class="seller-info">
+                    <strong>Seller:</strong><br>
+                    {{ car.seller_name|default:"Private Seller" }}
+                </div>
+
+                <div class="seller-info">
+                    <strong>Location:</strong><br>
+                    {{ car.location|default:"Location not specified" }}
+                </div>
+
+                <div class="seller-info">
+                    <strong>Contact Method:</strong><br>
+                    Send an enquiry using the form below.
+                </div>
+
+                <div class="seller-safe-note">
+                    Seller phone number and email are hidden for privacy and spam protection.
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Contact Seller</h2>
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="success-message">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    {{ form.name }}
+                    {{ form.email }}
+                    {{ form.phone }}
+                    {{ form.message }}
+
+                    <button type="submit" class="btn">
+                        Send Enquiry
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="similar-section">
+        <h2 class="section-title">Similar Cars You May Like</h2>
+
+        <div class="similar-grid">
+
+            {% for similar in similar_cars %}
+
+                <div class="similar-card">
+
+                    <div class="similar-image-wrap">
+                        {% with similar.images.first as similar_image %}
+                            {% if similar_image %}
+                                <img src="{{ similar_image.image.url }}" class="similar-image" alt="{{ similar.title }}">
+                            {% else %}
+                                <div class="similar-no-image">No Image Available</div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+
+                    <div class="similar-content">
+                        <div class="similar-price">${{ similar.price }}</div>
+
+                        <div class="similar-title">
+                            {{ similar.title }}
+                        </div>
+
+                        <div class="similar-meta">
+                            {{ similar.year }} • {{ similar.kilometres }} km<br>
+                            {{ similar.location|default:"Location not specified" }}
+                        </div>
+
+                        <a href="{% url 'car_detail' similar.id %}" class="similar-btn">
+                            View Details
+                        </a>
+                    </div>
+
+                </div>
+
+            {% empty %}
+
+                <p>No similar cars found yet.</p>
+
+            {% endfor %}
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
