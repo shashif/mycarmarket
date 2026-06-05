@@ -1,103 +1,151 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.3.6 - View Counter + Trust Fields
+# Version: v0.5.1
 # File: vehicles/models.py
+# Note: Location text removed. Empty suburb/state will show nothing.
 # ==========================================
 
 from django.db import models
+from django.contrib.auth.models import User
+
+
+BODY_TYPE_CHOICES = [
+    ('Sedan', 'Sedan'),
+    ('SUV', 'SUV'),
+    ('Hatchback', 'Hatchback'),
+    ('Ute', 'Ute'),
+    ('Coupe', 'Coupe'),
+    ('Convertible', 'Convertible'),
+    ('Wagon', 'Wagon'),
+    ('Van', 'Van'),
+    ('Other', 'Other'),
+]
+
+TRANSMISSION_CHOICES = [
+    ('Automatic', 'Automatic'),
+    ('Manual', 'Manual'),
+]
+
+FUEL_TYPE_CHOICES = [
+    ('Petrol', 'Petrol'),
+    ('Diesel', 'Diesel'),
+    ('Hybrid', 'Hybrid'),
+    ('Electric', 'Electric'),
+    ('LPG', 'LPG'),
+    ('Other', 'Other'),
+]
+
+STATE_CHOICES = [
+    ('VIC', 'Victoria'),
+    ('NSW', 'New South Wales'),
+    ('QLD', 'Queensland'),
+    ('SA', 'South Australia'),
+    ('WA', 'Western Australia'),
+    ('TAS', 'Tasmania'),
+    ('ACT', 'Australian Capital Territory'),
+    ('NT', 'Northern Territory'),
+]
 
 
 class Car(models.Model):
-
-    BODY_TYPE_CHOICES = [
-        ('Sedan', 'Sedan'),
-        ('SUV', 'SUV'),
-        ('Hatchback', 'Hatchback'),
-        ('Ute', 'Ute'),
-        ('Wagon', 'Wagon'),
-        ('Coupe', 'Coupe'),
-        ('Convertible', 'Convertible'),
-        ('Van', 'Van'),
-    ]
-
-    TRANSMISSION_CHOICES = [
-        ('Automatic', 'Automatic'),
-        ('Manual', 'Manual'),
-    ]
-
-    FUEL_TYPE_CHOICES = [
-        ('Petrol', 'Petrol'),
-        ('Diesel', 'Diesel'),
-        ('Hybrid', 'Hybrid'),
-        ('Electric', 'Electric'),
-        ('LPG', 'LPG'),
-    ]
+    seller = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='cars',
+        null=True,
+        blank=True
+    )
 
     title = models.CharField(max_length=200)
     make = models.CharField(max_length=100)
     model = models.CharField(max_length=100)
     year = models.PositiveIntegerField()
     price = models.DecimalField(max_digits=12, decimal_places=2)
-    kilometres = models.PositiveIntegerField(default=0)
+    kilometres = models.PositiveIntegerField()
 
-    location = models.CharField(max_length=150, blank=True)
+    body_type = models.CharField(max_length=50, choices=BODY_TYPE_CHOICES, blank=True)
+    transmission = models.CharField(max_length=50, choices=TRANSMISSION_CHOICES, blank=True)
+    fuel_type = models.CharField(max_length=50, choices=FUEL_TYPE_CHOICES, blank=True)
 
-    transmission = models.CharField(
-        max_length=50,
-        choices=TRANSMISSION_CHOICES,
-        blank=True
-    )
-
-    fuel_type = models.CharField(
-        max_length=50,
-        choices=FUEL_TYPE_CHOICES,
-        blank=True
-    )
-
-    body_type = models.CharField(
-        max_length=50,
-        choices=BODY_TYPE_CHOICES,
-        blank=True
-    )
+    state = models.CharField(max_length=10, choices=STATE_CHOICES, blank=True)
+    suburb = models.CharField(max_length=100, blank=True)
 
     description = models.TextField(blank=True)
 
-    seller_name = models.CharField(max_length=150, blank=True)
+    seller_name = models.CharField(max_length=100, blank=True)
     seller_email = models.EmailField(blank=True)
     seller_phone = models.CharField(max_length=30, blank=True)
 
     is_featured = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
-
     is_verified_listing = models.BooleanField(default=False)
+
     views_count = models.PositiveIntegerField(default=0)
 
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def display_location(self):
+        if self.suburb and self.state:
+            return f"{self.suburb}, {self.state}"
+
+        if self.suburb:
+            return self.suburb
+
+        if self.state:
+            return self.state
+
+        return ""
+
+    def primary_image(self):
+        primary = self.images.filter(is_primary=True).first()
+        if primary:
+            return primary.image.url
+
+        first_image = self.images.first()
+        if first_image:
+            return first_image.image.url
+
+        return None
 
     def __str__(self):
         return self.title
 
 
 class CarImage(models.Model):
-    car = models.ForeignKey(Car, on_delete=models.CASCADE, related_name='images')
-    image = models.ImageField(upload_to='car_images/')
+    car = models.ForeignKey(
+        Car,
+        on_delete=models.CASCADE,
+        related_name='images'
+    )
+
+    image = models.ImageField(upload_to='cars/')
     is_primary = models.BooleanField(default=False)
     sort_order = models.PositiveIntegerField(default=0)
 
+    class Meta:
+        ordering = ['sort_order', 'id']
+
     def __str__(self):
-        return f"{self.car.title} Image"
+        return f"Image for {self.car.title}"
 
 
 class Enquiry(models.Model):
-    car = models.ForeignKey(Car, on_delete=models.CASCADE, related_name='enquiries')
+    car = models.ForeignKey(
+        Car,
+        on_delete=models.CASCADE,
+        related_name='enquiries'
+    )
 
-    name = models.CharField(max_length=120)
+    name = models.CharField(max_length=100)
     email = models.EmailField()
     phone = models.CharField(max_length=30, blank=True)
     message = models.TextField()
 
-    is_read = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        verbose_name_plural = 'Enquiries'
+        ordering = ['-created_at']
+
     def __str__(self):
-        return f"Enquiry for {self.car.title} by {self.name}"
+        return f"{self.name} - {self.car.title}"

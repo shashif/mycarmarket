@@ -1,6 +1,6 @@
 <!-- =========================================
 MyCarMarket
-Version: v0.3.5.2 - Hide Seller Email Phone
+Version: v0.3.6 - Detail Page With Views, Listed Date, Trust Badges
 File: vehicles/templates/vehicles/car_detail.html
 ========================================= -->
 
@@ -113,7 +113,42 @@ File: vehicles/templates/vehicles/car_detail.html
             color: #059669;
             font-size: 34px;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
+        }
+
+        .top-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 13px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .featured-badge {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .verified-badge {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .views-badge {
+            background: #e0f2fe;
+            color: #075985;
+        }
+
+        .date-badge {
+            background: #f3f4f6;
+            color: #374151;
         }
 
         .details-grid {
@@ -158,6 +193,19 @@ File: vehicles/templates/vehicles/car_detail.html
             color: #1e40af;
             padding: 14px;
             border-radius: 12px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .trust-box {
+            margin-bottom: 25px;
+        }
+
+        .trust-item {
+            background: #f9fafb;
+            padding: 14px;
+            border-radius: 12px;
+            margin-bottom: 10px;
             font-size: 14px;
             line-height: 1.5;
         }
@@ -367,6 +415,20 @@ File: vehicles/templates/vehicles/car_detail.html
 
                 <div class="price">${{ car.price }}</div>
 
+                <div class="top-badges">
+                    {% if car.is_featured %}
+                        <span class="badge featured-badge">⭐ Featured Vehicle</span>
+                    {% endif %}
+
+                    {% if car.is_verified_listing %}
+                        <span class="badge verified-badge">🛡 Verified Listing</span>
+                    {% endif %}
+
+                    <span class="badge views-badge">👁 {{ car.views_count }} Views</span>
+
+                    <span class="badge date-badge">📅 Listed {{ car.created_at|date:"d M Y" }}</span>
+                </div>
+
                 <div class="details-grid">
                     <div class="detail-box">
                         <strong>Make</strong>
@@ -438,6 +500,28 @@ File: vehicles/templates/vehicles/car_detail.html
                 <div class="seller-safe-note">
                     Seller phone number and email are hidden for privacy and spam protection.
                 </div>
+            </div>
+
+            <div class="card trust-box">
+                <h2>Trust & Safety</h2>
+
+                <div class="trust-item">
+                    ✅ Always inspect the car before payment.
+                </div>
+
+                <div class="trust-item">
+                    ✅ Do not send money before confirming ownership.
+                </div>
+
+                <div class="trust-item">
+                    ✅ Use the enquiry form to keep contact secure.
+                </div>
+
+                {% if car.is_verified_listing %}
+                    <div class="trust-item">
+                        🛡 This listing has been marked as verified by MyCarMarket admin.
+                    </div>
+                {% endif %}
             </div>
 
             <div class="card">

@@ -1,6 +1,7 @@
 <!-- =========================================
 MyCarMarket
-Version: v0.3.2 - Full Filters + Fixed Images
+Version: v0.4.1
+Feature: State + Suburb Location Display
 File: vehicles/templates/vehicles/car_list.html
 ========================================= -->
 
@@ -40,10 +41,6 @@ File: vehicles/templates/vehicles/car_list.html
             font-weight: bold;
         }
 
-        .nav-links a:hover {
-            color: #93c5fd;
-        }
-
         .hero {
             background: #1f2937;
             color: white;
@@ -69,22 +66,10 @@ File: vehicles/templates/vehicles/car_list.html
             gap: 14px;
         }
 
-        .search-row {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 10px;
-        }
-
         .filter-row {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 10px;
-        }
-
-        .button-row {
-            display: flex;
-            gap: 12px;
-            align-items: center;
         }
 
         .search-input,
@@ -112,6 +97,7 @@ File: vehicles/templates/vehicles/car_list.html
             color: #dc2626;
             text-decoration: none;
             font-weight: bold;
+            margin-left: 12px;
         }
 
         .cars-grid {
@@ -125,13 +111,6 @@ File: vehicles/templates/vehicles/car_list.html
             border-radius: 16px;
             overflow: hidden;
             box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-            transition: 0.2s;
-            position: relative;
-        }
-
-        .car-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
         }
 
         .image-wrap {
@@ -208,6 +187,7 @@ File: vehicles/templates/vehicles/car_list.html
             color: #374151;
             font-size: 14px;
             margin-bottom: 16px;
+            font-weight: bold;
         }
 
         .view-btn {
@@ -219,27 +199,6 @@ File: vehicles/templates/vehicles/car_list.html
             padding: 12px 18px;
             border-radius: 10px;
             font-weight: bold;
-        }
-
-        .pagination {
-            text-align: center;
-            margin: 40px 0;
-        }
-
-        .pagination a {
-            display: inline-block;
-            padding: 10px 18px;
-            margin: 0 5px;
-            background: #111827;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-        }
-
-        .current-page {
-            margin: 0 15px;
-            font-weight: bold;
-            font-size: 18px;
         }
 
         @media (max-width: 1100px) {
@@ -259,30 +218,12 @@ File: vehicles/templates/vehicles/car_list.html
                 gap: 15px;
             }
 
-            .nav-links a {
-                margin: 0 8px;
-                font-size: 14px;
-            }
-
-            .hero {
-                padding: 25px 20px;
-            }
-
             .container {
                 width: 95%;
             }
 
             .filter-row {
                 grid-template-columns: 1fr;
-            }
-
-            .button-row {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .search-btn {
-                width: 100%;
             }
 
             .cars-grid {
@@ -298,9 +239,9 @@ File: vehicles/templates/vehicles/car_list.html
     <a href="{% url 'car_list' %}" class="logo">🚗 MyCarMarket</a>
 
     <div class="nav-links">
-        <a href="{% url 'car_list' %}">Home</a>
+        <a href="{% url 'home' %}">Home</a>
         <a href="{% url 'car_list' %}">Buy Cars</a>
-        <a href="#">Sell Car</a>
+        <a href="{% url 'create_car' %}">Sell Car</a>
         <a href="#">Dealers</a>
         <a href="#">Contact</a>
     </div>
@@ -316,9 +257,13 @@ File: vehicles/templates/vehicles/car_list.html
     <div class="search-box">
         <form method="GET" action="{% url 'car_list' %}" class="search-form">
 
-            <div class="search-row">
-                <input type="text" name="q" class="search-input" placeholder="Search make, model, title, location..." value="{{ query }}">
-            </div>
+            <input
+                type="text"
+                name="q"
+                class="search-input"
+                placeholder="Search Toyota, BMW, Tesla, Melbourne..."
+                value="{{ query }}"
+            >
 
             <div class="filter-row">
                 <input type="number" name="min_price" class="filter-input" placeholder="Min price" value="{{ min_price }}">
@@ -328,8 +273,26 @@ File: vehicles/templates/vehicles/car_list.html
             </div>
 
             <div class="filter-row">
-                <input type="text" name="location" class="filter-input" placeholder="Location / suburb" value="{{ location }}">
+                <!-- <input type="text" name="location" class="filter-input" placeholder="Suburb / City / State" value="{{ location }}"> -->
+                <input
+    type="text"
+    name="suburb"
+    class="filter-input"
+    placeholder="Suburb / City"
+    value="{{ suburb }}"
+>
 
+<select name="state" class="filter-select">
+    <option value="">All States</option>
+    <option value="VIC">Victoria</option>
+    <option value="NSW">New South Wales</option>
+    <option value="QLD">Queensland</option>
+    <option value="SA">South Australia</option>
+    <option value="WA">Western Australia</option>
+    <option value="TAS">Tasmania</option>
+    <option value="ACT">ACT</option>
+    <option value="NT">Northern Territory</option>
+</select>
                 <select name="transmission" class="filter-select">
                     <option value="">Any Transmission</option>
                     <option value="Automatic" {% if transmission == "Automatic" %}selected{% endif %}>Automatic</option>
@@ -343,6 +306,7 @@ File: vehicles/templates/vehicles/car_list.html
                     <option value="Hybrid" {% if fuel_type == "Hybrid" %}selected{% endif %}>Hybrid</option>
                     <option value="Electric" {% if fuel_type == "Electric" %}selected{% endif %}>Electric</option>
                     <option value="LPG" {% if fuel_type == "LPG" %}selected{% endif %}>LPG</option>
+                    <option value="Other" {% if fuel_type == "Other" %}selected{% endif %}>Other</option>
                 </select>
 
                 <select name="body_type" class="filter-select">
@@ -355,105 +319,105 @@ File: vehicles/templates/vehicles/car_list.html
                     <option value="Coupe" {% if body_type == "Coupe" %}selected{% endif %}>Coupe</option>
                     <option value="Convertible" {% if body_type == "Convertible" %}selected{% endif %}>Convertible</option>
                     <option value="Van" {% if body_type == "Van" %}selected{% endif %}>Van</option>
+                    <option value="Other" {% if body_type == "Other" %}selected{% endif %}>Other</option>
                 </select>
             </div>
 
-            <div class="filter-row">
-                <select name="sort_by" class="filter-select">
-                    <option value="newest" {% if sort_by == "newest" %}selected{% endif %}>Newest</option>
-                    <option value="oldest" {% if sort_by == "oldest" %}selected{% endif %}>Oldest</option>
-                    <option value="price_low" {% if sort_by == "price_low" %}selected{% endif %}>Price: Low to High</option>
-                    <option value="price_high" {% if sort_by == "price_high" %}selected{% endif %}>Price: High to Low</option>
-                    <option value="km_low" {% if sort_by == "km_low" %}selected{% endif %}>KM: Low to High</option>
-                    <option value="km_high" {% if sort_by == "km_high" %}selected{% endif %}>KM: High to Low</option>
-                    <option value="year_new" {% if sort_by == "year_new" %}selected{% endif %}>Year: New to Old</option>
-                    <option value="year_old" {% if sort_by == "year_old" %}selected{% endif %}>Year: Old to New</option>
-                </select>
-            </div>
+            <select name="sort_by" class="filter-select">
+                <option value="newest" {% if sort_by == "newest" %}selected{% endif %}>Newest</option>
+                <option value="oldest" {% if sort_by == "oldest" %}selected{% endif %}>Oldest</option>
+                <option value="price_low" {% if sort_by == "price_low" %}selected{% endif %}>Price: Low to High</option>
+                <option value="price_high" {% if sort_by == "price_high" %}selected{% endif %}>Price: High to Low</option>
+                <option value="km_low" {% if sort_by == "km_low" %}selected{% endif %}>KM: Low to High</option>
+                <option value="km_high" {% if sort_by == "km_high" %}selected{% endif %}>KM: High to Low</option>
+                <option value="year_new" {% if sort_by == "year_new" %}selected{% endif %}>Year: New to Old</option>
+                <option value="year_old" {% if sort_by == "year_old" %}selected{% endif %}>Year: Old to New</option>
+            </select>
 
-            <div class="button-row">
+            <div>
                 <button type="submit" class="search-btn">Search</button>
-
-                {% if query or min_price or max_price or min_year or max_year or location or transmission or fuel_type or body_type or sort_by != "newest" %}
-                    <a href="{% url 'car_list' %}" class="clear-btn">Clear Search</a>
-                {% endif %}
+                <a href="{% url 'car_list' %}" class="clear-btn">Clear Search</a>
             </div>
 
         </form>
     </div>
 
-    <div class="cars-grid">
+    <!-- ==========================================
+MyCarMarket
+Version: v0.5.0
+Section: Professional Car Cards Upgrade
+Note: Replace old cars-grid section with this.
+========================================== -->
 
-        {% for car in page_obj %}
+<div class="cars-grid">
 
-            <div class="car-card">
+    {% for car in cars %}
 
-                <div class="image-wrap">
-                    {% if car.is_featured %}
-                        <div class="featured-badge">FEATURED</div>
+        <div class="car-card">
+
+            <div class="image-wrap">
+                {% if car.is_featured %}
+                    <div class="featured-badge">FEATURED</div>
+                {% endif %}
+
+                {% if car.is_verified_listing %}
+                    <div class="verified-badge">VERIFIED</div>
+                {% endif %}
+
+                {% with car.images.first as car_image %}
+                    {% if car_image %}
+                        <img src="{{ car_image.image.url }}" class="car-image" alt="{{ car.title }}">
+                    {% else %}
+                        <div class="no-image">No Image Available</div>
                     {% endif %}
-
-                    {% with car.images.first as car_image %}
-                        {% if car_image %}
-                            <img src="{{ car_image.image.url }}" class="car-image" alt="{{ car.title }}">
-                        {% else %}
-                            <div class="no-image">No Image Available</div>
-                        {% endif %}
-                    {% endwith %}
-                </div>
-
-                <div class="car-content">
-                    <div class="price">${{ car.price }}</div>
-                    <div class="car-title">{{ car.title }}</div>
-
-                    <div class="meta">
-                        <span>{{ car.year }}</span>
-                        <span>{{ car.kilometres }} km</span>
-                        <span>{{ car.transmission|default:"N/A"|title }}</span>
-                        <span>{{ car.fuel_type|default:"N/A"|title }}</span>
-                    </div>
-
-                    <div class="location">
-                        📍 {{ car.location|default:"Location not specified" }}
-                    </div>
-
-                    <a href="{% url 'car_detail' car.id %}" class="view-btn">View Details</a>
-                </div>
-
+                {% endwith %}
             </div>
 
-        {% empty %}
+            <div class="car-content">
+                <div class="price">${{ car.price }}</div>
 
-            <div class="car-card">
-                <div class="car-content">
-                    <h2>No Cars Found</h2>
-                    <p>Try changing your search, price, year, location, transmission, fuel type, or body type.</p>
+                <div class="car-title">
+                    {{ car.year }} {{ car.make }} {{ car.model }}
                 </div>
+
+                <div class="location">
+                    📍 {{ car.display_location }}
+                </div>
+
+                <div class="meta">
+                    <span>🚗 {{ car.kilometres }} km</span>
+                    <span>⚙️ {{ car.transmission|default:"N/A"|title }}</span>
+                    <span>⛽ {{ car.fuel_type|default:"N/A"|title }}</span>
+                    <span>🚘 {{ car.body_type|default:"N/A"|title }}</span>
+                </div>
+
+                {% if car.is_verified_listing %}
+                    <div class="trust-row">
+                        ✓ Verified Listing
+                    </div>
+                {% else %}
+                    <div class="trust-row muted">
+                        Standard Listing
+                    </div>
+                {% endif %}
+
+                <a href="{% url 'car_detail' car.id %}" class="view-btn">
+                    View Details
+                </a>
             </div>
 
-        {% endfor %}
+        </div>
 
-    </div>
+    {% empty %}
 
-    <div class="pagination">
+        <div class="empty-box">
+            <h2>No Cars Found</h2>
+            <p>Try changing your search or filters.</p>
+        </div>
 
-        {% if page_obj.has_previous %}
-            <a href="?q={{ query }}&min_price={{ min_price }}&max_price={{ max_price }}&min_year={{ min_year }}&max_year={{ max_year }}&location={{ location }}&transmission={{ transmission }}&fuel_type={{ fuel_type }}&body_type={{ body_type }}&sort_by={{ sort_by }}&page=1">First</a>
+    {% endfor %}
 
-            <a href="?q={{ query }}&min_price={{ min_price }}&max_price={{ max_price }}&min_year={{ min_year }}&max_year={{ max_year }}&location={{ location }}&transmission={{ transmission }}&fuel_type={{ fuel_type }}&body_type={{ body_type }}&sort_by={{ sort_by }}&page={{ page_obj.previous_page_number }}">Previous</a>
-        {% endif %}
-
-        <span class="current-page">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-        </span>
-
-        {% if page_obj.has_next %}
-            <a href="?q={{ query }}&min_price={{ min_price }}&max_price={{ max_price }}&min_year={{ min_year }}&max_year={{ max_year }}&location={{ location }}&transmission={{ transmission }}&fuel_type={{ fuel_type }}&body_type={{ body_type }}&sort_by={{ sort_by }}&page={{ page_obj.next_page_number }}">Next</a>
-
-            <a href="?q={{ query }}&min_price={{ min_price }}&max_price={{ max_price }}&min_year={{ min_year }}&max_year={{ max_year }}&location={{ location }}&transmission={{ transmission }}&fuel_type={{ fuel_type }}&body_type={{ body_type }}&sort_by={{ sort_by }}&page={{ page_obj.paginator.num_pages }}">Last</a>
-        {% endif %}
-
-    </div>
+</div>
 
 </div>
 

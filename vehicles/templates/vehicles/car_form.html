@@ -1,0 +1,109 @@
+<!-- ==========================================
+MyCarMarket
+Version: v0.4.4
+File: vehicles/templates/vehicles/car_form.html
+Note: Location removed. Using State + Suburb only.
+========================================== -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sell / Edit Car - MyCarMarket</title>
+
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background:#f4f6f8;
+            margin:0;
+            padding:0;
+        }
+
+        .container{
+            max-width:900px;
+            margin:40px auto;
+            background:white;
+            padding:30px;
+            border-radius:12px;
+            box-shadow:0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        h1{
+            margin-bottom:25px;
+            color:#111827;
+        }
+
+        form p{
+            margin-bottom:15px;
+        }
+
+        label{
+            display:block;
+            margin-bottom:5px;
+            font-weight:bold;
+        }
+
+        input,
+        textarea,
+        select{
+            width:100%;
+            padding:12px;
+            border:1px solid #d1d5db;
+            border-radius:8px;
+            box-sizing:border-box;
+        }
+
+        .btn{
+            background:#2563eb;
+            color:white;
+            border:none;
+            padding:14px 30px;
+            border-radius:8px;
+            cursor:pointer;
+            font-size:16px;
+            font-weight:bold;
+        }
+
+        .btn:hover{
+            background:#1d4ed8;
+        }
+
+        .upload-box{
+            margin-top:20px;
+            margin-bottom:20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    {% if car %}
+        <h1>Edit Car Listing</h1>
+    {% else %}
+        <h1>Sell Your Car</h1>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <div class="upload-box">
+            <label>Car Images</label>
+            <input type="file" name="images" multiple>
+        </div>
+
+        <button type="submit" class="btn">
+            {% if car %}
+                Update Listing
+            {% else %}
+                Publish Listing
+            {% endif %}
+        </button>
+    </form>
+
+</div>
+
+</body>
+</html>

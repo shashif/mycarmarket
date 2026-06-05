@@ -1,10 +1,12 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.3.6 - Admin With Trust + Views
+# Version: v0.4.9
 # File: vehicles/admin.py
+# State + Suburb + Image Preview
 # ==========================================
 
 from django.contrib import admin
+from django.utils.html import format_html
 from .models import Car, CarImage, Enquiry
 
 
@@ -13,98 +15,104 @@ class CarImageInline(admin.TabularInline):
     extra = 1
 
     fields = (
+        'image_preview',
         'image',
         'is_primary',
         'sort_order',
     )
 
+    readonly_fields = (
+        'image_preview',
+    )
+
+    def image_preview(self, obj):
+        if obj and obj.image:
+            return format_html(
+                '<img src="{}" style="width:120px;height:80px;object-fit:cover;border-radius:8px;" />',
+                obj.image.url
+            )
+        return "No Image"
+
+    image_preview.short_description = "Preview"
+
 
 @admin.register(Car)
 class CarAdmin(admin.ModelAdmin):
 
-    fieldsets = (
-        ('Basic Car Information', {
-            'fields': (
-                'title',
-                'make',
-                'model',
-                'year',
-                'price',
-                'kilometres',
-            )
-        }),
-
-        ('Vehicle Details', {
-            'fields': (
-                'location',
-                'transmission',
-                'fuel_type',
-                'body_type',
-            )
-        }),
-
-        ('Seller Information - Private Admin Only', {
-            'fields': (
-                'seller_name',
-                'seller_email',
-                'seller_phone',
-            )
-        }),
-
-        ('Marketplace Settings', {
-            'fields': (
-                'is_featured',
-                'is_active',
-                'is_verified_listing',
-                'views_count',
-            )
-        }),
-
-        ('Description', {
-            'fields': (
-                'description',
-            )
-        }),
-    )
-
-    readonly_fields = (
-        'views_count',
-    )
-
     list_display = (
+        'id',
         'title',
         'make',
         'model',
         'year',
         'price',
-        'body_type',
-        'location',
-        'views_count',
-        'is_verified_listing',
+        'state',
+        'suburb',
+        'seller',
         'is_featured',
         'is_active',
+        'is_verified_listing',
+        'views_count',
     )
 
     list_filter = (
+        'state',
         'make',
-        'year',
         'body_type',
-        'transmission',
         'fuel_type',
-        'is_verified_listing',
+        'transmission',
+        'seller',
         'is_featured',
         'is_active',
+        'is_verified_listing',
     )
 
     search_fields = (
         'title',
         'make',
         'model',
-        'location',
-        'body_type',
+        'suburb',
+        'state',
         'seller_name',
         'seller_email',
         'seller_phone',
+        'seller__username',
+    )
+
+    readonly_fields = (
+        'views_count',
+        'created_at',
+    )
+
+    fields = (
+        'title',
+        'make',
+        'model',
+        'year',
+        'price',
+        'kilometres',
+
+        'body_type',
+        'transmission',
+        'fuel_type',
+
+        'state',
+        'suburb',
+
+        'description',
+
+        'seller_name',
+        'seller_email',
+        'seller_phone',
+
+        'seller',
+
+        'is_featured',
+        'is_active',
+        'is_verified_listing',
+
+        'views_count',
+        'created_at',
     )
 
     inlines = [CarImageInline]
@@ -112,8 +120,11 @@ class CarAdmin(admin.ModelAdmin):
 
 @admin.register(CarImage)
 class CarImageAdmin(admin.ModelAdmin):
+
     list_display = (
+        'id',
         'car',
+        'image_preview',
         'is_primary',
         'sort_order',
     )
@@ -122,20 +133,40 @@ class CarImageAdmin(admin.ModelAdmin):
         'is_primary',
     )
 
+    search_fields = (
+        'car__title',
+        'car__make',
+        'car__model',
+    )
+
+    readonly_fields = (
+        'image_preview',
+    )
+
+    def image_preview(self, obj):
+        if obj and obj.image:
+            return format_html(
+                '<img src="{}" style="width:120px;height:80px;object-fit:cover;border-radius:8px;" />',
+                obj.image.url
+            )
+        return "No Image"
+
+    image_preview.short_description = "Preview"
+
 
 @admin.register(Enquiry)
 class EnquiryAdmin(admin.ModelAdmin):
+
     list_display = (
+        'id',
+        'car',
         'name',
         'email',
         'phone',
-        'car',
-        'is_read',
         'created_at',
     )
 
     list_filter = (
-        'is_read',
         'created_at',
     )
 
@@ -145,13 +176,10 @@ class EnquiryAdmin(admin.ModelAdmin):
         'phone',
         'message',
         'car__title',
+        'car__make',
+        'car__model',
     )
 
     readonly_fields = (
-        'car',
-        'name',
-        'email',
-        'phone',
-        'message',
         'created_at',
     )
