@@ -235,17 +235,8 @@ File: vehicles/templates/vehicles/car_list.html
 
 <body>
 
-<div class="navbar">
-    <a href="{% url 'car_list' %}" class="logo">🚗 MyCarMarket</a>
-
-    <div class="nav-links">
-        <a href="{% url 'home' %}">Home</a>
-        <a href="{% url 'car_list' %}">Buy Cars</a>
-        <a href="{% url 'create_car' %}">Sell Car</a>
-        <a href="#">Dealers</a>
-        <a href="#">Contact</a>
-    </div>
-</div>
+    
+{% include 'includes/navbar.html' %}
 
 <div class="hero">
     <h1>Find Your Next Car</h1>
