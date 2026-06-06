@@ -467,7 +467,11 @@ File: vehicles/templates/vehicles/car_detail.html
 
                     <div class="detail-box">
                         <strong>Location</strong>
-                        {{ car.location|default:"Not specified" }}
+                        {% if car.display_location %}
+    📍 {{ car.display_location }}
+{% else %}
+    Not specified
+{% endif %}
                     </div>
                 </div>
 
