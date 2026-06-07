@@ -1,7 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.4.0
+# Version: v0.5.1
 # File: config/urls.py
+# Static + Media Files Enabled Safely
 # ==========================================
 
 from django.contrib import admin
@@ -20,4 +21,14 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
 ]
 
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT
+    )
+
+    urlpatterns += static(
+        settings.STATIC_URL,
+        document_root=settings.BASE_DIR / 'static'
+    )

@@ -1,15 +1,18 @@
 <!-- =========================================
 MyCarMarket
-Version: v0.3.6 - Detail Page With Views, Listed Date, Trust Badges
+Version: v0.5.0 - Professional Detail Page With Icons
 File: vehicles/templates/vehicles/car_detail.html
 ========================================= -->
 
+ {% load static %}
 <!DOCTYPE html>
 <html>
+   
+   
 <head>
     <title>{{ car.title }} - MyCarMarket</title>
+<style>
 
-    <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -70,14 +73,15 @@ File: vehicles/templates/vehicles/car_detail.html
             font-weight: bold;
         }
 
-        .main-image {
-            width: 100%;
-            max-height: 520px;
-            object-fit: contain;
-            background: white;
-            border-radius: 16px;
-            margin-bottom: 18px;
-        }
+      .main-image {
+    width: 100%;
+    height: 520px;
+    object-fit: cover;
+    background: #f3f4f6;
+    border-radius: 16px;
+    margin-bottom: 18px;
+    display: block;
+}
 
         .no-main-image {
             height: 350px;
@@ -97,12 +101,20 @@ File: vehicles/templates/vehicles/car_detail.html
             gap: 12px;
         }
 
-        .thumbs img {
-            width: 100%;
-            height: 110px;
-            object-fit: cover;
-            border-radius: 12px;
-        }
+    .thumbs img {
+    width: 100%;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.thumbs img:hover {
+    opacity: 0.85;
+    transform: scale(1.02);
+}
 
         h1 {
             margin-top: 0;
@@ -111,9 +123,16 @@ File: vehicles/templates/vehicles/car_detail.html
 
         .price {
             color: #059669;
-            font-size: 34px;
+            font-size: 36px;
             font-weight: bold;
-            margin-bottom: 16px;
+            margin-bottom: 10px;
+        }
+
+        .main-location {
+            font-size: 17px;
+            color: #374151;
+            margin-bottom: 18px;
+            font-weight: bold;
         }
 
         .top-badges {
@@ -160,16 +179,31 @@ File: vehicles/templates/vehicles/car_detail.html
 
         .detail-box {
             background: #f9fafb;
-            padding: 14px;
-            border-radius: 12px;
+            padding: 16px;
+            border-radius: 14px;
             border: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        .detail-box strong {
+        .detail-icon {
+            font-size: 25px;
+            width: 34px;
+            text-align: center;
+        }
+
+        .detail-text strong {
             display: block;
             color: #6b7280;
             font-size: 13px;
             margin-bottom: 5px;
+        }
+
+        .detail-text span {
+            font-size: 16px;
+            font-weight: bold;
+            color: #111827;
         }
 
         .description {
@@ -317,6 +351,7 @@ File: vehicles/templates/vehicles/car_detail.html
             color: #4b5563;
             font-size: 14px;
             margin-bottom: 12px;
+            line-height: 1.5;
         }
 
         .similar-btn {
@@ -368,12 +403,13 @@ File: vehicles/templates/vehicles/car_detail.html
                 grid-template-columns: 1fr;
             }
         }
-    </style>
+  
+</style>
+   
 </head>
 
 <body>
 
-    
 {% include 'includes/navbar.html' %}
 
 <div class="container">
@@ -386,7 +422,12 @@ File: vehicles/templates/vehicles/car_detail.html
             <div class="card">
                 {% if images %}
                     {% with images.first as first_image %}
-                        <img src="{{ first_image.image.url }}" class="main-image" alt="{{ car.title }}">
+                        <img
+    id="mainCarImage"
+    src="{{ first_image.image.url }}"
+    class="main-image"
+    alt="{{ car.title }}"
+>
                     {% endwith %}
                 {% else %}
                     <div class="no-main-image">No Image Available</div>
@@ -395,8 +436,13 @@ File: vehicles/templates/vehicles/car_detail.html
                 {% if images %}
                     <div class="thumbs">
                         {% for image in images %}
-                            <img src="{{ image.image.url }}" alt="{{ car.title }}">
-                        {% endfor %}
+    <img
+        src="{{ image.image.url }}"
+        alt="{{ car.title }}"
+        onclick="changeMainImage('{{ image.image.url }}')"
+        style="cursor:pointer;"
+    >
+{% endfor %}
                     </div>
                 {% endif %}
             </div>
@@ -404,7 +450,17 @@ File: vehicles/templates/vehicles/car_detail.html
             <div class="card" style="margin-top:25px;">
                 <h1>{{ car.title }}</h1>
 
-                <div class="price">${{ car.price }}</div>
+                <div class="price">
+                    💰 ${{ car.price }}
+                </div>
+
+                <div class="main-location">
+                    {% if car.display_location %}
+                        📍 {{ car.display_location }}
+                    {% else %}
+                        📍 Location not specified
+                    {% endif %}
+                </div>
 
                 <div class="top-badges">
                     {% if car.is_featured %}
@@ -421,49 +477,77 @@ File: vehicles/templates/vehicles/car_detail.html
                 </div>
 
                 <div class="details-grid">
+
                     <div class="detail-box">
-                        <strong>Make</strong>
-                        {{ car.make }}
+                        <div class="detail-icon">🚗</div>
+                        <div class="detail-text">
+                            <strong>Make</strong>
+                            <span>{{ car.make }}</span>
+                        </div>
                     </div>
 
                     <div class="detail-box">
-                        <strong>Model</strong>
-                        {{ car.model }}
+                        <div class="detail-icon">🏷️</div>
+                        <div class="detail-text">
+                            <strong>Model</strong>
+                            <span>{{ car.model }}</span>
+                        </div>
                     </div>
 
                     <div class="detail-box">
-                        <strong>Year</strong>
-                        {{ car.year }}
+                        <div class="detail-icon">📅</div>
+                        <div class="detail-text">
+                            <strong>Year</strong>
+                            <span>{{ car.year }}</span>
+                        </div>
                     </div>
 
                     <div class="detail-box">
-                        <strong>Kilometres</strong>
-                        {{ car.kilometres }} km
+                        <div class="detail-icon">🛣️</div>
+                        <div class="detail-text">
+                            <strong>Kilometres</strong>
+                            <span>{{ car.kilometres }} km</span>
+                        </div>
                     </div>
 
                     <div class="detail-box">
-                        <strong>Transmission</strong>
-                        {{ car.transmission|default:"Not specified" }}
+                        <div class="detail-icon">⚙️</div>
+                        <div class="detail-text">
+                            <strong>Transmission</strong>
+                            <span>{{ car.transmission|default:"Not specified" }}</span>
+                        </div>
                     </div>
 
                     <div class="detail-box">
-                        <strong>Fuel Type</strong>
-                        {{ car.fuel_type|default:"Not specified" }}
+                        <div class="detail-icon">⛽</div>
+                        <div class="detail-text">
+                            <strong>Fuel Type</strong>
+                            <span>{{ car.fuel_type|default:"Not specified" }}</span>
+                        </div>
                     </div>
 
                     <div class="detail-box">
-                        <strong>Body Type</strong>
-                        {{ car.body_type|default:"Not specified" }}
+                        <div class="detail-icon">🚘</div>
+                        <div class="detail-text">
+                            <strong>Body Type</strong>
+                            <span>{{ car.body_type|default:"Not specified" }}</span>
+                        </div>
                     </div>
 
                     <div class="detail-box">
-                        <strong>Location</strong>
-                        {% if car.display_location %}
-    📍 {{ car.display_location }}
-{% else %}
-    Not specified
-{% endif %}
+                        <div class="detail-icon">📍</div>
+                        <div class="detail-text">
+                            <strong>Location</strong>
+                            <span>
+                                {% if car.display_location %}
+                                    {{ car.display_location }}
+                                {% else %}
+                                    Not specified
+                                {% endif %}
+                            </span>
+                        </div>
                     </div>
+
                 </div>
 
                 <div class="description">
@@ -484,12 +568,11 @@ File: vehicles/templates/vehicles/car_detail.html
 
                 <div class="seller-info">
                     <strong>Location:</strong><br>
-                    
-{% if car.display_location %}
-    📍 {{ car.display_location }}
-{% else %}
-    Location not specified
-{% endif %}
+                    {% if car.display_location %}
+                        📍 {{ car.display_location }}
+                    {% else %}
+                        Location not specified
+                    {% endif %}
                 </div>
 
                 <div class="seller-info">
@@ -580,7 +663,12 @@ File: vehicles/templates/vehicles/car_detail.html
 
                         <div class="similar-meta">
                             {{ similar.year }} • {{ similar.kilometres }} km<br>
-                            {{ similar.location|default:"Location not specified" }}
+
+                            {% if similar.display_location %}
+                                📍 {{ similar.display_location }}
+                            {% else %}
+                                Location not specified
+                            {% endif %}
                         </div>
 
                         <a href="{% url 'car_detail' similar.id %}" class="similar-btn">
@@ -601,5 +689,15 @@ File: vehicles/templates/vehicles/car_detail.html
 
 </div>
 
+ <script>
+    function changeMainImage(imageUrl) {
+        const mainImage = document.getElementById('mainCarImage');
+
+        if (mainImage) {
+            mainImage.src = imageUrl;
+        }
+    }
+</script>
 </body>
+
 </html>

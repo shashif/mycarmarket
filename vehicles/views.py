@@ -1,8 +1,13 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.4.2
+# Version: v0.5.1
 # File: vehicles/views.py
-# State + Suburb Filter Fixed
+# Seller Dashboard Added
+# ==========================================
+
+
+# ==========================================
+# START SECTION 1: IMPORTS
 # ==========================================
 
 from django.shortcuts import render, get_object_or_404, redirect
@@ -14,6 +19,14 @@ from django.core.paginator import Paginator
 from .models import Car
 from .forms import CarForm, EnquiryForm
 
+# ==========================================
+# END SECTION 1: IMPORTS
+# ==========================================
+
+
+# ==========================================
+# START SECTION 2: CAR LIST PAGE
+# ==========================================
 
 def car_list(request):
     cars = Car.objects.all()
@@ -58,51 +71,34 @@ def car_list(request):
         cars = cars.filter(year__lte=max_year)
 
     if suburb:
-        cars = cars.filter(
-            suburb__icontains=suburb
-        )
+        cars = cars.filter(suburb__icontains=suburb)
 
     if state:
-        cars = cars.filter(
-            state=state
-        )
+        cars = cars.filter(state=state)
 
     if transmission:
-        cars = cars.filter(
-            transmission=transmission
-        )
+        cars = cars.filter(transmission=transmission)
 
     if fuel_type:
-        cars = cars.filter(
-            fuel_type=fuel_type
-        )
+        cars = cars.filter(fuel_type=fuel_type)
 
     if body_type:
-        cars = cars.filter(
-            body_type=body_type
-        )
+        cars = cars.filter(body_type=body_type)
 
     if sort_by == 'oldest':
         cars = cars.order_by('created_at')
-
     elif sort_by == 'price_low':
         cars = cars.order_by('price')
-
     elif sort_by == 'price_high':
         cars = cars.order_by('-price')
-
     elif sort_by == 'km_low':
         cars = cars.order_by('kilometres')
-
     elif sort_by == 'km_high':
         cars = cars.order_by('-kilometres')
-
     elif sort_by == 'year_new':
         cars = cars.order_by('-year')
-
     elif sort_by == 'year_old':
         cars = cars.order_by('year')
-
     else:
         cars = cars.order_by('-created_at')
 
@@ -137,6 +133,14 @@ def car_list(request):
         }
     )
 
+# ==========================================
+# END SECTION 2: CAR LIST PAGE
+# ==========================================
+
+
+# ==========================================
+# START SECTION 3: CAR DETAIL PAGE + ENQUIRY
+# ==========================================
 
 def car_detail(request, pk):
     car = get_object_or_404(Car, pk=pk)
@@ -205,6 +209,14 @@ def car_detail(request, pk):
         }
     )
 
+# ==========================================
+# END SECTION 3: CAR DETAIL PAGE + ENQUIRY
+# ==========================================
+
+
+# ==========================================
+# START SECTION 4: CREATE CAR LISTING
+# ==========================================
 
 @login_required
 def create_car(request):
@@ -254,6 +266,14 @@ def create_car(request):
         }
     )
 
+# ==========================================
+# END SECTION 4: CREATE CAR LISTING
+# ==========================================
+
+
+# ==========================================
+# START SECTION 5: MY LISTINGS / SELLER DASHBOARD
+# ==========================================
 
 @login_required
 def my_listings(request):
@@ -262,14 +282,35 @@ def my_listings(request):
         seller=request.user
     ).order_by('-created_at')
 
+    total_listings = cars.count()
+
+    total_views = sum(
+        car.views_count for car in cars
+    )
+
+    total_enquiries = sum(
+        car.enquiries.count() for car in cars
+    )
+
     return render(
         request,
         'vehicles/my_listings.html',
         {
-            'cars': cars
+            'cars': cars,
+            'total_listings': total_listings,
+            'total_views': total_views,
+            'total_enquiries': total_enquiries,
         }
     )
 
+# ==========================================
+# END SECTION 5: MY LISTINGS / SELLER DASHBOARD
+# ==========================================
+
+
+# ==========================================
+# START SECTION 6: EDIT CAR LISTING
+# ==========================================
 
 @login_required
 def edit_car(request, pk):
@@ -327,6 +368,14 @@ def edit_car(request, pk):
         }
     )
 
+# ==========================================
+# END SECTION 6: EDIT CAR LISTING
+# ==========================================
+
+
+# ==========================================
+# START SECTION 7: DELETE CAR LISTING
+# ==========================================
 
 @login_required
 def delete_car(request, pk):
@@ -357,3 +406,7 @@ def delete_car(request, pk):
             'car': car
         }
     )
+
+# ==========================================
+# END SECTION 7: DELETE CAR LISTING
+# ==========================================
