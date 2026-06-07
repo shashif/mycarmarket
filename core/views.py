@@ -1,7 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.3.1 - Dealers Page
+# Version: v0.5.2
 # File: core/views.py
+# Homepage Shows Approved Listings Only
 # ==========================================
 
 from django.shortcuts import render
@@ -9,8 +10,14 @@ from vehicles.models import Car
 
 
 def home(request):
-    featured_cars = Car.objects.filter(is_featured=True).order_by('-created_at')[:3]
-    latest_cars = Car.objects.all().order_by('-created_at')[:6]
+    featured_cars = Car.objects.filter(
+        is_approved=True,
+        is_featured=True
+    ).order_by('-created_at')[:3]
+
+    latest_cars = Car.objects.filter(
+        is_approved=True
+    ).order_by('-created_at')[:6]
 
     return render(
         request,
