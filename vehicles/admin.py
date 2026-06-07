@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.4.9
+# Version: v0.5.2
 # File: vehicles/admin.py
-# State + Suburb + Image Preview
+# Admin Approval Added
 # ==========================================
 
 from django.contrib import admin
@@ -49,6 +49,7 @@ class CarAdmin(admin.ModelAdmin):
         'state',
         'suburb',
         'seller',
+        'is_approved',
         'is_featured',
         'is_active',
         'is_verified_listing',
@@ -56,6 +57,7 @@ class CarAdmin(admin.ModelAdmin):
     )
 
     list_filter = (
+        'is_approved',
         'state',
         'make',
         'body_type',
@@ -107,6 +109,7 @@ class CarAdmin(admin.ModelAdmin):
 
         'seller',
 
+        'is_approved',
         'is_featured',
         'is_active',
         'is_verified_listing',
@@ -115,7 +118,30 @@ class CarAdmin(admin.ModelAdmin):
         'created_at',
     )
 
+    actions = (
+        'approve_selected_listings',
+        'unapprove_selected_listings',
+    )
+
     inlines = [CarImageInline]
+
+    def approve_selected_listings(self, request, queryset):
+        queryset.update(is_approved=True)
+        self.message_user(
+            request,
+            'Selected listings approved successfully.'
+        )
+
+    approve_selected_listings.short_description = "Approve selected listings"
+
+    def unapprove_selected_listings(self, request, queryset):
+        queryset.update(is_approved=False)
+        self.message_user(
+            request,
+            'Selected listings moved to pending successfully.'
+        )
+
+    unapprove_selected_listings.short_description = "Move selected listings to pending"
 
 
 @admin.register(CarImage)

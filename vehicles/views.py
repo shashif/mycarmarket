@@ -1,8 +1,10 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.5.1
+# Version: v0.5.2
 # File: vehicles/views.py
-# Seller Dashboard Added
+# Admin Approval Logic Added
+# Normal Seller Listings Need Approval
+# Dealer/Admin Listings Auto Approved
 # ==========================================
 
 
@@ -29,7 +31,7 @@ from .forms import CarForm, EnquiryForm
 # ==========================================
 
 def car_list(request):
-    cars = Car.objects.all()
+    cars = Car.objects.filter(is_approved=True)
 
     query = request.GET.get('q', '').strip()
 
@@ -145,19 +147,37 @@ def car_list(request):
 def car_detail(request, pk):
     car = get_object_or_404(Car, pk=pk)
 
+    if not car.is_approved:
+        if not request.user.is_authenticated:
+            messages.error(
+                request,
+                'This listing is waiting for admin approval.'
+            )
+            return redirect('car_list')
+
+        if car.seller != request.user and not request.user.is_staff:
+            messages.error(
+                request,
+                'This listing is waiting for admin approval.'
+            )
+            return redirect('car_list')
+
     car.views_count += 1
     car.save(update_fields=['views_count'])
 
     images = car.images.all()
 
     similar_cars = Car.objects.filter(
+        is_approved=True,
         make__icontains=car.make
     ).exclude(
         pk=car.pk
     ).order_by('-created_at')[:4]
 
     if not similar_cars.exists():
-        similar_cars = Car.objects.all().exclude(
+        similar_cars = Car.objects.filter(
+            is_approved=True
+        ).exclude(
             pk=car.pk
         ).order_by('-created_at')[:4]
 
@@ -232,6 +252,12 @@ def create_car(request):
 
             car = form.save(commit=False)
             car.seller = request.user
+
+            if request.user.is_staff:
+                car.is_approved = True
+            else:
+                car.is_approved = False
+
             car.save()
 
             images = request.FILES.getlist('images')
@@ -244,10 +270,16 @@ def create_car(request):
                     sort_order=index
                 )
 
-            messages.success(
-                request,
-                'Car listing created successfully.'
-            )
+            if car.is_approved:
+                messages.success(
+                    request,
+                    'Car listing created successfully.'
+                )
+            else:
+                messages.success(
+                    request,
+                    'Car listing submitted successfully. It is waiting for admin approval.'
+                )
 
             return redirect(
                 'car_detail',
@@ -292,6 +324,14 @@ def my_listings(request):
         car.enquiries.count() for car in cars
     )
 
+    approved_listings = cars.filter(
+        is_approved=True
+    ).count()
+
+    pending_listings = cars.filter(
+        is_approved=False
+    ).count()
+
     return render(
         request,
         'vehicles/my_listings.html',
@@ -300,6 +340,8 @@ def my_listings(request):
             'total_listings': total_listings,
             'total_views': total_views,
             'total_enquiries': total_enquiries,
+            'approved_listings': approved_listings,
+            'pending_listings': pending_listings,
         }
     )
 
@@ -331,7 +373,14 @@ def edit_car(request, pk):
 
         if form.is_valid():
 
-            car = form.save()
+            car = form.save(commit=False)
+
+            if request.user.is_staff:
+                car.is_approved = True
+            else:
+                car.is_approved = False
+
+            car.save()
 
             images = request.FILES.getlist('images')
 
@@ -343,10 +392,16 @@ def edit_car(request, pk):
                     sort_order=index
                 )
 
-            messages.success(
-                request,
-                'Car listing updated successfully.'
-            )
+            if car.is_approved:
+                messages.success(
+                    request,
+                    'Car listing updated successfully.'
+                )
+            else:
+                messages.success(
+                    request,
+                    'Car listing updated successfully. It is waiting for admin approval again.'
+                )
 
             return redirect(
                 'car_detail',

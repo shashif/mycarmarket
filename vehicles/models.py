@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.5.1
+# Version: v0.5.2
 # File: vehicles/models.py
-# Note: Location text removed. Empty suburb/state will show nothing.
+# Admin Approval Field Added
 # ==========================================
 
 from django.db import models
@@ -79,6 +79,8 @@ class Car(models.Model):
     is_featured = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_verified_listing = models.BooleanField(default=False)
+
+    is_approved = models.BooleanField(default=False)
 
     views_count = models.PositiveIntegerField(default=0)
 
