@@ -1,0 +1,51 @@
+ <div class="similar-section">
+        <h2 class="section-title">Similar Cars You May Like</h2>
+
+        <div class="similar-grid">
+
+            {% for similar in similar_cars %}
+
+                <div class="similar-card">
+
+                    <div class="similar-image-wrap">
+                        {% with similar.images.first as similar_image %}
+                            {% if similar_image %}
+                                <img src="{{ similar_image.image.url }}" class="similar-image" alt="{{ similar.title }}">
+                            {% else %}
+                                <div class="similar-no-image">No Image Available</div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+
+                    <div class="similar-content">
+                        <div class="similar-price">${{ similar.price }}</div>
+
+                        <div class="similar-title">
+                            {{ similar.title }}
+                        </div>
+
+                        <div class="similar-meta">
+                            {{ similar.year }} • {{ similar.kilometres }} km<br>
+
+                            {% if similar.display_location %}
+                                📍 {{ similar.display_location }}
+                            {% else %}
+                                Location not specified
+                            {% endif %}
+                        </div>
+
+                        <a href="{% url 'car_detail' similar.id %}" class="similar-btn">
+                            View Details
+                        </a>
+                    </div>
+
+                </div>
+
+            {% empty %}
+
+                <p>No similar cars found yet.</p>
+
+            {% endfor %}
+
+        </div>
+    </div>

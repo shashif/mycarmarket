@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.5.2
+# Version: v0.6.1 SAFE
 # File: vehicles/models.py
-# Admin Approval Field Added
+# Slug Temporarily Removed To Fix Database Error
 # ==========================================
 
 from django.db import models

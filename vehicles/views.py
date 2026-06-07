@@ -1,10 +1,7 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.5.2
-# File: vehicles/views.py
-# Admin Approval Logic Added
-# Normal Seller Listings Need Approval
-# Dealer/Admin Listings Auto Approved
+# Version: v0.6.1
+# Dealer Profile Page
 # ==========================================
 
 
@@ -20,7 +17,7 @@ from django.core.paginator import Paginator
 
 from .models import Car
 from .forms import CarForm, EnquiryForm
-
+from django.contrib.auth.models import User
 # ==========================================
 # END SECTION 1: IMPORTS
 # ==========================================
@@ -465,3 +462,27 @@ def delete_car(request, pk):
 # ==========================================
 # END SECTION 7: DELETE CAR LISTING
 # ==========================================
+
+def dealer_detail(request, user_id):
+
+    dealer = get_object_or_404(
+        User,
+        id=user_id
+    )
+
+    cars = Car.objects.filter(
+        seller=dealer,
+        is_approved=True
+    ).order_by('-created_at')
+
+    share_url = request.build_absolute_uri()
+
+    return render(
+        request,
+        'vehicles/dealer_detail.html',
+        {
+            'dealer': dealer,
+            'cars': cars,
+            'share_url': share_url,
+        }
+    )

@@ -1,11 +1,13 @@
 <!-- =========================================
 MyCarMarket
-Version: v0.5.3
+Version: v0.6.2
 File: vehicles/templates/vehicles/car_detail.html
-Split Detail Page With Includes + Google Ads Ready
+Social Share + Copy Link Button Added
+Safe Version Without Slug
 ========================================= -->
 
 {% load static %}
+
 <!DOCTYPE html>
 <html>
 
@@ -18,23 +20,132 @@ Split Detail Page With Includes + Google Ads Ready
 
 <body>
 
+<!-- =========================================
+START SECTION 1: NAVBAR
+========================================= -->
+
 {% include 'includes/navbar.html' %}
+
+<!-- =========================================
+END SECTION 1: NAVBAR
+========================================= -->
+
+
+<!-- =========================================
+START SECTION 2: MAIN PAGE CONTAINER
+========================================= -->
 
 <div class="container">
 
     <a href="{% url 'car_list' %}" class="back-link">← Back to Cars</a>
 
+    <!-- =========================================
+    START SECTION 3: DETAIL GRID
+    ========================================= -->
+
     <div class="detail-grid">
 
+        <!-- =========================================
+        START SECTION 4: LEFT CONTENT
+        ========================================= -->
+
         <div>
+
+            <!-- =========================================
+            START SECTION 5: CAR IMAGE GALLERY
+            ========================================= -->
+
             {% include 'vehicles/includes/detail_gallery.html' %}
 
+            <!-- =========================================
+            END SECTION 5: CAR IMAGE GALLERY
+            ========================================= -->
+
+
+            <!-- =========================================
+            START SECTION 6: CAR INFORMATION
+            ========================================= -->
+
             {% include 'vehicles/includes/detail_info.html' %}
+
+            <!-- =========================================
+            END SECTION 6: CAR INFORMATION
+            ========================================= -->
+
+
+            <!-- =========================================
+            START SECTION 7: SOCIAL SHARE BOX
+            ========================================= -->
+
+            <div class="share-box">
+                <h3>Share This Car</h3>
+
+                <div class="share-buttons">
+
+                    <a target="_blank"
+                       href="https://www.facebook.com/sharer/sharer.php?u={{ share_url }}"
+                       class="share-btn facebook">
+                        Facebook
+                    </a>
+
+                    <a target="_blank"
+                       href="https://twitter.com/intent/tweet?url={{ share_url }}&text={{ share_text }}"
+                       class="share-btn twitter">
+                        X / Twitter
+                    </a>
+
+                    <a target="_blank"
+                       href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url }}"
+                       class="share-btn linkedin">
+                        LinkedIn
+                    </a>
+
+                    <a target="_blank"
+                       href="https://api.whatsapp.com/send?text={{ share_text }} {{ share_url }}"
+                       class="share-btn whatsapp">
+                        WhatsApp
+                    </a>
+
+                    <button type="button"
+                            class="share-btn copy-link-btn"
+                            onclick="copyCarLink()">
+                        Copy Link
+                    </button>
+
+                </div>
+            </div>
+
+            <!-- =========================================
+            END SECTION 7: SOCIAL SHARE BOX
+            ========================================= -->
+
         </div>
+
+        <!-- =========================================
+        END SECTION 4: LEFT CONTENT
+        ========================================= -->
+
+
+        <!-- =========================================
+        START SECTION 8: RIGHT SIDEBAR
+        ========================================= -->
 
         {% include 'vehicles/includes/detail_sidebar.html' %}
 
+        <!-- =========================================
+        END SECTION 8: RIGHT SIDEBAR
+        ========================================= -->
+
     </div>
+
+    <!-- =========================================
+    END SECTION 3: DETAIL GRID
+    ========================================= -->
+
+
+    <!-- =========================================
+    START SECTION 9: GOOGLE ADS PLACEHOLDER
+    ========================================= -->
 
     <div class="ad-banner">
         <div class="ad-label">Advertisement</div>
@@ -47,59 +158,31 @@ Split Detail Page With Includes + Google Ads Ready
         </div>
     </div>
 
-   <div class="similar-section">
-    <h2 class="section-title">Similar Cars You May Like</h2>
+    <!-- =========================================
+    END SECTION 9: GOOGLE ADS PLACEHOLDER
+    ========================================= -->
 
-    <div class="similar-grid">
 
-        {% for similar in similar_cars %}
+    <!-- =========================================
+    START SECTION 10: SIMILAR CARS
+    ========================================= -->
+ {% include 'vehicles/includes/similar_cars.html' %}
+   
 
-            <div class="similar-card">
-
-                <div class="similar-image-wrap">
-                    {% with similar.images.first as similar_image %}
-                        {% if similar_image %}
-                            <img src="{{ similar_image.image.url }}" class="similar-image" alt="{{ similar.title }}">
-                        {% else %}
-                            <div class="similar-no-image">No Image Available</div>
-                        {% endif %}
-                    {% endwith %}
-                </div>
-
-                <div class="similar-content">
-                    <div class="similar-price">${{ similar.price }}</div>
-
-                    <div class="similar-title">
-                        {{ similar.title }}
-                    </div>
-
-                    <div class="similar-meta">
-                        {{ similar.year }} • {{ similar.kilometres }} km<br>
-
-                        {% if similar.display_location %}
-                            📍 {{ similar.display_location }}
-                        {% else %}
-                            Location not specified
-                        {% endif %}
-                    </div>
-
-                    <a href="{% url 'car_detail' similar.id %}" class="similar-btn">
-                        View Details
-                    </a>
-                </div>
-
-            </div>
-
-        {% empty %}
-
-            <p>No similar cars found yet.</p>
-
-        {% endfor %}
-
-    </div>
-</div>
+    <!-- =========================================
+    END SECTION 10: SIMILAR CARS
+    ========================================= -->
 
 </div>
+
+<!-- =========================================
+END SECTION 2: MAIN PAGE CONTAINER
+========================================= -->
+
+
+<!-- =========================================
+START SECTION 11: PAGE JAVASCRIPT
+========================================= -->
 
 <script>
     function changeMainImage(imageUrl) {
@@ -109,7 +192,21 @@ Split Detail Page With Includes + Google Ads Ready
             mainImage.src = imageUrl;
         }
     }
+
+    function copyCarLink() {
+        navigator.clipboard.writeText(window.location.href)
+            .then(function () {
+                alert("Car link copied successfully!");
+            })
+            .catch(function () {
+                alert("Unable to copy link. Please copy it from your browser.");
+            });
+    }
 </script>
+
+<!-- =========================================
+END SECTION 11: PAGE JAVASCRIPT
+========================================= -->
 
 </body>
 </html>

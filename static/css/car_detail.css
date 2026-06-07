@@ -1,8 +1,70 @@
 /* ==========================================
 MyCarMarket
-Version: v0.6.0 Patch
-Premium polish added without removing old design
+Version: v0.6.2
+Section: Copy Link Button
 ========================================== */
+
+.copy-link-btn {
+    background: #6b7280;
+    border: none;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+}
+
+.copy-link-btn:hover {
+    background: #4b5563;
+}
+
+.share-box {
+    background: white;
+    padding: 22px;
+    border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.share-box h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.share-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.share-btn {
+    text-decoration: none;
+    padding: 11px 18px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    transition: 0.2s ease;
+}
+
+.share-btn:hover {
+    opacity: 0.85;
+    transform: translateY(-2px);
+}
+
+.share-btn.facebook {
+    background: #1877f2;
+}
+
+.share-btn.twitter {
+    background: #111827;
+}
+
+.share-btn.linkedin {
+    background: #0a66c2;
+}
+
+.share-btn.whatsapp {
+    background: #25d366;
+}
 
 
 
