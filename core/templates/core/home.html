@@ -1,8 +1,8 @@
 <!-- =========================================
 MyCarMarket
-Version: v0.5.3
+Version: v0.5.7
 File: core/templates/core/home.html
-Feature: Google Ads Ready Homepage + Navbar Fixed
+Note: Featured + Verified Badges On Latest Cars
 ========================================= -->
 
 <!DOCTYPE html>
@@ -82,17 +82,23 @@ Feature: Google Ads Ready Homepage + Navbar Fixed
     <div class="cars-grid">
         {% for car in featured_cars %}
             <div class="car-card">
-                <div class="image-wrap">
-                    <div class="featured-badge">FEATURED</div>
+              <div class="image-wrap">
 
-                    {% with car.images.first as car_image %}
-                        {% if car_image %}
-                            <img src="{{ car_image.image.url }}" class="car-image" alt="{{ car.title }}">
-                        {% else %}
-                            <div class="no-image">No Image Available</div>
-                        {% endif %}
-                    {% endwith %}
-                </div>
+    <div class="featured-badge">⭐ FEATURED</div>
+
+    {% if car.is_verified_listing %}
+        <div class="verified-badge">🛡 VERIFIED</div>
+    {% endif %}
+
+    {% with car.images.first as car_image %}
+        {% if car_image %}
+            <img src="{{ car_image.image.url }}" class="car-image" alt="{{ car.title }}">
+        {% else %}
+            <div class="no-image">No Image Available</div>
+        {% endif %}
+    {% endwith %}
+
+</div>
 
                 <div class="car-content">
                     <div class="price">${{ car.price }}</div>
@@ -132,19 +138,29 @@ Feature: Google Ads Ready Homepage + Navbar Fixed
     <div class="cars-grid">
         {% for car in latest_cars %}
             <div class="car-card">
-                <div class="image-wrap">
-                    {% if car.is_featured %}
-                        <div class="featured-badge">FEATURED</div>
-                    {% endif %}
+              <div class="image-wrap">
 
-                    {% with car.images.first as car_image %}
-                        {% if car_image %}
-                            <img src="{{ car_image.image.url }}" class="car-image" alt="{{ car.title }}">
-                        {% else %}
-                            <div class="no-image">No Image Available</div>
-                        {% endif %}
-                    {% endwith %}
-                </div>
+    {% if car.is_featured %}
+        <div class="featured-badge">
+            ⭐ FEATURED
+        </div>
+    {% endif %}
+
+    {% if car.is_verified_listing %}
+        <div class="verified-badge">
+            🛡 VERIFIED
+        </div>
+    {% endif %}
+
+    {% with car.images.first as car_image %}
+        {% if car_image %}
+            <img src="{{ car_image.image.url }}" class="car-image" alt="{{ car.title }}">
+        {% else %}
+            <div class="no-image">No Image Available</div>
+        {% endif %}
+    {% endwith %}
+
+</div>
 
                 <div class="car-content">
                     <div class="price">${{ car.price }}</div>

@@ -1,0 +1,85 @@
+<div>
+    <div class="card seller-box">
+        <h2>Seller Details</h2>
+
+        <div class="seller-info">
+            <strong>Seller:</strong><br>
+            {{ car.seller_name|default:"Private Seller" }}
+        </div>
+
+        <div class="seller-info">
+            <strong>Location:</strong><br>
+            {% if car.display_location %}
+                📍 {{ car.display_location }}
+            {% else %}
+                Location not specified
+            {% endif %}
+        </div>
+
+        <div class="seller-info">
+            <strong>Contact Method:</strong><br>
+            Send an enquiry using the form below.
+        </div>
+
+        <div class="seller-safe-note">
+            Seller phone number and email are hidden for privacy and spam protection.
+        </div>
+    </div>
+
+    <div class="ad-banner">
+        <div class="ad-label">Advertisement</div>
+        <div class="ad-placeholder">
+            <div>
+                <strong>Google AdSense Sidebar Ad</strong><br>
+                <span>300 x 250 Ad Space</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card trust-box">
+        <h2>Trust & Safety</h2>
+
+        <div class="trust-item">
+            ✅ Always inspect the car before payment.
+        </div>
+
+        <div class="trust-item">
+            ✅ Do not send money before confirming ownership.
+        </div>
+
+        <div class="trust-item">
+            ✅ Use the enquiry form to keep contact secure.
+        </div>
+
+        {% if car.is_verified_listing %}
+            <div class="trust-item">
+                🛡 This listing has been marked as verified by MyCarMarket admin.
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="card">
+        <h2>Contact Seller</h2>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="success-message">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {{ form.name }}
+            {{ form.email }}
+            {{ form.phone }}
+            {{ form.message }}
+
+            <button type="submit" class="btn">
+                Send Enquiry
+            </button>
+        </form>
+    </div>
+</div>

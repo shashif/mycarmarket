@@ -1,0 +1,66 @@
+<!-- =========================================
+MyCarMarket
+Version: v0.5.5
+File: vehicles/templates/vehicles/includes/detail_gallery.html
+Note: Featured Badge Left + Verified Badge Right On Main Image
+========================================= -->
+
+<div class="card">
+
+    {% if images %}
+
+        {% with images.first as first_image %}
+
+            <div class="image-wrapper">
+
+                {% if car.is_featured %}
+                    <div class="featured-badge-detail">
+                        ⭐ Featured Vehicle
+                    </div>
+                {% endif %}
+
+                {% if car.is_verified_listing %}
+                    <div class="verified-badge-detail">
+                        🛡 Verified Listing
+                    </div>
+                {% endif %}
+
+                <img
+                    id="mainCarImage"
+                    src="{{ first_image.image.url }}"
+                    class="main-image"
+                    alt="{{ car.title }}"
+                >
+
+            </div>
+
+        {% endwith %}
+
+    {% else %}
+
+        <div class="no-main-image">
+            No Image Available
+        </div>
+
+    {% endif %}
+
+    {% if images %}
+
+        <div class="thumbs">
+
+            {% for image in images %}
+
+                <img
+                    src="{{ image.image.url }}"
+                    alt="{{ car.title }}"
+                    onclick="changeMainImage('{{ image.image.url }}')"
+                    style="cursor:pointer;"
+                >
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+</div>

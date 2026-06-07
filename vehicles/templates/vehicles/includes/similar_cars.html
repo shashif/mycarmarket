@@ -1,53 +1,4 @@
-<!-- =========================================
-MyCarMarket
-Version: v0.5.3
-File: vehicles/templates/vehicles/car_detail.html
-Split Detail Page With Includes + Google Ads Ready
-========================================= -->
-
-{% load static %}
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>{{ car.title }} - MyCarMarket</title>
-
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/car_detail.css' %}">
-</head>
-
-<body>
-
-{% include 'includes/navbar.html' %}
-
-<div class="container">
-
-    <a href="{% url 'car_list' %}" class="back-link">← Back to Cars</a>
-
-    <div class="detail-grid">
-
-        <div>
-            {% include 'vehicles/includes/detail_gallery.html' %}
-
-            {% include 'vehicles/includes/detail_info.html' %}
-        </div>
-
-        {% include 'vehicles/includes/detail_sidebar.html' %}
-
-    </div>
-
-    <div class="ad-banner">
-        <div class="ad-label">Advertisement</div>
-
-        <div class="ad-placeholder">
-            <div>
-                <strong>Google AdSense Responsive Ad</strong><br>
-                <span>728 x 90 or responsive ad space</span>
-            </div>
-        </div>
-    </div>
-
-   <div class="similar-section">
+<div class="similar-section">
     <h2 class="section-title">Similar Cars You May Like</h2>
 
     <div class="similar-grid">
@@ -98,18 +49,3 @@ Split Detail Page With Includes + Google Ads Ready
 
     </div>
 </div>
-
-</div>
-
-<script>
-    function changeMainImage(imageUrl) {
-        const mainImage = document.getElementById('mainCarImage');
-
-        if (mainImage) {
-            mainImage.src = imageUrl;
-        }
-    }
-</script>
-
-</body>
-</html>

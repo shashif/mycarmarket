@@ -1,0 +1,111 @@
+<!-- =========================================
+MyCarMarket
+Version: v0.5.5
+File: vehicles/templates/vehicles/includes/detail_info.html
+Note: Featured and Verified badges removed from info section because they show on main image
+========================================= -->
+
+<div class="card" style="margin-top:25px;">
+    <h1>{{ car.title }}</h1>
+
+    <div class="price">
+        💰 ${{ car.price }}
+    </div>
+
+    <div class="main-location">
+        {% if car.display_location %}
+            📍 {{ car.display_location }}
+        {% else %}
+            📍 Location not specified
+        {% endif %}
+    </div>
+
+    <div class="top-badges">
+        <span class="badge views-badge">
+            👁 {{ car.views_count }} Views
+        </span>
+
+        <span class="badge date-badge">
+            📅 Listed {{ car.created_at|date:"d M Y" }}
+        </span>
+    </div>
+
+    <div class="details-grid">
+
+        <div class="detail-box">
+            <div class="detail-icon">🚗</div>
+            <div class="detail-text">
+                <strong>Make</strong>
+                <span>{{ car.make }}</span>
+            </div>
+        </div>
+
+        <div class="detail-box">
+            <div class="detail-icon">🏷️</div>
+            <div class="detail-text">
+                <strong>Model</strong>
+                <span>{{ car.model }}</span>
+            </div>
+        </div>
+
+        <div class="detail-box">
+            <div class="detail-icon">📅</div>
+            <div class="detail-text">
+                <strong>Year</strong>
+                <span>{{ car.year }}</span>
+            </div>
+        </div>
+
+        <div class="detail-box">
+            <div class="detail-icon">🛣️</div>
+            <div class="detail-text">
+                <strong>Kilometres</strong>
+                <span>{{ car.kilometres }} km</span>
+            </div>
+        </div>
+
+        <div class="detail-box">
+            <div class="detail-icon">⚙️</div>
+            <div class="detail-text">
+                <strong>Transmission</strong>
+                <span>{{ car.transmission|default:"Not specified" }}</span>
+            </div>
+        </div>
+
+        <div class="detail-box">
+            <div class="detail-icon">⛽</div>
+            <div class="detail-text">
+                <strong>Fuel Type</strong>
+                <span>{{ car.fuel_type|default:"Not specified" }}</span>
+            </div>
+        </div>
+
+        <div class="detail-box">
+            <div class="detail-icon">🚘</div>
+            <div class="detail-text">
+                <strong>Body Type</strong>
+                <span>{{ car.body_type|default:"Not specified" }}</span>
+            </div>
+        </div>
+
+        <div class="detail-box">
+            <div class="detail-icon">📍</div>
+            <div class="detail-text">
+                <strong>Location</strong>
+                <span>
+                    {% if car.display_location %}
+                        {{ car.display_location }}
+                    {% else %}
+                        Not specified
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="description">
+        <h2>Description</h2>
+        <p>{{ car.description|linebreaks }}</p>
+    </div>
+</div>
