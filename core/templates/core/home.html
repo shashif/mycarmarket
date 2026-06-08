@@ -13,24 +13,18 @@ Note: Vehicle Type Buttons Moved Inside Search Box
     <title>MyCarMarket Australia - Buy, Sell & Rent Cars</title>
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/home.css' %}?v=67">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}?v=68">
 </head>
 
 <body>
 
 {% include 'includes/navbar.html' %}
 
-<div class="hero">
-    <h1>Buy, Sell & Rent Cars Across Australia</h1>
-    <p>Find your next car from trusted private sellers and dealers.</p>
-
-    <div class="hero-buttons">
-        <a href="{% url 'car_list' %}" class="primary-btn">Browse Cars</a>
-        <a href="{% url 'create_car' %}" class="secondary-btn">Sell Your Car</a>
-    </div>
+<div class="market-hero">
+    <img src="{% static 'images/hero-car.png' %}" class="market-hero-img" alt="MyCarMarket Australia">
 </div>
 
-<div class="container">
+<div class="container hero-search-container">
 
     <div class="search-box">
         <h2 class="search-title">Find your next car</h2>
