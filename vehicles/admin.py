@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.5.2
+# Version: v0.6.9
 # File: vehicles/admin.py
-# Admin Approval Added
+# Admin Seller Username + Quick Approval
 # ==========================================
 
 from django.contrib import admin
@@ -42,18 +42,25 @@ class CarAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'title',
+        'posted_by',
         'make',
         'model',
         'year',
         'price',
         'state',
         'suburb',
-        'seller',
         'is_approved',
         'is_featured',
         'is_active',
         'is_verified_listing',
         'views_count',
+    )
+
+    list_editable = (
+        'is_approved',
+        'is_featured',
+        'is_active',
+        'is_verified_listing',
     )
 
     list_filter = (
@@ -79,6 +86,7 @@ class CarAdmin(admin.ModelAdmin):
         'seller_email',
         'seller_phone',
         'seller__username',
+        'seller__email',
     )
 
     readonly_fields = (
@@ -124,6 +132,13 @@ class CarAdmin(admin.ModelAdmin):
     )
 
     inlines = [CarImageInline]
+
+    def posted_by(self, obj):
+        if obj.seller:
+            return obj.seller.username
+        return "No User"
+
+    posted_by.short_description = "Posted User"
 
     def approve_selected_listings(self, request, queryset):
         queryset.update(is_approved=True)

@@ -1,6 +1,6 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.6.3
+# Version: v0.6.8
 # File: vehicles/views/dealer_views.py
 # Dealer Public Profile View
 # ==========================================

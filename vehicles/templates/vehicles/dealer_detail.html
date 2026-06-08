@@ -1,0 +1,266 @@
+<!-- =========================================
+MyCarMarket
+Version: v0.6.8
+File: vehicles/templates/vehicles/dealer_detail.html
+Dealer Public Profile Page + Social Share
+========================================= -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+
+    <title>{{ dealer.username }} - Dealer Profile | MyCarMarket Australia</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+{% include 'includes/navbar.html' %}
+
+<div class="dealer-page-wrapper">
+
+    <div class="dealer-header-card">
+        <div>
+            <h1>{{ dealer.username }}</h1>
+            <p>Verified dealer on MyCarMarket Australia</p>
+        </div>
+
+        <div class="dealer-share-box">
+            <p>Share dealer profile</p>
+
+            <a target="_blank"
+               href="https://www.facebook.com/sharer/sharer.php?u={{ share_url }}">
+                Facebook
+            </a>
+
+            <a target="_blank"
+               href="https://twitter.com/intent/tweet?text={{ share_text }}&url={{ share_url }}">
+                X
+            </a>
+
+            <a target="_blank"
+               href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url }}">
+                LinkedIn
+            </a>
+
+            <a target="_blank"
+               href="https://wa.me/?text={{ share_text }} {{ share_url }}">
+                WhatsApp
+            </a>
+        </div>
+    </div>
+
+    <h2 class="section-title">Cars from this dealer</h2>
+
+    {% if cars %}
+
+        <div class="dealer-car-grid">
+
+            {% for car in cars %}
+
+                <div class="dealer-car-card">
+
+                    {% with primary=car.images.first %}
+                        {% if primary %}
+                            <img src="{{ primary.image.url }}" alt="{{ car.title }}">
+                        {% else %}
+                            <div class="no-image-box">
+                                No Image
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+
+                    <div class="dealer-car-info">
+
+                        <h3>{{ car.title }}</h3>
+
+                        <p>
+                            {{ car.year }} |
+                            {{ car.make }} {{ car.model }}
+                        </p>
+
+                        <strong>
+                            ${{ car.price }}
+                        </strong>
+
+                        <a href="{% url 'car_detail' car.slug %}"
+                           class="view-btn">
+                            View Details
+                        </a>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-box">
+            <p>No approved cars found for this dealer yet.</p>
+        </div>
+
+    {% endif %}
+
+</div>
+
+<style>
+
+.dealer-page-wrapper {
+    width: 92%;
+    max-width: 1250px;
+    margin: 35px auto;
+}
+
+.dealer-header-card {
+    background: linear-gradient(
+        135deg,
+        #111827,
+        #1f2937
+    );
+    color: white;
+    padding: 35px;
+    border-radius: 22px;
+    display: flex;
+    justify-content: space-between;
+    gap: 25px;
+    align-items: center;
+    margin-bottom: 35px;
+}
+
+.dealer-header-card h1 {
+    margin: 0;
+    font-size: 38px;
+}
+
+.dealer-header-card p {
+    color: #d1d5db;
+    margin-top: 8px;
+}
+
+.dealer-share-box {
+    text-align: right;
+}
+
+.dealer-share-box p {
+    margin-bottom: 12px;
+    font-weight: bold;
+}
+
+.dealer-share-box a {
+    display: inline-block;
+    background: white;
+    color: #111827;
+    text-decoration: none;
+    padding: 9px 13px;
+    border-radius: 10px;
+    margin-left: 6px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.section-title {
+    font-size: 28px;
+    margin-bottom: 22px;
+}
+
+.dealer-car-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.dealer-car-card {
+    background: white;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.dealer-car-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+}
+
+.no-image-box {
+    height: 220px;
+    background: #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+    font-weight: bold;
+}
+
+.dealer-car-info {
+    padding: 18px;
+}
+
+.dealer-car-info h3 {
+    margin: 0 0 8px;
+    font-size: 20px;
+}
+
+.dealer-car-info p {
+    color: #6b7280;
+    margin-bottom: 10px;
+}
+
+.dealer-car-info strong {
+    display: block;
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #111827;
+}
+
+.view-btn {
+    display: inline-block;
+    background: #2563eb;
+    color: white;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.empty-box {
+    background: white;
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    color: #6b7280;
+}
+
+@media (max-width: 900px) {
+
+    .dealer-header-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .dealer-share-box {
+        text-align: left;
+    }
+
+    .dealer-share-box a {
+        margin-left: 0;
+        margin-right: 6px;
+        margin-bottom: 6px;
+    }
+
+    .dealer-car-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+
+</body>
+</html>
