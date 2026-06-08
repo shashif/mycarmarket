@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.6.3
+# Version: v0.6.7
 # File: vehicles/views/car_detail_views.py
-# Car Detail Page + Enquiry + Share Link
+# SEO Slug Detail Page + Enquiry + Share Link
 # ==========================================
 
 from django.shortcuts import render, get_object_or_404, redirect
@@ -12,8 +12,8 @@ from vehicles.models import Car
 from vehicles.forms import EnquiryForm
 
 
-def car_detail(request, pk):
-    car = get_object_or_404(Car, pk=pk)
+def car_detail(request, slug):
+    car = get_object_or_404(Car, slug=slug)
 
     if not car.is_approved:
         if not request.user.is_authenticated:
@@ -52,7 +52,7 @@ def car_detail(request, pk):
 
             messages.success(request, 'Your enquiry has been sent successfully.')
 
-            return redirect('car_detail', pk=car.pk)
+            return redirect('car_detail', slug=car.slug)
 
     else:
         initial_message = (

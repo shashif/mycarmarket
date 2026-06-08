@@ -1,12 +1,13 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.6.1 SAFE
+# Version: v0.6.7 SAFE
 # File: vehicles/models.py
-# Slug Temporarily Removed To Fix Database Error
+# SEO Friendly Slug Added Safely
 # ==========================================
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.text import slugify
 
 
 BODY_TYPE_CHOICES = [
@@ -57,6 +58,8 @@ class Car(models.Model):
     )
 
     title = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
+
     make = models.CharField(max_length=100)
     model = models.CharField(max_length=100)
     year = models.PositiveIntegerField()
@@ -85,6 +88,24 @@ class Car(models.Model):
     views_count = models.PositiveIntegerField(default=0)
 
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(f"{self.year}-{self.make}-{self.model}-{self.title}")
+
+            if not base_slug:
+                base_slug = "car-listing"
+
+            slug = base_slug
+            counter = 1
+
+            while Car.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+
+            self.slug = slug
+
+        super().save(*args, **kwargs)
 
     def display_location(self):
         if self.suburb and self.state:

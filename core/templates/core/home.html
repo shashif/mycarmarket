@@ -166,7 +166,7 @@ Note: Vehicle Type Buttons Moved Inside Search Box
                         <div class="location">📍 {{ car.display_location }}</div>
                     {% endif %}
 
-                    <a href="{% url 'car_detail' car.id %}" class="view-btn">View Details</a>
+                    <a href="{% url 'car_detail' car.slug %}" class="view-btn">View Details</a>
                 </div>
 
             </div>
@@ -230,7 +230,7 @@ Note: Vehicle Type Buttons Moved Inside Search Box
                         <div class="location">📍 {{ car.display_location }}</div>
                     {% endif %}
 
-                    <a href="{% url 'car_detail' car.id %}" class="view-btn">View Details</a>
+                    <a href="{% url 'car_detail' car.slug %}" class="view-btn">View Details</a>
                 </div>
 
             </div>

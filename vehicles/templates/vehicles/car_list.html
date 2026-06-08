@@ -130,7 +130,7 @@ Note: Special Car List Design + All Filters Kept
                     <div class="car-content">
 
                         <div class="car-title">
-                            <a href="{% url 'car_detail' car.id %}">
+                            <a href="{% url 'car_detail' car.slug %}">
                                 {{ car.title }}
                             </a>
                         </div>
@@ -152,7 +152,7 @@ Note: Special Car List Design + All Filters Kept
                             📍 {{ car.suburb }}, {{ car.state }}
                         </div>
 
-                        <a href="{% url 'car_detail' car.id %}" class="view-btn">
+                        <a href="{% url 'car_detail' car.slug %}" class="view-btn">
                             View Details
                         </a>
 
