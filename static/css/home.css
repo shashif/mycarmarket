@@ -1,9 +1,60 @@
 /* ==========================================
-MyCarMarket
-Version: v0.5.2.1
-File: static/css/home.css
-Homepage Styles
+MyCarMarket v0.6.4
+Browse By Vehicle Type
 ========================================== */
+
+.type-img {
+    width: 90px;
+    height: 50px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 8px;
+}
+
+.special-type {
+    background: linear-gradient(
+        135deg,
+        #eff6ff,
+        #dbeafe
+    );
+}
+
+.type-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.type-card {
+    background: white;
+    border-radius: 16px;
+    padding: 15px 8px;
+    text-align: center;
+    text-decoration: none;
+    color: #111827;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    transition: 0.25s;
+}
+
+.type-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 35px rgba(0,0,0,0.12);
+}
+
+
+
+.type-card span {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+
+
+
+
+
 
 .hero {
     background: linear-gradient(135deg, #111827, #1f2937);
