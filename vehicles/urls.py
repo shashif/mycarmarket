@@ -1,26 +1,31 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.6.7
+# Version: v0.7.0
 # File: vehicles/urls.py
-# SEO Friendly Car URLs
+# SEO Friendly Car URLs + Dealer Profile
 # ==========================================
 
 from django.urls import path
 from . import views
 
+
 urlpatterns = [
 
     # Car Listings
-    path('', views.car_list, name='car_list'),
+    path(
+        '',
+        views.car_list,
+        name='car_list'
+    ),
 
-    # SEO Friendly Car URL
+    # SEO Friendly Car Detail URL
     path(
         'car/<slug:slug>/',
         views.car_detail,
         name='car_detail'
     ),
 
-    # Dealer Profile
+    # Dealer Public Profile
     path(
         'dealer/<int:user_id>/',
         views.dealer_detail,

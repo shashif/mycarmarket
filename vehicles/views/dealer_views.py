@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.6.8
+# Version: v0.6.9
 # File: vehicles/views/dealer_views.py
-# Dealer Public Profile View
+# Dealer Public Profile + Share
 # ==========================================
 
 from django.shortcuts import render, get_object_or_404

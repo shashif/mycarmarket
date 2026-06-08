@@ -1,6 +1,6 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.6.7
+# Version: v0.7.0
 # File: vehicles/views/car_detail_views.py
 # SEO Slug Detail Page + Enquiry + Share Link
 # ==========================================

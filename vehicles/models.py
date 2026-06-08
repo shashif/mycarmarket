@@ -1,6 +1,6 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.6.7 SAFE
+# Version: v0.7.0
 # File: vehicles/models.py
 # SEO Friendly Slug Added Safely
 # ==========================================
