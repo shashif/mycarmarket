@@ -1,12 +1,12 @@
 <!-- =========================================
 MyCarMarket
-Version: v0.5.5
+Version: v0.7.8
 File: vehicles/templates/vehicles/includes/detail_info.html
-Note: Featured and Verified badges removed from info section because they show on main image
+Auto SEO Vehicle Content Added
 ========================================= -->
 
 <div class="card" style="margin-top:25px;">
-    <h1>{{ car.title }}</h1>
+    <h1>{{ car.year }} {{ car.make }} {{ car.model }}</h1>
 
     <div class="price">
         💰 ${{ car.price }}
@@ -106,6 +106,97 @@ Note: Featured and Verified badges removed from info section because they show o
 
     <div class="description">
         <h2>Description</h2>
-        <p>{{ car.description|linebreaks }}</p>
+
+        {% if car.description %}
+            <p>{{ car.description|linebreaks }}</p>
+        {% else %}
+            <p>
+                No seller description has been added yet for this
+                {{ car.year }} {{ car.make }} {{ car.model }}.
+            </p>
+        {% endif %}
     </div>
+
+    <div class="seo-auto-content">
+        <h2>About This {{ car.make }} {{ car.model }}</h2>
+
+        <p>
+            This {{ car.year }} {{ car.make }} {{ car.model }}
+            {% if car.body_type %}
+                {{ car.body_type }}
+            {% endif %}
+            is listed for sale on MyCarMarket Australia
+            {% if car.display_location %}
+                in {{ car.display_location }}
+            {% endif %}.
+            It has travelled {{ car.kilometres }} km
+            {% if car.transmission %}
+                and comes with {{ car.transmission }} transmission
+            {% endif %}
+            {% if car.fuel_type %}
+                using {{ car.fuel_type }} fuel
+            {% endif %}.
+        </p>
+
+        <p>
+            Buyers looking for a {{ car.make }} {{ car.model }}
+            {% if car.state %}
+                in {{ car.state }}
+            {% endif %}
+            can view photos, vehicle details, seller information and send a secure enquiry through MyCarMarket Australia.
+        </p>
+
+        {% if car.make|lower == "toyota" %}
+            <p>
+                Toyota vehicles are popular in Australia for reliability, practical ownership costs and strong everyday usability.
+            </p>
+        {% elif car.make|lower == "mazda" %}
+            <p>
+                Mazda vehicles are well known for stylish design, comfortable interiors and enjoyable everyday driving.
+            </p>
+        {% elif car.make|lower == "ford" %}
+            <p>
+                Ford vehicles are popular among Australian buyers for performance, practicality and strong ute and SUV options.
+            </p>
+        {% elif car.make|lower == "hyundai" %}
+            <p>
+                Hyundai vehicles are popular for value, modern features and practical everyday driving.
+            </p>
+        {% elif car.make|lower == "kia" %}
+            <p>
+                Kia vehicles are known for value, modern styling and strong appeal among Australian families.
+            </p>
+        {% elif car.make|lower == "tesla" %}
+            <p>
+                Tesla vehicles are popular electric cars known for modern technology, strong performance and zero tailpipe emissions.
+            </p>
+        {% endif %}
+
+        {% if car.model|lower == "corolla" %}
+            <p>
+                The Toyota Corolla is one of Australia's most recognised small cars, commonly chosen for fuel efficiency, reliability and easy daily driving.
+            </p>
+        {% elif car.model|lower == "camry" %}
+            <p>
+                The Toyota Camry is a popular sedan choice for comfort, space and long-term reliability.
+            </p>
+        {% elif car.model|lower == "ranger" %}
+            <p>
+                The Ford Ranger is one of Australia's most popular utes, suitable for work, towing, touring and family use.
+            </p>
+        {% elif car.model|lower == "hilux" %}
+            <p>
+                The Toyota HiLux is a strong-selling ute in Australia, valued for durability, work use and off-road capability.
+            </p>
+        {% elif car.model|lower == "cx-5" %}
+            <p>
+                The Mazda CX-5 is a popular family SUV, offering comfort, practicality and modern styling.
+            </p>
+        {% elif car.model|lower == "model 3" %}
+            <p>
+                The Tesla Model 3 is a popular electric sedan, offering strong performance, modern technology and efficient electric driving.
+            </p>
+        {% endif %}
+    </div>
+
 </div>

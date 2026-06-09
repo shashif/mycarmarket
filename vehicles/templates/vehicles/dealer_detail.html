@@ -1,8 +1,8 @@
 <!-- =========================================
 MyCarMarket
-Version: v0.6.8
+Version: v0.7.7
 File: vehicles/templates/vehicles/dealer_detail.html
-Dealer Public Profile Page + Social Share
+Premium Dealer Profile + Full Clickable Car Cards
 ========================================= -->
 
 <!DOCTYPE html>
@@ -25,30 +25,20 @@ Dealer Public Profile Page + Social Share
         <div>
             <h1>{{ dealer.username }}</h1>
             <p>Verified dealer on MyCarMarket Australia</p>
+            <p>🚗 {{ cars.count }} Cars Available</p>
         </div>
 
         <div class="dealer-share-box">
             <p>Share dealer profile</p>
 
-            <a target="_blank"
-               href="https://www.facebook.com/sharer/sharer.php?u={{ share_url }}">
-                Facebook
-            </a>
+            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ share_url }}">Facebook</a>
+            <a target="_blank" href="https://twitter.com/intent/tweet?text={{ share_text }}&url={{ share_url }}">X</a>
+            <a target="_blank" href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url }}">LinkedIn</a>
+            <a target="_blank" href="https://wa.me/?text={{ share_text }} {{ share_url }}">WhatsApp</a>
 
-            <a target="_blank"
-               href="https://twitter.com/intent/tweet?text={{ share_text }}&url={{ share_url }}">
-                X
-            </a>
-
-            <a target="_blank"
-               href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url }}">
-                LinkedIn
-            </a>
-
-            <a target="_blank"
-               href="https://wa.me/?text={{ share_text }} {{ share_url }}">
-                WhatsApp
-            </a>
+            <button type="button" class="copy-dealer-link-btn" onclick="copyDealerLink()">
+                Copy Link
+            </button>
         </div>
     </div>
 
@@ -56,43 +46,55 @@ Dealer Public Profile Page + Social Share
 
     {% if cars %}
 
-        <div class="dealer-car-grid">
+        <div class="premium-car-grid">
 
             {% for car in cars %}
 
-                <div class="dealer-car-card">
+                <a href="{% url 'car_detail' car.slug %}" class="premium-car-card">
 
-                    {% with primary=car.images.first %}
-                        {% if primary %}
-                            <img src="{{ primary.image.url }}" alt="{{ car.title }}">
-                        {% else %}
-                            <div class="no-image-box">
-                                No Image
-                            </div>
+                    <div class="premium-car-image-wrap">
+                        {% with primary=car.images.first %}
+                            {% if primary %}
+                                <img src="{{ primary.image.url }}" alt="{{ car.title }}">
+                            {% else %}
+                                <div class="no-image-box">No Image</div>
+                            {% endif %}
+                        {% endwith %}
+
+                        {% if car.is_featured %}
+                            <span class="featured-badge">⭐ Featured</span>
                         {% endif %}
-                    {% endwith %}
 
-                    <div class="dealer-car-info">
-
-                        <h3>{{ car.title }}</h3>
-
-                        <p>
-                            {{ car.year }} |
-                            {{ car.make }} {{ car.model }}
-                        </p>
-
-                        <strong>
-                            ${{ car.price }}
-                        </strong>
-
-                        <a href="{% url 'car_detail' car.slug %}"
-                           class="view-btn">
-                            View Details
-                        </a>
-
+                        {% if car.is_verified_listing %}
+                            <span class="verified-badge">✓ Verified</span>
+                        {% endif %}
                     </div>
 
-                </div>
+                    <div class="premium-car-info">
+                        <h3>{{ car.title }}</h3>
+
+                        <p class="car-meta">
+                            🚘 {{ car.year }} • {{ car.make }} {{ car.model }}
+                        </p>
+
+                        <div class="icon-info-grid">
+                            <span>🛣 {{ car.kilometres }} km</span>
+                            <span>⚙️ {{ car.transmission|default:"N/A" }}</span>
+                            <span>⛽ {{ car.fuel_type|default:"N/A" }}</span>
+                            <span>👁 {{ car.views_count }} views</span>
+                        </div>
+
+                        <p class="car-location">
+                            📍 {{ car.display_location|default:"Location not specified" }}
+                        </p>
+
+                        <div class="price-row">
+                            <strong>${{ car.price }}</strong>
+                            
+                        </div>
+                    </div>
+
+                </a>
 
             {% endfor %}
 
@@ -117,11 +119,7 @@ Dealer Public Profile Page + Social Share
 }
 
 .dealer-header-card {
-    background: linear-gradient(
-        135deg,
-        #111827,
-        #1f2937
-    );
+    background: linear-gradient(135deg, #111827, #1f2937);
     color: white;
     padding: 35px;
     border-radius: 22px;
@@ -151,7 +149,8 @@ Dealer Public Profile Page + Social Share
     font-weight: bold;
 }
 
-.dealer-share-box a {
+.dealer-share-box a,
+.copy-dealer-link-btn {
     display: inline-block;
     background: white;
     color: #111827;
@@ -161,6 +160,14 @@ Dealer Public Profile Page + Social Share
     margin-left: 6px;
     font-weight: bold;
     font-size: 14px;
+    border: none;
+    cursor: pointer;
+}
+
+.dealer-share-box a:hover,
+.copy-dealer-link-btn:hover {
+    background: #2563eb;
+    color: white;
 }
 
 .section-title {
@@ -168,24 +175,38 @@ Dealer Public Profile Page + Social Share
     margin-bottom: 22px;
 }
 
-.dealer-car-grid {
+.premium-car-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 22px;
+    gap: 24px;
 }
 
-.dealer-car-card {
-    background: white;
-    border-radius: 18px;
-    overflow: hidden;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-}
-
-.dealer-car-card img {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
+.premium-car-card {
     display: block;
+    background: white;
+    color: inherit;
+    text-decoration: none;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.10);
+    transition: 0.25s;
+}
+
+.premium-car-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 36px rgba(0,0,0,0.14);
+}
+
+.premium-car-image-wrap {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+}
+
+.premium-car-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .no-image-box {
@@ -198,35 +219,84 @@ Dealer Public Profile Page + Social Share
     font-weight: bold;
 }
 
-.dealer-car-info {
+.featured-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: #f59e0b;
+    color: white;
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.verified-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: #16a34a;
+    color: white;
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.premium-car-info {
     padding: 18px;
 }
 
-.dealer-car-info h3 {
+.premium-car-info h3 {
     margin: 0 0 8px;
     font-size: 20px;
-}
-
-.dealer-car-info p {
-    color: #6b7280;
-    margin-bottom: 10px;
-}
-
-.dealer-car-info strong {
-    display: block;
-    font-size: 22px;
-    margin-bottom: 15px;
     color: #111827;
 }
 
-.view-btn {
-    display: inline-block;
-    background: #2563eb;
-    color: white;
-    text-decoration: none;
-    padding: 10px 16px;
+.car-meta {
+    color: #374151;
+    margin: 6px 0 12px;
+    font-size: 14px;
+}
+
+.icon-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin: 12px 0;
+}
+
+.icon-info-grid span {
+    background: #f3f4f6;
+    color: #374151;
+    padding: 8px;
     border-radius: 10px;
+    font-size: 13px;
+}
+
+.car-location {
+    color: #374151;
+    margin: 12px 0;
+    font-size: 14px;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    gap: 10px;
+}
+
+.price-row strong {
+    font-size: 24px;
+    color: #111827;
+}
+
+.price-row span {
+    color: #2563eb;
     font-weight: bold;
+    font-size: 14px;
 }
 
 .empty-box {
@@ -248,19 +318,32 @@ Dealer Public Profile Page + Social Share
         text-align: left;
     }
 
-    .dealer-share-box a {
+    .dealer-share-box a,
+    .copy-dealer-link-btn {
         margin-left: 0;
         margin-right: 6px;
         margin-bottom: 6px;
     }
 
-    .dealer-car-grid {
+    .premium-car-grid {
         grid-template-columns: 1fr;
     }
 
 }
 
 </style>
+
+<script>
+    function copyDealerLink() {
+        navigator.clipboard.writeText(window.location.href)
+            .then(function () {
+                alert("Dealer profile link copied successfully!");
+            })
+            .catch(function () {
+                alert("Unable to copy link. Please copy it from your browser.");
+            });
+    }
+</script>
 
 </body>
 </html>

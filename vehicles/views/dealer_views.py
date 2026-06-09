@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.6.9
+# Version: v0.7.6
 # File: vehicles/views/dealer_views.py
-# Dealer Public Profile + Share
+# SEO Friendly Dealer Public Profile + Share
 # ==========================================
 
 from django.shortcuts import render, get_object_or_404
@@ -11,12 +11,13 @@ from django.contrib.auth.models import User
 from vehicles.models import Car
 
 
-def dealer_detail(request, user_id):
-    dealer = get_object_or_404(User, id=user_id)
+def dealer_detail(request, username):
+    dealer = get_object_or_404(User, username=username)
 
     cars = Car.objects.filter(
         seller=dealer,
-        is_approved=True
+        is_approved=True,
+        is_active=True
     ).order_by('-created_at')
 
     share_url = request.build_absolute_uri()
