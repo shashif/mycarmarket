@@ -1,8 +1,9 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.6.3
+# Version: v0.7.1
 # File: vehicles/views/car_manage_views.py
 # Create, My Listings, Edit, Delete Views
+# Normal User Approval + Dealer Auto Approval
 # ==========================================
 
 from django.shortcuts import render, get_object_or_404, redirect
@@ -11,6 +12,13 @@ from django.contrib.auth.decorators import login_required
 
 from vehicles.models import Car
 from vehicles.forms import CarForm
+
+
+def user_is_dealer(user):
+    return (
+        hasattr(user, 'profile') and
+        user.profile.account_type == 'dealer'
+    )
 
 
 @login_required
@@ -22,7 +30,7 @@ def create_car(request):
             car = form.save(commit=False)
             car.seller = request.user
 
-            if request.user.is_staff:
+            if request.user.is_staff or user_is_dealer(request.user):
                 car.is_approved = True
             else:
                 car.is_approved = False
@@ -39,7 +47,7 @@ def create_car(request):
                 )
 
             if car.is_approved:
-                messages.success(request, 'Car listing created successfully.')
+                messages.success(request, 'Car listing created successfully and published.')
             else:
                 messages.success(
                     request,
@@ -105,7 +113,7 @@ def edit_car(request, pk):
         if form.is_valid():
             car = form.save(commit=False)
 
-            if request.user.is_staff:
+            if request.user.is_staff or user_is_dealer(request.user):
                 car.is_approved = True
             else:
                 car.is_approved = False
@@ -122,7 +130,7 @@ def edit_car(request, pk):
                 )
 
             if car.is_approved:
-                messages.success(request, 'Car listing updated successfully.')
+                messages.success(request, 'Car listing updated successfully and published.')
             else:
                 messages.success(
                     request,

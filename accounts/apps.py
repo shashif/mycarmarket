@@ -1,5 +1,16 @@
+# ==========================================
+# MyCarMarket
+# Version: v0.7.1
+# File: accounts/apps.py
+# Load Profile Signals Automatically
+# ==========================================
+
 from django.apps import AppConfig
 
 
 class AccountsConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
     name = 'accounts'
+
+    def ready(self):
+        import accounts.signals
