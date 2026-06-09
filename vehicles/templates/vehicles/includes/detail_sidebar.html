@@ -1,4 +1,12 @@
+<!-- =========================================
+MyCarMarket
+Version: v0.7.6
+File: vehicles/templates/vehicles/includes/detail_sidebar.html
+Dealer Trust Card + Contact Seller Upgrade
+========================================= -->
+
 <div>
+
     <div class="card seller-box">
         <h2>Seller Details</h2>
 
@@ -18,13 +26,65 @@
 
         <div class="seller-info">
             <strong>Contact Method:</strong><br>
-            Send an enquiry using the form below.
+            Send an enquiry using the secure form below.
         </div>
 
         <div class="seller-safe-note">
             Seller phone number and email are hidden for privacy and spam protection.
         </div>
     </div>
+
+
+    {% if car.seller %}
+        <div class="card dealer-trust-card">
+            <h2>Dealer Trust</h2>
+
+            <div class="dealer-name">
+                🚗 {{ car.seller.username }}
+            </div>
+
+            {% if car.is_verified_listing %}
+                <div class="dealer-badge verified">
+                    ✓ Verified Listing
+                </div>
+            {% endif %}
+
+            {% if car.is_featured %}
+                <div class="dealer-badge premium">
+                    ⭐ Featured Car
+                </div>
+            {% endif %}
+
+            <div class="dealer-stat">
+                <strong>Member Since:</strong><br>
+                {% if dealer_member_since %}
+                    {{ dealer_member_since|date:"M Y" }}
+                {% else %}
+                    Not available
+                {% endif %}
+            </div>
+
+            <div class="dealer-stat">
+                <strong>Active Listings:</strong><br>
+                {{ dealer_active_cars_count }}
+            </div>
+
+            <div class="dealer-stat">
+                <strong>Featured Cars:</strong><br>
+                {{ dealer_featured_cars_count }}
+            </div>
+
+            <div class="dealer-stat">
+                <strong>Years Active:</strong><br>
+                {{ dealer_years_active }}
+            </div>
+
+            <a href="{% url 'dealer_detail' car.seller.id %}" class="dealer-profile-btn">
+                View Dealer Profile
+            </a>
+        </div>
+    {% endif %}
+
 
     <div class="ad-banner">
         <div class="ad-label">Advertisement</div>
@@ -35,6 +95,7 @@
             </div>
         </div>
     </div>
+
 
     <div class="card trust-box">
         <h2>Trust & Safety</h2>
@@ -58,8 +119,9 @@
         {% endif %}
     </div>
 
-    <div class="card">
-        <h2>Contact Seller</h2>
+
+    <div class="card contact-seller-card">
+        <h2>📞 Contact Seller</h2>
 
         {% if messages %}
             {% for message in messages %}
@@ -69,7 +131,7 @@
             {% endfor %}
         {% endif %}
 
-        <form method="POST">
+        <form method="POST" class="contact-form">
             {% csrf_token %}
 
             {{ form.name }}
@@ -82,4 +144,5 @@
             </button>
         </form>
     </div>
+
 </div>

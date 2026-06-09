@@ -1,8 +1,89 @@
 /* ==========================================
 MyCarMarket
-Version: v0.7.5
-Section: Premium Similar Cars Cards
+Version: v0.7.6
+Dealer Trust Card + Contact Seller Upgrade
 ========================================== */
+
+.dealer-trust-card {
+    margin-top: 20px;
+}
+
+.dealer-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #111827;
+}
+
+.dealer-badge {
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0 6px 10px 0;
+}
+
+.dealer-badge.verified {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.dealer-badge.premium {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.dealer-stat {
+    padding: 10px 0;
+    border-bottom: 1px solid #e5e7eb;
+    color: #374151;
+}
+
+.dealer-stat:last-of-type {
+    border-bottom: none;
+}
+
+.dealer-profile-btn {
+    display: block;
+    margin-top: 18px;
+    padding: 12px;
+    background: #111827;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: bold;
+}
+
+.dealer-profile-btn:hover {
+    background: #2563eb;
+}
+
+.contact-seller-card input,
+.contact-seller-card textarea {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.contact-seller-card textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.success-message {
+    background: #dcfce7;
+    color: #166534;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
 
 .similar-card-link,
 .similar-card-link:hover,
