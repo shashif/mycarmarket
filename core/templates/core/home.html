@@ -13,7 +13,7 @@ Note: Vehicle Type Buttons Moved Inside Search Box
     <title>MyCarMarket Australia - Buy, Sell & Rent Cars</title>
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/home.css' %}?v=68">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}?v=73">
 </head>
 
 <body>
@@ -131,7 +131,8 @@ Note: Vehicle Type Buttons Moved Inside Search Box
 
     <div class="cars-grid">
         {% for car in featured_cars %}
-            <div class="car-card">
+<a href="{% url 'car_detail' car.slug %}" class="car-card-link">
+    <div class="car-card">
 
                 <div class="image-wrap">
 
@@ -155,21 +156,21 @@ Note: Vehicle Type Buttons Moved Inside Search Box
                     <div class="price">${{ car.price }}</div>
                     <div class="car-title">{{ car.title }}</div>
 
-                    <div class="meta">
-                        <span>{{ car.year }}</span>
-                        <span>{{ car.kilometres }} km</span>
-                        <span>{{ car.transmission|default:"N/A"|title }}</span>
-                        <span>{{ car.fuel_type|default:"N/A"|title }}</span>
-                    </div>
+                  <div class="meta">
+    <span>📅 {{ car.year }}</span>
+    <span>🛣 {{ car.kilometres }} km</span>
+    <span>⚙ {{ car.transmission|default:"N/A"|title }}</span>
+    <span>⛽ {{ car.fuel_type|default:"N/A"|title }}</span>
+</div>
 
                     {% if car.display_location %}
-                        <div class="location">📍 {{ car.display_location }}</div>
+                       <div class="location">📍 {{ car.display_location }}</div>
                     {% endif %}
 
-                    <a href="{% url 'car_detail' car.slug %}" class="view-btn">View Details</a>
+                   
                 </div>
 
-            </div>
+            </div></a>
         {% empty %}
             <p>No featured cars yet. Mark cars as featured from the admin panel.</p>
         {% endfor %}
@@ -188,8 +189,9 @@ Note: Vehicle Type Buttons Moved Inside Search Box
     <h2 class="section-title">Latest Cars</h2>
 
     <div class="cars-grid">
-        {% for car in latest_cars %}
-            <div class="car-card">
+     {% for car in latest_cars %}
+<a href="{% url 'car_detail' car.slug %}" class="car-card-link">
+    <div class="car-card">
 
                 <div class="image-wrap">
 
@@ -219,21 +221,21 @@ Note: Vehicle Type Buttons Moved Inside Search Box
                     <div class="price">${{ car.price }}</div>
                     <div class="car-title">{{ car.title }}</div>
 
-                    <div class="meta">
-                        <span>{{ car.year }}</span>
-                        <span>{{ car.kilometres }} km</span>
-                        <span>{{ car.transmission|default:"N/A"|title }}</span>
-                        <span>{{ car.fuel_type|default:"N/A"|title }}</span>
-                    </div>
+                 <div class="meta">
+    <span>📅 {{ car.year }}</span>
+    <span>🛣 {{ car.kilometres }} km</span>
+    <span>⚙ {{ car.transmission|default:"N/A"|title }}</span>
+    <span>⛽ {{ car.fuel_type|default:"N/A"|title }}</span>
+</div>
 
                     {% if car.display_location %}
-                        <div class="location">📍 {{ car.display_location }}</div>
+                       <div class="location">📍 {{ car.display_location }}</div>
                     {% endif %}
 
-                    <a href="{% url 'car_detail' car.slug %}" class="view-btn">View Details</a>
+                    
                 </div>
 
-            </div>
+            </div></a>
         {% empty %}
             <p>No cars available yet.</p>
         {% endfor %}
