@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.7.0
+# Version: v0.7.4
 # File: vehicles/views/car_detail_views.py
-# SEO Slug Detail Page + Enquiry + Share Link
+# SEO Slug Detail Page + Enquiry + Share Link + Smart Similar Cars
 # ==========================================
 
 from django.shortcuts import render, get_object_or_404, redirect
@@ -32,15 +32,29 @@ def car_detail(request, slug):
     share_url = request.build_absolute_uri()
     share_text = f"Check out this {car.year} {car.make} {car.model} on MyCarMarket Australia"
 
+    # Smart Similar Cars
     similar_cars = Car.objects.filter(
         is_approved=True,
-        make__icontains=car.make
-    ).exclude(pk=car.pk).order_by('-created_at')[:4]
+        make__iexact=car.make,
+        body_type=car.body_type
+    ).exclude(pk=car.pk).order_by('-created_at')[:6]
+
+    if not similar_cars.exists():
+        similar_cars = Car.objects.filter(
+            is_approved=True,
+            make__iexact=car.make
+        ).exclude(pk=car.pk).order_by('-created_at')[:6]
+
+    if not similar_cars.exists():
+        similar_cars = Car.objects.filter(
+            is_approved=True,
+            body_type=car.body_type
+        ).exclude(pk=car.pk).order_by('-created_at')[:6]
 
     if not similar_cars.exists():
         similar_cars = Car.objects.filter(
             is_approved=True
-        ).exclude(pk=car.pk).order_by('-created_at')[:4]
+        ).exclude(pk=car.pk).order_by('-created_at')[:6]
 
     if request.method == 'POST':
         form = EnquiryForm(request.POST)

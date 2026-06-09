@@ -1,8 +1,7 @@
 <!-- =========================================
-MyCarMarket
-Version: v0.6.7
+Version: v0.7.5
 File: vehicles/templates/vehicles/car_detail.html
-Social Share + Copy Link + SEO Friendly Slug URL
+Premium Similar Cars Cards
 ========================================= -->
 
 {% load static %}
@@ -14,7 +13,7 @@ Social Share + Copy Link + SEO Friendly Slug URL
     <title>{{ car.title }} - MyCarMarket</title>
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/car_detail.css' %}">
+    <link rel="stylesheet" href="{% static 'css/car_detail.css' %}?v=75">
 </head>
 
 <body>
@@ -165,7 +164,7 @@ START SECTION 2: MAIN PAGE CONTAINER
     <!-- =========================================
     START SECTION 10: SIMILAR CARS
     ========================================= -->
- {% include 'vehicles/includes/similar_cars.html' %}
+ {% include 'vehicles/similar_cars.html' %}
    
 
     <!-- =========================================

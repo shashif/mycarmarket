@@ -1,51 +1,89 @@
- <div class="similar-section">
-        <h2 class="section-title">Similar Cars You May Like</h2>
+<!-- =========================================
+MyCarMarket
+Version: v0.7.5
+File: vehicles/includes/similar_cars.html
+Premium Similar Cars Cards
+========================================= -->
 
-        <div class="similar-grid">
+<div class="similar-section">
+    <h2 class="section-title">Similar Cars You May Like</h2>
 
-            {% for similar in similar_cars %}
+    <div class="similar-grid">
 
-                <div class="similar-card">
+        {% for similar in similar_cars %}
 
-                    <div class="similar-image-wrap">
-                        {% with similar.images.first as similar_image %}
-                            {% if similar_image %}
-                                <img src="{{ similar_image.image.url }}" class="similar-image" alt="{{ similar.title }}">
-                            {% else %}
-                                <div class="similar-no-image">No Image Available</div>
-                            {% endif %}
-                        {% endwith %}
-                    </div>
+        <a href="{% url 'car_detail' similar.slug %}" class="similar-card-link">
 
-                    <div class="similar-content">
-                        <div class="similar-price">${{ similar.price }}</div>
+            <div class="similar-card">
 
-                        <div class="similar-title">
-                            {{ similar.title }}
+                <div class="similar-image-wrap">
+
+                    {% if similar.is_featured %}
+                        <div class="similar-badge-featured">
+                            ⭐ Featured
                         </div>
+                    {% endif %}
 
-                        <div class="similar-meta">
-                            {{ similar.year }} • {{ similar.kilometres }} km<br>
-
-                            {% if similar.display_location %}
-                                📍 {{ similar.display_location }}
-                            {% else %}
-                                Location not specified
-                            {% endif %}
+                    {% if similar.is_verified_listing %}
+                        <div class="similar-badge-verified">
+                            🛡 Verified
                         </div>
+                    {% endif %}
 
-                        <a href="{% url 'car_detail' similar.slug %}" class="similar-btn">
-                            View Details
-                        </a>
-                    </div>
+                    {% with similar.images.first as similar_image %}
+                        {% if similar_image %}
+                            <img
+                                src="{{ similar_image.image.url }}"
+                                class="similar-image"
+                                alt="{{ similar.title }}"
+                            >
+                        {% else %}
+                            <div class="similar-no-image">
+                                No Image Available
+                            </div>
+                        {% endif %}
+                    {% endwith %}
 
                 </div>
 
-            {% empty %}
+                <div class="similar-content">
 
-                <p>No similar cars found yet.</p>
+                    <div class="similar-price">
+                        ${{ similar.price }}
+                    </div>
 
-            {% endfor %}
+                    <div class="similar-title">
+                        {{ similar.title }}
+                    </div>
 
-        </div>
+                    <div class="similar-meta-grid">
+                        <span>📅 {{ similar.year }}</span>
+                        <span>🛣 {{ similar.kilometres }} km</span>
+                        <span>⚙ {{ similar.transmission|default:"N/A"|title }}</span>
+                        <span>⛽ {{ similar.fuel_type|default:"N/A"|title }}</span>
+                    </div>
+
+                    {% if similar.display_location %}
+                        <div class="similar-location">
+                            📍 {{ similar.display_location }}
+                        </div>
+                    {% else %}
+                        <div class="similar-location">
+                            📍 Location not specified
+                        </div>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </a>
+
+        {% empty %}
+
+            <p>No similar cars found yet.</p>
+
+        {% endfor %}
+
     </div>
+</div>

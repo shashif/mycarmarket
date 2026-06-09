@@ -1,8 +1,80 @@
 /* ==========================================
 MyCarMarket
-Version: v0.6.2
-Section: Copy Link Button
+Version: v0.7.5
+Section: Premium Similar Cars Cards
 ========================================== */
+
+.similar-card-link,
+.similar-card-link:hover,
+.similar-card-link:visited,
+.similar-card-link:active {
+    text-decoration: none !important;
+    color: inherit !important;
+    display: block;
+}
+
+.similar-card-link * {
+    text-decoration: none !important;
+}
+
+.similar-card {
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.similar-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 34px rgba(0,0,0,0.13);
+}
+
+.similar-meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 12px 0;
+}
+
+.similar-meta-grid span {
+    background: #f9fafb;
+    padding: 8px 9px;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4b5563;
+}
+
+.similar-location {
+    color: #374151;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.similar-badge-featured {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #f59e0b;
+    color: #111827;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    z-index: 5;
+}
+
+.similar-badge-verified {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #dcfce7;
+    color: #166534;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    z-index: 5;
+}
 
 .copy-link-btn {
     background: #6b7280;
