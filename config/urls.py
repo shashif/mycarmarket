@@ -1,14 +1,23 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.5.1
+# Version: v0.8.2
 # File: config/urls.py
-# Static + Media Files Enabled Safely
+# Sitemap + Robots + Static Media
 # ==========================================
 
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.sitemaps.views import sitemap
+
+from vehicles.sitemaps import CarSitemap
+from core.views_robots import robots_txt
+
+
+sitemaps = {
+    'cars': CarSitemap,
+}
 
 
 urlpatterns = [
@@ -19,6 +28,18 @@ urlpatterns = [
 
     path('accounts/', include('accounts.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
+
+    path(
+        'sitemap.xml',
+        sitemap,
+        {'sitemaps': sitemaps},
+        name='django.contrib.sitemaps.views.sitemap'
+    ),
+
+    path(
+        'robots.txt',
+        robots_txt
+    ),
 ]
 
 

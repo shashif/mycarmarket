@@ -1,79 +1,74 @@
 <!-- =========================================
-Version: v0.7.5
+MyCarMarket
+Version: v0.8.1
 File: vehicles/templates/vehicles/car_detail.html
-Premium Similar Cars Cards
+SEO Pro Meta Tags + Social Preview
 ========================================= -->
 
 {% load static %}
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>{{ car.title }} - MyCarMarket</title>
+    <title>
+        {{ car.year }} {{ car.make }} {{ car.model }} For Sale{% if car.suburb %} in {{ car.suburb }}{% endif %} | MyCarMarket Australia
+    </title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="{{ car.year }} {{ car.make }} {{ car.model }} for sale{% if car.display_location %} in {{ car.display_location }}{% endif %}. {{ car.kilometres }} km, {{ car.transmission|default:'transmission not specified' }}, {{ car.fuel_type|default:'fuel type not specified' }}. View photos and contact seller on MyCarMarket Australia.">
+
+    <meta name="keywords"
+          content="{{ car.year }} {{ car.make }} {{ car.model }}, {{ car.make }} {{ car.model }} for sale, used cars Australia, cars for sale Australia, {% if car.suburb %}cars for sale {{ car.suburb }},{% endif %} {% if car.state %}cars for sale {{ car.state }}{% endif %}">
+
+    <link rel="canonical" href="{{ share_url }}">
+
+    <meta property="og:title"
+          content="{{ car.year }} {{ car.make }} {{ car.model }} For Sale | MyCarMarket Australia">
+
+    <meta property="og:description"
+          content="{{ car.year }} {{ car.make }} {{ car.model }} for sale{% if car.display_location %} in {{ car.display_location }}{% endif %}. Price ${{ car.price }}, {{ car.kilometres }} km.">
+
+    {% if car.primary_image %}
+        <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ car.primary_image }}">
+    {% endif %}
+
+    <meta property="og:url" content="{{ share_url }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="MyCarMarket Australia">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title"
+          content="{{ car.year }} {{ car.make }} {{ car.model }} For Sale | MyCarMarket Australia">
+    <meta name="twitter:description"
+          content="{{ car.year }} {{ car.make }} {{ car.model }} for sale{% if car.display_location %} in {{ car.display_location }}{% endif %}. Price ${{ car.price }}, {{ car.kilometres }} km.">
+
+    {% if car.primary_image %}
+        <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{{ car.primary_image }}">
+    {% endif %}
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/car_detail.css' %}?v=75">
+    <link rel="stylesheet" href="{% static 'css/car_detail.css' %}?v=81">
 </head>
 
 <body>
 
-<!-- =========================================
-START SECTION 1: NAVBAR
-========================================= -->
-
 {% include 'includes/navbar.html' %}
-
-<!-- =========================================
-END SECTION 1: NAVBAR
-========================================= -->
-
-
-<!-- =========================================
-START SECTION 2: MAIN PAGE CONTAINER
-========================================= -->
 
 <div class="container">
 
     <a href="{% url 'car_list' %}" class="back-link">← Back to Cars</a>
 
-    <!-- =========================================
-    START SECTION 3: DETAIL GRID
-    ========================================= -->
-
     <div class="detail-grid">
-
-        <!-- =========================================
-        START SECTION 4: LEFT CONTENT
-        ========================================= -->
 
         <div>
 
-            <!-- =========================================
-            START SECTION 5: CAR IMAGE GALLERY
-            ========================================= -->
-
             {% include 'vehicles/includes/detail_gallery.html' %}
 
-            <!-- =========================================
-            END SECTION 5: CAR IMAGE GALLERY
-            ========================================= -->
-
-
-            <!-- =========================================
-            START SECTION 6: CAR INFORMATION
-            ========================================= -->
-
             {% include 'vehicles/includes/detail_info.html' %}
-
-            <!-- =========================================
-            END SECTION 6: CAR INFORMATION
-            ========================================= -->
-
-
-            <!-- =========================================
-            START SECTION 7: SOCIAL SHARE BOX
-            ========================================= -->
 
             <div class="share-box">
                 <h3>Share This Car</h3>
@@ -113,37 +108,11 @@ START SECTION 2: MAIN PAGE CONTAINER
                 </div>
             </div>
 
-            <!-- =========================================
-            END SECTION 7: SOCIAL SHARE BOX
-            ========================================= -->
-
         </div>
-
-        <!-- =========================================
-        END SECTION 4: LEFT CONTENT
-        ========================================= -->
-
-
-        <!-- =========================================
-        START SECTION 8: RIGHT SIDEBAR
-        ========================================= -->
 
         {% include 'vehicles/includes/detail_sidebar.html' %}
 
-        <!-- =========================================
-        END SECTION 8: RIGHT SIDEBAR
-        ========================================= -->
-
     </div>
-
-    <!-- =========================================
-    END SECTION 3: DETAIL GRID
-    ========================================= -->
-
-
-    <!-- =========================================
-    START SECTION 9: GOOGLE ADS PLACEHOLDER
-    ========================================= -->
 
     <div class="ad-banner">
         <div class="ad-label">Advertisement</div>
@@ -156,31 +125,9 @@ START SECTION 2: MAIN PAGE CONTAINER
         </div>
     </div>
 
-    <!-- =========================================
-    END SECTION 9: GOOGLE ADS PLACEHOLDER
-    ========================================= -->
-
-
-    <!-- =========================================
-    START SECTION 10: SIMILAR CARS
-    ========================================= -->
- {% include 'vehicles/similar_cars.html' %}
-   
-
-    <!-- =========================================
-    END SECTION 10: SIMILAR CARS
-    ========================================= -->
+    {% include 'vehicles/similar_cars.html' %}
 
 </div>
-
-<!-- =========================================
-END SECTION 2: MAIN PAGE CONTAINER
-========================================= -->
-
-
-<!-- =========================================
-START SECTION 11: PAGE JAVASCRIPT
-========================================= -->
 
 <script>
     function changeMainImage(imageUrl) {
@@ -201,10 +148,6 @@ START SECTION 11: PAGE JAVASCRIPT
             });
     }
 </script>
-
-<!-- =========================================
-END SECTION 11: PAGE JAVASCRIPT
-========================================= -->
 
 </body>
 </html>

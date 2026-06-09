@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.6.3
+# Version: v0.7.9
 # File: vehicles/views/car_list_views.py
-# Car List Page View
+# Featured Cars First + Verified Cars Priority
 # ==========================================
 
 from django.shortcuts import render
@@ -13,7 +13,10 @@ from vehicles.models import Car
 
 
 def car_list(request):
-    cars = Car.objects.filter(is_approved=True)
+    cars = Car.objects.filter(
+        is_approved=True,
+        is_active=True
+    )
 
     query = request.GET.get('q', '').strip()
 
@@ -70,21 +73,60 @@ def car_list(request):
         cars = cars.filter(body_type=body_type)
 
     if sort_by == 'oldest':
-        cars = cars.order_by('created_at')
+        cars = cars.order_by(
+            '-is_featured',
+            '-is_verified_listing',
+            'created_at'
+        )
+
     elif sort_by == 'price_low':
-        cars = cars.order_by('price')
+        cars = cars.order_by(
+            '-is_featured',
+            '-is_verified_listing',
+            'price'
+        )
+
     elif sort_by == 'price_high':
-        cars = cars.order_by('-price')
+        cars = cars.order_by(
+            '-is_featured',
+            '-is_verified_listing',
+            '-price'
+        )
+
     elif sort_by == 'km_low':
-        cars = cars.order_by('kilometres')
+        cars = cars.order_by(
+            '-is_featured',
+            '-is_verified_listing',
+            'kilometres'
+        )
+
     elif sort_by == 'km_high':
-        cars = cars.order_by('-kilometres')
+        cars = cars.order_by(
+            '-is_featured',
+            '-is_verified_listing',
+            '-kilometres'
+        )
+
     elif sort_by == 'year_new':
-        cars = cars.order_by('-year')
+        cars = cars.order_by(
+            '-is_featured',
+            '-is_verified_listing',
+            '-year'
+        )
+
     elif sort_by == 'year_old':
-        cars = cars.order_by('year')
+        cars = cars.order_by(
+            '-is_featured',
+            '-is_verified_listing',
+            'year'
+        )
+
     else:
-        cars = cars.order_by('-created_at')
+        cars = cars.order_by(
+            '-is_featured',
+            '-is_verified_listing',
+            '-created_at'
+        )
 
     paginator = Paginator(cars, 6)
 

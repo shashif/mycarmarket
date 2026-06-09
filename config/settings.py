@@ -25,6 +25,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'django.contrib.sites',
+'django.contrib.sitemaps',
 ]
 
 
@@ -97,7 +100,7 @@ TIME_ZONE = 'Australia/Melbourne'
 USE_I18N = True
 
 USE_TZ = True
-
+SITE_ID = 1
 
 STATIC_URL = 'static/'
 
