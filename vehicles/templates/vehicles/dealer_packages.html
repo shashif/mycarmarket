@@ -1,0 +1,295 @@
+<!-- ==========================================
+MyCarMarket
+Version: v0.8.4
+File: vehicles/templates/vehicles/dealer_packages.html
+Dealer Packages Benefits Page
+========================================== -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+
+    <title>Dealer Packages - MyCarMarket Australia</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f4f6;
+            color: #111827;
+        }
+
+        .wrapper {
+            width: 92%;
+            max-width: 1250px;
+            margin: 40px auto;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #111827, #1f2937);
+            color: white;
+            padding: 45px 30px;
+            border-radius: 24px;
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-size: 40px;
+        }
+
+        .hero p {
+            color: #d1d5db;
+            font-size: 18px;
+            margin-top: 12px;
+        }
+
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 35px;
+        }
+
+        .benefit-card {
+            background: white;
+            padding: 22px;
+            border-radius: 18px;
+            box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .benefit-card h3 {
+            margin-top: 0;
+            color: #2563eb;
+        }
+
+        .package-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 18px;
+        }
+
+      .package-card {
+    background: white;
+    padding: 24px;
+    border-radius: 20px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+    text-align: center;
+    border: 2px solid transparent;
+
+    display: flex;
+    flex-direction: column;
+    min-height: 360px;
+}
+
+        .package-card:hover {
+            border-color: #2563eb;
+            transform: translateY(-5px);
+            transition: 0.25s;
+        }
+
+        .package-card h2 {
+            margin: 0;
+        }
+
+        .price {
+            font-size: 34px;
+            font-weight: bold;
+            color: #2563eb;
+            margin: 18px 0;
+        }
+
+        .price span {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+   ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    text-align: left;
+
+    flex-grow: 1;
+}
+
+        li {
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+.btn {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+
+    margin-top: auto;
+
+    background: #2563eb;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+}
+
+        .popular {
+            border-color: #f59e0b;
+        }
+
+        .popular-label {
+            background: #f59e0b;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 13px;
+            display: inline-block;
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        .note {
+            margin-top: 35px;
+            background: #ecfdf5;
+            border-left: 5px solid #16a34a;
+            padding: 20px;
+            border-radius: 14px;
+        }
+
+        @media (max-width: 1000px) {
+            .package-grid,
+            .benefits {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .package-grid,
+            .benefits {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+{% include 'includes/navbar.html' %}
+
+<div class="wrapper">
+
+    <div class="hero">
+        <h1>Dealer Packages</h1>
+        <p>Grow your car business with more visibility, featured ads, verified badges and priority search exposure.</p>
+    </div>
+
+    <div class="benefits">
+        <div class="benefit-card">
+            <h3>⭐ Featured Ads</h3>
+            <p>Your cars can appear in premium positions and attract more buyers.</p>
+        </div>
+
+        <div class="benefit-card">
+            <h3>🔍 Better Search Visibility</h3>
+            <p>Higher packages can get stronger exposure in search results and listing pages.</p>
+        </div>
+
+        <div class="benefit-card">
+            <h3>✔ Verified Dealer Badge</h3>
+            <p>Build trust with buyers by showing your dealer verification badge.</p>
+        </div>
+
+        <div class="benefit-card">
+            <h3>🏢 Dealer Profile</h3>
+            <p>Show all your cars in one professional dealer profile page.</p>
+        </div>
+    </div>
+
+    <div class="package-grid">
+
+        <div class="package-card">
+            <h2>Free</h2>
+            <div class="price">$0 <span>AUD</span></div>
+            <ul>
+                <li>✅ 3 car listings</li>
+                <li>❌ No featured ads</li>
+                <li>❌ No verified badge</li>
+                <li>✅ Basic seller profile</li>
+                <li>✅ Standard search listing</li>
+            </ul>
+            <a href="{% url 'create_car' %}" class="btn">Start Free</a>
+        </div>
+
+        <div class="package-card">
+            <h2>Starter</h2>
+            <div class="price">$99 <span>AUD</span></div>
+            <ul>
+                <li>✅ 10 car listings</li>
+                <li>✅ 1 featured ad</li>
+                <li>✅ Starter dealer badge</li>
+                <li>✅ Better listing visibility</li>
+                <li>✅ Dealer profile page</li>
+            </ul>
+            <a href="{% url 'create_car' %}" class="btn">Choose Starter</a>
+        </div>
+
+        <div class="package-card popular">
+            <span class="popular-label">Most Popular</span>
+            <h2>Professional</h2>
+            <div class="price">$299 <span>AUD</span></div>
+            <ul>
+                <li>✅ 30 car listings</li>
+                <li>✅ 5 featured ads</li>
+                <li>✅ Verified dealer badge</li>
+                <li>✅ Higher search visibility</li>
+                <li>✅ Priority dealer exposure</li>
+            </ul>
+            <a href="{% url 'create_car' %}" class="btn">Choose Professional</a>
+        </div>
+
+        <div class="package-card">
+            <h2>Premium</h2>
+            <div class="price">$599 <span>AUD</span></div>
+            <ul>
+                <li>✅ 75 car listings</li>
+                <li>✅ 15 featured ads</li>
+                <li>✅ Premium dealer badge</li>
+                <li>✅ Strong search boost</li>
+                <li>✅ Homepage dealer exposure</li>
+            </ul>
+            <a href="{% url 'create_car' %}" class="btn">Choose Premium</a>
+        </div>
+
+        <div class="package-card">
+            <h2>Enterprise</h2>
+            <div class="price">$999 <span>AUD</span></div>
+            <ul>
+                <li>✅ Unlimited listings</li>
+                <li>✅ 30 featured ads</li>
+                <li>✅ Enterprise dealer badge</li>
+                <li>✅ Maximum search exposure</li>
+                <li>✅ Priority support</li>
+            </ul>
+            <a href="{% url 'create_car' %}" class="btn">Choose Enterprise</a>
+        </div>
+
+    </div>
+
+    <div class="note">
+        <strong>Note:</strong> Payment system will be added later. For now, admin can manually upgrade dealer packages and verification status from the  admin panel.
+    </div>
+
+</div>
+
+</body>
+</html>
