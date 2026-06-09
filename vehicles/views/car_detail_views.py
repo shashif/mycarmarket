@@ -1,15 +1,15 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.7.6
+# Version: v0.8.3
 # File: vehicles/views/car_detail_views.py
-# Dealer Trust Card + Dealer Stats + Enquiry
+# Dealer Trust + Enquiry + Favourite Status
 # ==========================================
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.utils import timezone
 
-from vehicles.models import Car
+from vehicles.models import Car, FavouriteCar
 from vehicles.forms import EnquiryForm
 
 
@@ -32,6 +32,14 @@ def car_detail(request, slug):
 
     share_url = request.build_absolute_uri()
     share_text = f"Check out this {car.year} {car.make} {car.model} on MyCarMarket Australia"
+
+    is_favourite = False
+
+    if request.user.is_authenticated:
+        is_favourite = FavouriteCar.objects.filter(
+            user=request.user,
+            car=car
+        ).exists()
 
     dealer_active_cars_count = 0
     dealer_featured_cars_count = 0
@@ -126,6 +134,7 @@ def car_detail(request, slug):
             'form': form,
             'share_url': share_url,
             'share_text': share_text,
+            'is_favourite': is_favourite,
             'dealer_active_cars_count': dealer_active_cars_count,
             'dealer_featured_cars_count': dealer_featured_cars_count,
             'dealer_member_since': dealer_member_since,

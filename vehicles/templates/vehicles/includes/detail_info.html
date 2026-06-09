@@ -1,15 +1,41 @@
 <!-- =========================================
 MyCarMarket
-Version: v0.7.8
+Version: v0.8.4
 File: vehicles/templates/vehicles/includes/detail_info.html
-Auto SEO Vehicle Content Added
+Auto SEO Content + Inline Save Button
 ========================================= -->
 
 <div class="card" style="margin-top:25px;">
     <h1>{{ car.year }} {{ car.make }} {{ car.model }}</h1>
 
-    <div class="price">
-        💰 ${{ car.price }}
+    <div class="price-save-row">
+
+        <div class="price">
+            💰 ${{ car.price }}
+        </div>
+
+        {% if user.is_authenticated %}
+            <form method="POST"
+                  action="{% url 'toggle_favourite' car.slug %}"
+                  class="favourite-inline-form">
+                {% csrf_token %}
+
+                {% if is_favourite %}
+                    <button type="submit" class="save-car-btn saved">
+                        ❤️ Saved
+                    </button>
+                {% else %}
+                    <button type="submit" class="save-car-btn">
+                        🤍 Save
+                    </button>
+                {% endif %}
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}" class="save-car-btn login-save-btn">
+                🤍 Save
+            </a>
+        {% endif %}
+
     </div>
 
     <div class="main-location">
@@ -28,6 +54,10 @@ Auto SEO Vehicle Content Added
         <span class="badge date-badge">
             📅 Listed {{ car.created_at|date:"d M Y" }}
         </span>
+
+        <a href="{% url 'saved_cars' %}" class="saved-cars-small-link">
+            ❤️ Saved Cars
+        </a>
     </div>
 
     <div class="details-grid">

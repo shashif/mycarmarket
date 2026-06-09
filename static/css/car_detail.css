@@ -1,7 +1,220 @@
 /* ==========================================
-MyCarMarket v0.7.8
-Auto SEO Vehicle Content
+MyCarMarket v0.8.4
+Inline Save Button Beside Price
 ========================================== */
+
+.price-save-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.favourite-inline-form {
+    margin: 0;
+}
+
+.save-car-btn {
+    border: none;
+    background: #f3f4f6;
+    color: #111827;
+    padding: 11px 18px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: 0.25s;
+}
+
+.save-car-btn:hover {
+    background: #e5e7eb;
+    transform: translateY(-2px);
+}
+
+.save-car-btn.saved {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.login-save-btn {
+    display: inline-block;
+}
+
+.saved-cars-small-link {
+    display: inline-block;
+    background: #f3f4f6;
+    color: #2563eb;
+    padding: 8px 13px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.favourite-card {
+    padding: 24px;
+    margin-bottom: 30px !important;
+    background: white;
+    border-radius: 18px;
+}
+
+.favourite-card form {
+    margin: 0;
+}
+
+.favourite-header {
+    font-size: 24px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 12px;
+}
+
+.favourite-text {
+    color: #6b7280;
+    line-height: 1.6;
+    margin-bottom: 18px;
+}
+
+.favourite-card button.favourite-btn,
+.favourite-card .favourite-btn {
+    width: 100% !important;
+    display: block !important;
+
+    background: #ef4444 !important;
+    color: #ffffff !important;
+
+    border: none !important;
+    border-radius: 14px !important;
+
+    padding: 16px !important;
+
+    font-size: 16px !important;
+    font-weight: 700 !important;
+
+    text-align: center !important;
+    text-decoration: none !important;
+
+    cursor: pointer !important;
+
+    box-sizing: border-box !important;
+
+    transition: 0.25s ease !important;
+}
+
+.favourite-card button.favourite-btn:hover,
+.favourite-card .favourite-btn:hover {
+    transform: translateY(-2px);
+    background: #dc2626 !important;
+}
+
+.favourite-card .saved {
+    background: #16a34a !important;
+}
+
+.favourite-card .saved:hover {
+    background: #15803d !important;
+}
+
+.saved-cars-link {
+    display: block !important;
+
+    width: 100% !important;
+
+    margin-top: 14px !important;
+
+    padding: 14px !important;
+
+    background: #f3f4f6 !important;
+
+    border-radius: 14px !important;
+
+    text-align: center !important;
+
+    text-decoration: none !important;
+
+    color: #2563eb !important;
+
+    font-weight: 700 !important;
+
+    box-sizing: border-box !important;
+}
+
+.saved-cars-link:hover {
+    background: #e5e7eb !important;
+}
+
+.login-btn {
+    background: #111827 !important;
+}
+
+.login-btn:hover {
+    background: #2563eb !important;
+}
+
+.favourite-card,
+.seller-box,
+.dealer-trust-card,
+.trust-box,
+.contact-seller-card {
+    margin-bottom: 25px;
+}
+
+.favourite-card {
+    padding: 24px;
+}
+
+.favourite-header {
+    font-size: 22px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 10px;
+}
+
+.favourite-text {
+    color: #6b7280;
+    line-height: 1.5;
+    margin-bottom: 18px;
+}
+
+.favourite-btn {
+    width: 100%;
+    display: block;
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+.favourite-btn:hover {
+    transform: translateY(-2px);
+}
+
+.favourite-btn.saved {
+    background: #16a34a;
+}
+
+.login-btn {
+    background: #111827;
+}
+
+.saved-cars-link {
+    display: block;
+    margin-top: 15px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 700;
+    color: #2563eb;
+}
 
 .seo-auto-content {
     margin-top: 28px;

@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.7.0
+# Version: v0.8.3
 # File: vehicles/models.py
-# SEO Friendly Slug Added Safely
+# SEO Slug + Enquiry + Favourite Cars
 # ==========================================
 
 from django.db import models
@@ -82,11 +82,9 @@ class Car(models.Model):
     is_featured = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_verified_listing = models.BooleanField(default=False)
-
     is_approved = models.BooleanField(default=False)
 
     views_count = models.PositiveIntegerField(default=0)
-
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
@@ -172,3 +170,26 @@ class Enquiry(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.car.title}"
+
+
+class FavouriteCar(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='favourite_cars'
+    )
+
+    car = models.ForeignKey(
+        Car,
+        on_delete=models.CASCADE,
+        related_name='favourited_by'
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'car')
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.user.username} saved {self.car.title}"

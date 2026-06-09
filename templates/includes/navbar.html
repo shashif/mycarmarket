@@ -8,17 +8,37 @@
         <a href="{% url 'dealers' %}">Dealers</a>
 
         {% if user.is_authenticated %}
-            <a href="{% url 'my_listings' %}">My Listings</a>
 
-            <form method="POST" action="{% url 'logout' %}" style="display:inline;">
+            <a href="{% url 'saved_cars' %}">
+                ❤️ Saved Cars
+            </a>
+
+            <a href="{% url 'my_listings' %}">
+                My Listings
+            </a>
+
+            <form method="POST"
+                  action="{% url 'logout' %}"
+                  style="display:inline;">
                 {% csrf_token %}
-                <button type="submit" style="background:none; border:none; color:white; font-weight:bold; margin-left:22px; cursor:pointer; font-size:inherit;">
+
+                <button type="submit"
+                        style="background:none;
+                               border:none;
+                               color:white;
+                               font-weight:bold;
+                               margin-left:22px;
+                               cursor:pointer;
+                               font-size:inherit;">
                     Logout
                 </button>
             </form>
+
         {% else %}
+
             <a href="{% url 'login' %}">Login</a>
             <a href="{% url 'register' %}">Register</a>
+
         {% endif %}
     </div>
 </div>

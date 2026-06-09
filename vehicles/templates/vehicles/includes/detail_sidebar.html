@@ -1,11 +1,13 @@
 <!-- =========================================
 MyCarMarket
-Version: v0.7.6
+Version: v0.8.3
 File: vehicles/templates/vehicles/includes/detail_sidebar.html
-Dealer Trust Card + Contact Seller Upgrade
+Premium Favourite Cars + Dealer Trust + Contact Seller
 ========================================= -->
 
 <div>
+
+   
 
     <div class="card seller-box">
         <h2>Seller Details</h2>
@@ -34,7 +36,6 @@ Dealer Trust Card + Contact Seller Upgrade
         </div>
     </div>
 
-
     {% if car.seller %}
         <div class="card dealer-trust-card">
             <h2>Dealer Trust</h2>
@@ -44,15 +45,11 @@ Dealer Trust Card + Contact Seller Upgrade
             </div>
 
             {% if car.is_verified_listing %}
-                <div class="dealer-badge verified">
-                    ✓ Verified Listing
-                </div>
+                <div class="dealer-badge verified">✓ Verified Listing</div>
             {% endif %}
 
             {% if car.is_featured %}
-                <div class="dealer-badge premium">
-                    ⭐ Featured Car
-                </div>
+                <div class="dealer-badge premium">⭐ Featured Car</div>
             {% endif %}
 
             <div class="dealer-stat">
@@ -85,8 +82,7 @@ Dealer Trust Card + Contact Seller Upgrade
         </div>
     {% endif %}
 
-
-    <div class="ad-banner">
+    <div class="ad-banner sidebar-ad-box">
         <div class="ad-label">Advertisement</div>
         <div class="ad-placeholder">
             <div>
@@ -96,21 +92,12 @@ Dealer Trust Card + Contact Seller Upgrade
         </div>
     </div>
 
-
     <div class="card trust-box">
         <h2>Trust & Safety</h2>
 
-        <div class="trust-item">
-            ✅ Always inspect the car before payment.
-        </div>
-
-        <div class="trust-item">
-            ✅ Do not send money before confirming ownership.
-        </div>
-
-        <div class="trust-item">
-            ✅ Use the enquiry form to keep contact secure.
-        </div>
+        <div class="trust-item">✅ Always inspect the car before payment.</div>
+        <div class="trust-item">✅ Do not send money before confirming ownership.</div>
+        <div class="trust-item">✅ Use the enquiry form to keep contact secure.</div>
 
         {% if car.is_verified_listing %}
             <div class="trust-item">
@@ -118,7 +105,6 @@ Dealer Trust Card + Contact Seller Upgrade
             </div>
         {% endif %}
     </div>
-
 
     <div class="card contact-seller-card">
         <h2>📞 Contact Seller</h2>
