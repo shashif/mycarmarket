@@ -1,265 +1,323 @@
- <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f3f4f6;
-            color: #111827;
-        }
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f4f6;
+    color: #111827;
+}
 
-        .page-wrapper {
-            width: 92%;
-            max-width: 1250px;
-            margin: 35px auto;
-        }
+.page-wrapper {
+    width: 92%;
+    max-width: 1250px;
+    margin: 35px auto;
+}
 
-        .page-header {
-            background: linear-gradient(135deg, #111827, #1f2937);
-            color: white;
-            padding: 35px;
-            border-radius: 22px;
-            margin-bottom: 28px;
-        }
+.page-header {
+    background: linear-gradient(135deg, #111827, #1f2937);
+    color: white;
+    padding: 35px;
+    border-radius: 22px;
+    margin-bottom: 28px;
+}
 
-        .page-header h1 {
-            margin: 0;
-            font-size: 36px;
-        }
+.page-header h1 {
+    margin: 0;
+    font-size: 36px;
+}
 
-        .page-header p {
-            margin-top: 10px;
-            color: #d1d5db;
-        }
+.page-header p {
+    margin-top: 10px;
+    color: #d1d5db;
+}
 
-        .filter-box {
-            background: white;
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-            margin-bottom: 30px;
-        }
+.filter-box {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    margin-bottom: 30px;
+}
 
-        .filter-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-        }
+.filter-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
 
-        .filter-grid input,
-        .filter-grid select {
-            padding: 13px;
-            border: 1px solid #d1d5db;
-            border-radius: 12px;
-            font-size: 15px;
-        }
+.filter-grid input,
+.filter-grid select {
+    padding: 13px;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    font-size: 15px;
+}
 
-        .filter-actions {
-            margin-top: 18px;
-            display: flex;
-            gap: 12px;
-        }
+.filter-actions {
+    margin-top: 18px;
+    display: flex;
+    gap: 12px;
+}
 
-        .filter-actions button,
-        .filter-actions a {
-            padding: 13px 24px;
-            border-radius: 12px;
-            text-decoration: none;
-            border: none;
-            font-weight: bold;
-            cursor: pointer;
-        }
+.filter-actions button,
+.filter-actions a {
+    padding: 13px 24px;
+    border-radius: 12px;
+    text-decoration: none;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
 
-        .search-btn {
-            background: #2563eb;
-            color: white;
-        }
+.search-btn {
+    background: #2563eb;
+    color: white;
+}
 
-        .reset-btn {
-            background: #e5e7eb;
-            color: #111827;
-        }
+.reset-btn {
+    background: #e5e7eb;
+    color: #111827;
+}
 
-        .car-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
+.car-grid,
+.premium-car-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
 
-        .car-card {
-            background: white;
-            border-radius: 22px;
-            overflow: hidden;
-            box-shadow: 0 10px 28px rgba(0,0,0,0.08);
-            transition: 0.25s;
-            position: relative;
-        }
+.car-card,
+.premium-car-card {
+    display: block;
+    background: white;
+    color: inherit;
+    text-decoration: none;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.10);
+    transition: 0.25s;
+    position: relative;
+}
 
-        .car-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 16px 35px rgba(0,0,0,0.14);
-        }
+.car-card:hover,
+.premium-car-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 35px rgba(0,0,0,0.14);
+}
 
-        .image-box {
-            width: 100%;
-            height: 220px;
-            background: #e5e7eb;
-            position: relative;
-        }
+.image-box,
+.premium-car-image-wrap {
+    width: 100%;
+    height: 220px;
+    background: #e5e7eb;
+    position: relative;
+    overflow: hidden;
+}
 
-        .image-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+.image-box img,
+.premium-car-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
-        .no-image {
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #6b7280;
-            font-weight: bold;
-        }
+.no-image,
+.no-image-box {
+    height: 220px;
+    background: #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+    font-weight: bold;
+}
 
-        .badge-row {
-            position: absolute;
-            top: 14px;
-            left: 14px;
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
+.featured-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: #f59e0b;
+    color: white;
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: bold;
+}
 
-        .badge {
-            padding: 7px 11px;
-            border-radius: 999px;
-            font-size: 12px;
-            font-weight: bold;
-            color: white;
-        }
+.verified-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: #16a34a;
+    color: white;
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: bold;
+}
 
-        .featured-badge {
-            background: #f59e0b;
-        }
+.car-content,
+.premium-car-info {
+    padding: 20px;
+}
 
-        .verified-badge {
-            background: #16a34a;
-        }
+.premium-car-info h3,
+.car-title {
+    margin: 0 0 8px;
+    font-size: 21px;
+    font-weight: bold;
+    color: #111827;
+}
 
-        .car-content {
-            padding: 20px;
-        }
+.car-title a {
+    color: #111827;
+    text-decoration: none;
+}
 
-        .car-title {
-            font-size: 21px;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
+.car-title a:hover {
+    color: #2563eb;
+}
 
-        .car-title a {
-            color: #111827;
-            text-decoration: none;
-        }
+.car-meta {
+    color: #374151;
+    margin: 6px 0 12px;
+    font-size: 14px;
+}
 
-        .car-title a:hover {
-            color: #2563eb;
-        }
+/* v0.8.7 Dealer Branding */
 
-        .price {
-            font-size: 24px;
-            font-weight: bold;
-            color: #2563eb;
-            margin-bottom: 15px;
-        }
+.dealer-info {
+    margin: 10px 0 14px;
+}
 
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-bottom: 18px;
-        }
+.dealer-name {
+    margin: 0 0 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #111827;
+}
 
-        .info-item {
-            background: #f9fafb;
-            padding: 10px;
-            border-radius: 12px;
-            font-size: 14px;
-            color: #374151;
-        }
+.dealer-verified,
+.dealer-featured {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-right: 6px;
+    margin-bottom: 5px;
+}
 
-        .location {
-            color: #6b7280;
-            font-size: 14px;
-            margin-bottom: 18px;
-        }
+.dealer-verified {
+    background: #dcfce7;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
 
-        .view-btn {
-            display: block;
-            text-align: center;
-            background: #111827;
-            color: white;
-            text-decoration: none;
-            padding: 13px;
-            border-radius: 14px;
-            font-weight: bold;
-        }
+.dealer-featured {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fde68a;
+}
 
-        .view-btn:hover {
-            background: #2563eb;
-        }
+.premium-car-card:has(.dealer-featured),
+.car-card:has(.dealer-featured) {
+    border: 2px solid #f59e0b;
+}
 
-        .empty-box {
-            background: white;
-            padding: 45px;
-            border-radius: 22px;
-            text-align: center;
-            color: #6b7280;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-        }
+.icon-info-grid,
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin: 12px 0 18px;
+}
 
-        .pagination {
-            margin-top: 35px;
-            text-align: center;
-        }
+.icon-info-grid span,
+.info-item {
+    background: #f9fafb;
+    padding: 10px;
+    border-radius: 12px;
+    font-size: 14px;
+    color: #374151;
+}
 
-        .pagination a,
-        .pagination span {
-            display: inline-block;
-            margin: 4px;
-            padding: 10px 15px;
-            border-radius: 10px;
-            background: white;
-            color: #111827;
-            text-decoration: none;
-            font-weight: bold;
-        }
+.car-location,
+.location {
+    color: #6b7280;
+    font-size: 14px;
+    margin-bottom: 18px;
+}
 
-        .pagination .current {
-            background: #2563eb;
-            color: white;
-        }
+.price,
+.price-row strong {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2563eb;
+}
 
-        @media (max-width: 1000px) {
-            .filter-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    gap: 10px;
+}
 
-            .car-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
+.empty-box {
+    background: white;
+    padding: 45px;
+    border-radius: 22px;
+    text-align: center;
+    color: #6b7280;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
 
-        @media (max-width: 650px) {
-            .filter-grid,
-            .car-grid {
-                grid-template-columns: 1fr;
-            }
+.pagination {
+    margin-top: 35px;
+    text-align: center;
+}
 
-            .page-header h1 {
-                font-size: 28px;
-            }
+.pagination a,
+.pagination span {
+    display: inline-block;
+    margin: 4px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    background: white;
+    color: #111827;
+    text-decoration: none;
+    font-weight: bold;
+}
 
-            .filter-actions {
-                flex-direction: column;
-            }
-        }
-    </style>
+.pagination .current {
+    background: #2563eb;
+    color: white;
+}
+
+@media (max-width: 1000px) {
+    .filter-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .car-grid,
+    .premium-car-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 650px) {
+    .filter-grid,
+    .car-grid,
+    .premium-car-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .page-header h1 {
+        font-size: 28px;
+    }
+
+    .filter-actions {
+        flex-direction: column;
+    }
+}
+</style>

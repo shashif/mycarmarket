@@ -150,7 +150,21 @@ Premium Search/List Cards + Full Card Clickable
                         <p class="car-meta">
                             🚘 {{ car.year }} • {{ car.make }} {{ car.model }}
                         </p>
+<div class="dealer-info">
 
+    <p class="dealer-name">
+        🏢 {{ car.seller_business_name }}
+    </p>
+
+    {% if car.seller_is_verified %}
+        <span class="dealer-verified">✔ Verified Dealer</span>
+    {% endif %}
+
+    {% if car.seller_is_featured_dealer %}
+        <span class="dealer-featured">⭐ Featured Dealer</span>
+    {% endif %}
+
+</div>
                         <div class="icon-info-grid">
                             <span>🛣 {{ car.kilometres }} km</span>
                             <span>⚙️ {{ car.transmission|default:"N/A" }}</span>
