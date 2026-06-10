@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.8.4
+# Version: v0.8.6 FIXED
 # File: vehicles/admin.py
-# Admin Seller Username + Quick Approval + Dealer Packages
+# Admin Seller Username + Quick Approval + Dealer Branding + Dealer Packages
 # ==========================================
 
 from django.contrib import admin
@@ -44,8 +44,10 @@ class CarAdmin(admin.ModelAdmin):
         'id',
         'title',
         'posted_by',
+        'dealer_business',
         'dealer_package',
         'dealer_verified',
+        'featured_dealer',
         'make',
         'model',
         'year',
@@ -104,27 +106,20 @@ class CarAdmin(admin.ModelAdmin):
         'year',
         'price',
         'kilometres',
-
         'body_type',
         'transmission',
         'fuel_type',
-
         'state',
         'suburb',
-
         'description',
-
         'seller_name',
         'seller_email',
         'seller_phone',
-
         'seller',
-
         'is_approved',
         'is_featured',
         'is_active',
         'is_verified_listing',
-
         'views_count',
         'created_at',
     )
@@ -147,6 +142,14 @@ class CarAdmin(admin.ModelAdmin):
 
     posted_by.short_description = "Posted User"
 
+    def dealer_business(self, obj):
+        if obj.seller and hasattr(obj.seller, 'dealer_profile'):
+            profile = obj.seller.dealer_profile
+            return profile.business_name or obj.seller.username
+        return "Private Seller"
+
+    dealer_business.short_description = "Dealer Business"
+
     def dealer_package(self, obj):
         if obj.seller and hasattr(obj.seller, 'dealer_profile'):
             return obj.seller.dealer_profile.package_badge()
@@ -157,15 +160,18 @@ class CarAdmin(admin.ModelAdmin):
     def dealer_verified(self, obj):
         if obj.seller and hasattr(obj.seller, 'dealer_profile'):
             if obj.seller.dealer_profile.is_verified:
-                return format_html(
-                    '<span style="color:#16a34a;font-weight:bold;">✔ Verified</span>'
-                )
-
-        return format_html(
-            '<span style="color:#6b7280;">Not Verified</span>'
-        )
+                return "✔ Verified"
+        return "Not Verified"
 
     dealer_verified.short_description = "Dealer Verified"
+
+    def featured_dealer(self, obj):
+        if obj.seller and hasattr(obj.seller, 'dealer_profile'):
+            if obj.seller.dealer_profile.is_featured_dealer:
+                return "⭐ Featured"
+        return "No"
+
+    featured_dealer.short_description = "Featured Dealer"
 
     def approve_selected_listings(self, request, queryset):
         queryset.update(is_approved=True)
@@ -305,9 +311,11 @@ class DealerProfileAdmin(admin.ModelAdmin):
         'id',
         'user',
         'business_name',
+        'logo_preview',
         'package',
         'is_dealer',
         'is_verified',
+        'is_featured_dealer',
         'package_active',
         'max_listings',
         'featured_ads_allowed',
@@ -319,6 +327,7 @@ class DealerProfileAdmin(admin.ModelAdmin):
         'package',
         'is_dealer',
         'is_verified',
+        'is_featured_dealer',
         'package_active',
         'max_listings',
         'featured_ads_allowed',
@@ -329,6 +338,7 @@ class DealerProfileAdmin(admin.ModelAdmin):
         'package',
         'is_dealer',
         'is_verified',
+        'is_featured_dealer',
         'package_active',
         'priority_support',
         'created_at',
@@ -338,18 +348,68 @@ class DealerProfileAdmin(admin.ModelAdmin):
         'user__username',
         'user__email',
         'business_name',
+        'business_phone',
+        'business_email',
+        'address',
     )
 
     readonly_fields = (
+        'logo_preview',
+        'banner_preview',
+        'created_at',
+    )
+
+    fields = (
+        'user',
+        'business_name',
+        'business_description',
+        'logo_preview',
+        'logo',
+        'banner_preview',
+        'banner',
+        'website',
+        'business_phone',
+        'business_email',
+        'address',
+        'package',
+        'is_dealer',
+        'is_verified',
+        'is_featured_dealer',
+        'package_active',
+        'max_listings',
+        'featured_ads_allowed',
+        'priority_support',
         'created_at',
     )
 
     actions = (
         'mark_verified',
         'remove_verified',
+        'mark_as_featured_dealer',
+        'remove_featured_dealer',
         'activate_package',
         'deactivate_package',
     )
+
+    def logo_preview(self, obj):
+        if obj and obj.logo:
+            return format_html(
+                '<img src="{}" style="width:80px;height:80px;object-fit:cover;border-radius:50%;" />',
+                obj.logo.url
+            )
+        return "No Logo"
+
+    logo_preview.short_description = "Logo"
+
+    def banner_preview(self, obj):
+        if obj and obj.banner:
+            return format_html(
+                '<img src="{}" style="width:280px;height:90px;object-fit:cover;border-radius:10px;" />',
+                obj.banner.url
+            )
+        return "No Banner"
+
+    banner_preview.short_description = "Banner"
 
     def mark_verified(self, request, queryset):
         queryset.update(is_verified=True)
@@ -362,6 +422,18 @@ class DealerProfileAdmin(admin.ModelAdmin):
         self.message_user(request, 'Selected dealers removed from verified.')
 
     remove_verified.short_description = "Remove selected dealers from verified"
+
+    def mark_as_featured_dealer(self, request, queryset):
+        queryset.update(is_featured_dealer=True)
+        self.message_user(request, 'Selected dealers marked as featured.')
+
+    mark_as_featured_dealer.short_description = "Mark selected dealers as featured"
+
+    def remove_featured_dealer(self, request, queryset):
+        queryset.update(is_featured_dealer=False)
+        self.message_user(request, 'Selected dealers removed from featured.')
+
+    remove_featured_dealer.short_description = "Remove selected dealers from featured"
 
     def activate_package(self, request, queryset):
         queryset.update(package_active=True)

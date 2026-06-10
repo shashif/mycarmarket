@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.8.4
+# Version: v0.8.6
 # File: vehicles/models.py
-# SEO Slug + Enquiry + Favourite Cars + Dealer Packages
+# SEO Slug + Enquiry + Favourite Cars + Dealer Branding + Dealer Packages
 # ==========================================
 
 from django.db import models
@@ -64,11 +64,35 @@ class DealerProfile(models.Model):
     )
 
     business_name = models.CharField(max_length=150, blank=True)
-    package = models.CharField(max_length=20, choices=PACKAGE_CHOICES, default='free')
+    business_description = models.TextField(blank=True)
+
+    logo = models.ImageField(
+        upload_to='dealer_logos/',
+        blank=True,
+        null=True
+    )
+
+    banner = models.ImageField(
+        upload_to='dealer_banners/',
+        blank=True,
+        null=True
+    )
+
+    website = models.URLField(blank=True)
+    business_phone = models.CharField(max_length=30, blank=True)
+    business_email = models.EmailField(blank=True)
+    address = models.CharField(max_length=255, blank=True)
+
+    package = models.CharField(
+        max_length=20,
+        choices=PACKAGE_CHOICES,
+        default='free'
+    )
 
     is_dealer = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
     package_active = models.BooleanField(default=True)
+    is_featured_dealer = models.BooleanField(default=False)
 
     max_listings = models.PositiveIntegerField(default=3)
     featured_ads_allowed = models.PositiveIntegerField(default=0)
@@ -78,17 +102,23 @@ class DealerProfile(models.Model):
 
     def package_badge(self):
         if self.package == 'enterprise':
-            return 'Enterprise Dealer'
+            return '👑 Enterprise Dealer'
         if self.package == 'premium':
-            return 'Premium Dealer'
+            return '⭐ Premium Dealer'
         if self.package == 'professional':
-            return 'Professional Dealer'
+            return '🏢 Professional Dealer'
         if self.package == 'starter':
-            return 'Starter Dealer'
+            return '🚗 Starter Dealer'
         return 'Basic Seller'
 
+    def verified_badge(self):
+        if self.is_verified:
+            return '✔ Verified Dealer'
+        return ''
+
     def __str__(self):
-        return f"{self.user.username} - {self.package}"
+        name = self.business_name or self.user.username
+        return f"{name} - {self.package}"
 
 
 class Car(models.Model):
@@ -176,10 +206,27 @@ class Car(models.Model):
             return self.seller.dealer_profile.is_verified
         return False
 
+    def seller_verified_badge(self):
+        if self.seller and hasattr(self.seller, 'dealer_profile'):
+            return self.seller.dealer_profile.verified_badge()
+        return ''
+
     def seller_package_badge(self):
         if self.seller and hasattr(self.seller, 'dealer_profile'):
             return self.seller.dealer_profile.package_badge()
         return 'Private Seller'
+
+    def seller_business_name(self):
+        if self.seller and hasattr(self.seller, 'dealer_profile'):
+            profile = self.seller.dealer_profile
+            if profile.business_name:
+                return profile.business_name
+        return self.seller_name or 'Private Seller'
+
+    def seller_is_featured_dealer(self):
+        if self.seller and hasattr(self.seller, 'dealer_profile'):
+            return self.seller.dealer_profile.is_featured_dealer
+        return False
 
     def __str__(self):
         return self.title
