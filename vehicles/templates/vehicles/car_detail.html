@@ -1,8 +1,8 @@
 <!-- =========================================
 MyCarMarket
-Version: v0.8.1
+Version: v0.8.9
 File: vehicles/templates/vehicles/car_detail.html
-SEO Pro Meta Tags + Social Preview
+Car Detail + View Dealer Profile Button
 ========================================= -->
 
 {% load static %}
@@ -51,7 +51,45 @@ SEO Pro Meta Tags + Social Preview
     {% endif %}
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/car_detail.css' %}?v=85">
+    <link rel="stylesheet" href="{% static 'css/car_detail.css' %}?v=86">
+
+    <style>
+        .dealer-profile-box {
+            background: white;
+            padding: 22px;
+            border-radius: 18px;
+            margin: 24px 0;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+
+        .dealer-profile-box h3 {
+            margin: 0 0 10px;
+            color: #111827;
+        }
+
+        .dealer-badge-row {
+            margin: 10px 0 16px;
+        }
+
+        .dealer-verified,
+     
+
+        .dealer-verified {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .dealer-featured {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+  
+
+        .view-dealer-btn:hover {
+            background: #2563eb;
+        }
+    </style>
 </head>
 
 <body>
@@ -69,6 +107,8 @@ SEO Pro Meta Tags + Social Preview
             {% include 'vehicles/includes/detail_gallery.html' %}
 
             {% include 'vehicles/includes/detail_info.html' %}
+
+         
 
             <div class="share-box">
                 <h3>Share This Car</h3>

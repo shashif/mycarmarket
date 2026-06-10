@@ -1,8 +1,8 @@
 <!-- =========================================
 MyCarMarket
-Version: v0.7.7
+Version: v0.8.8
 File: vehicles/templates/vehicles/dealer_detail.html
-Premium Dealer Profile + Full Clickable Car Cards
+Dealer Public Profile + Branding + Share + Inventory
 ========================================= -->
 
 <!DOCTYPE html>
@@ -10,7 +10,7 @@ Premium Dealer Profile + Full Clickable Car Cards
 <head>
     {% load static %}
 
-    <title>{{ dealer.username }} - Dealer Profile | MyCarMarket Australia</title>
+    <title>{{ business_name }} - Dealer Profile | MyCarMarket Australia</title>
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
@@ -21,28 +21,118 @@ Premium Dealer Profile + Full Clickable Car Cards
 
 <div class="dealer-page-wrapper">
 
-    <div class="dealer-header-card">
-        <div>
-            <h1>{{ dealer.username }}</h1>
-            <p>Verified dealer on MyCarMarket Australia</p>
-            <p>🚗 {{ cars.count }} Cars Available</p>
+    <div class="dealer-hero-card">
+
+        {% if dealer_profile and dealer_profile.banner %}
+            <div class="dealer-banner">
+                <img src="{{ dealer_profile.banner.url }}" alt="{{ business_name }}">
+            </div>
+        {% endif %}
+
+        <div class="dealer-header-content">
+
+            <div class="dealer-main-info">
+
+                {% if dealer_profile and dealer_profile.logo %}
+                    <img class="dealer-logo" src="{{ dealer_profile.logo.url }}" alt="{{ business_name }}">
+                {% else %}
+                    <div class="dealer-logo-placeholder">🏢</div>
+                {% endif %}
+
+                <div>
+                    <h1>{{ business_name }}</h1>
+
+                    <div class="dealer-badges">
+                        {% if dealer_profile and dealer_profile.is_verified %}
+                            <span class="dealer-verified">✔ Verified Dealer</span>
+                        {% endif %}
+
+                        {% if dealer_profile and dealer_profile.is_featured_dealer %}
+                            <span class="dealer-featured">⭐ Featured Dealer</span>
+                        {% endif %}
+
+                        {% if dealer_profile %}
+                            <span class="dealer-package">{{ dealer_profile.package_badge }}</span>
+                        {% endif %}
+                    </div>
+
+                    <p class="dealer-subtitle">
+                        Trusted dealer on MyCarMarket Australia
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="dealer-share-box">
+                <p>Share dealer profile</p>
+
+                <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ share_url }}">Facebook</a>
+                <a target="_blank" href="https://twitter.com/intent/tweet?text={{ share_text }}&url={{ share_url }}">X</a>
+                <a target="_blank" href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url }}">LinkedIn</a>
+                <a target="_blank" href="https://wa.me/?text={{ share_text }} {{ share_url }}">WhatsApp</a>
+
+                <button type="button" class="copy-dealer-link-btn" onclick="copyDealerLink()">
+                    Copy Link
+                </button>
+            </div>
+
         </div>
 
-        <div class="dealer-share-box">
-            <p>Share dealer profile</p>
-
-            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ share_url }}">Facebook</a>
-            <a target="_blank" href="https://twitter.com/intent/tweet?text={{ share_text }}&url={{ share_url }}">X</a>
-            <a target="_blank" href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url }}">LinkedIn</a>
-            <a target="_blank" href="https://wa.me/?text={{ share_text }} {{ share_url }}">WhatsApp</a>
-
-            <button type="button" class="copy-dealer-link-btn" onclick="copyDealerLink()">
-                Copy Link
-            </button>
-        </div>
     </div>
 
-    <h2 class="section-title">Cars from this dealer</h2>
+    <div class="dealer-info-grid">
+
+        <div class="dealer-about-card">
+            <h2>About {{ business_name }}</h2>
+
+            {% if dealer_profile and dealer_profile.business_description %}
+                <p>{{ dealer_profile.business_description }}</p>
+            {% else %}
+                <p>This dealer has not added a business description yet.</p>
+            {% endif %}
+        </div>
+
+        <div class="dealer-contact-card">
+
+    <h2>Dealer Details</h2>
+
+    <p>
+        🚗 <strong>{{ cars.count }}</strong> Active Cars
+    </p>
+
+    {% if dealer_profile and dealer_profile.is_verified %}
+        <p>
+            ✔ Verified Dealer
+        </p>
+    {% endif %}
+
+    {% if dealer_profile and dealer_profile.website %}
+        <p>
+            <a href="{{ dealer_profile.website }}"
+               target="_blank"
+               rel="noopener">
+                🌐 Visit Website
+            </a>
+        </p>
+    {% endif %}
+
+    {% if dealer_profile and dealer_profile.address and dealer_profile.address != "na" %}
+        <p>
+            📍 {{ dealer_profile.address }}
+        </p>
+    {% endif %}
+
+    {% if dealer_profile %}
+        <p>
+            📦 {{ dealer_profile.package_badge }}
+        </p>
+    {% endif %}
+
+</div>
+
+    </div>
+
+    <h2 class="section-title">Cars from {{ business_name }}</h2>
 
     {% if cars %}
 
@@ -90,7 +180,6 @@ Premium Dealer Profile + Full Clickable Car Cards
 
                         <div class="price-row">
                             <strong>${{ car.price }}</strong>
-                            
                         </div>
                     </div>
 
@@ -111,33 +200,107 @@ Premium Dealer Profile + Full Clickable Car Cards
 </div>
 
 <style>
-
 .dealer-page-wrapper {
     width: 92%;
     max-width: 1250px;
     margin: 35px auto;
 }
 
-.dealer-header-card {
+.dealer-hero-card {
     background: linear-gradient(135deg, #111827, #1f2937);
     color: white;
+    border-radius: 24px;
+    overflow: hidden;
+    margin-bottom: 28px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.14);
+}
+
+.dealer-banner {
+    height: 230px;
+    background: #374151;
+}
+
+.dealer-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.dealer-header-content {
     padding: 35px;
-    border-radius: 22px;
     display: flex;
     justify-content: space-between;
     gap: 25px;
     align-items: center;
-    margin-bottom: 35px;
 }
 
-.dealer-header-card h1 {
+.dealer-main-info {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.dealer-logo {
+    width: 95px;
+    height: 95px;
+    border-radius: 22px;
+    object-fit: cover;
+    background: white;
+    border: 4px solid white;
+}
+
+.dealer-logo-placeholder {
+    width: 95px;
+    height: 95px;
+    border-radius: 22px;
+    background: white;
+    color: #111827;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 38px;
+    border: 4px solid white;
+}
+
+.dealer-header-content h1 {
     margin: 0;
     font-size: 38px;
 }
 
-.dealer-header-card p {
+.dealer-subtitle {
+    margin-top: 10px;
     color: #d1d5db;
-    margin-top: 8px;
+}
+
+.dealer-badges {
+    margin-top: 10px;
+}
+
+.dealer-verified,
+.dealer-featured,
+.dealer-package {
+    display: inline-block;
+    padding: 6px 11px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-right: 6px;
+    margin-bottom: 6px;
+}
+
+.dealer-verified {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.dealer-featured {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.dealer-package {
+    background: #dbeafe;
+    color: #1e40af;
 }
 
 .dealer-share-box {
@@ -147,6 +310,7 @@ Premium Dealer Profile + Full Clickable Car Cards
 .dealer-share-box p {
     margin-bottom: 12px;
     font-weight: bold;
+    color: #e5e7eb;
 }
 
 .dealer-share-box a,
@@ -168,6 +332,39 @@ Premium Dealer Profile + Full Clickable Car Cards
 .copy-dealer-link-btn:hover {
     background: #2563eb;
     color: white;
+}
+
+.dealer-info-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+    margin-bottom: 35px;
+}
+
+.dealer-about-card,
+.dealer-contact-card,
+.empty-box {
+    background: white;
+    padding: 28px;
+    border-radius: 22px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.dealer-about-card h2,
+.dealer-contact-card h2 {
+    margin-top: 0;
+}
+
+.dealer-about-card p,
+.dealer-contact-card p {
+    color: #374151;
+    line-height: 1.6;
+}
+
+.dealer-contact-card a {
+    color: #2563eb;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 .section-title {
@@ -293,23 +490,13 @@ Premium Dealer Profile + Full Clickable Car Cards
     color: #111827;
 }
 
-.price-row span {
-    color: #2563eb;
-    font-weight: bold;
-    font-size: 14px;
-}
-
-.empty-box {
-    background: white;
-    padding: 30px;
-    border-radius: 18px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-    color: #6b7280;
-}
-
 @media (max-width: 900px) {
+    .dealer-header-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 
-    .dealer-header-card {
+    .dealer-main-info {
         flex-direction: column;
         align-items: flex-start;
     }
@@ -325,12 +512,14 @@ Premium Dealer Profile + Full Clickable Car Cards
         margin-bottom: 6px;
     }
 
-    .premium-car-grid {
+    .dealer-info-grid {
         grid-template-columns: 1fr;
     }
 
+    .premium-car-grid {
+        grid-template-columns: 1fr;
+    }
 }
-
 </style>
 
 <script>

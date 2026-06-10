@@ -1,55 +1,37 @@
 <!-- =========================================
 MyCarMarket
-Version: v0.8.3
+Version: v0.8.9
 File: vehicles/templates/vehicles/includes/detail_sidebar.html
-Premium Favourite Cars + Dealer Trust + Contact Seller
+Dealer Trust Cleanup
+Seller Details Removed
 ========================================= -->
 
 <div>
 
-   
-
-    <div class="card seller-box">
-        <h2>Seller Details</h2>
-
-        <div class="seller-info">
-            <strong>Seller:</strong><br>
-            {{ car.seller_name|default:"Private Seller" }}
-        </div>
-
-        <div class="seller-info">
-            <strong>Location:</strong><br>
-            {% if car.display_location %}
-                📍 {{ car.display_location }}
-            {% else %}
-                Location not specified
-            {% endif %}
-        </div>
-
-        <div class="seller-info">
-            <strong>Contact Method:</strong><br>
-            Send an enquiry using the secure form below.
-        </div>
-
-        <div class="seller-safe-note">
-            Seller phone number and email are hidden for privacy and spam protection.
-        </div>
-    </div>
+    <!-- =========================================
+    SECTION 1 START
+    Dealer Trust Card
+    ========================================= -->
 
     {% if car.seller %}
         <div class="card dealer-trust-card">
+
             <h2>Dealer Trust</h2>
 
             <div class="dealer-name">
-                🚗 {{ car.seller.username }}
+                🏢 {{ car.seller_business_name|default:car.seller.username }}
             </div>
 
             {% if car.is_verified_listing %}
-                <div class="dealer-badge verified">✓ Verified Listing</div>
+                <div class="dealer-badge verified">
+                    ✓ Verified Listing
+                </div>
             {% endif %}
 
             {% if car.is_featured %}
-                <div class="dealer-badge premium">⭐ Featured Car</div>
+                <div class="dealer-badge premium">
+                    ⭐ Featured Car
+                </div>
             {% endif %}
 
             <div class="dealer-stat">
@@ -57,7 +39,7 @@ Premium Favourite Cars + Dealer Trust + Contact Seller
                 {% if dealer_member_since %}
                     {{ dealer_member_since|date:"M Y" }}
                 {% else %}
-                    Not available
+                    Not Available
                 {% endif %}
             </div>
 
@@ -76,37 +58,85 @@ Premium Favourite Cars + Dealer Trust + Contact Seller
                 {{ dealer_years_active }}
             </div>
 
-            <a href="{% url 'dealer_detail' car.seller.username %}" class="dealer-profile-btn">
+            <a href="{% url 'dealer_detail' car.seller.username %}"
+               class="dealer-profile-btn">
                 View Dealer Profile
             </a>
+
         </div>
     {% endif %}
 
+    <!-- =========================================
+    SECTION 1 END
+    ========================================= -->
+
+
+    <!-- =========================================
+    SECTION 2 START
+    Advertisement
+    ========================================= -->
+
     <div class="ad-banner sidebar-ad-box">
-        <div class="ad-label">Advertisement</div>
+
+        <div class="ad-label">
+            Advertisement
+        </div>
+
         <div class="ad-placeholder">
             <div>
                 <strong>Google AdSense Sidebar Ad</strong><br>
                 <span>300 x 250 Ad Space</span>
             </div>
         </div>
+
     </div>
 
+    <!-- =========================================
+    SECTION 2 END
+    ========================================= -->
+
+
+    <!-- =========================================
+    SECTION 3 START
+    Trust & Safety
+    ========================================= -->
+
     <div class="card trust-box">
+
         <h2>Trust & Safety</h2>
 
-        <div class="trust-item">✅ Always inspect the car before payment.</div>
-        <div class="trust-item">✅ Do not send money before confirming ownership.</div>
-        <div class="trust-item">✅ Use the enquiry form to keep contact secure.</div>
+        <div class="trust-item">
+            ✅ Always inspect the car before payment.
+        </div>
+
+        <div class="trust-item">
+            ✅ Do not send money before confirming ownership.
+        </div>
+
+        <div class="trust-item">
+            ✅ Use the enquiry form to keep contact secure.
+        </div>
 
         {% if car.is_verified_listing %}
             <div class="trust-item">
                 🛡 This listing has been marked as verified by MyCarMarket admin.
             </div>
         {% endif %}
+
     </div>
 
+    <!-- =========================================
+    SECTION 3 END
+    ========================================= -->
+
+
+    <!-- =========================================
+    SECTION 4 START
+    Contact Seller Form
+    ========================================= -->
+
     <div class="card contact-seller-card">
+
         <h2>📞 Contact Seller</h2>
 
         {% if messages %}
@@ -118,6 +148,7 @@ Premium Favourite Cars + Dealer Trust + Contact Seller
         {% endif %}
 
         <form method="POST" class="contact-form">
+
             {% csrf_token %}
 
             {{ form.name }}
@@ -128,7 +159,13 @@ Premium Favourite Cars + Dealer Trust + Contact Seller
             <button type="submit" class="btn">
                 Send Enquiry
             </button>
+
         </form>
+
     </div>
+
+    <!-- =========================================
+    SECTION 4 END
+    ========================================= -->
 
 </div>

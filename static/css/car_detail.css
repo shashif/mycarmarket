@@ -827,10 +827,7 @@ textarea.form-control {
     transition: 0.2s;
 }
 
-.seller-box.card {
-    position: sticky;
-    top: 25px;
-}
+
 
 .similar-card {
     transition: 0.2s;
