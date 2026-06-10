@@ -1,8 +1,8 @@
 <!-- =========================================
 MyCarMarket
-Version: v0.8.8
+Version: v0.9.0
 File: vehicles/templates/vehicles/dealer_detail.html
-Dealer Public Profile + Branding + Share + Inventory
+Premium Dealer Profile UI
 ========================================= -->
 
 <!DOCTYPE html>
@@ -21,6 +21,7 @@ Dealer Public Profile + Branding + Share + Inventory
 
 <div class="dealer-page-wrapper">
 
+    <!-- START SECTION 1: DEALER HERO -->
     <div class="dealer-hero-card">
 
         {% if dealer_profile and dealer_profile.banner %}
@@ -59,6 +60,29 @@ Dealer Public Profile + Branding + Share + Inventory
                     <p class="dealer-subtitle">
                         Trusted dealer on MyCarMarket Australia
                     </p>
+
+                    <div class="dealer-stats-row">
+                        <div class="dealer-stat-box">
+                            <strong>{{ total_cars }}</strong>
+                            <span>Cars</span>
+                        </div>
+
+                        <div class="dealer-stat-box">
+                            <strong>{{ member_since }}</strong>
+                            <span>Member Since</span>
+                        </div>
+
+                        <div class="dealer-stat-box">
+                            <strong>
+                                {% if dealer_profile and dealer_profile.is_verified %}
+                                    Verified
+                                {% else %}
+                                    Standard
+                                {% endif %}
+                            </strong>
+                            <span>Status</span>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -79,7 +103,10 @@ Dealer Public Profile + Branding + Share + Inventory
         </div>
 
     </div>
+    <!-- END SECTION 1: DEALER HERO -->
 
+
+    <!-- START SECTION 2: DEALER INFO -->
     <div class="dealer-info-grid">
 
         <div class="dealer-about-card">
@@ -94,44 +121,69 @@ Dealer Public Profile + Branding + Share + Inventory
 
         <div class="dealer-contact-card">
 
-    <h2>Dealer Details</h2>
+            <h2>Dealer Details</h2>
 
-    <p>
-        🚗 <strong>{{ cars.count }}</strong> Active Cars
-    </p>
+            {% if dealer_profile %}
+                <div class="dealer-action-buttons">
 
-    {% if dealer_profile and dealer_profile.is_verified %}
-        <p>
-            ✔ Verified Dealer
-        </p>
-    {% endif %}
+                    {% if dealer_profile.business_phone %}
+                        <a href="tel:{{ dealer_profile.business_phone }}" class="dealer-btn">
+                            📞 Call Dealer
+                        </a>
+                    {% endif %}
 
-    {% if dealer_profile and dealer_profile.website %}
-        <p>
-            <a href="{{ dealer_profile.website }}"
-               target="_blank"
-               rel="noopener">
-                🌐 Visit Website
-            </a>
-        </p>
-    {% endif %}
+                    {% if dealer_profile.business_email %}
+                        <a href="mailto:{{ dealer_profile.business_email }}" class="dealer-btn">
+                            ✉ Email Dealer
+                        </a>
+                    {% endif %}
 
-    {% if dealer_profile and dealer_profile.address and dealer_profile.address != "na" %}
-        <p>
-            📍 {{ dealer_profile.address }}
-        </p>
-    {% endif %}
+                    {% if dealer_profile.website %}
+                        <a href="{{ dealer_profile.website }}" target="_blank" rel="noopener" class="dealer-btn">
+                            🌐 Website
+                        </a>
+                    {% endif %}
 
-    {% if dealer_profile %}
-        <p>
-            📦 {{ dealer_profile.package_badge }}
-        </p>
-    {% endif %}
+                </div>
+            {% endif %}
 
-</div>
+            <p>🚗 <strong>{{ total_cars }}</strong> Active Cars</p>
+
+            {% if dealer_profile and dealer_profile.is_verified %}
+                <p>✔ Verified Dealer</p>
+            {% endif %}
+
+            {% if dealer_profile and dealer_profile.address and dealer_profile.address != "na" %}
+                <p>📍 {{ dealer_profile.address }}</p>
+            {% endif %}
+
+            {% if dealer_profile %}
+                <p>📦 {{ dealer_profile.package_badge }}</p>
+            {% endif %}
+
+        </div>
 
     </div>
+    <!-- END SECTION 2: DEALER INFO -->
 
+
+    <!-- START SECTION 3: TRUST CARD -->
+    <div class="dealer-trust-card">
+
+        <h2>Why Buy From This Dealer?</h2>
+
+        <div class="trust-grid">
+            <div>✔ Verified Dealer Account</div>
+            <div>✔ Approved Listings</div>
+            <div>✔ Active Marketplace Seller</div>
+            <div>✔ Secure MyCarMarket Platform</div>
+        </div>
+
+    </div>
+    <!-- END SECTION 3: TRUST CARD -->
+
+
+    <!-- START SECTION 4: CAR INVENTORY -->
     <h2 class="section-title">Cars from {{ business_name }}</h2>
 
     {% if cars %}
@@ -196,9 +248,12 @@ Dealer Public Profile + Branding + Share + Inventory
         </div>
 
     {% endif %}
+    <!-- END SECTION 4: CAR INVENTORY -->
 
 </div>
 
+
+<!-- START SECTION 5: PAGE STYLE -->
 <style>
 .dealer-page-wrapper {
     width: 92%;
@@ -216,7 +271,7 @@ Dealer Public Profile + Branding + Share + Inventory
 }
 
 .dealer-banner {
-    height: 230px;
+    height: 320px;
     background: #374151;
 }
 
@@ -241,25 +296,27 @@ Dealer Public Profile + Branding + Share + Inventory
 }
 
 .dealer-logo {
-    width: 95px;
-    height: 95px;
+    width: 120px;
+    height: 120px;
     border-radius: 22px;
     object-fit: cover;
     background: white;
     border: 4px solid white;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
 }
 
 .dealer-logo-placeholder {
-    width: 95px;
-    height: 95px;
+    width: 120px;
+    height: 120px;
     border-radius: 22px;
     background: white;
     color: #111827;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 38px;
+    font-size: 48px;
     border: 4px solid white;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
 }
 
 .dealer-header-content h1 {
@@ -303,6 +360,30 @@ Dealer Public Profile + Branding + Share + Inventory
     color: #1e40af;
 }
 
+.dealer-stats-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+}
+
+.dealer-stat-box {
+    background: rgba(255,255,255,0.12);
+    padding: 12px 18px;
+    border-radius: 12px;
+    min-width: 100px;
+}
+
+.dealer-stat-box strong {
+    display: block;
+    font-size: 18px;
+}
+
+.dealer-stat-box span {
+    font-size: 12px;
+    color: #d1d5db;
+}
+
 .dealer-share-box {
     text-align: right;
 }
@@ -343,6 +424,7 @@ Dealer Public Profile + Branding + Share + Inventory
 
 .dealer-about-card,
 .dealer-contact-card,
+.dealer-trust-card,
 .empty-box {
     background: white;
     padding: 28px;
@@ -351,7 +433,8 @@ Dealer Public Profile + Branding + Share + Inventory
 }
 
 .dealer-about-card h2,
-.dealer-contact-card h2 {
+.dealer-contact-card h2,
+.dealer-trust-card h2 {
     margin-top: 0;
 }
 
@@ -361,10 +444,44 @@ Dealer Public Profile + Branding + Share + Inventory
     line-height: 1.6;
 }
 
-.dealer-contact-card a {
-    color: #2563eb;
-    font-weight: bold;
+.dealer-action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.dealer-btn {
+    display: block;
+    text-align: center;
+    background: #2563eb;
+    color: white !important;
     text-decoration: none;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: bold;
+}
+
+.dealer-btn:hover {
+    background: #1d4ed8;
+}
+
+.dealer-trust-card {
+    margin-bottom: 35px;
+}
+
+.trust-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+.trust-grid div {
+    background: #f3f4f6;
+    padding: 14px;
+    border-radius: 14px;
+    color: #374151;
+    font-weight: bold;
 }
 
 .section-title {
@@ -512,7 +629,8 @@ Dealer Public Profile + Branding + Share + Inventory
         margin-bottom: 6px;
     }
 
-    .dealer-info-grid {
+    .dealer-info-grid,
+    .trust-grid {
         grid-template-columns: 1fr;
     }
 
@@ -521,7 +639,10 @@ Dealer Public Profile + Branding + Share + Inventory
     }
 }
 </style>
+<!-- END SECTION 5: PAGE STYLE -->
 
+
+<!-- START SECTION 6: COPY LINK SCRIPT -->
 <script>
     function copyDealerLink() {
         navigator.clipboard.writeText(window.location.href)
@@ -533,6 +654,7 @@ Dealer Public Profile + Branding + Share + Inventory
             });
     }
 </script>
+<!-- END SECTION 6: COPY LINK SCRIPT -->
 
 </body>
 </html>
