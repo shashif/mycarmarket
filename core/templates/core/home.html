@@ -1,8 +1,8 @@
 <!-- =========================================
 MyCarMarket
-Version: v0.6.4
+Version: v0.9.4
 File: core/templates/core/home.html
-Note: Vehicle Type Buttons Moved Inside Search Box
+Home Page + Premium Unified Car Cards
 ========================================= -->
 
 <!DOCTYPE html>
@@ -13,7 +13,7 @@ Note: Vehicle Type Buttons Moved Inside Search Box
     <title>MyCarMarket Australia - Buy, Sell & Rent Cars</title>
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/home.css' %}?v=73">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}?v=94">
 </head>
 
 <body>
@@ -40,59 +40,59 @@ Note: Vehicle Type Buttons Moved Inside Search Box
             <button type="submit" class="search-btn">Search Cars</button>
         </form>
 
-       <div class="type-grid">
+        <div class="type-grid">
 
-    <a href="{% url 'car_list' %}?body_type=SUV" class="type-card">
-        <img src="{% static 'images/vehicle-types/suv.png' %}" class="type-img" alt="SUV">
-        <span>SUV</span>
-    </a>
+            <a href="{% url 'car_list' %}?body_type=SUV" class="type-card">
+                <img src="{% static 'images/vehicle-types/suv.png' %}" class="type-img" alt="SUV">
+                <span>SUV</span>
+            </a>
 
-    <a href="{% url 'car_list' %}?body_type=Sedan" class="type-card">
-        <img src="{% static 'images/vehicle-types/sedan.png' %}" class="type-img" alt="Sedan">
-        <span>Sedan</span>
-    </a>
+            <a href="{% url 'car_list' %}?body_type=Sedan" class="type-card">
+                <img src="{% static 'images/vehicle-types/sedan.png' %}" class="type-img" alt="Sedan">
+                <span>Sedan</span>
+            </a>
 
-    <a href="{% url 'car_list' %}?body_type=Hatchback" class="type-card">
-        <img src="{% static 'images/vehicle-types/hatchback.png' %}" class="type-img" alt="Hatchback">
-        <span>Hatchback</span>
-    </a>
+            <a href="{% url 'car_list' %}?body_type=Hatchback" class="type-card">
+                <img src="{% static 'images/vehicle-types/hatchback.png' %}" class="type-img" alt="Hatchback">
+                <span>Hatchback</span>
+            </a>
 
-    <a href="{% url 'car_list' %}?body_type=Ute" class="type-card">
-        <img src="{% static 'images/vehicle-types/ute.png' %}" class="type-img" alt="Ute">
-        <span>Ute</span>
-    </a>
+            <a href="{% url 'car_list' %}?body_type=Ute" class="type-card">
+                <img src="{% static 'images/vehicle-types/ute.png' %}" class="type-img" alt="Ute">
+                <span>Ute</span>
+            </a>
 
-    <a href="{% url 'car_list' %}?body_type=Wagon" class="type-card">
-        <img src="{% static 'images/vehicle-types/wagon.png' %}" class="type-img" alt="Wagon">
-        <span>Wagon</span>
-    </a>
+            <a href="{% url 'car_list' %}?body_type=Wagon" class="type-card">
+                <img src="{% static 'images/vehicle-types/wagon.png' %}" class="type-img" alt="Wagon">
+                <span>Wagon</span>
+            </a>
 
-    <a href="{% url 'car_list' %}?body_type=Coupe" class="type-card">
-        <img src="{% static 'images/vehicle-types/coupe.png' %}" class="type-img" alt="Coupe">
-        <span>Coupe</span>
-    </a>
+            <a href="{% url 'car_list' %}?body_type=Coupe" class="type-card">
+                <img src="{% static 'images/vehicle-types/coupe.png' %}" class="type-img" alt="Coupe">
+                <span>Coupe</span>
+            </a>
 
-    <a href="{% url 'car_list' %}?body_type=Convertible" class="type-card">
-        <img src="{% static 'images/vehicle-types/convertible.png' %}" class="type-img" alt="Convertible">
-        <span>Convertible</span>
-    </a>
+            <a href="{% url 'car_list' %}?body_type=Convertible" class="type-card">
+                <img src="{% static 'images/vehicle-types/convertible.png' %}" class="type-img" alt="Convertible">
+                <span>Convertible</span>
+            </a>
 
-    <a href="{% url 'car_list' %}?body_type=Van" class="type-card">
-        <img src="{% static 'images/vehicle-types/van.png' %}" class="type-img" alt="Van">
-        <span>Van</span>
-    </a>
+            <a href="{% url 'car_list' %}?body_type=Van" class="type-card">
+                <img src="{% static 'images/vehicle-types/van.png' %}" class="type-img" alt="Van">
+                <span>Van</span>
+            </a>
 
-    <a href="{% url 'car_list' %}?fuel_type=Electric" class="type-card">
-        <img src="{% static 'images/vehicle-types/electric.png' %}" class="type-img" alt="Electric">
-        <span>Electric</span>
-    </a>
+            <a href="{% url 'car_list' %}?fuel_type=Electric" class="type-card">
+                <img src="{% static 'images/vehicle-types/electric.png' %}" class="type-img" alt="Electric">
+                <span>Electric</span>
+            </a>
 
-    <a href="{% url 'car_list' %}?fuel_type=Hybrid" class="type-card">
-        <img src="{% static 'images/vehicle-types/hybrid.png' %}" class="type-img" alt="Hybrid">
-        <span>Hybrid</span>
-    </a>
+            <a href="{% url 'car_list' %}?fuel_type=Hybrid" class="type-card">
+                <img src="{% static 'images/vehicle-types/hybrid.png' %}" class="type-img" alt="Hybrid">
+                <span>Hybrid</span>
+            </a>
 
-</div>
+        </div>
     </div>
 
     <div class="ad-banner">
@@ -129,48 +129,72 @@ Note: Vehicle Type Buttons Moved Inside Search Box
 
     <h2 class="section-title">Featured Cars</h2>
 
-    <div class="cars-grid">
+    <div class="premium-car-grid">
         {% for car in featured_cars %}
-<a href="{% url 'car_detail' car.slug %}" class="car-card-link">
-    <div class="car-card">
 
-                <div class="image-wrap">
+            <a href="{% url 'car_detail' car.slug %}" class="premium-car-card">
 
-                    <div class="featured-badge">⭐ FEATURED</div>
-
-                    {% if car.is_verified_listing %}
-                        <div class="verified-badge">🛡 VERIFIED</div>
-                    {% endif %}
+                <div class="premium-car-image-wrap">
 
                     {% with car.images.first as car_image %}
                         {% if car_image %}
-                            <img src="{{ car_image.image.url }}" class="car-image" alt="{{ car.title }}">
+                            <img src="{{ car_image.image.url }}" alt="{{ car.title }}">
                         {% else %}
-                            <div class="no-image">No Image Available</div>
+                            <div class="no-image-box">No Image Available</div>
                         {% endif %}
                     {% endwith %}
 
-                </div>
-
-                <div class="car-content">
-                    <div class="price">${{ car.price }}</div>
-                    <div class="car-title">{{ car.title }}</div>
-
-                  <div class="meta">
-    <span>📅 {{ car.year }}</span>
-    <span>🛣 {{ car.kilometres }} km</span>
-    <span>⚙ {{ car.transmission|default:"N/A"|title }}</span>
-    <span>⛽ {{ car.fuel_type|default:"N/A"|title }}</span>
-</div>
-
-                    {% if car.display_location %}
-                       <div class="location">📍 {{ car.display_location }}</div>
+                    {% if car.is_featured %}
+                        <span class="featured-badge">⭐ Featured</span>
                     {% endif %}
 
-                   
+                    {% if car.is_verified_listing %}
+                        <span class="verified-badge">✓ Verified</span>
+                    {% endif %}
+
                 </div>
 
-            </div></a>
+                <div class="premium-car-info">
+
+                    <h3>{{ car.title }}</h3>
+
+                    <p class="car-meta">
+                        🚘 {{ car.year }} • {{ car.make }} {{ car.model }}
+                    </p>
+
+                    <div class="dealer-info">
+                        <p class="dealer-name">
+                            🏢 {{ car.seller_business_name }}
+                        </p>
+
+                        {% if car.seller_is_verified %}
+                            <span class="dealer-verified">✔ Verified Dealer</span>
+                        {% endif %}
+
+                        {% if car.seller_is_featured_dealer %}
+                            <span class="dealer-featured">⭐ Featured Dealer</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="icon-info-grid">
+                        <span>🛣 {{ car.kilometres }} km</span>
+                        <span>⚙️ {{ car.transmission|default:"N/A" }}</span>
+                        <span>⛽ {{ car.fuel_type|default:"N/A" }}</span>
+                        <span>👁 {{ car.views_count }} views</span>
+                    </div>
+
+                    <p class="car-location">
+                        📍 {{ car.display_location|default:"Location not specified" }}
+                    </p>
+
+                    <div class="price-row">
+                        <strong>${{ car.price }}</strong>
+                    </div>
+
+                </div>
+
+            </a>
+
         {% empty %}
             <p>No featured cars yet. Mark cars as featured from the admin panel.</p>
         {% endfor %}
@@ -188,54 +212,72 @@ Note: Vehicle Type Buttons Moved Inside Search Box
 
     <h2 class="section-title">Latest Cars</h2>
 
-    <div class="cars-grid">
-     {% for car in latest_cars %}
-<a href="{% url 'car_detail' car.slug %}" class="car-card-link">
-    <div class="car-card">
+    <div class="premium-car-grid">
+        {% for car in latest_cars %}
 
-                <div class="image-wrap">
+            <a href="{% url 'car_detail' car.slug %}" class="premium-car-card">
 
-                    {% if car.is_featured %}
-                        <div class="featured-badge">
-                            ⭐ FEATURED
-                        </div>
-                    {% endif %}
-
-                    {% if car.is_verified_listing %}
-                        <div class="verified-badge">
-                            🛡 VERIFIED
-                        </div>
-                    {% endif %}
+                <div class="premium-car-image-wrap">
 
                     {% with car.images.first as car_image %}
                         {% if car_image %}
-                            <img src="{{ car_image.image.url }}" class="car-image" alt="{{ car.title }}">
+                            <img src="{{ car_image.image.url }}" alt="{{ car.title }}">
                         {% else %}
-                            <div class="no-image">No Image Available</div>
+                            <div class="no-image-box">No Image Available</div>
                         {% endif %}
                     {% endwith %}
 
-                </div>
-
-                <div class="car-content">
-                    <div class="price">${{ car.price }}</div>
-                    <div class="car-title">{{ car.title }}</div>
-
-                 <div class="meta">
-    <span>📅 {{ car.year }}</span>
-    <span>🛣 {{ car.kilometres }} km</span>
-    <span>⚙ {{ car.transmission|default:"N/A"|title }}</span>
-    <span>⛽ {{ car.fuel_type|default:"N/A"|title }}</span>
-</div>
-
-                    {% if car.display_location %}
-                       <div class="location">📍 {{ car.display_location }}</div>
+                    {% if car.is_featured %}
+                        <span class="featured-badge">⭐ Featured</span>
                     {% endif %}
 
-                    
+                    {% if car.is_verified_listing %}
+                        <span class="verified-badge">✓ Verified</span>
+                    {% endif %}
+
                 </div>
 
-            </div></a>
+                <div class="premium-car-info">
+
+                    <h3>{{ car.title }}</h3>
+
+                    <p class="car-meta">
+                        🚘 {{ car.year }} • {{ car.make }} {{ car.model }}
+                    </p>
+
+                    <div class="dealer-info">
+                        <p class="dealer-name">
+                            🏢 {{ car.seller_business_name }}
+                        </p>
+
+                        {% if car.seller_is_verified %}
+                            <span class="dealer-verified">✔ Verified Dealer</span>
+                        {% endif %}
+
+                        {% if car.seller_is_featured_dealer %}
+                            <span class="dealer-featured">⭐ Featured Dealer</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="icon-info-grid">
+                        <span>🛣 {{ car.kilometres }} km</span>
+                        <span>⚙️ {{ car.transmission|default:"N/A" }}</span>
+                        <span>⛽ {{ car.fuel_type|default:"N/A" }}</span>
+                        <span>👁 {{ car.views_count }} views</span>
+                    </div>
+
+                    <p class="car-location">
+                        📍 {{ car.display_location|default:"Location not specified" }}
+                    </p>
+
+                    <div class="price-row">
+                        <strong>${{ car.price }}</strong>
+                    </div>
+
+                </div>
+
+            </a>
+
         {% empty %}
             <p>No cars available yet.</p>
         {% endfor %}

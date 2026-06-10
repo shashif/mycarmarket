@@ -1,28 +1,66 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.7.1
+# Version: v0.9.5
 # File: vehicles/views/car_manage_views.py
-# Create, My Listings, Edit, Delete Views
-# Normal User Approval + Dealer Auto Approval
+# Dealer Package Listing Limits + Dashboard Analytics
 # ==========================================
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
-from vehicles.models import Car
+from vehicles.models import Car, Enquiry
 from vehicles.forms import CarForm
 
 
 def user_is_dealer(user):
     return (
-        hasattr(user, 'profile') and
-        user.profile.account_type == 'dealer'
+        hasattr(user, 'dealer_profile') and
+        user.dealer_profile.is_dealer and
+        user.dealer_profile.package_active
     )
+
+
+def get_listing_limit(user):
+    if not hasattr(user, 'dealer_profile'):
+        return 1
+
+    profile = user.dealer_profile
+
+    if not profile.package_active:
+        return 0
+
+    if profile.package == 'enterprise':
+        return None
+
+    return profile.max_listings
+
+
+def user_can_create_listing(user):
+    if user.is_staff:
+        return True
+
+    listing_limit = get_listing_limit(user)
+
+    if listing_limit is None:
+        return True
+
+    current_count = Car.objects.filter(
+        seller=user
+    ).count()
+
+    return current_count < listing_limit
 
 
 @login_required
 def create_car(request):
+    if not user_can_create_listing(request.user):
+        messages.error(
+            request,
+            'You have reached your package listing limit. Please upgrade your dealer package to add more cars.'
+        )
+        return redirect('my_listings')
+
     if request.method == 'POST':
         form = CarForm(request.POST, request.FILES)
 
@@ -54,7 +92,7 @@ def create_car(request):
                     'Car listing submitted successfully. It is waiting for admin approval.'
                 )
 
-            return redirect('car_detail', pk=car.pk)
+            return redirect('car_detail', slug=car.slug)
 
     else:
         form = CarForm()
@@ -80,6 +118,35 @@ def my_listings(request):
 
     approved_listings = cars.filter(is_approved=True).count()
     pending_listings = cars.filter(is_approved=False).count()
+    active_listings = cars.filter(is_active=True).count()
+    featured_listings = cars.filter(is_featured=True).count()
+
+    listing_limit = get_listing_limit(request.user)
+
+    if listing_limit is None:
+        listings_remaining = 'Unlimited'
+        listing_limit_display = 'Unlimited'
+    else:
+        listings_remaining = max(0, listing_limit - total_listings)
+        listing_limit_display = listing_limit
+
+    if total_listings > 0:
+        average_views = round(total_views / total_listings)
+    else:
+        average_views = 0
+
+    top_performing_cars = cars.order_by('-views_count')[:5]
+
+    recent_enquiries = Enquiry.objects.filter(
+        car__seller=request.user
+    ).select_related('car').order_by('-created_at')[:8]
+
+    dealer_score = (
+        total_listings * 5 +
+        total_views +
+        total_enquiries * 10 +
+        featured_listings * 20
+    )
 
     return render(
         request,
@@ -91,6 +158,14 @@ def my_listings(request):
             'total_enquiries': total_enquiries,
             'approved_listings': approved_listings,
             'pending_listings': pending_listings,
+            'active_listings': active_listings,
+            'featured_listings': featured_listings,
+            'listing_limit': listing_limit_display,
+            'listings_remaining': listings_remaining,
+            'average_views': average_views,
+            'top_performing_cars': top_performing_cars,
+            'recent_enquiries': recent_enquiries,
+            'dealer_score': dealer_score,
         }
     )
 
@@ -137,7 +212,7 @@ def edit_car(request, pk):
                     'Car listing updated successfully. It is waiting for admin approval again.'
                 )
 
-            return redirect('car_detail', pk=car.pk)
+            return redirect('car_detail', slug=car.slug)
 
     else:
         form = CarForm(instance=car)

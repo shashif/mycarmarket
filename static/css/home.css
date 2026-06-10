@@ -1,24 +1,13 @@
 /* ==========================================
-MyCarMarket v0.7.3
-Clickable Card Link Fix
+MyCarMarket
+Version: v0.9.4
+File: static/css/home.css
+Home Page + Premium Unified Car Cards
 ========================================== */
 
-.car-card-link,
-.car-card-link:hover,
-.car-card-link:visited,
-.car-card-link:active {
-    text-decoration: none !important;
-    color: inherit !important;
-    display: block;
-}
-
-.car-card-link * {
-    text-decoration: none !important;
-}
-
-.car-card {
-    cursor: pointer;
-}
+/* ==========================================
+HERO IMAGE
+========================================== */
 
 .market-hero {
     width: 100%;
@@ -38,99 +27,40 @@ Clickable Card Link Fix
     position: relative;
 }
 
+/* ==========================================
+SEARCH BOX
+========================================== */
+
 .search-box {
+    padding: 25px;
+    border-radius: 22px;
     margin-top: -70px;
     position: relative;
     z-index: 10;
+    background: white;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.15);
 }
 
-@media (max-width: 768px) {
-
-    .market-hero {
-        height: 280px;
-    }
-
-    .search-box {
-        margin-top: -35px;
-    }
-
+.search-title {
+    margin-top: 0;
 }
 
-.hero-with-image {
+.search-form {
     display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    align-items: center;
-    gap: 40px;
-    padding: 70px 8%;
-    text-align: left;
-    min-height: 460px;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
 }
 
-.hero-content h1 {
-    font-size: 56px;
-    line-height: 1.1;
-    margin-bottom: 22px;
+.search-input {
+    padding: 16px;
+    font-size: 17px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
 }
 
-.hero-content p {
-    font-size: 22px;
-    color: #d1d5db;
-    margin-bottom: 35px;
-}
-
-.hero-photo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.hero-photo img {
-    width: 100%;
-    max-width: 620px;
-    max-height: 360px;
-    object-fit: contain;
-    filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.35));
-}
-
-@media (max-width: 900px) {
-    .hero-with-image {
-        grid-template-columns: 1fr;
-        text-align: center;
-        padding: 55px 6%;
-    }
-
-    .hero-content h1 {
-        font-size: 40px;
-    }
-
-    .hero-content p {
-        font-size: 18px;
-    }
-
-    .hero-buttons {
-        justify-content: center;
-    }
-
-    .hero-photo img {
-        max-height: 280px;
-    }
-}
-
-.type-img {
-    width: 90px;
-    height: 50px;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto 8px;
-}
-
-.special-type {
-    background: linear-gradient(
-        135deg,
-        #eff6ff,
-        #dbeafe
-    );
-}
+/* ==========================================
+VEHICLE TYPE GRID
+========================================== */
 
 .type-grid {
     display: grid;
@@ -155,7 +85,13 @@ Clickable Card Link Fix
     box-shadow: 0 14px 35px rgba(0,0,0,0.12);
 }
 
-
+.type-img {
+    width: 90px;
+    height: 50px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 8px;
+}
 
 .type-card span {
     display: block;
@@ -163,84 +99,9 @@ Clickable Card Link Fix
     font-weight: bold;
 }
 
-
-
-
-
-
-
-.hero {
-    background: linear-gradient(135deg, #111827, #1f2937);
-    color: white;
-    padding: 70px 60px;
-    text-align: center;
-}
-
-.hero h1 {
-    font-size: 46px;
-    margin-bottom: 15px;
-}
-
-.hero p {
-    font-size: 20px;
-    color: #d1d5db;
-    margin-bottom: 30px;
-}
-
-.hero-buttons a {
-    display: inline-block;
-    padding: 14px 28px;
-    border-radius: 10px;
-    text-decoration: none;
-    font-weight: bold;
-    margin: 8px;
-}
-
-.primary-btn {
-    background: #2563eb;
-    color: white;
-}
-
-.secondary-btn {
-    background: white;
-    color: #111827;
-}
-
-.section-title {
-    font-size: 30px;
-    color: #111827;
-    margin-bottom: 20px;
-}
-
-.search-box,
-.stat-card,
-.car-card {
-    background: white;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-}
-
-.search-box {
-    padding: 25px;
-    border-radius: 22px;
-    margin-top: -70px;
-    position: relative;
-    z-index: 10;
-    background: white;
-    box-shadow: 0 20px 45px rgba(0,0,0,0.15);
-}
-
-.search-form {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 12px;
-}
-
-.search-input {
-    padding: 16px;
-    font-size: 17px;
-    border: 1px solid #d1d5db;
-    border-radius: 10px;
-}
+/* ==========================================
+STATS
+========================================== */
 
 .stats {
     display: grid;
@@ -250,9 +111,11 @@ Clickable Card Link Fix
 }
 
 .stat-card {
+    background: white;
     padding: 25px;
     border-radius: 16px;
     text-align: center;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
 }
 
 .stat-card h2 {
@@ -260,40 +123,60 @@ Clickable Card Link Fix
     margin-bottom: 8px;
 }
 
-.cars-grid {
+/* ==========================================
+SECTION TITLE
+========================================== */
+
+.section-title {
+    font-size: 30px;
+    color: #111827;
+    margin-bottom: 20px;
+}
+
+/* ==========================================
+PREMIUM UNIFIED CAR CARDS
+Same style as Buy Cars / Search Results page
+========================================== */
+
+.premium-car-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
     margin-bottom: 45px;
 }
 
-.car-card {
-    border-radius: 16px;
-    overflow: hidden;
-    transition: 0.2s;
-    position: relative;
-}
-
-.car-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
-}
-
-.image-wrap {
-    height: 230px;
-    background: #f3f4f6;
-    position: relative;
-}
-
-.car-image {
-    width: 100%;
-    height: 230px;
-    object-fit: cover;
+.premium-car-card {
     display: block;
+    background: white;
+    color: inherit;
+    text-decoration: none;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.10);
+    transition: 0.25s;
 }
 
-.no-image {
-    height: 230px;
+.premium-car-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 36px rgba(0,0,0,0.14);
+}
+
+.premium-car-image-wrap {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+    background: #e5e7eb;
+}
+
+.premium-car-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.no-image-box {
+    height: 220px;
+    background: #e5e7eb;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -301,59 +184,117 @@ Clickable Card Link Fix
     font-weight: bold;
 }
 
-.car-content {
+.featured-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: #f59e0b;
+    color: white;
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: bold;
+    z-index: 2;
+}
+
+.verified-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: #16a34a;
+    color: white;
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: bold;
+    z-index: 2;
+}
+
+.premium-car-info {
     padding: 18px;
 }
 
-.price {
-    font-size: 25px;
-    color: #059669;
-    font-weight: bold;
-    margin-bottom: 8px;
-}
-
-.car-title {
-    font-size: 18px;
-    font-weight: bold;
+.premium-car-info h3 {
+    margin: 0 0 8px;
+    font-size: 20px;
     color: #111827;
-    margin-bottom: 12px;
-    line-height: 1.35;
 }
 
-.meta {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin-bottom: 14px;
-    color: #4b5563;
+.car-meta {
+    color: #374151;
+    margin: 6px 0 12px;
     font-size: 14px;
 }
 
-.meta span {
-    background: #f9fafb;
-    padding: 9px 10px;
-    border-radius: 10px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 6px;
+.dealer-info {
+    margin: 10px 0 12px;
 }
 
-.car-card {
-    cursor: pointer;
-}
-
-.car-card-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-}
-
-.location {
+.dealer-name {
+    margin: 0 0 8px;
     color: #374151;
     font-size: 14px;
-    margin-bottom: 16px;
+    font-weight: bold;
 }
+
+.dealer-verified,
+.dealer-featured {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.dealer-verified {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.dealer-featured {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.icon-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin: 12px 0;
+}
+
+.icon-info-grid span {
+    background: #f3f4f6;
+    color: #374151;
+    padding: 8px;
+    border-radius: 10px;
+    font-size: 13px;
+}
+
+.car-location {
+    color: #374151;
+    margin: 12px 0;
+    font-size: 14px;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    gap: 10px;
+}
+
+.price-row strong {
+    font-size: 24px;
+    color: #111827;
+}
+
+/* ==========================================
+CALL TO ACTION
+========================================== */
 
 .cta {
     background: #111827;
@@ -380,25 +321,45 @@ Clickable Card Link Fix
     margin-top: 15px;
 }
 
+/* ==========================================
+RESPONSIVE
+========================================== */
+
 @media (max-width: 1100px) {
-    .cars-grid,
+    .premium-car-grid,
     .stats {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    .type-grid {
+        grid-template-columns: repeat(5, 1fr);
     }
 }
 
 @media (max-width: 768px) {
-    .hero {
-        padding: 50px 20px;
+    .market-hero {
+        height: 280px;
     }
 
-    .hero h1 {
-        font-size: 34px;
+    .search-box {
+        margin-top: -35px;
     }
 
     .search-form,
-    .cars-grid,
+    .premium-car-grid,
     .stats {
         grid-template-columns: 1fr;
+    }
+
+    .type-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cta {
+        padding: 30px 20px;
+    }
+
+    .cta h2 {
+        font-size: 26px;
     }
 }

@@ -1,8 +1,8 @@
 /* ==========================================
 MyCarMarket
-Version: v0.5.2.1
+Version: v0.9.2
 File: static/css/style.css
-Common Global Styles
+Global Styles + Navbar Fix
 ========================================== */
 
 body {
@@ -12,6 +12,10 @@ body {
     padding: 0;
     color: #111827;
 }
+
+/* ==========================================
+NAVBAR
+========================================== */
 
 .navbar {
     background: #111827;
@@ -29,6 +33,12 @@ body {
     text-decoration: none;
 }
 
+.nav-links {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
 .nav-links a {
     color: white;
     text-decoration: none;
@@ -40,10 +50,36 @@ body {
     color: #93c5fd;
 }
 
+.nav-links form {
+    display: inline;
+}
+
+.nav-links button {
+    background: none;
+    border: none;
+    color: white;
+    font-weight: bold;
+    margin-left: 22px;
+    cursor: pointer;
+    font-size: inherit;
+}
+
+.nav-links button:hover {
+    color: #93c5fd;
+}
+
+/* ==========================================
+CONTAINER
+========================================== */
+
 .container {
     width: 90%;
     margin: 40px auto;
 }
+
+/* ==========================================
+FOOTER
+========================================== */
 
 .footer {
     background: #111827;
@@ -52,6 +88,10 @@ body {
     padding: 25px;
     margin-top: 40px;
 }
+
+/* ==========================================
+BUTTONS
+========================================== */
 
 .view-btn,
 .search-btn,
@@ -89,6 +129,10 @@ body {
     background: #1d4ed8;
 }
 
+/* ==========================================
+BADGES
+========================================== */
+
 .featured-badge {
     position: absolute;
     top: 12px;
@@ -114,6 +158,10 @@ body {
     font-weight: bold;
     z-index: 2;
 }
+
+/* ==========================================
+ADS READY
+========================================== */
 
 .ad-banner {
     background: white;
@@ -149,15 +197,25 @@ body {
     color: #6b7280;
 }
 
+/* ==========================================
+MOBILE
+========================================== */
+
 @media (max-width: 768px) {
+
     .navbar {
         padding: 18px 20px;
         flex-direction: column;
         gap: 15px;
     }
 
-    .nav-links a {
-        margin: 0 8px;
+    .nav-links {
+        justify-content: center;
+    }
+
+    .nav-links a,
+    .nav-links button {
+        margin: 6px 8px;
         font-size: 14px;
     }
 

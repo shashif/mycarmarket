@@ -1,15 +1,19 @@
 <!-- =========================================
 MyCarMarket
-Version: v0.5.1 - Seller Dashboard
+Version: v0.9.5
 File: vehicles/templates/vehicles/my_listings.html
+Seller Dashboard + Dealer Analytics + Package Limits
 ========================================= -->
 
 <!DOCTYPE html>
 <html>
 <head>
+    {% load static %}
+
     <title>My Listings - MyCarMarket</title>
 
-    <!-- START SECTION 1: PAGE STYLE -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
     <style>
         body {
             margin: 0;
@@ -18,54 +22,6 @@ File: vehicles/templates/vehicles/my_listings.html
             color: #111827;
         }
 
-        /* START SECTION 1.1: NAVBAR STYLE */
-        .navbar {
-            background: #111827;
-            color: white;
-            padding: 18px 60px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            color: white;
-            text-decoration: none;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            margin-left: 22px;
-            font-weight: bold;
-        }
-
-        .nav-links a:hover {
-            color: #93c5fd;
-        }
-
-        .nav-links form {
-            display: inline;
-        }
-
-        .nav-links button {
-            background: none;
-            border: none;
-            color: white;
-            font-weight: bold;
-            margin-left: 22px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .nav-links button:hover {
-            color: #93c5fd;
-        }
-        /* END SECTION 1.1: NAVBAR STYLE */
-
-        /* START SECTION 1.2: PAGE LAYOUT */
         .container {
             width: 90%;
             margin: 35px auto;
@@ -80,17 +36,17 @@ File: vehicles/templates/vehicles/my_listings.html
             color: #6b7280;
             margin-bottom: 30px;
         }
-        /* END SECTION 1.2: PAGE LAYOUT */
 
-        /* START SECTION 1.3: DASHBOARD STATS */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 20px;
             margin-bottom: 35px;
         }
 
-        .stat-card {
+        .stat-card,
+        .analytics-box,
+        .empty-box {
             background: white;
             padding: 25px;
             border-radius: 18px;
@@ -108,9 +64,65 @@ File: vehicles/templates/vehicles/my_listings.html
             color: #6b7280;
             font-weight: bold;
         }
-        /* END SECTION 1.3: DASHBOARD STATS */
 
-        /* START SECTION 1.4: LISTING CARDS */
+        .package-box {
+            margin-bottom: 35px;
+        }
+
+        .package-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 18px;
+        }
+
+        .package-item {
+            background: #f3f4f6;
+            padding: 18px;
+            border-radius: 14px;
+        }
+
+        .package-item strong {
+            display: block;
+            font-size: 24px;
+            color: #2563eb;
+            margin-bottom: 6px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .analytics-box h2 {
+            margin-top: 0;
+            font-size: 24px;
+        }
+
+        .rank-row,
+        .lead-row {
+            border-bottom: 1px solid #e5e7eb;
+            padding: 12px 0;
+        }
+
+        .rank-row:last-child,
+        .lead-row:last-child {
+            border-bottom: none;
+        }
+
+        .lead-meta {
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-size: 28px;
+            margin: 30px 0 18px;
+        }
+
         .listing-card {
             background: white;
             border-radius: 18px;
@@ -159,9 +171,7 @@ File: vehicles/templates/vehicles/my_listings.html
             margin-bottom: 12px;
             line-height: 1.6;
         }
-        /* END SECTION 1.4: LISTING CARDS */
 
-        /* START SECTION 1.5: BADGES */
         .badge {
             display: inline-block;
             padding: 6px 12px;
@@ -169,6 +179,7 @@ File: vehicles/templates/vehicles/my_listings.html
             font-size: 13px;
             font-weight: bold;
             margin-right: 6px;
+            margin-top: 6px;
         }
 
         .active {
@@ -185,14 +196,23 @@ File: vehicles/templates/vehicles/my_listings.html
             background: #fef3c7;
             color: #92400e;
         }
-        /* END SECTION 1.5: BADGES */
 
-        /* START SECTION 1.6: ACTION BUTTONS */
+        .pending {
+            background: #ffedd5;
+            color: #9a3412;
+        }
+
+        .approved {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
         .actions {
             margin-top: 15px;
         }
 
-        .actions a {
+        .actions a,
+        .upgrade-btn {
             display: inline-block;
             text-decoration: none;
             padding: 10px 15px;
@@ -216,7 +236,8 @@ File: vehicles/templates/vehicles/my_listings.html
             color: white;
         }
 
-        .sell-btn {
+        .sell-btn,
+        .upgrade-btn {
             display: inline-block;
             background: #2563eb;
             color: white;
@@ -226,21 +247,22 @@ File: vehicles/templates/vehicles/my_listings.html
             font-weight: bold;
             margin-top: 15px;
         }
-        /* END SECTION 1.6: ACTION BUTTONS */
 
-        /* START SECTION 1.7: EMPTY STATE */
-        .empty-box {
-            background: white;
-            padding: 35px;
-            border-radius: 18px;
-            text-align: center;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        .upgrade-btn:hover,
+        .sell-btn:hover,
+        .view-btn:hover {
+            background: #1d4ed8;
         }
-        /* END SECTION 1.7: EMPTY STATE */
 
-        /* START SECTION 1.8: RESPONSIVE STYLE */
-        @media (max-width: 900px) {
-            .stats-grid {
+        .empty-box {
+            padding: 35px;
+            text-align: center;
+        }
+
+        @media (max-width: 1000px) {
+            .stats-grid,
+            .dashboard-grid,
+            .package-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -254,44 +276,27 @@ File: vehicles/templates/vehicles/my_listings.html
                 height: 220px;
             }
         }
-
-        @media (max-width: 700px) {
-            .navbar {
-                padding: 18px 20px;
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .nav-links a,
-            .nav-links button {
-                margin: 0 8px;
-                font-size: 14px;
-            }
-        }
-        /* END SECTION 1.8: RESPONSIVE STYLE */
     </style>
-    <!-- END SECTION 1: PAGE STYLE -->
-
 </head>
 
 <body>
 
-<!-- START SECTION 2: NAVBAR -->
 {% include 'includes/navbar.html' %}
-<!-- END SECTION 2: NAVBAR -->
 
 <div class="container">
 
-    <!-- START SECTION 3: PAGE HEADER -->
     <h1 class="page-title">My Seller Dashboard</h1>
-    <p class="subtitle">Manage your vehicle listings, views, and enquiries.</p>
-    <!-- END SECTION 3: PAGE HEADER -->
+    <p class="subtitle">Manage your vehicle listings, views, enquiries, package limits, and dealer performance.</p>
 
-    <!-- START SECTION 4: DASHBOARD STATS -->
     <div class="stats-grid">
         <div class="stat-card">
             <h2>{{ total_listings }}</h2>
             <p>Total Listings</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>{{ active_listings }}</h2>
+            <p>Active Listings</p>
         </div>
 
         <div class="stat-card">
@@ -303,10 +308,105 @@ File: vehicles/templates/vehicles/my_listings.html
             <h2>{{ total_enquiries }}</h2>
             <p>Total Enquiries</p>
         </div>
-    </div>
-    <!-- END SECTION 4: DASHBOARD STATS -->
 
-    <!-- START SECTION 5: LISTINGS -->
+        <div class="stat-card">
+            <h2>{{ approved_listings }}</h2>
+            <p>Approved Listings</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>{{ pending_listings }}</h2>
+            <p>Pending Approval</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>{{ featured_listings }}</h2>
+            <p>Featured Listings</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>{{ average_views }}</h2>
+            <p>Average Views</p>
+        </div>
+    </div>
+
+    <div class="analytics-box package-box">
+        <h2>📦 Dealer Package Limit</h2>
+        <p class="subtitle">Your package controls how many cars you can list on MyCarMarket.</p>
+
+        <div class="package-grid">
+            <div class="package-item">
+                <strong>{{ listing_limit }}</strong>
+                Listing Limit
+            </div>
+
+            <div class="package-item">
+                <strong>{{ total_listings }}</strong>
+                Listings Used
+            </div>
+
+            <div class="package-item">
+                <strong>{{ listings_remaining }}</strong>
+                Listings Remaining
+            </div>
+        </div>
+
+        <a href="{% url 'dealer_packages' %}" class="upgrade-btn">
+            Upgrade Package
+        </a>
+    </div>
+
+    <div class="dashboard-grid">
+
+        <div class="analytics-box">
+            <h2>🏆 Top Performing Cars</h2>
+
+            {% if top_performing_cars %}
+                {% for car in top_performing_cars %}
+                    <div class="rank-row">
+                        <strong>{{ forloop.counter }}. {{ car.title }}</strong><br>
+                        👁️ {{ car.views_count }} views |
+                        ✉️ {{ car.enquiries.count }} enquiries
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No performance data yet.</p>
+            {% endif %}
+        </div>
+
+        <div class="analytics-box">
+            <h2>📨 Recent Enquiries</h2>
+
+            {% if recent_enquiries %}
+                {% for enquiry in recent_enquiries %}
+                    <div class="lead-row">
+                        <strong>{{ enquiry.name }}</strong><br>
+                        Interested in: {{ enquiry.car.title }}
+                        <div class="lead-meta">
+                            Email: {{ enquiry.email }}<br>
+                            Phone: {{ enquiry.phone|default:"Not provided" }}<br>
+                            Sent: {{ enquiry.created_at|date:"d M Y, h:i A" }}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No enquiries yet.</p>
+            {% endif %}
+        </div>
+
+    </div>
+
+    <div class="analytics-box">
+        <h2>🚀 Dealer Performance Score</h2>
+        <p>Your current dealer score is:</p>
+        <h2>{{ dealer_score }}</h2>
+        <p class="subtitle">
+            Score increases with more listings, views, enquiries, and featured cars.
+        </p>
+    </div>
+
+    <h2 class="section-title">Your Listings</h2>
+
     {% if cars %}
         {% for car in cars %}
             <div class="listing-card">
@@ -350,6 +450,12 @@ File: vehicles/templates/vehicles/my_listings.html
                         <span class="badge inactive">Inactive</span>
                     {% endif %}
 
+                    {% if car.is_approved %}
+                        <span class="badge approved">Approved</span>
+                    {% else %}
+                        <span class="badge pending">Pending Approval</span>
+                    {% endif %}
+
                     {% if car.is_featured %}
                         <span class="badge featured">Featured</span>
                     {% endif %}
@@ -370,7 +476,6 @@ File: vehicles/templates/vehicles/my_listings.html
             <a href="{% url 'create_car' %}" class="sell-btn">Sell Your First Car</a>
         </div>
     {% endif %}
-    <!-- END SECTION 5: LISTINGS -->
 
 </div>
 

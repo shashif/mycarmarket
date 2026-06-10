@@ -7,10 +7,9 @@
         <a href="{% url 'create_car' %}">Sell Car</a>
         <a href="{% url 'dealers' %}">Dealers</a>
 
-        <!-- NEW v0.8.5 -->
-      <a href="{% url 'dealer_packages' %}">
-    ⭐ Dealer Packages
-</a>
+        <a href="{% url 'dealer_packages' %}">
+            ⭐ Dealer Packages
+        </a>
 
         {% if user.is_authenticated %}
 
@@ -19,7 +18,7 @@
             </a>
 
             <a href="{% url 'my_listings' %}">
-                My Listings
+                📊 Dashboard
             </a>
 
             <form method="POST"

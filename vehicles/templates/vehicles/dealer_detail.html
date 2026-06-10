@@ -1,8 +1,8 @@
 <!-- =========================================
 MyCarMarket
-Version: v0.9.0
+Version: v0.9.3
 File: vehicles/templates/vehicles/dealer_detail.html
-Premium Dealer Profile UI
+Premium Dealer Profile UI + Dealer Trust Centre
 ========================================= -->
 
 <!DOCTYPE html>
@@ -167,7 +167,50 @@ Premium Dealer Profile UI
     <!-- END SECTION 2: DEALER INFO -->
 
 
-    <!-- START SECTION 3: TRUST CARD -->
+    <!-- START SECTION 3: DEALER TRUST CENTRE -->
+    <div class="dealer-trust-centre">
+
+        <h2>🏆 Dealer Trust Centre</h2>
+
+        <div class="trust-score-big">
+            {{ trust_score }}/100
+        </div>
+
+        <p class="trust-score-text">
+            Trust score is based on active cars, vehicle views, enquiries, dealer age, verification, and featured dealer status.
+        </p>
+
+        <div class="trust-grid">
+            <div>
+                🚗 {{ total_cars }}
+                <br>
+                Active Cars
+            </div>
+
+            <div>
+                👁 {{ total_views }}
+                <br>
+                Vehicle Views
+            </div>
+
+            <div>
+                📨 {{ total_enquiries }}
+                <br>
+                Customer Enquiries
+            </div>
+
+            <div>
+                📅 {{ years_active }}
+                <br>
+                Years Active
+            </div>
+        </div>
+
+    </div>
+    <!-- END SECTION 3: DEALER TRUST CENTRE -->
+
+
+    <!-- START SECTION 4: TRUST CARD -->
     <div class="dealer-trust-card">
 
         <h2>Why Buy From This Dealer?</h2>
@@ -180,10 +223,10 @@ Premium Dealer Profile UI
         </div>
 
     </div>
-    <!-- END SECTION 3: TRUST CARD -->
+    <!-- END SECTION 4: TRUST CARD -->
 
 
-    <!-- START SECTION 4: CAR INVENTORY -->
+    <!-- START SECTION 5: CAR INVENTORY -->
     <h2 class="section-title">Cars from {{ business_name }}</h2>
 
     {% if cars %}
@@ -248,12 +291,11 @@ Premium Dealer Profile UI
         </div>
 
     {% endif %}
-    <!-- END SECTION 4: CAR INVENTORY -->
+    <!-- END SECTION 5: CAR INVENTORY -->
 
 </div>
 
 
-<!-- START SECTION 5: PAGE STYLE -->
 <style>
 .dealer-page-wrapper {
     width: 92%;
@@ -424,6 +466,7 @@ Premium Dealer Profile UI
 
 .dealer-about-card,
 .dealer-contact-card,
+.dealer-trust-centre,
 .dealer-trust-card,
 .empty-box {
     background: white;
@@ -434,6 +477,7 @@ Premium Dealer Profile UI
 
 .dealer-about-card h2,
 .dealer-contact-card h2,
+.dealer-trust-centre h2,
 .dealer-trust-card h2 {
     margin-top: 0;
 }
@@ -464,6 +508,23 @@ Premium Dealer Profile UI
 
 .dealer-btn:hover {
     background: #1d4ed8;
+}
+
+.dealer-trust-centre {
+    margin-bottom: 35px;
+    text-align: center;
+}
+
+.trust-score-big {
+    font-size: 56px;
+    font-weight: bold;
+    color: #2563eb;
+    margin: 18px 0 10px;
+}
+
+.trust-score-text {
+    color: #6b7280;
+    margin-bottom: 22px;
 }
 
 .dealer-trust-card {
@@ -639,10 +700,8 @@ Premium Dealer Profile UI
     }
 }
 </style>
-<!-- END SECTION 5: PAGE STYLE -->
 
 
-<!-- START SECTION 6: COPY LINK SCRIPT -->
 <script>
     function copyDealerLink() {
         navigator.clipboard.writeText(window.location.href)
@@ -654,7 +713,6 @@ Premium Dealer Profile UI
             });
     }
 </script>
-<!-- END SECTION 6: COPY LINK SCRIPT -->
 
 </body>
 </html>
