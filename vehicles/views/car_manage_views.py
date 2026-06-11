@@ -1,13 +1,16 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.9.5
+# Version: v0.9.7
 # File: vehicles/views/car_manage_views.py
-# Dealer Package Listing Limits + Dashboard Analytics
+# Advanced Image Management + Featured Ad Limits + Dashboard Analytics
 # ==========================================
+
+from datetime import timedelta
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
 from vehicles.models import Car, Enquiry
 from vehicles.forms import CarForm
@@ -36,6 +39,53 @@ def get_listing_limit(user):
     return profile.max_listings
 
 
+def get_featured_limit(user):
+    if user.is_staff:
+        return None
+
+    if not hasattr(user, 'dealer_profile'):
+        return 1
+
+    profile = user.dealer_profile
+
+    if not profile.package_active:
+        return 0
+
+    if profile.package == 'enterprise':
+        return None
+
+    return profile.featured_ads_allowed
+
+
+def get_featured_days(user):
+    if not hasattr(user, 'dealer_profile'):
+        return 7
+
+    profile = user.dealer_profile
+
+    if profile.package == 'starter':
+        return 14
+
+    if profile.package == 'professional':
+        return 21
+
+    if profile.package in ['premium', 'enterprise']:
+        return 30
+
+    return 7
+
+
+def clean_expired_featured_ads():
+    Car.objects.filter(
+        is_featured=True,
+        featured_until__isnull=False,
+        featured_until__lt=timezone.now()
+    ).update(
+        is_featured=False,
+        featured_until=None
+    )
+
+
 def user_can_create_listing(user):
     if user.is_staff:
         return True
@@ -45,15 +95,35 @@ def user_can_create_listing(user):
     if listing_limit is None:
         return True
 
-    current_count = Car.objects.filter(
-        seller=user
-    ).count()
+    current_count = Car.objects.filter(seller=user).count()
 
     return current_count < listing_limit
 
 
+def user_can_feature_car(user, car=None):
+    if user.is_staff:
+        return True
+
+    featured_limit = get_featured_limit(user)
+
+    if featured_limit is None:
+        return True
+
+    featured_cars = Car.objects.filter(
+        seller=user,
+        is_featured=True
+    )
+
+    if car:
+        featured_cars = featured_cars.exclude(pk=car.pk)
+
+    return featured_cars.count() < featured_limit
+
+
 @login_required
 def create_car(request):
+    clean_expired_featured_ads()
+
     if not user_can_create_listing(request.user):
         messages.error(
             request,
@@ -67,6 +137,18 @@ def create_car(request):
         if form.is_valid():
             car = form.save(commit=False)
             car.seller = request.user
+
+            if car.is_featured:
+                if user_can_feature_car(request.user):
+                    featured_days = get_featured_days(request.user)
+                    car.featured_until = timezone.now() + timedelta(days=featured_days)
+                else:
+                    car.is_featured = False
+                    car.featured_until = None
+                    messages.error(
+                        request,
+                        'Featured ad limit reached for your package. Your car was saved as a normal listing.'
+                    )
 
             if request.user.is_staff or user_is_dealer(request.user):
                 car.is_approved = True
@@ -84,13 +166,7 @@ def create_car(request):
                     sort_order=index
                 )
 
-            if car.is_approved:
-                messages.success(request, 'Car listing created successfully and published.')
-            else:
-                messages.success(
-                    request,
-                    'Car listing submitted successfully. It is waiting for admin approval.'
-                )
+            messages.success(request, 'Car listing saved successfully.')
 
             return redirect('car_detail', slug=car.slug)
 
@@ -108,6 +184,8 @@ def create_car(request):
 
 @login_required
 def my_listings(request):
+    clean_expired_featured_ads()
+
     cars = Car.objects.filter(
         seller=request.user
     ).order_by('-created_at')
@@ -122,6 +200,7 @@ def my_listings(request):
     featured_listings = cars.filter(is_featured=True).count()
 
     listing_limit = get_listing_limit(request.user)
+    featured_limit = get_featured_limit(request.user)
 
     if listing_limit is None:
         listings_remaining = 'Unlimited'
@@ -130,10 +209,14 @@ def my_listings(request):
         listings_remaining = max(0, listing_limit - total_listings)
         listing_limit_display = listing_limit
 
-    if total_listings > 0:
-        average_views = round(total_views / total_listings)
+    if featured_limit is None:
+        featured_remaining = 'Unlimited'
+        featured_limit_display = 'Unlimited'
     else:
-        average_views = 0
+        featured_remaining = max(0, featured_limit - featured_listings)
+        featured_limit_display = featured_limit
+
+    average_views = round(total_views / total_listings) if total_listings > 0 else 0
 
     top_performing_cars = cars.order_by('-views_count')[:5]
 
@@ -162,6 +245,8 @@ def my_listings(request):
             'featured_listings': featured_listings,
             'listing_limit': listing_limit_display,
             'listings_remaining': listings_remaining,
+            'featured_limit': featured_limit_display,
+            'featured_remaining': featured_remaining,
             'average_views': average_views,
             'top_performing_cars': top_performing_cars,
             'recent_enquiries': recent_enquiries,
@@ -172,6 +257,8 @@ def my_listings(request):
 
 @login_required
 def edit_car(request, pk):
+    clean_expired_featured_ads()
+
     car = get_object_or_404(
         Car,
         pk=pk,
@@ -188,6 +275,21 @@ def edit_car(request, pk):
         if form.is_valid():
             car = form.save(commit=False)
 
+            if car.is_featured:
+                if user_can_feature_car(request.user, car):
+                    if not car.featured_until or car.featured_until < timezone.now():
+                        featured_days = get_featured_days(request.user)
+                        car.featured_until = timezone.now() + timedelta(days=featured_days)
+                else:
+                    car.is_featured = False
+                    car.featured_until = None
+                    messages.error(
+                        request,
+                        'Featured ad limit reached for your package. This car was saved as a normal listing.'
+                    )
+            else:
+                car.featured_until = None
+
             if request.user.is_staff or user_is_dealer(request.user):
                 car.is_approved = True
             else:
@@ -195,22 +297,34 @@ def edit_car(request, pk):
 
             car.save()
 
+            delete_image_ids = request.POST.getlist('delete_images')
+
+            if delete_image_ids:
+                car.images.filter(id__in=delete_image_ids).delete()
+
+            primary_image_id = request.POST.get('primary_image')
+
+            if primary_image_id and car.images.filter(id=primary_image_id).exists():
+                car.images.update(is_primary=False)
+                car.images.filter(id=primary_image_id).update(is_primary=True)
+
             images = request.FILES.getlist('images')
+            current_image_count = car.images.count()
 
             for index, image in enumerate(images):
                 car.images.create(
                     image=image,
-                    is_primary=False,
-                    sort_order=index
+                    is_primary=(current_image_count == 0 and index == 0),
+                    sort_order=current_image_count + index
                 )
 
-            if car.is_approved:
-                messages.success(request, 'Car listing updated successfully and published.')
-            else:
-                messages.success(
-                    request,
-                    'Car listing updated successfully. It is waiting for admin approval again.'
-                )
+            if not car.images.filter(is_primary=True).exists():
+                first_image = car.images.first()
+                if first_image:
+                    first_image.is_primary = True
+                    first_image.save()
+
+            messages.success(request, 'Car listing updated successfully.')
 
             return redirect('car_detail', slug=car.slug)
 
@@ -237,9 +351,7 @@ def delete_car(request, pk):
 
     if request.method == 'POST':
         car.delete()
-
         messages.success(request, 'Car listing deleted successfully.')
-
         return redirect('my_listings')
 
     return render(

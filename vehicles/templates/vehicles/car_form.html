@@ -1,34 +1,33 @@
 <!-- ==========================================
 MyCarMarket
-Version: v0.4.4
+Version: v0.9.7
 File: vehicles/templates/vehicles/car_form.html
-Note: Location removed. Using State + Suburb only.
+Advanced Image Management
 ========================================== -->
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>Sell / Edit Car - MyCarMarket</title>
-
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
     <style>
         body{
             font-family: Arial, sans-serif;
             background:#f4f6f8;
             margin:0;
-            padding:0;
         }
 
         .container{
-            max-width:900px;
+            max-width:1000px;
             margin:40px auto;
             background:white;
             padding:30px;
-            border-radius:12px;
+            border-radius:16px;
             box-shadow:0 5px 20px rgba(0,0,0,0.1);
         }
 
-        h1{
-            margin-bottom:25px;
+        h1, h2{
             color:#111827;
         }
 
@@ -38,13 +37,11 @@ Note: Location removed. Using State + Suburb only.
 
         label{
             display:block;
-            margin-bottom:5px;
+            margin-bottom:6px;
             font-weight:bold;
         }
 
-        input,
-        textarea,
-        select{
+        input, textarea, select{
             width:100%;
             padding:12px;
             border:1px solid #d1d5db;
@@ -67,16 +64,74 @@ Note: Location removed. Using State + Suburb only.
             background:#1d4ed8;
         }
 
+        .image-section{
+            margin:30px 0;
+            padding:22px;
+            background:#f9fafb;
+            border-radius:14px;
+            border:1px solid #e5e7eb;
+        }
+
+        .image-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
+            gap:18px;
+            margin-top:18px;
+        }
+
+        .image-card{
+            background:white;
+            border-radius:12px;
+            padding:12px;
+            border:1px solid #e5e7eb;
+        }
+
+        .image-card img{
+            width:100%;
+            height:130px;
+            object-fit:cover;
+            border-radius:10px;
+            margin-bottom:10px;
+        }
+
+        .image-actions label{
+            font-weight:normal;
+            margin-bottom:8px;
+        }
+
+        .image-actions input{
+            width:auto;
+            margin-right:6px;
+        }
+
+        .primary-badge{
+            display:inline-block;
+            background:#16a34a;
+            color:white;
+            padding:5px 10px;
+            border-radius:999px;
+            font-size:12px;
+            margin-bottom:8px;
+        }
+
         .upload-box{
-            margin-top:20px;
-            margin-bottom:20px;
+            margin-top:25px;
+            padding:20px;
+            background:#eff6ff;
+            border-radius:14px;
+            border:1px dashed #2563eb;
+        }
+
+        .help-text{
+            color:#6b7280;
+            font-size:14px;
+            margin-top:8px;
         }
     </style>
 </head>
 
 <body>
 
-        
 {% include 'includes/navbar.html' %}
 
 <div class="container">
@@ -92,9 +147,51 @@ Note: Location removed. Using State + Suburb only.
 
         {{ form.as_p }}
 
+        {% if car and car.images.all %}
+            <div class="image-section">
+                <h2>Current Images</h2>
+                <p class="help-text">
+                    Choose primary image or delete old images.
+                </p>
+
+                <div class="image-grid">
+                    {% for image in car.images.all %}
+                        <div class="image-card">
+                            <img src="{{ image.image.url }}" alt="Car image">
+
+                            {% if image.is_primary %}
+                                <div class="primary-badge">Primary Image</div>
+                            {% endif %}
+
+                            <div class="image-actions">
+                                <label>
+                                    <input type="radio" name="primary_image" value="{{ image.id }}"
+                                           {% if image.is_primary %}checked{% endif %}>
+                                    Set as primary
+                                </label>
+
+                                <label>
+                                    <input type="checkbox" name="delete_images" value="{{ image.id }}">
+                                    Delete this image
+                                </label>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
         <div class="upload-box">
-            <label>Car Images</label>
-            <input type="file" name="images" multiple>
+            {% if car %}
+                <label>Upload New Images</label>
+                <input type="file" name="images" multiple accept="image/*">
+                <p class="help-text">
+                    New images will be added without removing old images. Image quality will be kept original.
+                </p>
+            {% else %}
+                <label>Upload Car Images</label>
+                <input type="file" name="images" multiple accept="image/*">
+            {% endif %}
         </div>
 
         <button type="submit" class="btn">

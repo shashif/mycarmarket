@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.8.6
+# Version: v0.9.3
 # File: vehicles/models.py
-# SEO Slug + Enquiry + Favourite Cars + Dealer Branding + Dealer Packages
+# Featured Ad Expiry Field Added Safely
 # ==========================================
 
 from django.db import models
@@ -66,17 +66,8 @@ class DealerProfile(models.Model):
     business_name = models.CharField(max_length=150, blank=True)
     business_description = models.TextField(blank=True)
 
-    logo = models.ImageField(
-        upload_to='dealer_logos/',
-        blank=True,
-        null=True
-    )
-
-    banner = models.ImageField(
-        upload_to='dealer_banners/',
-        blank=True,
-        null=True
-    )
+    logo = models.ImageField(upload_to='dealer_logos/', blank=True, null=True)
+    banner = models.ImageField(upload_to='dealer_banners/', blank=True, null=True)
 
     website = models.URLField(blank=True)
     business_phone = models.CharField(max_length=30, blank=True)
@@ -153,6 +144,8 @@ class Car(models.Model):
     seller_phone = models.CharField(max_length=30, blank=True)
 
     is_featured = models.BooleanField(default=False)
+    featured_until = models.DateTimeField(null=True, blank=True)
+
     is_active = models.BooleanField(default=True)
     is_verified_listing = models.BooleanField(default=False)
     is_approved = models.BooleanField(default=False)
