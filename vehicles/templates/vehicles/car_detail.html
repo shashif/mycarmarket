@@ -1,8 +1,8 @@
 <!-- =========================================
 MyCarMarket
-Version: v0.9.8
+Version: v0.9.9.6
 File: vehicles/templates/vehicles/car_detail.html
-Premium Social Sharing System
+Mobile Responsive Review + Marketplace Polish
 ========================================= -->
 
 {% load static %}
@@ -41,8 +41,10 @@ Premium Social Sharing System
     <meta property="og:site_name" content="MyCarMarket Australia">
 
     <meta name="twitter:card" content="summary_large_image">
+
     <meta name="twitter:title"
           content="{{ car.year }} {{ car.make }} {{ car.model }} For Sale | MyCarMarket Australia">
+
     <meta name="twitter:description"
           content="{{ car.year }} {{ car.make }} {{ car.model }} for sale{% if car.display_location %} in {{ car.display_location }}{% endif %}. Price ${{ car.price }}, {{ car.kilometres }} km.">
 
@@ -51,105 +53,7 @@ Premium Social Sharing System
     {% endif %}
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/car_detail.css' %}?v=86">
-
-    <style>
-        .share-box {
-    background: white;
-    padding: 22px;
-    border-radius: 18px;
-    margin: 24px 0;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-}
-
-.share-subtitle {
-    color: #6b7280;
-    margin-top: -5px;
-}
-
-.share-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.share-btn {
-    text-decoration: none;
-    border: none;
-    padding: 11px 16px;
-    border-radius: 999px;
-    font-weight: bold;
-    cursor: pointer;
-    color: white;
-    font-size: 14px;
-}
-
-.facebook {
-    background: #1877f2;
-}
-
-.whatsapp {
-    background: #25d366;
-}
-
-.messenger {
-    background: #0084ff;
-}
-
-.twitter {
-    background: #111827;
-}
-
-.copy-link-btn {
-    background: #2563eb;
-}
-
-.copy-message {
-    display: none;
-    margin-top: 14px;
-    background: #dcfce7;
-    color: #166534;
-    padding: 10px 14px;
-    border-radius: 10px;
-    font-weight: bold;
-}
-        .dealer-profile-box {
-            background: white;
-            padding: 22px;
-            border-radius: 18px;
-            margin: 24px 0;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-        }
-
-        .dealer-profile-box h3 {
-            margin: 0 0 10px;
-            color: #111827;
-        }
-
-        .dealer-badge-row {
-            margin: 10px 0 16px;
-        }
-
-        .dealer-verified,
-     
-
-        .dealer-verified {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .dealer-featured {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-  
-
-        .view-dealer-btn:hover {
-            background: #2563eb;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/car_detail.css' %}?v=996">
 </head>
 
 <body>
@@ -168,50 +72,48 @@ Premium Social Sharing System
 
             {% include 'vehicles/includes/detail_info.html' %}
 
-         
-
             <div class="share-box">
-    <h3>📢 Share This Car</h3>
-    <p class="share-subtitle">Help this listing reach more buyers.</p>
+                <h3>📢 Share This Car</h3>
+                <p class="share-subtitle">Help this listing reach more buyers.</p>
 
-    <div class="share-buttons">
+                <div class="share-buttons">
 
-        <a target="_blank"
-           href="https://www.facebook.com/sharer/sharer.php?u={{ share_url }}"
-           class="share-btn facebook">
-            📘 Facebook
-        </a>
+                    <a target="_blank"
+                       href="https://www.facebook.com/sharer/sharer.php?u={{ share_url }}"
+                       class="share-btn facebook">
+                        📘 Facebook
+                    </a>
 
-        <a target="_blank"
-           href="https://api.whatsapp.com/send?text={{ share_text }} {{ share_url }}"
-           class="share-btn whatsapp">
-            💬 WhatsApp
-        </a>
+                    <a target="_blank"
+                       href="https://api.whatsapp.com/send?text={{ share_text }} {{ share_url }}"
+                       class="share-btn whatsapp">
+                        💬 WhatsApp
+                    </a>
 
-        <a target="_blank"
-           href="https://www.facebook.com/dialog/send?link={{ share_url }}&redirect_uri={{ share_url }}"
-           class="share-btn messenger">
-            📩 Messenger
-        </a>
+                    <a target="_blank"
+                       href="https://www.facebook.com/dialog/send?link={{ share_url }}&redirect_uri={{ share_url }}"
+                       class="share-btn messenger">
+                        📩 Messenger
+                    </a>
 
-        <a target="_blank"
-           href="https://twitter.com/intent/tweet?url={{ share_url }}&text={{ share_text }}"
-           class="share-btn twitter">
-            𝕏 Twitter
-        </a>
+                    <a target="_blank"
+                       href="https://twitter.com/intent/tweet?url={{ share_url }}&text={{ share_text }}"
+                       class="share-btn twitter">
+                        𝕏 Twitter
+                    </a>
 
-        <button type="button"
-                class="share-btn copy-link-btn"
-                onclick="copyCarLink()">
-            🔗 Copy Link
-        </button>
+                    <button type="button"
+                            class="share-btn copy-link-btn"
+                            onclick="copyCarLink()">
+                        🔗 Copy Link
+                    </button>
 
-    </div>
+                </div>
 
-    <div id="copyMessage" class="copy-message">
-        Link copied successfully ✅
-    </div>
-</div>
+                <div id="copyMessage" class="copy-message">
+                    Link copied successfully ✅
+                </div>
+            </div>
 
         </div>
 
@@ -244,27 +146,24 @@ Premium Social Sharing System
     }
 
     function copyCarLink() {
-    navigator.clipboard.writeText(window.location.href)
-        .then(function () {
+        navigator.clipboard.writeText(window.location.href)
+            .then(function () {
 
-            const message =
-                document.getElementById('copyMessage');
+                const message = document.getElementById('copyMessage');
 
-            if (message) {
-                message.style.display = 'block';
+                if (message) {
+                    message.style.display = 'block';
 
-                setTimeout(function () {
-                    message.style.display = 'none';
-                }, 2500);
-            }
+                    setTimeout(function () {
+                        message.style.display = 'none';
+                    }, 2500);
+                }
 
-        })
-        .catch(function () {
-            alert(
-                "Unable to copy link. Please copy it from your browser."
-            );
-        });
-}
+            })
+            .catch(function () {
+                alert("Unable to copy link. Please copy it from your browser.");
+            });
+    }
 </script>
 
 </body>

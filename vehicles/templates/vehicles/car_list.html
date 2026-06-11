@@ -1,8 +1,8 @@
 <!-- =========================================
 MyCarMarket
-Version: v0.8.0
+Version: v0.9.9.6
 File: vehicles/templates/vehicles/car_list.html
-Premium Search/List Cards + Full Card Clickable
+Mobile Responsive Review + Marketplace Polish
 ========================================= -->
 
 <!DOCTYPE html>
@@ -13,7 +13,7 @@ Premium Search/List Cards + Full Card Clickable
     <title>Cars for Sale - MyCarMarket Australia</title>
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/car_list.css' %}">
+    <link rel="stylesheet" href="{% static 'css/car_list.css' %}?v=996">
 </head>
 
 <body>
@@ -32,14 +32,9 @@ Premium Search/List Cards + Full Card Clickable
 
             <div class="filter-grid">
 
-                <input type="text" name="q" placeholder="Search make, model, title"
-                       value="{{ request.GET.q }}">
-
-                <input type="text" name="make" placeholder="Make"
-                       value="{{ request.GET.make }}">
-
-                <input type="text" name="model" placeholder="Model"
-                       value="{{ request.GET.model }}">
+                <input type="text" name="q" placeholder="Search make, model, title" value="{{ request.GET.q }}">
+                <input type="text" name="make" placeholder="Make" value="{{ request.GET.make }}">
+                <input type="text" name="model" placeholder="Model" value="{{ request.GET.model }}">
 
                 <select name="body_type">
                     <option value="">Body Type</option>
@@ -82,20 +77,11 @@ Premium Search/List Cards + Full Card Clickable
                     <option value="NT" {% if request.GET.state == "NT" %}selected{% endif %}>NT</option>
                 </select>
 
-                <input type="text" name="suburb" placeholder="Suburb / City"
-                       value="{{ request.GET.suburb }}">
-
-                <input type="number" name="min_price" placeholder="Min Price"
-                       value="{{ request.GET.min_price }}">
-
-                <input type="number" name="max_price" placeholder="Max Price"
-                       value="{{ request.GET.max_price }}">
-
-                <input type="number" name="min_year" placeholder="Min Year"
-                       value="{{ request.GET.min_year }}">
-
-                <input type="number" name="max_year" placeholder="Max Year"
-                       value="{{ request.GET.max_year }}">
+                <input type="text" name="suburb" placeholder="Suburb / City" value="{{ request.GET.suburb }}">
+                <input type="number" name="min_price" placeholder="Min Price" value="{{ request.GET.min_price }}">
+                <input type="number" name="max_price" placeholder="Max Price" value="{{ request.GET.max_price }}">
+                <input type="number" name="min_year" placeholder="Min Year" value="{{ request.GET.min_year }}">
+                <input type="number" name="max_year" placeholder="Max Year" value="{{ request.GET.max_year }}">
 
                 <select name="sort_by">
                     <option value="newest" {% if request.GET.sort_by == "newest" %}selected{% endif %}>Newest First</option>
@@ -150,21 +136,21 @@ Premium Search/List Cards + Full Card Clickable
                         <p class="car-meta">
                             🚘 {{ car.year }} • {{ car.make }} {{ car.model }}
                         </p>
-<div class="dealer-info">
 
-    <p class="dealer-name">
-        🏢 {{ car.seller_business_name }}
-    </p>
+                        <div class="dealer-info">
+                            <p class="dealer-name">
+                                🏢 {{ car.seller_business_name }}
+                            </p>
 
-    {% if car.seller_is_verified %}
-        <span class="dealer-verified">✔ Verified Dealer</span>
-    {% endif %}
+                            {% if car.seller_is_verified %}
+                                <span class="dealer-verified">✔ Verified Dealer</span>
+                            {% endif %}
 
-    {% if car.seller_is_featured_dealer %}
-        <span class="dealer-featured">⭐ Featured Dealer</span>
-    {% endif %}
+                            {% if car.seller_is_featured_dealer %}
+                                <span class="dealer-featured">⭐ Featured Dealer</span>
+                            {% endif %}
+                        </div>
 
-</div>
                         <div class="icon-info-grid">
                             <span>🛣 {{ car.kilometres }} km</span>
                             <span>⚙️ {{ car.transmission|default:"N/A" }}</span>
@@ -178,7 +164,6 @@ Premium Search/List Cards + Full Card Clickable
 
                         <div class="price-row">
                             <strong>${{ car.price }}</strong>
-                            
                         </div>
 
                     </div>
@@ -217,138 +202,6 @@ Premium Search/List Cards + Full Card Clickable
     {% endif %}
 
 </div>
-
-<style>
-.premium-car-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-}
-
-.premium-car-card {
-    display: block;
-    background: white;
-    color: inherit;
-    text-decoration: none;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 10px 28px rgba(0,0,0,0.10);
-    transition: 0.25s;
-}
-
-.premium-car-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 36px rgba(0,0,0,0.14);
-}
-
-.premium-car-image-wrap {
-    position: relative;
-    height: 220px;
-    overflow: hidden;
-}
-
-.premium-car-image-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.no-image-box {
-    height: 220px;
-    background: #e5e7eb;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #6b7280;
-    font-weight: bold;
-}
-
-.featured-badge {
-    position: absolute;
-    top: 14px;
-    left: 14px;
-    background: #f59e0b;
-    color: white;
-    padding: 7px 12px;
-    border-radius: 999px;
-    font-size: 13px;
-    font-weight: bold;
-}
-
-.verified-badge {
-    position: absolute;
-    top: 14px;
-    right: 14px;
-    background: #16a34a;
-    color: white;
-    padding: 7px 12px;
-    border-radius: 999px;
-    font-size: 13px;
-    font-weight: bold;
-}
-
-.premium-car-info {
-    padding: 18px;
-}
-
-.premium-car-info h3 {
-    margin: 0 0 8px;
-    font-size: 20px;
-    color: #111827;
-}
-
-.car-meta {
-    color: #374151;
-    margin: 6px 0 12px;
-    font-size: 14px;
-}
-
-.icon-info-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-    margin: 12px 0;
-}
-
-.icon-info-grid span {
-    background: #f3f4f6;
-    color: #374151;
-    padding: 8px;
-    border-radius: 10px;
-    font-size: 13px;
-}
-
-.car-location {
-    color: #374151;
-    margin: 12px 0;
-    font-size: 14px;
-}
-
-.price-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 12px;
-    gap: 10px;
-}
-
-.price-row strong {
-    font-size: 24px;
-    color: #111827;
-}
-
-.price-row span {
-    color: #2563eb;
-    font-weight: bold;
-    font-size: 14px;
-}
-
-@media (max-width: 900px) {
-    .premium-car-grid {
-        grid-template-columns: 1fr;
-    }
-}
-</style>
 
 </body>
 </html>

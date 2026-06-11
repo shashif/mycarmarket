@@ -1,11 +1,10 @@
 /* ==========================================
 MyCarMarket
-Version: v0.9.9.2
+Version: v0.9.9.7
 File: static/css/dealer_detail.css
-Dealer Profile Styles
+Dealer Profile Mobile Optimisation
 ========================================== */
 
-<style>
 .dealer-page-wrapper {
     width: 92%;
     max-width: 1250px;
@@ -46,28 +45,26 @@ Dealer Profile Styles
     align-items: center;
 }
 
-.dealer-logo {
-    width: 120px;
-    height: 120px;
-    border-radius: 22px;
-    object-fit: cover;
-    background: white;
-    border: 4px solid white;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-}
-
+.dealer-logo,
 .dealer-logo-placeholder {
     width: 120px;
     height: 120px;
     border-radius: 22px;
     background: white;
+    border: 4px solid white;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+.dealer-logo {
+    object-fit: cover;
+}
+
+.dealer-logo-placeholder {
     color: #111827;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 48px;
-    border: 4px solid white;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
 }
 
 .dealer-header-content h1 {
@@ -377,6 +374,7 @@ Dealer Profile Styles
     color: #111827;
 }
 
+/* Tablet */
 @media (max-width: 900px) {
     .dealer-header-content {
         flex-direction: column;
@@ -408,4 +406,87 @@ Dealer Profile Styles
         grid-template-columns: 1fr;
     }
 }
-</style>
+
+/* Mobile */
+@media (max-width: 768px) {
+    .dealer-page-wrapper {
+        width: 94%;
+        margin: 24px auto;
+    }
+
+    .dealer-banner {
+        height: 180px;
+    }
+
+    .dealer-header-content {
+        padding: 22px;
+    }
+
+    .dealer-logo,
+    .dealer-logo-placeholder {
+        width: 90px;
+        height: 90px;
+    }
+
+    .dealer-logo-placeholder {
+        font-size: 38px;
+    }
+
+    .dealer-header-content h1 {
+        font-size: 28px;
+        line-height: 1.2;
+    }
+
+    .dealer-subtitle {
+        font-size: 14px;
+    }
+
+    .dealer-stat-box {
+        width: 100%;
+        min-width: auto;
+        box-sizing: border-box;
+    }
+
+    .dealer-share-box {
+        width: 100%;
+    }
+
+    .dealer-share-box a,
+    .copy-dealer-link-btn {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        margin: 0 0 8px 0;
+        text-align: center;
+    }
+
+    .dealer-about-card,
+    .dealer-contact-card,
+    .dealer-trust-centre,
+    .dealer-trust-card,
+    .empty-box {
+        padding: 20px;
+        border-radius: 18px;
+    }
+
+    .trust-score-big {
+        font-size: 42px;
+    }
+
+    .section-title {
+        font-size: 24px;
+    }
+
+    .premium-car-image-wrap,
+    .no-image-box {
+        height: 190px;
+    }
+
+    .premium-car-info {
+        padding: 16px;
+    }
+
+    .price-row strong {
+        font-size: 22px;
+    }
+}

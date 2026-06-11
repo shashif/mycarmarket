@@ -1,4 +1,10 @@
-<style>
+/* ==========================================
+MyCarMarket
+Version: v0.9.9.6
+File: static/css/car_list.css
+Mobile Responsive Review + Marketplace Polish
+========================================== */
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -30,6 +36,10 @@ body {
     color: #d1d5db;
 }
 
+/* ==========================================
+FILTER BOX
+========================================== */
+
 .filter-box {
     background: white;
     padding: 25px;
@@ -46,10 +56,13 @@ body {
 
 .filter-grid input,
 .filter-grid select {
+    width: 100%;
+    box-sizing: border-box;
     padding: 13px;
     border: 1px solid #d1d5db;
     border-radius: 12px;
     font-size: 15px;
+    background: white;
 }
 
 .filter-actions {
@@ -66,6 +79,7 @@ body {
     border: none;
     font-weight: bold;
     cursor: pointer;
+    text-align: center;
 }
 
 .search-btn {
@@ -73,10 +87,22 @@ body {
     color: white;
 }
 
+.search-btn:hover {
+    background: #1d4ed8;
+}
+
 .reset-btn {
     background: #e5e7eb;
     color: #111827;
 }
+
+.reset-btn:hover {
+    background: #d1d5db;
+}
+
+/* ==========================================
+CAR GRID
+========================================== */
 
 .car-grid,
 .premium-car-grid {
@@ -131,6 +157,10 @@ body {
     font-weight: bold;
 }
 
+/* ==========================================
+BADGES
+========================================== */
+
 .featured-badge {
     position: absolute;
     top: 14px;
@@ -141,6 +171,7 @@ body {
     border-radius: 999px;
     font-size: 13px;
     font-weight: bold;
+    z-index: 2;
 }
 
 .verified-badge {
@@ -153,7 +184,12 @@ body {
     border-radius: 999px;
     font-size: 13px;
     font-weight: bold;
+    z-index: 2;
 }
+
+/* ==========================================
+CAR CONTENT
+========================================== */
 
 .car-content,
 .premium-car-info {
@@ -166,6 +202,8 @@ body {
     font-size: 21px;
     font-weight: bold;
     color: #111827;
+    line-height: 1.3;
+    overflow-wrap: break-word;
 }
 
 .car-title a {
@@ -181,9 +219,12 @@ body {
     color: #374151;
     margin: 6px 0 12px;
     font-size: 14px;
+    overflow-wrap: break-word;
 }
 
-/* v0.8.7 Dealer Branding */
+/* ==========================================
+DEALER INFO
+========================================== */
 
 .dealer-info {
     margin: 10px 0 14px;
@@ -194,6 +235,7 @@ body {
     font-size: 14px;
     font-weight: 700;
     color: #111827;
+    overflow-wrap: break-word;
 }
 
 .dealer-verified,
@@ -224,6 +266,10 @@ body {
     border: 2px solid #f59e0b;
 }
 
+/* ==========================================
+CAR DETAILS
+========================================== */
+
 .icon-info-grid,
 .info-grid {
     display: grid;
@@ -239,6 +285,7 @@ body {
     border-radius: 12px;
     font-size: 14px;
     color: #374151;
+    overflow-wrap: break-word;
 }
 
 .car-location,
@@ -246,6 +293,7 @@ body {
     color: #6b7280;
     font-size: 14px;
     margin-bottom: 18px;
+    overflow-wrap: break-word;
 }
 
 .price,
@@ -253,6 +301,7 @@ body {
     font-size: 24px;
     font-weight: bold;
     color: #2563eb;
+    overflow-wrap: break-word;
 }
 
 .price-row {
@@ -262,6 +311,10 @@ body {
     margin-top: 12px;
     gap: 10px;
 }
+
+/* ==========================================
+EMPTY + PAGINATION
+========================================== */
 
 .empty-box {
     background: white;
@@ -294,6 +347,10 @@ body {
     color: white;
 }
 
+/* ==========================================
+TABLET RESPONSIVE
+========================================== */
+
 @media (max-width: 1000px) {
     .filter-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -305,19 +362,87 @@ body {
     }
 }
 
+/* ==========================================
+MOBILE RESPONSIVE
+========================================== */
+
 @media (max-width: 650px) {
+    .page-wrapper {
+        width: 94%;
+        margin: 22px auto;
+    }
+
+    .page-header {
+        padding: 28px 22px;
+        border-radius: 18px;
+    }
+
+    .page-header h1 {
+        font-size: 28px;
+        line-height: 1.2;
+    }
+
+    .page-header p {
+        font-size: 14px;
+    }
+
+    .filter-box {
+        padding: 18px;
+        border-radius: 18px;
+    }
+
     .filter-grid,
     .car-grid,
     .premium-car-grid {
         grid-template-columns: 1fr;
     }
 
-    .page-header h1 {
-        font-size: 28px;
-    }
-
     .filter-actions {
         flex-direction: column;
     }
+
+    .filter-actions button,
+    .filter-actions a {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .premium-car-image-wrap,
+    .image-box,
+    .no-image,
+    .no-image-box {
+        height: 190px;
+    }
+
+    .premium-car-info,
+    .car-content {
+        padding: 16px;
+    }
+
+    .premium-car-info h3,
+    .car-title {
+        font-size: 19px;
+    }
+
+    .featured-badge,
+    .verified-badge {
+        font-size: 11px;
+        padding: 6px 9px;
+    }
+
+    .icon-info-grid,
+    .info-grid {
+        gap: 8px;
+    }
+
+    .icon-info-grid span,
+    .info-item {
+        font-size: 13px;
+        padding: 9px;
+    }
+
+    .price,
+    .price-row strong {
+        font-size: 22px;
+    }
 }
-</style>
