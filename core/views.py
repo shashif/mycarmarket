@@ -1,13 +1,18 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.5.2
+# Version: v1.0.0 Launch Candidate
 # File: core/views.py
-# Homepage Shows Approved Listings Only
+# Homepage + Legal Pages + Contact + Custom 404
 # ==========================================
 
 from django.shortcuts import render
+
 from vehicles.models import Car
 
+
+# ==========================================
+# HOME PAGE
+# ==========================================
 
 def home(request):
     featured_cars = Car.objects.filter(
@@ -29,9 +34,68 @@ def home(request):
     )
 
 
-def sell_car(request):
-    return render(request, 'core/sell_car.html')
+# ==========================================
+# SELL CAR PAGE
+# ==========================================
 
+def sell_car(request):
+    return render(
+        request,
+        'core/sell_car.html'
+    )
+
+
+# ==========================================
+# DEALERS PAGE
+# ==========================================
 
 def dealers(request):
-    return render(request, 'core/dealers.html')
+    return render(
+        request,
+        'core/dealers.html'
+    )
+
+
+# ==========================================
+# TERMS & CONDITIONS
+# ==========================================
+
+def terms_conditions(request):
+    return render(
+        request,
+        'core/terms_conditions.html'
+    )
+
+
+# ==========================================
+# PRIVACY POLICY
+# ==========================================
+
+def privacy_policy(request):
+    return render(
+        request,
+        'core/privacy_policy.html'
+    )
+
+
+# ==========================================
+# CONTACT US
+# ==========================================
+
+def contact_us(request):
+    return render(
+        request,
+        'core/contact_us.html'
+    )
+
+
+# ==========================================
+# CUSTOM 404 PAGE
+# ==========================================
+
+def custom_404(request, exception):
+    return render(
+        request,
+        '404.html',
+        status=404
+    )

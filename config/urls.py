@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.8.2
+# Version: v1.0.0 Launch Candidate
 # File: config/urls.py
-# Sitemap + Robots + Static Media
+# Sitemap + Robots + Static Media + Custom 404
 # ==========================================
 
 from django.contrib import admin
@@ -38,10 +38,22 @@ urlpatterns = [
 
     path(
         'robots.txt',
-        robots_txt
+        robots_txt,
+        name='robots_txt'
     ),
 ]
 
+
+# ==========================================
+# CUSTOM ERROR PAGES
+# ==========================================
+
+handler404 = 'core.views.custom_404'
+
+
+# ==========================================
+# LOCAL DEVELOPMENT MEDIA / STATIC
+# ==========================================
 
 if settings.DEBUG:
     urlpatterns += static(
