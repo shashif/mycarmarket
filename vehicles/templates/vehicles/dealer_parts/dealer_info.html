@@ -1,0 +1,59 @@
+  <!-- START SECTION 2: DEALER INFO -->
+    <div class="dealer-info-grid">
+
+        <div class="dealer-about-card">
+            <h2>About {{ business_name }}</h2>
+
+            {% if dealer_profile and dealer_profile.business_description %}
+                <p>{{ dealer_profile.business_description }}</p>
+            {% else %}
+                <p>This dealer has not added a business description yet.</p>
+            {% endif %}
+        </div>
+
+        <div class="dealer-contact-card">
+
+            <h2>Dealer Details</h2>
+
+            {% if dealer_profile %}
+                <div class="dealer-action-buttons">
+
+                    {% if dealer_profile.business_phone %}
+                        <a href="tel:{{ dealer_profile.business_phone }}" class="dealer-btn">
+                            📞 Call Dealer
+                        </a>
+                    {% endif %}
+
+                    {% if dealer_profile.business_email %}
+                        <a href="mailto:{{ dealer_profile.business_email }}" class="dealer-btn">
+                            ✉ Email Dealer
+                        </a>
+                    {% endif %}
+
+                    {% if dealer_profile.website %}
+                        <a href="{{ dealer_profile.website }}" target="_blank" rel="noopener" class="dealer-btn">
+                            🌐 Website
+                        </a>
+                    {% endif %}
+
+                </div>
+            {% endif %}
+
+            <p>🚗 <strong>{{ total_cars }}</strong> Active Cars</p>
+
+            {% if dealer_profile and dealer_profile.is_verified %}
+                <p>✔ Verified Dealer</p>
+            {% endif %}
+
+            {% if dealer_profile and dealer_profile.address and dealer_profile.address != "na" %}
+                <p>📍 {{ dealer_profile.address }}</p>
+            {% endif %}
+
+            {% if dealer_profile %}
+                <p>📦 {{ dealer_profile.package_badge }}</p>
+            {% endif %}
+
+        </div>
+
+    </div>
+    <!-- END SECTION 2: DEALER INFO -->

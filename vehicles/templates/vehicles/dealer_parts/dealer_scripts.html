@@ -1,0 +1,11 @@
+<script>
+    function copyDealerLink() {
+        navigator.clipboard.writeText(window.location.href)
+            .then(function () {
+                alert("Dealer profile link copied successfully!");
+            })
+            .catch(function () {
+                alert("Unable to copy link. Please copy it from your browser.");
+            });
+    }
+</script>
