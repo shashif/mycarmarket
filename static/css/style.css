@@ -1,9 +1,52 @@
 /* ==========================================
 MyCarMarket
-Version: v0.9.2
-File: static/css/style.css
-Global Styles + Navbar Fix
+Version: v1.0.0
+Global Footer
 ========================================== */
+
+.footer {
+    background: #111827;
+    color: white;
+    text-align: center;
+    padding: 35px 20px;
+    margin-top: 50px;
+}
+
+.footer-brand h3 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.footer-brand p {
+    margin: 8px 0 20px;
+    color: #d1d5db;
+}
+
+.footer-links,
+.footer-social {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.footer a {
+    color: #d1d5db;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+.footer-copy {
+    margin: 18px 0 0;
+    color: #9ca3af;
+    font-size: 14px;
+}
 
 body {
     font-family: Arial, sans-serif;
