@@ -13,7 +13,7 @@ Home Page + Premium Unified Car Cards
     <title>MyCarMarket Australia - Buy, Sell & Rent Cars</title>
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/home.css' %}?v=94">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}?v=102">
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-FGGQZ4WXDT"></script>
@@ -32,7 +32,21 @@ Home Page + Premium Unified Car Cards
 {% include 'includes/navbar.html' %}
 
 <div class="market-hero">
-    <img src="{% static 'images/hero-car.png' %}" class="market-hero-img" alt="MyCarMarket Australia">
+
+    {% if settings and settings.hero_image %}
+        <img
+            src="{{ settings.hero_image.url }}"
+            class="market-hero-img"
+            alt="MyCarMarket Australia"
+        >
+    {% else %}
+        <img
+            src="{% static 'images/hero-car.png' %}"
+            class="market-hero-img"
+            alt="MyCarMarket Australia"
+        >
+    {% endif %}
+
 </div>
 
 <div class="container hero-search-container">
@@ -106,15 +120,41 @@ Home Page + Premium Unified Car Cards
         </div>
     </div>
 
-    <div class="ad-banner">
-        <div class="ad-label">Advertisement</div>
+<!-- =========================================
+Alternate Google Banner Ad
+========================================= -->
+
+<div class="ad-banner">
+
+    {% if settings and settings.alternate_google_banner_ad %}
+
+        <a href="{{ settings.alternate_google_banner_link|default:'#' }}"
+           target="_blank">
+
+            <img
+                src="{{ settings.alternate_google_banner_ad.url }}"
+                alt="Advertisement"
+                class="custom-banner-ad"
+            >
+
+        </a>
+
+    {% else %}
+
         <div class="ad-placeholder">
+
             <div>
                 <strong>Google AdSense Banner</strong><br>
-                <span>Replace this box with your Google AdSense code later</span>
+                <span>
+                    Replace this box with your Google AdSense code later
+                </span>
             </div>
+
         </div>
-    </div>
+
+    {% endif %}
+
+</div>
 
     <div class="stats">
         <div class="stat-card">
@@ -211,15 +251,7 @@ Home Page + Premium Unified Car Cards
         {% endfor %}
     </div>
 
-    <div class="ad-banner">
-        <div class="ad-label">Advertisement</div>
-        <div class="ad-placeholder">
-            <div>
-                <strong>Google AdSense Responsive Ad</strong><br>
-                <span>Perfect ad space between Featured Cars and Latest Cars</span>
-            </div>
-        </div>
-    </div>
+
 
     <h2 class="section-title">Latest Cars</h2>
 

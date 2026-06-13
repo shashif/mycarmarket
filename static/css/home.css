@@ -1,13 +1,26 @@
 /* ==========================================
-MyCarMarket
-Version: v0.9.4
-File: static/css/home.css
-Home Page + Premium Unified Car Cards
+ALTERNATE GOOGLE BANNER AD
 ========================================== */
 
-/* ==========================================
-HERO IMAGE
-========================================== */
+.ad-banner {
+    margin: 30px 0;
+}
+
+.custom-banner-ad {
+    width: 100%;
+    max-height: 220px;
+    object-fit: cover;
+    display: block;
+    border-radius: 18px;
+}
+
+.ad-label {
+    font-size: 12px;
+    color: #6b7280;
+    margin-bottom: 8px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
 
 .market-hero {
     width: 100%;

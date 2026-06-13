@@ -6,7 +6,7 @@
 # ==========================================
 
 from django.shortcuts import render
-
+from core.models import SiteSettings
 from vehicles.models import Car
 
 
@@ -24,15 +24,17 @@ def home(request):
         is_approved=True
     ).order_by('-created_at')[:6]
 
+    settings = SiteSettings.objects.first()
+
     return render(
         request,
         'core/home.html',
         {
             'featured_cars': featured_cars,
             'latest_cars': latest_cars,
+            'settings': settings,
         }
     )
-
 
 # ==========================================
 # SELL CAR PAGE
