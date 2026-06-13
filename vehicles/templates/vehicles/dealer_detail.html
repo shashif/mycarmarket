@@ -1,48 +1,48 @@
 <!-- =========================================
 MyCarMarket
-Version: v0.9.9.2
+Version: v1.0.0
 File: vehicles/templates/vehicles/dealer_detail.html
-Dealer Profile HTML + External CSS
+Dealer Profile Split Template
 ========================================= -->
 
+{% load static %}
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>{{ business_name }} - Dealer Profile | MyCarMarket Australia</title>
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/dealer_detail.css' %}?v=997">
+    <link rel="stylesheet" href="{% static 'css/dealer_detail.css' %}?v=100">
 </head>
 
 <body>
 
-{% include 'includes/navbar.html' %}
+    {% include 'includes/navbar.html' %}
 
-<div class="dealer-page-wrapper">
+    <main class="dealer-page-wrapper">
 
-   {% include 'vehicles/dealer_parts/dealer_hero.html' %}
+        {% include 'vehicles/dealer_parts/dealer_hero.html' %}
 
+        {% include 'vehicles/dealer_parts/dealer_info.html' %}
 
-  {% include 'vehicles/dealer_parts/dealer_info.html' %}
+        {% include 'vehicles/dealer_parts/dealer_trust_centre.html' %}
 
+        {% include 'vehicles/dealer_parts/dealer_trust_card.html' %}
 
-{% include 'vehicles/dealer_parts/dealer_trust_centre.html' %}
+        {% include 'vehicles/dealer_parts/dealer_inventory.html' %}
 
+    </main>
 
-   {% include 'vehicles/dealer_parts/dealer_trust_card.html' %}
+    {% include 'includes/footer.html' %}
 
-
-{% include 'vehicles/dealer_parts/dealer_inventory.html' %}
-
-</div>
-
-
-
-
-
-{% include 'vehicles/dealer_parts/dealer_scripts.html' %}
+    {% include 'vehicles/dealer_parts/dealer_scripts.html' %}
 
 </body>
+
 </html>
