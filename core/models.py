@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.0.2
+# Version: v1.0.3
 # File: core/models.py
-# Homepage Hero + Custom / Google Ad Switch
+# Homepage Hero + Custom / Google AdSense ID Switch
 # ==========================================
 
 from django.db import models
@@ -59,8 +59,16 @@ class SiteSettings(models.Model):
         blank=True
     )
 
-    google_adsense_code = models.TextField(
-        blank=True
+    google_adsense_publisher_id = models.CharField(
+        max_length=100,
+        blank=True,
+        help_text='Example: ca-pub-1234567890123456'
+    )
+
+    google_adsense_slot_id = models.CharField(
+        max_length=100,
+        blank=True,
+        help_text='Example: 1234567890'
     )
 
     # ==========================================

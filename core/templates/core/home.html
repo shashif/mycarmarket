@@ -32,6 +32,21 @@ Homepage Master Template
     Google Analytics END
     ========================================== -->
 
+   <!-- =========================================
+Google AdSense START
+Loaded only when Google AdSense is selected in Admin
+========================================== -->
+
+{% if settings and settings.homepage_ad_type == 'google' and settings.google_adsense_publisher_id %}
+    <script async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ settings.google_adsense_publisher_id }}"
+        crossorigin="anonymous">
+    </script>
+{% endif %}
+
+<!-- =========================================
+Google AdSense END
+========================================== -->
 </head>
 
 <body>

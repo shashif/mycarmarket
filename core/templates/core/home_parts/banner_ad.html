@@ -1,9 +1,9 @@
 <!-- =========================================
 MyCarMarket
-Version: v1.0.2
+Version: v1.0.3
 File: core/templates/core/home_parts/banner_ad.html
 Homepage Advertisement System
-Custom Banner + Google AdSense
+Custom Banner + Google AdSense IDs
 ========================================= -->
 
 <div class="ad-banner">
@@ -15,9 +15,19 @@ GOOGLE ADSENSE MODE
 
 {% if settings and settings.homepage_ad_type == 'google' %}
 
-    {% if settings.google_adsense_code %}
+    {% if settings.google_adsense_publisher_id and settings.google_adsense_slot_id %}
 
-        {{ settings.google_adsense_code|safe }}
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="{{ settings.google_adsense_publisher_id }}"
+             data-ad-slot="{{ settings.google_adsense_slot_id }}"
+             data-ad-format="auto"
+             data-full-width-responsive="true">
+        </ins>
+
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
 
     {% else %}
 
@@ -26,7 +36,7 @@ GOOGLE ADSENSE MODE
             <div>
                 <strong>Google AdSense Not Configured</strong><br>
                 <span>
-                    Please paste your AdSense code in Admin.
+                    Enter Publisher ID and Slot ID in Admin.
                 </span>
             </div>
 

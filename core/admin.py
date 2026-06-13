@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.0.2
+# Version: v1.0.3
 # File: core/admin.py
-# Site Settings Admin Preview + Ad Type Switch
+# Site Settings Admin Preview + AdSense ID Switch
 # ==========================================
 
 from django.contrib import admin
@@ -39,7 +39,8 @@ class SiteSettingsAdmin(admin.ModelAdmin):
                     'alternate_google_banner_ad',
                     'alternate_banner_preview',
                     'alternate_google_banner_link',
-                    'google_adsense_code',
+                    'google_adsense_publisher_id',
+                    'google_adsense_slot_id',
                 )
             }
         ),
