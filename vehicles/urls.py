@@ -1,6 +1,6 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.8.4
+# Version: v0.9.5
 # File: vehicles/urls.py
 # SEO URLs + Favourite Cars + Dealer Packages
 # ==========================================
