@@ -1,0 +1,72 @@
+{% load static %}
+
+<div class="premium-car-grid">
+        {% for car in featured_cars %}
+
+            <a href="{% url 'car_detail' car.slug %}" class="premium-car-card">
+
+                <div class="premium-car-image-wrap">
+
+                    {% with car.images.first as car_image %}
+                        {% if car_image %}
+                            <img src="{{ car_image.image.url }}" alt="{{ car.title }}">
+                        {% else %}
+                            <div class="no-image-box">No Image Available</div>
+                        {% endif %}
+                    {% endwith %}
+
+                    {% if car.is_featured %}
+                        <span class="featured-badge">⭐ Featured</span>
+                    {% endif %}
+
+                    {% if car.is_verified_listing %}
+                        <span class="verified-badge">✓ Verified</span>
+                    {% endif %}
+
+                </div>
+
+                <div class="premium-car-info">
+
+                    <h3>{{ car.title }}</h3>
+
+                    <p class="car-meta">
+                        🚘 {{ car.year }} • {{ car.make }} {{ car.model }}
+                    </p>
+
+                    <div class="dealer-info">
+                        <p class="dealer-name">
+                            🏢 {{ car.seller_business_name }}
+                        </p>
+
+                        {% if car.seller_is_verified %}
+                            <span class="dealer-verified">✔ Verified Dealer</span>
+                        {% endif %}
+
+                        {% if car.seller_is_featured_dealer %}
+                            <span class="dealer-featured">⭐ Featured Dealer</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="icon-info-grid">
+                        <span>🛣 {{ car.kilometres }} km</span>
+                        <span>⚙️ {{ car.transmission|default:"N/A" }}</span>
+                        <span>⛽ {{ car.fuel_type|default:"N/A" }}</span>
+                        <span>👁 {{ car.views_count }} views</span>
+                    </div>
+
+                    <p class="car-location">
+                        📍 {{ car.display_location|default:"Location not specified" }}
+                    </p>
+
+                    <div class="price-row">
+                        <strong>${{ car.price }}</strong>
+                    </div>
+
+                </div>
+
+            </a>
+
+        {% empty %}
+            <p>No featured cars yet. Mark cars as featured from the admin panel.</p>
+        {% endfor %}
+    </div>

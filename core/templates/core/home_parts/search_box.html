@@ -1,0 +1,70 @@
+{% load static %}
+
+<div class="search-box">
+    <h2 class="search-title">Find your next car</h2>
+
+    <form method="GET" action="{% url 'car_list' %}" class="search-form">
+        <input
+            type="text"
+            name="q"
+            class="search-input"
+            placeholder="Search Toyota, BMW, Tesla, Melbourne..."
+        >
+
+        <button type="submit" class="search-btn">Search Cars</button>
+    </form>
+
+    <div class="type-grid">
+
+        <a href="{% url 'car_list' %}?body_type=SUV" class="type-card">
+            <img src="{% static 'images/vehicle-types/suv.png' %}" class="type-img" alt="SUV">
+            <span>SUV</span>
+        </a>
+
+        <a href="{% url 'car_list' %}?body_type=Sedan" class="type-card">
+            <img src="{% static 'images/vehicle-types/sedan.png' %}" class="type-img" alt="Sedan">
+            <span>Sedan</span>
+        </a>
+
+        <a href="{% url 'car_list' %}?body_type=Hatchback" class="type-card">
+            <img src="{% static 'images/vehicle-types/hatchback.png' %}" class="type-img" alt="Hatchback">
+            <span>Hatchback</span>
+        </a>
+
+        <a href="{% url 'car_list' %}?body_type=Ute" class="type-card">
+            <img src="{% static 'images/vehicle-types/ute.png' %}" class="type-img" alt="Ute">
+            <span>Ute</span>
+        </a>
+
+        <a href="{% url 'car_list' %}?body_type=Wagon" class="type-card">
+            <img src="{% static 'images/vehicle-types/wagon.png' %}" class="type-img" alt="Wagon">
+            <span>Wagon</span>
+        </a>
+
+        <a href="{% url 'car_list' %}?body_type=Coupe" class="type-card">
+            <img src="{% static 'images/vehicle-types/coupe.png' %}" class="type-img" alt="Coupe">
+            <span>Coupe</span>
+        </a>
+
+        <a href="{% url 'car_list' %}?body_type=Convertible" class="type-card">
+            <img src="{% static 'images/vehicle-types/convertible.png' %}" class="type-img" alt="Convertible">
+            <span>Convertible</span>
+        </a>
+
+        <a href="{% url 'car_list' %}?body_type=Van" class="type-card">
+            <img src="{% static 'images/vehicle-types/van.png' %}" class="type-img" alt="Van">
+            <span>Van</span>
+        </a>
+
+        <a href="{% url 'car_list' %}?fuel_type=Electric" class="type-card">
+            <img src="{% static 'images/vehicle-types/electric.png' %}" class="type-img" alt="Electric">
+            <span>Electric</span>
+        </a>
+
+        <a href="{% url 'car_list' %}?fuel_type=Hybrid" class="type-card">
+            <img src="{% static 'images/vehicle-types/hybrid.png' %}" class="type-img" alt="Hybrid">
+            <span>Hybrid</span>
+        </a>
+
+    </div>
+</div>

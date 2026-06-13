@@ -1,0 +1,23 @@
+{% load static %}
+
+<!-- =========================================
+Hero Banner
+========================================= -->
+
+<div class="market-hero">
+
+    {% if settings and settings.hero_image %}
+        <img
+            src="{{ settings.hero_image.url }}"
+            class="market-hero-img"
+            alt="MyCarMarket Australia"
+        >
+    {% else %}
+        <img
+            src="{% static 'images/hero-car.png' %}"
+            class="market-hero-img"
+            alt="MyCarMarket Australia"
+        >
+    {% endif %}
+
+</div>

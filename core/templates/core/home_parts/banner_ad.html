@@ -1,0 +1,76 @@
+<!-- =========================================
+MyCarMarket
+Version: v1.0.2
+File: core/templates/core/home_parts/banner_ad.html
+Homepage Advertisement System
+Custom Banner + Google AdSense
+========================================= -->
+
+<div class="ad-banner">
+
+```
+<!-- =========================================
+GOOGLE ADSENSE MODE
+========================================== -->
+
+{% if settings and settings.homepage_ad_type == 'google' %}
+
+    {% if settings.google_adsense_code %}
+
+        {{ settings.google_adsense_code|safe }}
+
+    {% else %}
+
+        <div class="ad-placeholder">
+
+            <div>
+                <strong>Google AdSense Not Configured</strong><br>
+                <span>
+                    Please paste your AdSense code in Admin.
+                </span>
+            </div>
+
+        </div>
+
+    {% endif %}
+
+<!-- =========================================
+CUSTOM IMAGE AD MODE
+========================================== -->
+
+{% elif settings and settings.alternate_google_banner_ad %}
+
+    <a
+        href="{{ settings.alternate_google_banner_link|default:'#' }}"
+        target="_blank"
+    >
+
+        <img
+            src="{{ settings.alternate_google_banner_ad.url }}"
+            alt="Advertisement"
+            class="custom-banner-ad"
+        >
+
+    </a>
+
+<!-- =========================================
+FALLBACK MODE
+========================================== -->
+
+{% else %}
+
+    <div class="ad-placeholder">
+
+        <div>
+            <strong>Advertisement Area</strong><br>
+            <span>
+                Configure a Custom Banner or Google AdSense from Admin.
+            </span>
+        </div>
+
+    </div>
+
+{% endif %}
+```
+
+</div>

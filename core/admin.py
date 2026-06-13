@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.0.1
+# Version: v1.0.2
 # File: core/admin.py
-# Site Settings Admin Preview
+# Site Settings Admin Preview + Ad Type Switch
 # ==========================================
 
 from django.contrib import admin
@@ -17,6 +17,32 @@ class SiteSettingsAdmin(admin.ModelAdmin):
     readonly_fields = (
         'hero_image_preview',
         'alternate_banner_preview',
+    )
+
+    fieldsets = (
+        (
+            'Homepage Hero Banner',
+            {
+                'fields': (
+                    'hero_image',
+                    'hero_image_preview',
+                    'hero_title',
+                    'hero_subtitle',
+                )
+            }
+        ),
+        (
+            'Homepage Advertisement',
+            {
+                'fields': (
+                    'homepage_ad_type',
+                    'alternate_google_banner_ad',
+                    'alternate_banner_preview',
+                    'alternate_google_banner_link',
+                    'google_adsense_code',
+                )
+            }
+        ),
     )
 
     def hero_image_preview(self, obj):

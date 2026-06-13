@@ -1,8 +1,8 @@
 <!-- =========================================
 MyCarMarket
-Version: v0.9.4
+Version: v1.0.2
 File: core/templates/core/home.html
-Home Page + Premium Unified Car Cards
+Homepage Master Template
 ========================================= -->
 
 <!DOCTYPE html>
@@ -11,330 +11,140 @@ Home Page + Premium Unified Car Cards
     {% load static %}
 
     <title>MyCarMarket Australia - Buy, Sell & Rent Cars</title>
-
+    {% include 'core/home_parts/meta.html' %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/home.css' %}?v=102">
 
-    <!-- Google Analytics -->
+    <!-- =========================================
+    Google Analytics START
+    ========================================== -->
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-FGGQZ4WXDT"></script>
+
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-FGGQZ4WXDT');
     </script>
+
+    <!-- =========================================
+    Google Analytics END
+    ========================================== -->
 
 </head>
 
 <body>
 
+<!-- =========================================
+Navbar START
+========================================= -->
+
 {% include 'includes/navbar.html' %}
 
-<div class="market-hero">
+<!-- =========================================
+Navbar END
+========================================= -->
 
-    {% if settings and settings.hero_image %}
-        <img
-            src="{{ settings.hero_image.url }}"
-            class="market-hero-img"
-            alt="MyCarMarket Australia"
-        >
-    {% else %}
-        <img
-            src="{% static 'images/hero-car.png' %}"
-            class="market-hero-img"
-            alt="MyCarMarket Australia"
-        >
-    {% endif %}
 
-</div>
+<!-- =========================================
+Hero Section START
+========================================= -->
+
+{% include 'core/home_parts/hero.html' %}
+
+<!-- =========================================
+Hero Section END
+========================================= -->
+
+
+<!-- =========================================
+Homepage Content START
+========================================= -->
 
 <div class="container hero-search-container">
 
-    <div class="search-box">
-        <h2 class="search-title">Find your next car</h2>
+    <!-- =========================================
+    Search Section START
+    ========================================== -->
 
-        <form method="GET" action="{% url 'car_list' %}" class="search-form">
-            <input
-                type="text"
-                name="q"
-                class="search-input"
-                placeholder="Search Toyota, BMW, Tesla, Melbourne..."
-            >
+    {% include 'core/home_parts/search_box.html' %}
 
-            <button type="submit" class="search-btn">Search Cars</button>
-        </form>
+    <!-- =========================================
+    Search Section END
+    ========================================== -->
 
-        <div class="type-grid">
 
-            <a href="{% url 'car_list' %}?body_type=SUV" class="type-card">
-                <img src="{% static 'images/vehicle-types/suv.png' %}" class="type-img" alt="SUV">
-                <span>SUV</span>
-            </a>
+    <!-- =========================================
+    Banner Advertisement START
+    ========================================== -->
 
-            <a href="{% url 'car_list' %}?body_type=Sedan" class="type-card">
-                <img src="{% static 'images/vehicle-types/sedan.png' %}" class="type-img" alt="Sedan">
-                <span>Sedan</span>
-            </a>
+    {% include 'core/home_parts/banner_ad.html' %}
 
-            <a href="{% url 'car_list' %}?body_type=Hatchback" class="type-card">
-                <img src="{% static 'images/vehicle-types/hatchback.png' %}" class="type-img" alt="Hatchback">
-                <span>Hatchback</span>
-            </a>
+    <!-- =========================================
+    Banner Advertisement END
+    ========================================== -->
 
-            <a href="{% url 'car_list' %}?body_type=Ute" class="type-card">
-                <img src="{% static 'images/vehicle-types/ute.png' %}" class="type-img" alt="Ute">
-                <span>Ute</span>
-            </a>
 
-            <a href="{% url 'car_list' %}?body_type=Wagon" class="type-card">
-                <img src="{% static 'images/vehicle-types/wagon.png' %}" class="type-img" alt="Wagon">
-                <span>Wagon</span>
-            </a>
+    <!-- =========================================
+    Marketplace Stats START
+    ========================================== -->
 
-            <a href="{% url 'car_list' %}?body_type=Coupe" class="type-card">
-                <img src="{% static 'images/vehicle-types/coupe.png' %}" class="type-img" alt="Coupe">
-                <span>Coupe</span>
-            </a>
+    {% include 'core/home_parts/stats.html' %}
 
-            <a href="{% url 'car_list' %}?body_type=Convertible" class="type-card">
-                <img src="{% static 'images/vehicle-types/convertible.png' %}" class="type-img" alt="Convertible">
-                <span>Convertible</span>
-            </a>
+    <!-- =========================================
+    Marketplace Stats END
+    ========================================== -->
 
-            <a href="{% url 'car_list' %}?body_type=Van" class="type-card">
-                <img src="{% static 'images/vehicle-types/van.png' %}" class="type-img" alt="Van">
-                <span>Van</span>
-            </a>
 
-            <a href="{% url 'car_list' %}?fuel_type=Electric" class="type-card">
-                <img src="{% static 'images/vehicle-types/electric.png' %}" class="type-img" alt="Electric">
-                <span>Electric</span>
-            </a>
+    <!-- =========================================
+    Featured Cars START
+    ========================================== -->
 
-            <a href="{% url 'car_list' %}?fuel_type=Hybrid" class="type-card">
-                <img src="{% static 'images/vehicle-types/hybrid.png' %}" class="type-img" alt="Hybrid">
-                <span>Hybrid</span>
-            </a>
+    {% include 'core/home_parts/featured_cars.html' %}
 
-        </div>
-    </div>
+    <!-- =========================================
+    Featured Cars END
+    ========================================== -->
+
+
+    <!-- =========================================
+    Latest Cars START
+    ========================================== -->
+
+    {% include 'core/home_parts/latest_cars.html' %}
+
+    <!-- =========================================
+    Latest Cars END
+    ========================================== -->
+
+
+    <!-- =========================================
+    Call To Action START
+    ========================================== -->
+
+    {% include 'core/home_parts/cta.html' %}
+
+    <!-- =========================================
+    Call To Action END
+    ========================================== -->
+
+</div>
 
 <!-- =========================================
-Alternate Google Banner Ad
+Homepage Content END
 ========================================= -->
 
-<div class="ad-banner">
 
-    {% if settings and settings.alternate_google_banner_ad %}
-
-        <a href="{{ settings.alternate_google_banner_link|default:'#' }}"
-           target="_blank">
-
-            <img
-                src="{{ settings.alternate_google_banner_ad.url }}"
-                alt="Advertisement"
-                class="custom-banner-ad"
-            >
-
-        </a>
-
-    {% else %}
-
-        <div class="ad-placeholder">
-
-            <div>
-                <strong>Google AdSense Banner</strong><br>
-                <span>
-                    Replace this box with your Google AdSense code later
-                </span>
-            </div>
-
-        </div>
-
-    {% endif %}
-
-</div>
-
-    <div class="stats">
-        <div class="stat-card">
-            <h2>100+</h2>
-            <p>Cars Ready to List</p>
-        </div>
-
-        <div class="stat-card">
-            <h2>Australia</h2>
-            <p>Nationwide Marketplace</p>
-        </div>
-
-        <div class="stat-card">
-            <h2>Private</h2>
-            <p>Private Sellers Welcome</p>
-        </div>
-
-        <div class="stat-card">
-            <h2>Dealers</h2>
-            <p>Dealer Listings Supported</p>
-        </div>
-    </div>
-
-    <h2 class="section-title">Featured Cars</h2>
-
-    <div class="premium-car-grid">
-        {% for car in featured_cars %}
-
-            <a href="{% url 'car_detail' car.slug %}" class="premium-car-card">
-
-                <div class="premium-car-image-wrap">
-
-                    {% with car.images.first as car_image %}
-                        {% if car_image %}
-                            <img src="{{ car_image.image.url }}" alt="{{ car.title }}">
-                        {% else %}
-                            <div class="no-image-box">No Image Available</div>
-                        {% endif %}
-                    {% endwith %}
-
-                    {% if car.is_featured %}
-                        <span class="featured-badge">⭐ Featured</span>
-                    {% endif %}
-
-                    {% if car.is_verified_listing %}
-                        <span class="verified-badge">✓ Verified</span>
-                    {% endif %}
-
-                </div>
-
-                <div class="premium-car-info">
-
-                    <h3>{{ car.title }}</h3>
-
-                    <p class="car-meta">
-                        🚘 {{ car.year }} • {{ car.make }} {{ car.model }}
-                    </p>
-
-                    <div class="dealer-info">
-                        <p class="dealer-name">
-                            🏢 {{ car.seller_business_name }}
-                        </p>
-
-                        {% if car.seller_is_verified %}
-                            <span class="dealer-verified">✔ Verified Dealer</span>
-                        {% endif %}
-
-                        {% if car.seller_is_featured_dealer %}
-                            <span class="dealer-featured">⭐ Featured Dealer</span>
-                        {% endif %}
-                    </div>
-
-                    <div class="icon-info-grid">
-                        <span>🛣 {{ car.kilometres }} km</span>
-                        <span>⚙️ {{ car.transmission|default:"N/A" }}</span>
-                        <span>⛽ {{ car.fuel_type|default:"N/A" }}</span>
-                        <span>👁 {{ car.views_count }} views</span>
-                    </div>
-
-                    <p class="car-location">
-                        📍 {{ car.display_location|default:"Location not specified" }}
-                    </p>
-
-                    <div class="price-row">
-                        <strong>${{ car.price }}</strong>
-                    </div>
-
-                </div>
-
-            </a>
-
-        {% empty %}
-            <p>No featured cars yet. Mark cars as featured from the admin panel.</p>
-        {% endfor %}
-    </div>
-
-
-
-    <h2 class="section-title">Latest Cars</h2>
-
-    <div class="premium-car-grid">
-        {% for car in latest_cars %}
-
-            <a href="{% url 'car_detail' car.slug %}" class="premium-car-card">
-
-                <div class="premium-car-image-wrap">
-
-                    {% with car.images.first as car_image %}
-                        {% if car_image %}
-                            <img src="{{ car_image.image.url }}" alt="{{ car.title }}">
-                        {% else %}
-                            <div class="no-image-box">No Image Available</div>
-                        {% endif %}
-                    {% endwith %}
-
-                    {% if car.is_featured %}
-                        <span class="featured-badge">⭐ Featured</span>
-                    {% endif %}
-
-                    {% if car.is_verified_listing %}
-                        <span class="verified-badge">✓ Verified</span>
-                    {% endif %}
-
-                </div>
-
-                <div class="premium-car-info">
-
-                    <h3>{{ car.title }}</h3>
-
-                    <p class="car-meta">
-                        🚘 {{ car.year }} • {{ car.make }} {{ car.model }}
-                    </p>
-
-                    <div class="dealer-info">
-                        <p class="dealer-name">
-                            🏢 {{ car.seller_business_name }}
-                        </p>
-
-                        {% if car.seller_is_verified %}
-                            <span class="dealer-verified">✔ Verified Dealer</span>
-                        {% endif %}
-
-                        {% if car.seller_is_featured_dealer %}
-                            <span class="dealer-featured">⭐ Featured Dealer</span>
-                        {% endif %}
-                    </div>
-
-                    <div class="icon-info-grid">
-                        <span>🛣 {{ car.kilometres }} km</span>
-                        <span>⚙️ {{ car.transmission|default:"N/A" }}</span>
-                        <span>⛽ {{ car.fuel_type|default:"N/A" }}</span>
-                        <span>👁 {{ car.views_count }} views</span>
-                    </div>
-
-                    <p class="car-location">
-                        📍 {{ car.display_location|default:"Location not specified" }}
-                    </p>
-
-                    <div class="price-row">
-                        <strong>${{ car.price }}</strong>
-                    </div>
-
-                </div>
-
-            </a>
-
-        {% empty %}
-            <p>No cars available yet.</p>
-        {% endfor %}
-    </div>
-
-    <div class="cta">
-        <h2>Want to Sell Your Car?</h2>
-        <p>List your car on MyCarMarket Australia and reach buyers across the country.</p>
-        <a href="{% url 'create_car' %}">Sell Your Car</a>
-    </div>
-
-</div>
+<!-- =========================================
+Footer START
+========================================= -->
 
 {% include 'includes/footer.html' %}
+
+<!-- =========================================
+Footer END
+========================================= -->
 
 </body>
 </html>
