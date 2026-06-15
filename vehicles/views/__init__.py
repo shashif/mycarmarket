@@ -11,3 +11,4 @@ from .car_manage_views import create_car, my_listings, edit_car, delete_car
 from .dealer_views import dealer_detail
 from .favourite_views import toggle_favourite, saved_cars
 from .package_views import dealer_packages
+from .payment_views import *

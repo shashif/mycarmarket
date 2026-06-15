@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.0.8
+# Version: v1.1.0
 # File: config/settings.py
-# Email Notification System + Production Settings Review
+# Email Notification System + Stripe Checkout Setup
 # ==========================================
 
 import os
@@ -167,8 +167,6 @@ LOGOUT_REDIRECT_URL = 'car_list'
 
 # ==========================================
 # EMAIL SETTINGS
-# Development default: console email backend
-# Production: set environment variables
 # ==========================================
 
 EMAIL_BACKEND = os.environ.get(
@@ -176,32 +174,11 @@ EMAIL_BACKEND = os.environ.get(
     'django.core.mail.backends.console.EmailBackend'
 )
 
-EMAIL_HOST = os.environ.get(
-    'EMAIL_HOST',
-    'smtp.gmail.com'
-)
-
-EMAIL_PORT = int(
-    os.environ.get(
-        'EMAIL_PORT',
-        587
-    )
-)
-
-EMAIL_USE_TLS = os.environ.get(
-    'EMAIL_USE_TLS',
-    'True'
-) == 'True'
-
-EMAIL_HOST_USER = os.environ.get(
-    'EMAIL_HOST_USER',
-    ''
-)
-
-EMAIL_HOST_PASSWORD = os.environ.get(
-    'EMAIL_HOST_PASSWORD',
-    ''
-)
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True') == 'True'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 
 DEFAULT_FROM_EMAIL = os.environ.get(
     'DEFAULT_FROM_EMAIL',
@@ -211,6 +188,25 @@ DEFAULT_FROM_EMAIL = os.environ.get(
 CONTACT_EMAIL = os.environ.get(
     'CONTACT_EMAIL',
     'support@mycarmarket.com.au'
+)
+
+
+# ==========================================
+# STRIPE PAYMENT SETTINGS
+# v1.1.0 Stripe Checkout Setup
+# ==========================================
+
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', '')
+STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY', '')
+
+STRIPE_PRICE_STARTER = os.environ.get('STRIPE_PRICE_STARTER', '')
+STRIPE_PRICE_PROFESSIONAL = os.environ.get('STRIPE_PRICE_PROFESSIONAL', '')
+STRIPE_PRICE_PREMIUM = os.environ.get('STRIPE_PRICE_PREMIUM', '')
+STRIPE_PRICE_ENTERPRISE = os.environ.get('STRIPE_PRICE_ENTERPRISE', '')
+
+SITE_URL = os.environ.get(
+    'SITE_URL',
+    'http://127.0.0.1:8000'
 )
 
 
