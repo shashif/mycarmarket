@@ -9,3 +9,5 @@ from .dealer_models import DealerProfile
 from .car_models import Car, CarImage
 from .enquiry_models import Enquiry
 from .favourite_models import FavouriteCar
+from .payment_models import DealerSubscription
+from .payment_models import PaymentTransaction
