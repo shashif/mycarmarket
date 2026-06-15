@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.1.0
+# Version: v1.1.2
 # File: vehicles/urls.py
-# SEO URLs + Favourite Cars + Dealer Packages + Stripe Checkout
+# SEO URLs + Favourite Cars + Dealer Packages + Stripe Checkout + Package Select
 # ==========================================
 
 from django.urls import path
@@ -45,6 +45,16 @@ urlpatterns = [
         'dealer-packages/',
         views.dealer_packages,
         name='dealer_packages'
+    ),
+
+    # ==========================================
+    # v1.1.2 Dealer Package Select Page
+    # ==========================================
+
+    path(
+        'dealer/package/select/',
+        views.dealer_package_select,
+        name='dealer_package_select'
     ),
 
     # ==========================================

@@ -1,8 +1,8 @@
 <!-- ==========================================
 MyCarMarket
-Version: v0.9.9.4
+Version: v1.1.1
 File: vehicles/templates/vehicles/dealer_packages.html
-Dealer Packages HTML + External CSS
+Dealer Package Subscribe Buttons
 ========================================== -->
 
 <!DOCTYPE html>
@@ -20,12 +20,33 @@ Dealer Packages HTML + External CSS
 
 {% include 'includes/navbar.html' %}
 
+<!-- ==========================================
+SECTION START
+Dealer Packages Wrapper
+========================================== -->
+
 <div class="wrapper">
+
+    <!-- ==========================================
+    SECTION START
+    Hero
+    ========================================== -->
 
     <div class="hero">
         <h1>Dealer Packages</h1>
         <p>Grow your car business with more visibility, featured ads, verified badges and priority search exposure.</p>
     </div>
+
+    <!-- ==========================================
+    SECTION END
+    Hero
+    ========================================== -->
+
+
+    <!-- ==========================================
+    SECTION START
+    Benefits
+    ========================================== -->
 
     <div class="benefits">
         <div class="benefit-card">
@@ -49,11 +70,23 @@ Dealer Packages HTML + External CSS
         </div>
     </div>
 
+    <!-- ==========================================
+    SECTION END
+    Benefits
+    ========================================== -->
+
+
+    <!-- ==========================================
+    SECTION START
+    Package Cards
+    ========================================== -->
+
     <div class="package-grid">
 
         <div class="package-card">
             <h2>Free</h2>
             <div class="price">$0 <span>AUD</span></div>
+
             <ul>
                 <li>✅ 3 car listings</li>
                 <li>❌ No featured ads</li>
@@ -61,12 +94,19 @@ Dealer Packages HTML + External CSS
                 <li>✅ Basic seller profile</li>
                 <li>✅ Standard search listing</li>
             </ul>
-            <a href="{% url 'create_car' %}" class="btn">Start Free</a>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'create_car' %}?package=free" class="btn">Start Free</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn">Login to Start</a>
+            {% endif %}
         </div>
+
 
         <div class="package-card">
             <h2>Starter</h2>
             <div class="price">$99 <span>AUD</span></div>
+
             <ul>
                 <li>✅ 10 car listings</li>
                 <li>✅ 1 featured ad</li>
@@ -74,13 +114,21 @@ Dealer Packages HTML + External CSS
                 <li>✅ Better listing visibility</li>
                 <li>✅ Dealer profile page</li>
             </ul>
-            <a href="{% url 'create_car' %}" class="btn">Choose Starter</a>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'create_car' %}?package=starter" class="btn">Subscribe Starter</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn">Login to Subscribe</a>
+            {% endif %}
         </div>
+
 
         <div class="package-card popular">
             <span class="popular-label">Most Popular</span>
+
             <h2>Professional</h2>
             <div class="price">$299 <span>AUD</span></div>
+
             <ul>
                 <li>✅ 30 car listings</li>
                 <li>✅ 5 featured ads</li>
@@ -88,12 +136,19 @@ Dealer Packages HTML + External CSS
                 <li>✅ Higher search visibility</li>
                 <li>✅ Priority dealer exposure</li>
             </ul>
-            <a href="{% url 'create_car' %}" class="btn">Choose Professional</a>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'create_car' %}?package=professional" class="btn">Subscribe Professional</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn">Login to Subscribe</a>
+            {% endif %}
         </div>
+
 
         <div class="package-card">
             <h2>Premium</h2>
             <div class="price">$599 <span>AUD</span></div>
+
             <ul>
                 <li>✅ 75 car listings</li>
                 <li>✅ 15 featured ads</li>
@@ -101,12 +156,19 @@ Dealer Packages HTML + External CSS
                 <li>✅ Strong search boost</li>
                 <li>✅ Homepage dealer exposure</li>
             </ul>
-            <a href="{% url 'create_car' %}" class="btn">Choose Premium</a>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'create_car' %}?package=premium" class="btn">Subscribe Premium</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn">Login to Subscribe</a>
+            {% endif %}
         </div>
+
 
         <div class="package-card">
             <h2>Enterprise</h2>
             <div class="price">$999 <span>AUD</span></div>
+
             <ul>
                 <li>✅ Unlimited listings</li>
                 <li>✅ 30 featured ads</li>
@@ -114,16 +176,42 @@ Dealer Packages HTML + External CSS
                 <li>✅ Maximum search exposure</li>
                 <li>✅ Priority support</li>
             </ul>
-            <a href="{% url 'create_car' %}" class="btn">Choose Enterprise</a>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'create_car' %}?package=enterprise" class="btn">Subscribe Enterprise</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn">Login to Subscribe</a>
+            {% endif %}
         </div>
 
     </div>
 
+    <!-- ==========================================
+    SECTION END
+    Package Cards
+    ========================================== -->
+
+
+    <!-- ==========================================
+    SECTION START
+    Payment Note
+    ========================================== -->
+
     <div class="note">
-        <strong>Note:</strong> Payment system will be added later. For now, admin can manually upgrade dealer packages and verification status from the admin panel.
+        <strong>Note:</strong> Payment system is being connected. For now, dealer package upgrades can still be managed manually from the admin panel.
     </div>
 
+    <!-- ==========================================
+    SECTION END
+    Payment Note
+    ========================================== -->
+
 </div>
+
+<!-- ==========================================
+SECTION END
+Dealer Packages Wrapper
+========================================== -->
 
 </body>
 </html>

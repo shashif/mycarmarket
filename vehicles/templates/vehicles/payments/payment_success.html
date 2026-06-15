@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Payment Successful - MyCarMarket</title>
-</head>
+{% extends 'base.html' %}
 
-<body>
+{% block title %}
+Payment Successful - MyCarMarket
+{% endblock %}
+
+{% block content %}
+
+<div class="page-wrapper" style="max-width:900px;margin:50px auto;padding:30px;text-align:center;">
 
     <h1>Payment Successful ✅</h1>
 
@@ -12,10 +14,10 @@
         Thank you. Your dealer payment was completed successfully.
     </p>
 
-    <a href="{% url 'dealer_packages' %}">
+    <a href="{% url 'dealer_packages' %}" class="btn">
         Back to Dealer Packages
     </a>
 
-</body>
+</div>
 
-</html>
+{% endblock %}

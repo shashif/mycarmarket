@@ -1,21 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Payment Cancelled - MyCarMarket</title>
-</head>
+{% extends 'base.html' %}
 
-<body>
+{% block title %}
+Payment Cancelled - MyCarMarket
+{% endblock %}
+
+{% block content %}
+
+<div class="page-wrapper" style="max-width:900px;margin:50px auto;padding:30px;text-align:center;">
 
     <h1>Payment Cancelled</h1>
 
     <p>
-        Your payment was cancelled.
+        Your payment was cancelled. You can try again anytime.
     </p>
 
-    <a href="{% url 'dealer_packages' %}">
+    <a href="{% url 'dealer_packages' %}" class="btn">
         Back to Dealer Packages
     </a>
 
-</body>
+</div>
 
-</html>
+{% endblock %}

@@ -1,0 +1,71 @@
+<!-- ==========================================
+MyCarMarket
+Version: v1.1.2
+File: vehicles/templates/vehicles/dealer_package_select.html
+Dealer Package Payment Select Page
+========================================== -->
+
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select Dealer Package - MyCarMarket Australia</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dealer_packages.css' %}">
+</head>
+
+<body>
+
+{% include 'includes/navbar.html' %}
+
+<div class="wrapper">
+
+    <div class="hero">
+        <h1>Select Dealer Package</h1>
+        <p>Choose your package and continue to payment.</p>
+    </div>
+
+    <div class="package-grid">
+
+        {% for package in packages %}
+
+            <div class="package-card {% if package.badge %}popular{% endif %}">
+
+                {% if package.badge %}
+                    <span class="popular-label">{{ package.badge }}</span>
+                {% endif %}
+
+                <h2>{{ package.name }}</h2>
+
+                <div class="price">
+                    ${{ package.price }} <span>AUD</span>
+                </div>
+
+                <ul>
+                    {% for feature in package.features %}
+                        <li>✅ {{ feature }}</li>
+                    {% endfor %}
+                </ul>
+
+                {% if package.slug == "free" %}
+                    <a href="{% url 'create_car' %}?package=free" class="btn">
+                        Start Free
+                    </a>
+                {% else %}
+                    <a href="{% url 'create_checkout_session' package.slug %}" class="btn">
+                        Continue to Payment
+                    </a>
+                {% endif %}
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+</body>
+</html>
