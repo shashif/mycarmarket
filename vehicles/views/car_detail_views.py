@@ -1,13 +1,15 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.8.3
+# Version: v1.0.8
 # File: vehicles/views/car_detail_views.py
-# Dealer Trust + Enquiry + Favourite Status
+# Dealer Trust + Enquiry + Favourite Status + Email Notifications
 # ==========================================
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.utils import timezone
+from django.core.mail import send_mail
+from django.conf import settings
 
 from vehicles.models import Car, FavouriteCar
 from vehicles.forms import EnquiryForm
@@ -76,6 +78,7 @@ def car_detail(request, slug):
 
     similar_cars = Car.objects.filter(
         is_approved=True,
+        is_active=True,
         make__iexact=car.make,
         body_type=car.body_type
     ).exclude(pk=car.pk).order_by('-created_at')[:6]
@@ -83,18 +86,21 @@ def car_detail(request, slug):
     if not similar_cars.exists():
         similar_cars = Car.objects.filter(
             is_approved=True,
+            is_active=True,
             make__iexact=car.make
         ).exclude(pk=car.pk).order_by('-created_at')[:6]
 
     if not similar_cars.exists():
         similar_cars = Car.objects.filter(
             is_approved=True,
+            is_active=True,
             body_type=car.body_type
         ).exclude(pk=car.pk).order_by('-created_at')[:6]
 
     if not similar_cars.exists():
         similar_cars = Car.objects.filter(
-            is_approved=True
+            is_approved=True,
+            is_active=True
         ).exclude(pk=car.pk).order_by('-created_at')[:6]
 
     if request.method == 'POST':
@@ -105,7 +111,53 @@ def car_detail(request, slug):
             enquiry.car = car
             enquiry.save()
 
-            messages.success(request, 'Your enquiry has been sent successfully.')
+            seller_email = ''
+
+            if car.seller and car.seller.email:
+                seller_email = car.seller.email
+            elif car.seller_email:
+                seller_email = car.seller_email
+
+            if seller_email:
+                subject = f"New enquiry for {car.title} - MyCarMarket Australia"
+
+                message = (
+                    f"Hello,\n\n"
+                    f"You have received a new enquiry on MyCarMarket Australia.\n\n"
+                    f"Car Details:\n"
+                    f"{car.year} {car.make} {car.model}\n"
+                    f"Title: {car.title}\n"
+                    f"Price: ${car.price}\n"
+                    f"Kilometres: {car.kilometres} km\n"
+                    f"Location: {car.display_location()}\n\n"
+                    f"Buyer Details:\n"
+                    f"Name: {enquiry.name}\n"
+                    f"Email: {enquiry.email}\n"
+                    f"Phone: {enquiry.phone or 'Not provided'}\n\n"
+                    f"Message:\n"
+                    f"{enquiry.message}\n\n"
+                    f"Listing Link:\n"
+                    f"{share_url}\n\n"
+                    f"Regards,\n"
+                    f"MyCarMarket Australia"
+                )
+
+                try:
+                    send_mail(
+                        subject,
+                        message,
+                        settings.DEFAULT_FROM_EMAIL,
+                        [seller_email],
+                        fail_silently=True
+                    )
+                except Exception:
+                    pass
+
+            messages.success(
+                request,
+                'Your enquiry has been sent successfully.'
+            )
+
             return redirect('car_detail', slug=car.slug)
 
     else:
@@ -141,3 +193,8 @@ def car_detail(request, slug):
             'dealer_years_active': dealer_years_active,
         }
     )
+
+
+# ==========================================
+# END CAR DETAIL VIEW
+# ==========================================

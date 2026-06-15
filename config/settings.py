@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.0.0 Launch Candidate
+# Version: v1.0.8
 # File: config/settings.py
-# Production Settings Review + Security Ready
+# Email Notification System + Production Settings Review
 # ==========================================
 
 import os
@@ -166,6 +166,55 @@ LOGOUT_REDIRECT_URL = 'car_list'
 
 
 # ==========================================
+# EMAIL SETTINGS
+# Development default: console email backend
+# Production: set environment variables
+# ==========================================
+
+EMAIL_BACKEND = os.environ.get(
+    'EMAIL_BACKEND',
+    'django.core.mail.backends.console.EmailBackend'
+)
+
+EMAIL_HOST = os.environ.get(
+    'EMAIL_HOST',
+    'smtp.gmail.com'
+)
+
+EMAIL_PORT = int(
+    os.environ.get(
+        'EMAIL_PORT',
+        587
+    )
+)
+
+EMAIL_USE_TLS = os.environ.get(
+    'EMAIL_USE_TLS',
+    'True'
+) == 'True'
+
+EMAIL_HOST_USER = os.environ.get(
+    'EMAIL_HOST_USER',
+    ''
+)
+
+EMAIL_HOST_PASSWORD = os.environ.get(
+    'EMAIL_HOST_PASSWORD',
+    ''
+)
+
+DEFAULT_FROM_EMAIL = os.environ.get(
+    'DEFAULT_FROM_EMAIL',
+    'MyCarMarket Australia <no-reply@mycarmarket.com.au>'
+)
+
+CONTACT_EMAIL = os.environ.get(
+    'CONTACT_EMAIL',
+    'support@mycarmarket.com.au'
+)
+
+
+# ==========================================
 # PRODUCTION SECURITY SETTINGS
 # Only active when DEBUG=False
 # ==========================================
@@ -188,3 +237,8 @@ if not DEBUG:
         'CSRF_TRUSTED_ORIGINS',
         ''
     ).split(',') if os.environ.get('CSRF_TRUSTED_ORIGINS') else []
+
+
+# ==========================================
+# END SETTINGS
+# ==========================================
