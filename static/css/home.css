@@ -1,6 +1,99 @@
 /* ==========================================
-ALTERNATE GOOGLE BANNER AD
+MyCarMarket
+Version: v1.0.7
+Homepage Featured Vehicles + Premium Listing Polish
+ADD BELOW EXISTING CSS
 ========================================== */
+
+.home-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 25px 0 18px;
+    gap: 20px;
+}
+
+.section-subtitle {
+    color: #6b7280;
+    margin-top: -8px;
+    margin-bottom: 0;
+    font-size: 15px;
+}
+
+.section-view-all {
+    background: #111827;
+    color: white;
+    text-decoration: none;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+    transition: 0.2s;
+}
+
+.section-view-all:hover {
+    background: #2563eb;
+}
+
+.featured-home-card {
+    border: 2px solid #f59e0b;
+}
+
+.car-title-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.car-title-link:hover h3 {
+    color: #2563eb;
+}
+
+.car-image-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.view-details-btn {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    background: #111827;
+    color: white;
+    text-decoration: none;
+    padding: 13px;
+    border-radius: 12px;
+    font-weight: bold;
+    margin-top: 18px;
+    transition: 0.2s;
+}
+
+.view-details-btn:hover {
+    background: #2563eb;
+}
+
+.empty-home-section {
+    width: 100%;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    color: #6b7280;
+}
+
+@media (max-width: 768px) {
+
+    .home-section-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .section-view-all {
+        width: 100%;
+        text-align: center;
+    }
+}
 
 .ad-banner {
     margin: 30px 0;

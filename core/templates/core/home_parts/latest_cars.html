@@ -1,12 +1,32 @@
 {% load static %}
 
+<!-- =========================================
+MyCarMarket
+Version: v1.0.7
+File: core/templates/core/home_parts/latest_cars.html
+Homepage Latest Vehicles Section
+========================================= -->
+
+<div class="home-section-header">
+    <div>
+        <h2 class="section-title">🚗 Latest Vehicles</h2>
+        <p class="section-subtitle">Newest listings across Australia, with featured cars prioritised.</p>
+    </div>
+
+    <a href="{% url 'car_list' %}" class="section-view-all">
+        Browse All Cars
+    </a>
+</div>
+
 <div class="premium-car-grid">
-        {% for car in latest_cars %}
 
-            <a href="{% url 'car_detail' car.slug %}" class="premium-car-card">
+    {% for car in latest_cars %}
 
-                <div class="premium-car-image-wrap">
+        <div class="premium-car-card">
 
+            <div class="premium-car-image-wrap">
+
+                <a href="{% url 'car_detail' car.slug %}" class="car-image-link">
                     {% with car.images.first as car_image %}
                         {% if car_image %}
                             <img src="{{ car_image.image.url }}" alt="{{ car.title }}">
@@ -14,59 +34,72 @@
                             <div class="no-image-box">No Image Available</div>
                         {% endif %}
                     {% endwith %}
+                </a>
 
-                    {% if car.is_featured %}
-                        <span class="featured-badge">⭐ Featured</span>
-                    {% endif %}
+                {% if car.is_featured %}
+                    <span class="featured-badge">⭐ Featured</span>
+                {% endif %}
 
-                    {% if car.is_verified_listing %}
-                        <span class="verified-badge">✓ Verified</span>
-                    {% endif %}
+                {% if car.is_verified_listing %}
+                    <span class="verified-badge">✓ Verified</span>
+                {% endif %}
 
-                </div>
+            </div>
 
-                <div class="premium-car-info">
+            <div class="premium-car-info">
 
+                <a href="{% url 'car_detail' car.slug %}" class="car-title-link">
                     <h3>{{ car.title }}</h3>
+                </a>
 
-                    <p class="car-meta">
-                        🚘 {{ car.year }} • {{ car.make }} {{ car.model }}
+                <p class="car-meta">
+                    🚘 {{ car.year }} • {{ car.make }} {{ car.model }}
+                </p>
+
+                <div class="dealer-info">
+                    <p class="dealer-name">
+                        🏢 {{ car.seller_business_name }}
                     </p>
 
-                    <div class="dealer-info">
-                        <p class="dealer-name">
-                            🏢 {{ car.seller_business_name }}
-                        </p>
+                    {% if car.seller_is_verified %}
+                        <span class="dealer-verified">✔ Verified Dealer</span>
+                    {% endif %}
 
-                        {% if car.seller_is_verified %}
-                            <span class="dealer-verified">✔ Verified Dealer</span>
-                        {% endif %}
-
-                        {% if car.seller_is_featured_dealer %}
-                            <span class="dealer-featured">⭐ Featured Dealer</span>
-                        {% endif %}
-                    </div>
-
-                    <div class="icon-info-grid">
-                        <span>🛣 {{ car.kilometres }} km</span>
-                        <span>⚙️ {{ car.transmission|default:"N/A" }}</span>
-                        <span>⛽ {{ car.fuel_type|default:"N/A" }}</span>
-                        <span>👁 {{ car.views_count }} views</span>
-                    </div>
-
-                    <p class="car-location">
-                        📍 {{ car.display_location|default:"Location not specified" }}
-                    </p>
-
-                    <div class="price-row">
-                        <strong>${{ car.price }}</strong>
-                    </div>
-
+                    {% if car.seller_is_featured_dealer %}
+                        <span class="dealer-featured">⭐ Featured Dealer</span>
+                    {% endif %}
                 </div>
 
-            </a>
+                <div class="icon-info-grid">
+                    <span>🛣 {{ car.kilometres }} km</span>
+                    <span>⚙️ {{ car.transmission|default:"N/A" }}</span>
+                    <span>⛽ {{ car.fuel_type|default:"N/A" }}</span>
+                    <span>👁 {{ car.views_count }} views</span>
+                </div>
 
-        {% empty %}
-            <p>No cars available yet.</p>
-        {% endfor %}
-    </div>
+                <p class="car-location">
+                    📍 {{ car.display_location|default:"Location not specified" }}
+                </p>
+
+                <div class="price-row">
+                    <strong>${{ car.price }}</strong>
+                </div>
+
+                <a href="{% url 'car_detail' car.slug %}" class="view-details-btn">
+                    View Details
+                </a>
+
+            </div>
+
+        </div>
+
+    {% empty %}
+
+        <div class="empty-home-section">
+            <h3>No cars available yet</h3>
+            <p>New vehicle listings will appear here after approval.</p>
+        </div>
+
+    {% endfor %}
+
+</div>

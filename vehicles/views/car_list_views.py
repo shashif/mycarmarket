@@ -1,15 +1,15 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.7.9
+# Version: v1.0.6
 # File: vehicles/views/car_list_views.py
-# Featured Cars First + Verified Cars Priority
+# Featured Cars First + Verified Cars Priority + Favourite Button Support
 # ==========================================
 
 from django.shortcuts import render
 from django.db.models import Q
 from django.core.paginator import Paginator
 
-from vehicles.models import Car
+from vehicles.models import Car, FavouriteCar
 
 
 def car_list(request):
@@ -128,6 +128,15 @@ def car_list(request):
             '-created_at'
         )
 
+    favourite_car_ids = []
+
+    if request.user.is_authenticated:
+        favourite_car_ids = list(
+            FavouriteCar.objects.filter(
+                user=request.user
+            ).values_list('car_id', flat=True)
+        )
+
     paginator = Paginator(cars, 6)
 
     page_number = request.GET.get('page')
@@ -150,5 +159,11 @@ def car_list(request):
             'fuel_type': fuel_type,
             'body_type': body_type,
             'sort_by': sort_by,
+            'favourite_car_ids': favourite_car_ids,
         }
     )
+
+
+# ==========================================
+# END CAR LIST VIEW
+# ==========================================

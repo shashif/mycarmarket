@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.0.0 Launch Candidate
+# Version: v1.0.7
 # File: core/views.py
-# Homepage + Legal Pages + Contact + Custom 404
+# Homepage Featured Vehicles + Premium Listing Polish
 # ==========================================
 
 from django.shortcuts import render
@@ -17,12 +17,21 @@ from vehicles.models import Car
 def home(request):
     featured_cars = Car.objects.filter(
         is_approved=True,
+        is_active=True,
         is_featured=True
-    ).order_by('-created_at')[:3]
+    ).order_by(
+        '-is_verified_listing',
+        '-created_at'
+    )[:6]
 
     latest_cars = Car.objects.filter(
-        is_approved=True
-    ).order_by('-created_at')[:6]
+        is_approved=True,
+        is_active=True
+    ).order_by(
+        '-is_featured',
+        '-is_verified_listing',
+        '-created_at'
+    )[:6]
 
     settings = SiteSettings.objects.first()
 
@@ -35,6 +44,7 @@ def home(request):
             'settings': settings,
         }
     )
+
 
 # ==========================================
 # SELL CAR PAGE
@@ -101,3 +111,8 @@ def custom_404(request, exception):
         '404.html',
         status=404
     )
+
+
+# ==========================================
+# END CORE VIEWS
+# ==========================================
