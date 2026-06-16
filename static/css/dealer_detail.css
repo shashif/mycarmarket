@@ -1,8 +1,8 @@
 /* ==========================================
 MyCarMarket
-Version: v0.9.9.7
+Version: v1.1.9
 File: static/css/dealer_detail.css
-Dealer Profile Mobile Optimisation
+Facebook Style Dealer Cover Page
 ========================================== */
 
 .dealer-page-wrapper {
@@ -11,9 +11,13 @@ Dealer Profile Mobile Optimisation
     margin: 35px auto;
 }
 
+/* ==========================================
+DEALER HERO - FACEBOOK STYLE
+========================================== */
+
 .dealer-hero-card {
-    background: linear-gradient(135deg, #111827, #1f2937);
-    color: white;
+    background: white;
+    color: #111827;
     border-radius: 24px;
     overflow: hidden;
     margin-bottom: 28px;
@@ -21,38 +25,58 @@ Dealer Profile Mobile Optimisation
 }
 
 .dealer-banner {
-    height: 320px;
-    background: #374151;
+    height: 360px;
+    background: linear-gradient(135deg, #111827, #374151);
+    position: relative;
 }
 
 .dealer-banner img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
 }
 
+.banner-position-top {
+    object-position: top;
+}
+
+.banner-position-center {
+    object-position: center;
+}
+
+.banner-position-bottom {
+    object-position: bottom;
+}
+
+/* Profile area */
 .dealer-header-content {
-    padding: 35px;
+    padding: 0 35px 35px;
     display: flex;
     justify-content: space-between;
     gap: 25px;
-    align-items: center;
+    align-items: flex-start;
+    position: relative;
 }
 
 .dealer-main-info {
     display: flex;
-    gap: 20px;
-    align-items: center;
+    gap: 22px;
+    align-items: flex-end;
+    margin-top: -58px;
+    position: relative;
+    z-index: 5;
 }
 
 .dealer-logo,
 .dealer-logo-placeholder {
-    width: 120px;
-    height: 120px;
-    border-radius: 22px;
+    width: 135px;
+    height: 135px;
+    border-radius: 24px;
     background: white;
-    border: 4px solid white;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    border: 5px solid white;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+    flex-shrink: 0;
 }
 
 .dealer-logo {
@@ -64,17 +88,18 @@ Dealer Profile Mobile Optimisation
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 48px;
+    font-size: 54px;
 }
 
 .dealer-header-content h1 {
-    margin: 0;
+    margin: 65px 0 0;
     font-size: 38px;
+    color: #111827;
 }
 
 .dealer-subtitle {
     margin-top: 10px;
-    color: #d1d5db;
+    color: #6b7280;
 }
 
 .dealer-badges {
@@ -116,7 +141,7 @@ Dealer Profile Mobile Optimisation
 }
 
 .dealer-stat-box {
-    background: rgba(255,255,255,0.12);
+    background: #f3f4f6;
     padding: 12px 18px;
     border-radius: 12px;
     min-width: 100px;
@@ -125,28 +150,30 @@ Dealer Profile Mobile Optimisation
 .dealer-stat-box strong {
     display: block;
     font-size: 18px;
+    color: #111827;
 }
 
 .dealer-stat-box span {
     font-size: 12px;
-    color: #d1d5db;
+    color: #6b7280;
 }
 
 .dealer-share-box {
     text-align: right;
+    margin-top: 28px;
 }
 
 .dealer-share-box p {
     margin-bottom: 12px;
     font-weight: bold;
-    color: #e5e7eb;
+    color: #374151;
 }
 
 .dealer-share-box a,
 .copy-dealer-link-btn {
     display: inline-block;
-    background: white;
-    color: #111827;
+    background: #111827;
+    color: white;
     text-decoration: none;
     padding: 9px 13px;
     border-radius: 10px;
@@ -162,6 +189,10 @@ Dealer Profile Mobile Optimisation
     background: #2563eb;
     color: white;
 }
+
+/* ==========================================
+DEALER INFO
+========================================== */
 
 .dealer-info-grid {
     display: grid;
@@ -216,6 +247,10 @@ Dealer Profile Mobile Optimisation
     background: #1d4ed8;
 }
 
+/* ==========================================
+TRUST CENTRE
+========================================== */
+
 .dealer-trust-centre {
     margin-bottom: 35px;
     text-align: center;
@@ -250,6 +285,10 @@ Dealer Profile Mobile Optimisation
     color: #374151;
     font-weight: bold;
 }
+
+/* ==========================================
+INVENTORY
+========================================== */
 
 .section-title {
     font-size: 28px;
@@ -374,7 +413,10 @@ Dealer Profile Mobile Optimisation
     color: #111827;
 }
 
-/* Tablet */
+/* ==========================================
+TABLET
+========================================== */
+
 @media (max-width: 900px) {
     .dealer-header-content {
         flex-direction: column;
@@ -407,7 +449,10 @@ Dealer Profile Mobile Optimisation
     }
 }
 
-/* Mobile */
+/* ==========================================
+MOBILE
+========================================== */
+
 @media (max-width: 768px) {
     .dealer-page-wrapper {
         width: 94%;
@@ -415,24 +460,35 @@ Dealer Profile Mobile Optimisation
     }
 
     .dealer-banner {
-        height: 180px;
+        height: 210px;
     }
 
     .dealer-header-content {
-        padding: 22px;
+        padding: 0 20px 24px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .dealer-main-info {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: -48px;
+        gap: 12px;
     }
 
     .dealer-logo,
     .dealer-logo-placeholder {
-        width: 90px;
-        height: 90px;
+        width: 100px;
+        height: 100px;
+        border-radius: 20px;
     }
 
     .dealer-logo-placeholder {
-        font-size: 38px;
+        font-size: 42px;
     }
 
     .dealer-header-content h1 {
+        margin: 0;
         font-size: 28px;
         line-height: 1.2;
     }
@@ -449,6 +505,8 @@ Dealer Profile Mobile Optimisation
 
     .dealer-share-box {
         width: 100%;
+        text-align: left;
+        margin-top: 10px;
     }
 
     .dealer-share-box a,

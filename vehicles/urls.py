@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.1.2
+# Version: v1.2.0
 # File: vehicles/urls.py
-# SEO URLs + Favourite Cars + Dealer Packages + Stripe Checkout + Package Select
+# SEO URLs + Dealer Dashboard + Dealer Profile + Payments
 # ==========================================
 
 from django.urls import path
@@ -35,6 +35,22 @@ urlpatterns = [
         name='saved_cars'
     ),
 
+    # ==========================================
+    # Dealer Dashboard + Dealer Profile
+    # ==========================================
+
+    path(
+        'dealer/dashboard/',
+        views.dealer_dashboard,
+        name='dealer_dashboard'
+    ),
+
+    path(
+        'dealer/profile/edit/',
+        views.edit_dealer_profile,
+        name='edit_dealer_profile'
+    ),
+
     path(
         'dealer/<str:username>/',
         views.dealer_detail,
@@ -47,10 +63,6 @@ urlpatterns = [
         name='dealer_packages'
     ),
 
-    # ==========================================
-    # v1.1.2 Dealer Package Select Page
-    # ==========================================
-
     path(
         'dealer/package/select/',
         views.dealer_package_select,
@@ -58,7 +70,7 @@ urlpatterns = [
     ),
 
     # ==========================================
-    # v1.1.0 Stripe Checkout URLs
+    # Stripe Payment URLs
     # ==========================================
 
     path(
@@ -78,6 +90,16 @@ urlpatterns = [
         views.payment_cancelled,
         name='payment_cancelled'
     ),
+
+    path(
+        'stripe/webhook/',
+        views.stripe_webhook,
+        name='stripe_webhook'
+    ),
+
+    # ==========================================
+    # Car Management URLs
+    # ==========================================
 
     path(
         'create/',

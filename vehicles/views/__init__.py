@@ -13,3 +13,5 @@ from .favourite_views import toggle_favourite, saved_cars
 from .package_views import dealer_packages
 from .payment_views import *
 from .dealer_package_select_views import dealer_package_select
+from .dealer_profile_edit_views import edit_dealer_profile
+from .dealer_dashboard_views import dealer_dashboard

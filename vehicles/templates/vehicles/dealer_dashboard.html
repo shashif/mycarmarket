@@ -1,0 +1,327 @@
+<!-- ==========================================
+MyCarMarket
+Version: v1.2.0
+File: vehicles/templates/vehicles/dealer_dashboard.html
+Dealer Dashboard
+========================================== -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Dealer Dashboard - MyCarMarket Australia</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        body {
+            background: #f3f4f6;
+        }
+
+        .dashboard-wrapper {
+            width: 92%;
+            max-width: 1250px;
+            margin: 35px auto;
+        }
+
+        .dashboard-hero {
+            background: linear-gradient(135deg, #111827, #2563eb);
+            color: white;
+            padding: 35px;
+            border-radius: 24px;
+            margin-bottom: 28px;
+        }
+
+        .dashboard-hero h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+
+        .dashboard-hero p {
+            color: #dbeafe;
+        }
+
+        .quick-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 22px;
+        }
+
+        .quick-actions a {
+            background: white;
+            color: #111827;
+            text-decoration: none;
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-weight: bold;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 24px;
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+
+        .stat-card h2 {
+            margin: 0;
+            font-size: 34px;
+            color: #2563eb;
+        }
+
+        .stat-card p {
+            margin-bottom: 0;
+            color: #6b7280;
+            font-weight: bold;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .dashboard-card {
+            background: white;
+            padding: 26px;
+            border-radius: 22px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            margin-bottom: 24px;
+        }
+
+        .dashboard-card h2 {
+            margin-top: 0;
+        }
+
+        .info-row {
+            padding: 12px 0;
+            border-bottom: 1px solid #e5e7eb;
+            color: #374151;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .lead-row,
+        .car-row {
+            background: #f9fafb;
+            padding: 14px;
+            border-radius: 14px;
+            margin-bottom: 12px;
+            color: #374151;
+        }
+
+        .lead-row strong,
+        .car-row strong {
+            color: #111827;
+        }
+
+        @media (max-width: 900px) {
+            .stats-grid,
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-hero h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+{% include 'includes/navbar.html' %}
+
+<main class="dashboard-wrapper">
+
+    <section class="dashboard-hero">
+
+        <h1>Dealer Dashboard</h1>
+
+        <p>
+            Manage your listings, enquiries, dealer profile and package performance.
+        </p>
+
+        <div class="quick-actions">
+
+            <a href="{% url 'create_car' %}">
+                + Add New Car
+            </a>
+
+            <a href="{% url 'my_listings' %}">
+                My Listings
+            </a>
+
+            <a href="{% url 'edit_dealer_profile' %}">
+                Edit Dealer Profile
+            </a>
+
+            <a href="{% url 'dealer_detail' request.user.username %}">
+                View Public Page
+            </a>
+
+            <a href="{% url 'dealer_packages' %}">
+                Dealer Packages
+            </a>
+
+        </div>
+
+    </section>
+
+    <section class="stats-grid">
+
+        <div class="stat-card">
+            <h2>{{ total_listings }}</h2>
+            <p>Total Listings</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>{{ active_listings }}</h2>
+            <p>Active Listings</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>{{ featured_listings }}</h2>
+            <p>Featured Cars</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>{{ total_views }}</h2>
+            <p>Total Views</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>{{ total_enquiries }}</h2>
+            <p>Total Enquiries</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>{{ approved_listings }}</h2>
+            <p>Approved</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>{{ pending_listings }}</h2>
+            <p>Pending</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>{{ listing_limit }}</h2>
+            <p>Listing Limit</p>
+        </div>
+
+    </section>
+
+    <section class="dashboard-grid">
+
+        <div class="dashboard-card">
+            <h2>📦 Package Status</h2>
+
+            <div class="info-row">
+                <strong>Package:</strong> {{ package_name|title }}
+            </div>
+
+            <div class="info-row">
+                <strong>Status:</strong>
+                {% if package_active %}
+                    Active
+                {% else %}
+                    Inactive
+                {% endif %}
+            </div>
+
+            <div class="info-row">
+                <strong>Package Expiry:</strong>
+                {% if package_expiry %}
+                    {{ package_expiry|date:"d M Y" }}
+                {% else %}
+                    No expiry date
+                {% endif %}
+            </div>
+
+            <div class="info-row">
+                <strong>Featured Limit:</strong> {{ featured_limit }}
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <h2>🏆 Top Performing Cars</h2>
+
+            {% if top_cars %}
+                {% for car in top_cars %}
+                    <div class="car-row">
+                        <strong>{{ car.title }}</strong><br>
+                        👁️ {{ car.views_count }} views |
+                        ✉️ {{ car.enquiries.count }} enquiries
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No cars listed yet.</p>
+            {% endif %}
+        </div>
+
+        <div class="dashboard-card">
+            <h2>📨 Recent Enquiries</h2>
+
+            {% if recent_enquiries %}
+                {% for enquiry in recent_enquiries %}
+                    <div class="lead-row">
+                        <strong>{{ enquiry.name }}</strong><br>
+                        Car: {{ enquiry.car.title }}<br>
+                        Email: {{ enquiry.email }}<br>
+                        Phone: {{ enquiry.phone }}<br>
+                        Date: {{ enquiry.created_at|date:"d M Y, h:i A" }}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No enquiries yet.</p>
+            {% endif %}
+        </div>
+
+        <div class="dashboard-card">
+            <h2>🚗 Quick Summary</h2>
+
+            <div class="info-row">
+                <strong>Total Cars:</strong> {{ total_listings }}
+            </div>
+
+            <div class="info-row">
+                <strong>Active Cars:</strong> {{ active_listings }}
+            </div>
+
+            <div class="info-row">
+                <strong>Featured Cars:</strong> {{ featured_listings }}
+            </div>
+
+            <div class="info-row">
+                <strong>Total Views:</strong> {{ total_views }}
+            </div>
+
+            <div class="info-row">
+                <strong>Total Enquiries:</strong> {{ total_enquiries }}
+            </div>
+        </div>
+
+    </section>
+
+</main>
+
+{% include 'includes/footer.html' %}
+
+</body>
+</html>

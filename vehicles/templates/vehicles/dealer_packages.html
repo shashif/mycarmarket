@@ -1,8 +1,8 @@
 <!-- ==========================================
 MyCarMarket
-Version: v1.1.1
+Version: v1.1.3
 File: vehicles/templates/vehicles/dealer_packages.html
-Dealer Package Subscribe Buttons
+Dealer Package Stripe Subscribe Buttons
 ========================================== -->
 
 <!DOCTYPE html>
@@ -20,33 +20,12 @@ Dealer Package Subscribe Buttons
 
 {% include 'includes/navbar.html' %}
 
-<!-- ==========================================
-SECTION START
-Dealer Packages Wrapper
-========================================== -->
-
 <div class="wrapper">
-
-    <!-- ==========================================
-    SECTION START
-    Hero
-    ========================================== -->
 
     <div class="hero">
         <h1>Dealer Packages</h1>
         <p>Grow your car business with more visibility, featured ads, verified badges and priority search exposure.</p>
     </div>
-
-    <!-- ==========================================
-    SECTION END
-    Hero
-    ========================================== -->
-
-
-    <!-- ==========================================
-    SECTION START
-    Benefits
-    ========================================== -->
 
     <div class="benefits">
         <div class="benefit-card">
@@ -70,17 +49,6 @@ Dealer Packages Wrapper
         </div>
     </div>
 
-    <!-- ==========================================
-    SECTION END
-    Benefits
-    ========================================== -->
-
-
-    <!-- ==========================================
-    SECTION START
-    Package Cards
-    ========================================== -->
-
     <div class="package-grid">
 
         <div class="package-card">
@@ -102,83 +70,79 @@ Dealer Packages Wrapper
             {% endif %}
         </div>
 
-
         <div class="package-card">
             <h2>Starter</h2>
-            <div class="price">$99 <span>AUD</span></div>
+            <div class="price">$99 <span>AUD / month</span></div>
 
             <ul>
-                <li>✅ 10 car listings</li>
-                <li>✅ 1 featured ad</li>
+                <li>✅ 25 car listings</li>
+                <li>✅ 2 featured ads</li>
                 <li>✅ Starter dealer badge</li>
                 <li>✅ Better listing visibility</li>
                 <li>✅ Dealer profile page</li>
             </ul>
 
             {% if user.is_authenticated %}
-                <a href="{% url 'create_car' %}?package=starter" class="btn">Subscribe Starter</a>
+                <a href="{% url 'create_checkout_session' 'starter' %}" class="btn">Subscribe Starter</a>
             {% else %}
                 <a href="{% url 'login' %}" class="btn">Login to Subscribe</a>
             {% endif %}
         </div>
 
-
         <div class="package-card popular">
             <span class="popular-label">Most Popular</span>
 
             <h2>Professional</h2>
-            <div class="price">$299 <span>AUD</span></div>
+            <div class="price">$299 <span>AUD / month</span></div>
 
             <ul>
-                <li>✅ 30 car listings</li>
-                <li>✅ 5 featured ads</li>
+                <li>✅ 100 car listings</li>
+                <li>✅ 10 featured ads</li>
                 <li>✅ Verified dealer badge</li>
                 <li>✅ Higher search visibility</li>
                 <li>✅ Priority dealer exposure</li>
             </ul>
 
             {% if user.is_authenticated %}
-                <a href="{% url 'create_car' %}?package=professional" class="btn">Subscribe Professional</a>
+                <a href="{% url 'create_checkout_session' 'professional' %}" class="btn">Subscribe Professional</a>
             {% else %}
                 <a href="{% url 'login' %}" class="btn">Login to Subscribe</a>
             {% endif %}
         </div>
 
-
         <div class="package-card">
             <h2>Premium</h2>
-            <div class="price">$599 <span>AUD</span></div>
+            <div class="price">$599 <span>AUD / month</span></div>
 
             <ul>
-                <li>✅ 75 car listings</li>
-                <li>✅ 15 featured ads</li>
+                <li>✅ 300 car listings</li>
+                <li>✅ 30 featured ads</li>
                 <li>✅ Premium dealer badge</li>
                 <li>✅ Strong search boost</li>
                 <li>✅ Homepage dealer exposure</li>
             </ul>
 
             {% if user.is_authenticated %}
-                <a href="{% url 'create_car' %}?package=premium" class="btn">Subscribe Premium</a>
+                <a href="{% url 'create_checkout_session' 'premium' %}" class="btn">Subscribe Premium</a>
             {% else %}
                 <a href="{% url 'login' %}" class="btn">Login to Subscribe</a>
             {% endif %}
         </div>
 
-
         <div class="package-card">
             <h2>Enterprise</h2>
-            <div class="price">$999 <span>AUD</span></div>
+            <div class="price">$999 <span>AUD / month</span></div>
 
             <ul>
                 <li>✅ Unlimited listings</li>
-                <li>✅ 30 featured ads</li>
+                <li>✅ 999 featured ads</li>
                 <li>✅ Enterprise dealer badge</li>
                 <li>✅ Maximum search exposure</li>
                 <li>✅ Priority support</li>
             </ul>
 
             {% if user.is_authenticated %}
-                <a href="{% url 'create_car' %}?package=enterprise" class="btn">Subscribe Enterprise</a>
+                <a href="{% url 'create_checkout_session' 'enterprise' %}" class="btn">Subscribe Enterprise</a>
             {% else %}
                 <a href="{% url 'login' %}" class="btn">Login to Subscribe</a>
             {% endif %}
@@ -186,32 +150,12 @@ Dealer Packages Wrapper
 
     </div>
 
-    <!-- ==========================================
-    SECTION END
-    Package Cards
-    ========================================== -->
-
-
-    <!-- ==========================================
-    SECTION START
-    Payment Note
-    ========================================== -->
-
     <div class="note">
-        <strong>Note:</strong> Payment system is being connected. For now, dealer package upgrades can still be managed manually from the admin panel.
+        <strong>Secure Payment:</strong>
+        Dealer packages are activated automatically after successful Stripe payment.
     </div>
 
-    <!-- ==========================================
-    SECTION END
-    Payment Note
-    ========================================== -->
-
 </div>
-
-<!-- ==========================================
-SECTION END
-Dealer Packages Wrapper
-========================================== -->
 
 </body>
 </html>

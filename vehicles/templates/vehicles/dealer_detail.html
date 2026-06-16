@@ -1,8 +1,8 @@
 <!-- =========================================
 MyCarMarket
-Version: v1.0.0
+Version: v1.1.8
 File: vehicles/templates/vehicles/dealer_detail.html
-Dealer Profile Split Template
+Dealer Profile Split Template + Edit Profile Button
 ========================================= -->
 
 {% load static %}
@@ -18,7 +18,7 @@ Dealer Profile Split Template
     <title>{{ business_name }} - Dealer Profile | MyCarMarket Australia</title>
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/dealer_detail.css' %}?v=100">
+    <link rel="stylesheet" href="{% static 'css/dealer_detail.css' %}?v=102">
 </head>
 
 <body>
@@ -28,6 +28,15 @@ Dealer Profile Split Template
     <main class="dealer-page-wrapper">
 
         {% include 'vehicles/dealer_parts/dealer_hero.html' %}
+
+        {% if request.user == dealer %}
+            <div style="margin: 20px 0;">
+                <a href="{% url 'edit_dealer_profile' %}"
+                   class="btn">
+                    ✏️ Edit Dealer Profile
+                </a>
+            </div>
+        {% endif %}
 
         {% include 'vehicles/dealer_parts/dealer_info.html' %}
 

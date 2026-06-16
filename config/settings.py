@@ -209,6 +209,7 @@ SITE_URL = os.environ.get(
     'http://127.0.0.1:8000'
 )
 
+STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_WEBHOOK_SECRET', '')
 
 # ==========================================
 # PRODUCTION SECURITY SETTINGS

@@ -1,0 +1,311 @@
+<!-- ==========================================
+MyCarMarket
+Version: v1.1.9
+File: vehicles/templates/vehicles/dealer_profile_edit.html
+Dealer Profile Edit Page - Clean Image Upload
+========================================== -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Dealer Profile - MyCarMarket Australia</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        body { background: #f3f4f6; }
+
+        .profile-edit-wrapper {
+            width: 92%;
+            max-width: 950px;
+            margin: 40px auto;
+        }
+
+        .profile-edit-card {
+            background: #ffffff;
+            border-radius: 22px;
+            padding: 35px;
+            box-shadow: 0 12px 35px rgba(15, 23, 42, 0.10);
+        }
+
+        .profile-edit-header { margin-bottom: 28px; }
+
+        .profile-edit-header h1 {
+            margin: 0;
+            font-size: 34px;
+            color: #111827;
+        }
+
+        .profile-edit-header p {
+            margin-top: 8px;
+            color: #6b7280;
+            font-size: 16px;
+        }
+
+        .form-section {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .form-section h2 {
+            font-size: 22px;
+            margin-bottom: 18px;
+            color: #111827;
+        }
+
+        .form-row { margin-bottom: 18px; }
+
+        .form-row label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+
+        .form-row input,
+        .form-row textarea,
+        .form-row select {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 12px;
+            font-size: 15px;
+            box-sizing: border-box;
+            background: #ffffff;
+        }
+
+        .form-row textarea {
+            resize: vertical;
+            min-height: 130px;
+        }
+
+        .current-file {
+            background: #f9fafb;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #374151;
+        }
+
+        .current-logo {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 16px;
+            border: 1px solid #ddd;
+        }
+
+        .current-banner {
+            width: 100%;
+            max-width: 650px;
+            height: 230px;
+            object-fit: cover;
+            border-radius: 16px;
+            border: 1px solid #ddd;
+        }
+
+        .cover-help {
+            margin-top: 8px;
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .action-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .save-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 14px;
+            padding: 14px 24px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .cancel-btn {
+            background: #111827;
+            color: white;
+            border-radius: 14px;
+            padding: 14px 24px;
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .errorlist {
+            color: #dc2626;
+            margin: 6px 0 0;
+            padding-left: 18px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 700px) {
+            .profile-edit-card { padding: 22px; }
+
+            .profile-edit-header h1 { font-size: 28px; }
+
+            .current-banner { height: 180px; }
+        }
+    </style>
+</head>
+
+<body>
+
+{% include 'includes/navbar.html' %}
+
+<main class="profile-edit-wrapper">
+
+    <div class="profile-edit-card">
+
+        <div class="profile-edit-header">
+            <h1>Edit Dealer Profile</h1>
+            <p>Update your dealership details, contact information and branding.</p>
+        </div>
+
+        <form method="POST" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            <div class="form-section">
+                <h2>🏢 Business Information</h2>
+
+                <div class="form-row">
+                    <label for="{{ form.business_name.id_for_label }}">Business Name</label>
+                    {{ form.business_name }}
+                    {{ form.business_name.errors }}
+                </div>
+
+                <div class="form-row">
+                    <label for="{{ form.business_description.id_for_label }}">Business Description</label>
+                    {{ form.business_description }}
+                    {{ form.business_description.errors }}
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>🖼️ Branding</h2>
+
+                <div class="form-row">
+                    <label for="id_logo">Dealer Logo</label>
+
+                    {% if dealer_profile.logo %}
+                        <div class="current-file">
+                            <p><strong>Current Logo</strong></p>
+                            <img src="{{ dealer_profile.logo.url }}"
+                                 class="current-logo"
+                                 alt="Current dealer logo">
+                        </div>
+                    {% else %}
+                        <div class="current-file">
+                            <p><strong>No logo uploaded yet</strong></p>
+                        </div>
+                    {% endif %}
+
+                    <input type="file"
+                           name="logo"
+                           id="id_logo"
+                           class="form-control">
+
+                    {{ form.logo.errors }}
+                </div>
+
+                <div class="form-row">
+                    <label for="id_banner">Dealer Cover Photo</label>
+
+                    {% if dealer_profile.banner %}
+                        <div class="current-file">
+                            <p><strong>Current Cover Photo</strong></p>
+                            <img src="{{ dealer_profile.banner.url }}"
+                                 class="current-banner"
+                                 alt="Current dealer cover photo">
+                        </div>
+                    {% else %}
+                        <div class="current-file">
+                            <p><strong>No cover photo uploaded yet</strong></p>
+                        </div>
+                    {% endif %}
+
+                    <input type="file"
+                           name="banner"
+                           id="id_banner"
+                           class="form-control">
+
+                    {{ form.banner.errors }}
+                </div>
+
+                <div class="form-row">
+                    <label for="{{ form.banner_position.id_for_label }}">Cover Photo Position</label>
+                    {{ form.banner_position }}
+                    {{ form.banner_position.errors }}
+
+                    <p class="cover-help">
+                        Choose Top, Center, or Bottom to control which part of your cover photo is shown on your dealer page.
+                    </p>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>🌐 Contact Information</h2>
+
+                <div class="form-row">
+                    <label for="{{ form.website.id_for_label }}">Website</label>
+                    {{ form.website }}
+                    {{ form.website.errors }}
+                </div>
+
+                <div class="form-row">
+                    <label for="{{ form.business_phone.id_for_label }}">Business Phone</label>
+                    {{ form.business_phone }}
+                    {{ form.business_phone.errors }}
+                </div>
+
+                <div class="form-row">
+                    <label for="{{ form.business_email.id_for_label }}">Business Email</label>
+                    {{ form.business_email }}
+                    {{ form.business_email.errors }}
+                </div>
+
+                <div class="form-row">
+                    <label for="{{ form.address.id_for_label }}">Address</label>
+                    {{ form.address }}
+                    {{ form.address.errors }}
+                </div>
+            </div>
+
+            <div class="action-row">
+                <button type="submit" class="save-btn">
+                    Save Dealer Profile
+                </button>
+
+                <a href="{% url 'dealer_detail' request.user.username %}"
+                   class="cancel-btn">
+                    Cancel
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+
+</main>
+
+{% include 'includes/footer.html' %}
+
+</body>
+</html>

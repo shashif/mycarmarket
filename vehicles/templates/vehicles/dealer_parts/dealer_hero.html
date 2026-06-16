@@ -1,83 +1,224 @@
- <!-- START SECTION 1: DEALER HERO -->
-    <div class="dealer-hero-card">
+<!-- ==========================================
+MyCarMarket
+Version: v1.1.9
+File: vehicles/templates/vehicles/dealer_parts/dealer_hero.html
+Facebook Style Dealer Hero + Adjustable Cover Photo
+========================================== -->
 
-        {% if dealer_profile and dealer_profile.banner %}
-            <div class="dealer-banner">
-                <img src="{{ dealer_profile.banner.url }}" alt="{{ business_name }}">
-            </div>
-        {% endif %}
+<!-- START SECTION 1: DEALER HERO -->
 
-        <div class="dealer-header-content">
+<div class="dealer-hero-card">
 
-            <div class="dealer-main-info">
+    {% if dealer_profile and dealer_profile.banner %}
 
-                {% if dealer_profile and dealer_profile.logo %}
-                    <img class="dealer-logo" src="{{ dealer_profile.logo.url }}" alt="{{ business_name }}">
-                {% else %}
-                    <div class="dealer-logo-placeholder">🏢</div>
-                {% endif %}
+        <div class="dealer-banner">
 
-                <div>
-                    <h1>{{ business_name }}</h1>
+            <img
+                src="{{ dealer_profile.banner.url }}"
+                alt="{{ business_name }}"
+                class="banner-position-{{ dealer_profile.banner_position|default:'center' }}"
+            >
 
-                    <div class="dealer-badges">
-                        {% if dealer_profile and dealer_profile.is_verified %}
-                            <span class="dealer-verified">✔ Verified Dealer</span>
-                        {% endif %}
+        </div>
 
-                        {% if dealer_profile and dealer_profile.is_featured_dealer %}
-                            <span class="dealer-featured">⭐ Featured Dealer</span>
-                        {% endif %}
+    {% else %}
 
-                        {% if dealer_profile %}
-                            <span class="dealer-package">{{ dealer_profile.package_badge }}</span>
-                        {% endif %}
+        <div class="dealer-banner"></div>
+
+    {% endif %}
+
+    <div class="dealer-header-content">
+
+        <div class="dealer-main-info">
+
+            {% if dealer_profile and dealer_profile.logo %}
+
+                <img
+                    class="dealer-logo"
+                    src="{{ dealer_profile.logo.url }}"
+                    alt="{{ business_name }}"
+                >
+
+            {% else %}
+
+                <div class="dealer-logo-placeholder">
+
+                    🏢
+
+                </div>
+
+            {% endif %}
+
+            <div>
+
+                <h1>
+
+                    {{ business_name }}
+
+                </h1>
+
+                <div class="dealer-badges">
+
+                    {% if dealer_profile and dealer_profile.is_verified %}
+
+                        <span class="dealer-verified">
+
+                            ✔ Verified Dealer
+
+                        </span>
+
+                    {% endif %}
+
+                    {% if dealer_profile and dealer_profile.is_featured_dealer %}
+
+                        <span class="dealer-featured">
+
+                            ⭐ Featured Dealer
+
+                        </span>
+
+                    {% endif %}
+
+                    {% if dealer_profile %}
+
+                        <span class="dealer-package">
+
+                            {{ dealer_profile.package_badge }}
+
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+                <p class="dealer-subtitle">
+
+                    Trusted dealer on MyCarMarket Australia
+
+                </p>
+
+                <div class="dealer-stats-row">
+
+                    <div class="dealer-stat-box">
+
+                        <strong>
+
+                            {{ total_cars }}
+
+                        </strong>
+
+                        <span>
+
+                            Cars
+
+                        </span>
+
                     </div>
 
-                    <p class="dealer-subtitle">
-                        Trusted dealer on MyCarMarket Australia
-                    </p>
+                    <div class="dealer-stat-box">
 
-                    <div class="dealer-stats-row">
-                        <div class="dealer-stat-box">
-                            <strong>{{ total_cars }}</strong>
-                            <span>Cars</span>
-                        </div>
+                        <strong>
 
-                        <div class="dealer-stat-box">
-                            <strong>{{ member_since }}</strong>
-                            <span>Member Since</span>
-                        </div>
+                            {{ member_since }}
 
-                        <div class="dealer-stat-box">
-                            <strong>
-                                {% if dealer_profile and dealer_profile.is_verified %}
-                                    Verified
-                                {% else %}
-                                    Standard
-                                {% endif %}
-                            </strong>
-                            <span>Status</span>
-                        </div>
+                        </strong>
+
+                        <span>
+
+                            Member Since
+
+                        </span>
+
                     </div>
+
+                    <div class="dealer-stat-box">
+
+                        <strong>
+
+                            {% if dealer_profile and dealer_profile.is_verified %}
+
+                                Verified
+
+                            {% else %}
+
+                                Standard
+
+                            {% endif %}
+
+                        </strong>
+
+                        <span>
+
+                            Status
+
+                        </span>
+
+                    </div>
+
                 </div>
 
             </div>
 
-            <div class="dealer-share-box">
-                <p>Share dealer profile</p>
+        </div>
 
-                <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ share_url }}">Facebook</a>
-                <a target="_blank" href="https://twitter.com/intent/tweet?text={{ share_text }}&url={{ share_url }}">X</a>
-                <a target="_blank" href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url }}">LinkedIn</a>
-                <a target="_blank" href="https://wa.me/?text={{ share_text }} {{ share_url }}">WhatsApp</a>
+        <div class="dealer-share-box">
 
-                <button type="button" class="copy-dealer-link-btn" onclick="copyDealerLink()">
-                    Copy Link
-                </button>
-            </div>
+            <p>
+
+                Share dealer profile
+
+            </p>
+
+            <a
+                target="_blank"
+                href="https://www.facebook.com/sharer/sharer.php?u={{ share_url }}"
+            >
+
+                Facebook
+
+            </a>
+
+            <a
+                target="_blank"
+                href="https://twitter.com/intent/tweet?text={{ share_text }}&url={{ share_url }}"
+            >
+
+                X
+
+            </a>
+
+            <a
+                target="_blank"
+                href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url }}"
+            >
+
+                LinkedIn
+
+            </a>
+
+            <a
+                target="_blank"
+                href="https://wa.me/?text={{ share_text }} {{ share_url }}"
+            >
+
+                WhatsApp
+
+            </a>
+
+            <button
+                type="button"
+                class="copy-dealer-link-btn"
+                onclick="copyDealerLink()"
+            >
+
+                Copy Link
+
+            </button>
 
         </div>
 
     </div>
-    <!-- END SECTION 1: DEALER HERO -->
+
+</div>
+
+<!-- END SECTION 1: DEALER HERO -->

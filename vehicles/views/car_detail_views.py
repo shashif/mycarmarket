@@ -1,9 +1,6 @@
-# ==========================================
-# MyCarMarket
-# Version: v1.0.8
+# Version: v1.1.7
 # File: vehicles/views/car_detail_views.py
-# Dealer Trust + Enquiry + Favourite Status + Email Notifications
-# ==========================================
+# Dealer Trust + Enquiry + Favourite Status + Required Phone + Email Notifications
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
@@ -133,7 +130,7 @@ def car_detail(request, slug):
                     f"Buyer Details:\n"
                     f"Name: {enquiry.name}\n"
                     f"Email: {enquiry.email}\n"
-                    f"Phone: {enquiry.phone or 'Not provided'}\n\n"
+                    f"Phone: {enquiry.phone}\n\n"
                     f"Message:\n"
                     f"{enquiry.message}\n\n"
                     f"Listing Link:\n"
