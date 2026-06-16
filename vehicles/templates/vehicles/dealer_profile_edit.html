@@ -1,8 +1,8 @@
 <!-- ==========================================
 MyCarMarket
-Version: v1.1.9
+Version: v1.2.0
 File: vehicles/templates/vehicles/dealer_profile_edit.html
-Dealer Profile Edit Page - Full Dealer Editor
+Dealer Profile Edit Page - Full Dealer Editor + Opening Hours
 ========================================== -->
 
 <!DOCTYPE html>
@@ -213,77 +213,65 @@ Dealer Profile Edit Page - Full Dealer Editor
                     {{ form.abn }}
                     {{ form.abn.errors }}
                 </div>
+            </div>
 
-               <div class="form-section">
-
+           <div class="form-section">
     <h2>🕒 Opening Hours</h2>
 
     <label class="checkbox-row">
-
         {{ form.open_24_hours }}
-
         Open 24 Hours
-
     </label>
 
     <div class="form-row">
-
         <label>Monday</label>
-
-        {{ form.monday_hours }}
-
+        {{ form.monday_closed }} Closed
+        {{ form.monday_open_time }}
+        {{ form.monday_close_time }}
     </div>
 
     <div class="form-row">
-
         <label>Tuesday</label>
-
-        {{ form.tuesday_hours }}
-
+        {{ form.tuesday_closed }} Closed
+        {{ form.tuesday_open_time }}
+        {{ form.tuesday_close_time }}
     </div>
 
     <div class="form-row">
-
         <label>Wednesday</label>
-
-        {{ form.wednesday_hours }}
-
+        {{ form.wednesday_closed }} Closed
+        {{ form.wednesday_open_time }}
+        {{ form.wednesday_close_time }}
     </div>
 
     <div class="form-row">
-
         <label>Thursday</label>
-
-        {{ form.thursday_hours }}
-
+        {{ form.thursday_closed }} Closed
+        {{ form.thursday_open_time }}
+        {{ form.thursday_close_time }}
     </div>
 
     <div class="form-row">
-
         <label>Friday</label>
-
-        {{ form.friday_hours }}
-
+        {{ form.friday_closed }} Closed
+        {{ form.friday_open_time }}
+        {{ form.friday_close_time }}
     </div>
 
     <div class="form-row">
-
         <label>Saturday</label>
-
-        {{ form.saturday_hours }}
-
+        {{ form.saturday_closed }} Closed
+        {{ form.saturday_open_time }}
+        {{ form.saturday_close_time }}
     </div>
 
     <div class="form-row">
-
         <label>Sunday</label>
-
-        {{ form.sunday_hours }}
-
+        {{ form.sunday_closed }} Closed
+        {{ form.sunday_open_time }}
+        {{ form.sunday_close_time }}
     </div>
-
 </div>
-            </div>
 
             <div class="form-section">
                 <h2>🖼️ Branding</h2>

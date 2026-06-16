@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.2.0
+# Version: v1.2.1
 # File: vehicles/models/dealer_models.py
-# Dealer Profile Model + Google Style Opening Hours
+# Dealer Profile Model + Smart Opening Hours Picker
 # ==========================================
 
 from django.db import models
@@ -73,15 +73,11 @@ class DealerProfile(models.Model):
         blank=True
     )
 
-    # Old field kept safely.
-    # Do not delete yet, because old data may exist.
+    # Old fields kept safely for existing data.
+    # Do not delete until final cleanup.
     opening_hours = models.CharField(
         max_length=255,
         blank=True
-    )
-
-    open_24_hours = models.BooleanField(
-        default=False
     )
 
     monday_hours = models.CharField(
@@ -125,6 +121,38 @@ class DealerProfile(models.Model):
         blank=True,
         default='Closed'
     )
+
+    open_24_hours = models.BooleanField(
+        default=False
+    )
+
+    monday_closed = models.BooleanField(default=False)
+    monday_open_time = models.TimeField(null=True, blank=True)
+    monday_close_time = models.TimeField(null=True, blank=True)
+
+    tuesday_closed = models.BooleanField(default=False)
+    tuesday_open_time = models.TimeField(null=True, blank=True)
+    tuesday_close_time = models.TimeField(null=True, blank=True)
+
+    wednesday_closed = models.BooleanField(default=False)
+    wednesday_open_time = models.TimeField(null=True, blank=True)
+    wednesday_close_time = models.TimeField(null=True, blank=True)
+
+    thursday_closed = models.BooleanField(default=False)
+    thursday_open_time = models.TimeField(null=True, blank=True)
+    thursday_close_time = models.TimeField(null=True, blank=True)
+
+    friday_closed = models.BooleanField(default=False)
+    friday_open_time = models.TimeField(null=True, blank=True)
+    friday_close_time = models.TimeField(null=True, blank=True)
+
+    saturday_closed = models.BooleanField(default=True)
+    saturday_open_time = models.TimeField(null=True, blank=True)
+    saturday_close_time = models.TimeField(null=True, blank=True)
+
+    sunday_closed = models.BooleanField(default=True)
+    sunday_open_time = models.TimeField(null=True, blank=True)
+    sunday_close_time = models.TimeField(null=True, blank=True)
 
     facebook = models.URLField(blank=True)
     instagram = models.URLField(blank=True)
@@ -185,6 +213,68 @@ class DealerProfile(models.Model):
             return '✔ Verified Dealer'
 
         return ''
+
+    def format_day_hours(self, is_closed, open_time, close_time):
+
+        if self.open_24_hours:
+            return 'Open 24 Hours'
+
+        if is_closed:
+            return 'Closed'
+
+        if open_time and close_time:
+            return f"{open_time.strftime('%I:%M %p')} - {close_time.strftime('%I:%M %p')}"
+
+        return 'Not set'
+
+    def monday_display_hours(self):
+        return self.format_day_hours(
+            self.monday_closed,
+            self.monday_open_time,
+            self.monday_close_time
+        )
+
+    def tuesday_display_hours(self):
+        return self.format_day_hours(
+            self.tuesday_closed,
+            self.tuesday_open_time,
+            self.tuesday_close_time
+        )
+
+    def wednesday_display_hours(self):
+        return self.format_day_hours(
+            self.wednesday_closed,
+            self.wednesday_open_time,
+            self.wednesday_close_time
+        )
+
+    def thursday_display_hours(self):
+        return self.format_day_hours(
+            self.thursday_closed,
+            self.thursday_open_time,
+            self.thursday_close_time
+        )
+
+    def friday_display_hours(self):
+        return self.format_day_hours(
+            self.friday_closed,
+            self.friday_open_time,
+            self.friday_close_time
+        )
+
+    def saturday_display_hours(self):
+        return self.format_day_hours(
+            self.saturday_closed,
+            self.saturday_open_time,
+            self.saturday_close_time
+        )
+
+    def sunday_display_hours(self):
+        return self.format_day_hours(
+            self.sunday_closed,
+            self.sunday_open_time,
+            self.sunday_close_time
+        )
 
     def __str__(self):
 

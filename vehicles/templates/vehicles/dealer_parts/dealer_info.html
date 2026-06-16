@@ -112,58 +112,50 @@ Dealer Info + Contact + Google Style Opening Hours
 
             </div>
 
-            <div class="dealer-opening-hours">
+           <div class="dealer-opening-hours">
 
-                <h3>Opening Hours</h3>
+    <h3>Opening Hours</h3>
 
-                {% if dealer_profile.open_24_hours %}
+    <div class="opening-hours-list">
 
-                    <p class="open-24-text">🟢 Open 24 hours</p>
+        <p>
+            <strong>Monday</strong>
+            <span>{{ dealer_profile.monday_display_hours }}</span>
+        </p>
 
-                {% else %}
+        <p>
+            <strong>Tuesday</strong>
+            <span>{{ dealer_profile.tuesday_display_hours }}</span>
+        </p>
 
-                    <div class="opening-hours-list">
+        <p>
+            <strong>Wednesday</strong>
+            <span>{{ dealer_profile.wednesday_display_hours }}</span>
+        </p>
 
-                        <p>
-                            <strong>Monday</strong>
-                            <span>{{ dealer_profile.monday_hours|default:"Not set" }}</span>
-                        </p>
+        <p>
+            <strong>Thursday</strong>
+            <span>{{ dealer_profile.thursday_display_hours }}</span>
+        </p>
 
-                        <p>
-                            <strong>Tuesday</strong>
-                            <span>{{ dealer_profile.tuesday_hours|default:"Not set" }}</span>
-                        </p>
+        <p>
+            <strong>Friday</strong>
+            <span>{{ dealer_profile.friday_display_hours }}</span>
+        </p>
 
-                        <p>
-                            <strong>Wednesday</strong>
-                            <span>{{ dealer_profile.wednesday_hours|default:"Not set" }}</span>
-                        </p>
+        <p>
+            <strong>Saturday</strong>
+            <span>{{ dealer_profile.saturday_display_hours }}</span>
+        </p>
 
-                        <p>
-                            <strong>Thursday</strong>
-                            <span>{{ dealer_profile.thursday_hours|default:"Not set" }}</span>
-                        </p>
+        <p>
+            <strong>Sunday</strong>
+            <span>{{ dealer_profile.sunday_display_hours }}</span>
+        </p>
 
-                        <p>
-                            <strong>Friday</strong>
-                            <span>{{ dealer_profile.friday_hours|default:"Not set" }}</span>
-                        </p>
+    </div>
 
-                        <p>
-                            <strong>Saturday</strong>
-                            <span>{{ dealer_profile.saturday_hours|default:"Not set" }}</span>
-                        </p>
-
-                        <p>
-                            <strong>Sunday</strong>
-                            <span>{{ dealer_profile.sunday_hours|default:"Not set" }}</span>
-                        </p>
-
-                    </div>
-
-                {% endif %}
-
-            </div>
+</div>
 
             {% if dealer_profile.facebook or dealer_profile.instagram or dealer_profile.tiktok or dealer_profile.youtube %}
 

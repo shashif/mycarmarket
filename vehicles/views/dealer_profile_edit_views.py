@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.1.8
+# Version: v1.2.1
 # File: vehicles/views/dealer_profile_edit_views.py
-# Dealer Profile Edit View
+# Dealer Profile Edit View + Form Error Debug
 # ==========================================
 
 from django.shortcuts import render, redirect
@@ -43,6 +43,13 @@ def edit_dealer_profile(request):
                 'dealer_detail',
                 username=request.user.username
             )
+
+        messages.error(
+            request,
+            'Please fix the errors below and try again.'
+        )
+
+        print(form.errors)
 
     else:
 
