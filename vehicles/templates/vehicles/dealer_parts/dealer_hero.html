@@ -23,7 +23,11 @@ Facebook Style Dealer Hero + Adjustable Cover Photo
 
     {% else %}
 
-        <div class="dealer-banner"></div>
+        <div class="dealer-banner dealer-banner-empty">
+
+            <span>MyCarMarket Dealer</span>
+
+        </div>
 
     {% endif %}
 
@@ -49,7 +53,7 @@ Facebook Style Dealer Hero + Adjustable Cover Photo
 
             {% endif %}
 
-            <div>
+            <div class="dealer-title-area">
 
                 <h1>
 
@@ -157,6 +161,8 @@ Facebook Style Dealer Hero + Adjustable Cover Photo
 
                 </div>
 
+              
+
             </div>
 
         </div>
@@ -171,7 +177,8 @@ Facebook Style Dealer Hero + Adjustable Cover Photo
 
             <a
                 target="_blank"
-                href="https://www.facebook.com/sharer/sharer.php?u={{ share_url }}"
+                rel="noopener"
+                href="https://www.facebook.com/sharer/sharer.php?u={{ share_url|urlencode }}"
             >
 
                 Facebook
@@ -180,7 +187,8 @@ Facebook Style Dealer Hero + Adjustable Cover Photo
 
             <a
                 target="_blank"
-                href="https://twitter.com/intent/tweet?text={{ share_text }}&url={{ share_url }}"
+                rel="noopener"
+                href="https://twitter.com/intent/tweet?text={{ share_text|urlencode }}&url={{ share_url|urlencode }}"
             >
 
                 X
@@ -189,7 +197,8 @@ Facebook Style Dealer Hero + Adjustable Cover Photo
 
             <a
                 target="_blank"
-                href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url }}"
+                rel="noopener"
+                href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url|urlencode }}"
             >
 
                 LinkedIn
@@ -198,7 +207,8 @@ Facebook Style Dealer Hero + Adjustable Cover Photo
 
             <a
                 target="_blank"
-                href="https://wa.me/?text={{ share_text }} {{ share_url }}"
+                rel="noopener"
+                href="https://wa.me/?text={{ share_text|urlencode }}%20{{ share_url|urlencode }}"
             >
 
                 WhatsApp

@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.1.9
+# Version: v1.2.0
 # File: vehicles/models/dealer_models.py
-# Dealer Profile Model + Cover Photo Position
+# Dealer Profile Model + Google Style Opening Hours
 # ==========================================
 
 from django.db import models
@@ -34,8 +34,17 @@ class DealerProfile(models.Model):
     business_name = models.CharField(max_length=150, blank=True)
     business_description = models.TextField(blank=True)
 
-    logo = models.ImageField(upload_to='dealer_logos/', blank=True, null=True)
-    banner = models.ImageField(upload_to='dealer_banners/', blank=True, null=True)
+    logo = models.ImageField(
+        upload_to='dealer_logos/',
+        blank=True,
+        null=True
+    )
+
+    banner = models.ImageField(
+        upload_to='dealer_banners/',
+        blank=True,
+        null=True
+    )
 
     banner_position = models.CharField(
         max_length=20,
@@ -44,9 +53,92 @@ class DealerProfile(models.Model):
     )
 
     website = models.URLField(blank=True)
-    business_phone = models.CharField(max_length=30, blank=True)
-    business_email = models.EmailField(blank=True)
-    address = models.CharField(max_length=255, blank=True)
+
+    business_phone = models.CharField(
+        max_length=30,
+        blank=True
+    )
+
+    business_email = models.EmailField(
+        blank=True
+    )
+
+    address = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    abn = models.CharField(
+        max_length=30,
+        blank=True
+    )
+
+    # Old field kept safely.
+    # Do not delete yet, because old data may exist.
+    opening_hours = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    open_24_hours = models.BooleanField(
+        default=False
+    )
+
+    monday_hours = models.CharField(
+        max_length=100,
+        blank=True,
+        default='9:00 AM - 5:00 PM'
+    )
+
+    tuesday_hours = models.CharField(
+        max_length=100,
+        blank=True,
+        default='9:00 AM - 5:00 PM'
+    )
+
+    wednesday_hours = models.CharField(
+        max_length=100,
+        blank=True,
+        default='9:00 AM - 5:00 PM'
+    )
+
+    thursday_hours = models.CharField(
+        max_length=100,
+        blank=True,
+        default='9:00 AM - 5:00 PM'
+    )
+
+    friday_hours = models.CharField(
+        max_length=100,
+        blank=True,
+        default='9:00 AM - 5:00 PM'
+    )
+
+    saturday_hours = models.CharField(
+        max_length=100,
+        blank=True,
+        default='Closed'
+    )
+
+    sunday_hours = models.CharField(
+        max_length=100,
+        blank=True,
+        default='Closed'
+    )
+
+    facebook = models.URLField(blank=True)
+    instagram = models.URLField(blank=True)
+    tiktok = models.URLField(blank=True)
+    youtube = models.URLField(blank=True)
+
+    show_email = models.BooleanField(default=True)
+    show_phone = models.BooleanField(default=True)
+
+    finance_available = models.BooleanField(default=False)
+    trade_in_available = models.BooleanField(default=False)
+    extended_warranty = models.BooleanField(default=False)
+    delivery_available = models.BooleanField(default=False)
+    test_drive_available = models.BooleanField(default=False)
 
     package = models.CharField(
         max_length=20,

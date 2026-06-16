@@ -2,7 +2,7 @@
 MyCarMarket
 Version: v1.1.9
 File: vehicles/templates/vehicles/dealer_profile_edit.html
-Dealer Profile Edit Page - Clean Image Upload
+Dealer Profile Edit Page - Full Dealer Editor
 ========================================== -->
 
 <!DOCTYPE html>
@@ -81,6 +81,19 @@ Dealer Profile Edit Page - Clean Image Upload
             background: #ffffff;
         }
 
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+            font-weight: 700;
+            color: #374151;
+        }
+
+        .checkbox-row input {
+            width: auto;
+        }
+
         .form-row textarea {
             resize: vertical;
             min-height: 130px;
@@ -157,9 +170,7 @@ Dealer Profile Edit Page - Clean Image Upload
 
         @media (max-width: 700px) {
             .profile-edit-card { padding: 22px; }
-
             .profile-edit-header h1 { font-size: 28px; }
-
             .current-banner { height: 180px; }
         }
     </style>
@@ -175,7 +186,7 @@ Dealer Profile Edit Page - Clean Image Upload
 
         <div class="profile-edit-header">
             <h1>Edit Dealer Profile</h1>
-            <p>Update your dealership details, contact information and branding.</p>
+            <p>Update your dealership details, contact information, services and branding.</p>
         </div>
 
         <form method="POST" enctype="multipart/form-data">
@@ -196,6 +207,82 @@ Dealer Profile Edit Page - Clean Image Upload
                     {{ form.business_description }}
                     {{ form.business_description.errors }}
                 </div>
+
+                <div class="form-row">
+                    <label for="{{ form.abn.id_for_label }}">ABN</label>
+                    {{ form.abn }}
+                    {{ form.abn.errors }}
+                </div>
+
+               <div class="form-section">
+
+    <h2>🕒 Opening Hours</h2>
+
+    <label class="checkbox-row">
+
+        {{ form.open_24_hours }}
+
+        Open 24 Hours
+
+    </label>
+
+    <div class="form-row">
+
+        <label>Monday</label>
+
+        {{ form.monday_hours }}
+
+    </div>
+
+    <div class="form-row">
+
+        <label>Tuesday</label>
+
+        {{ form.tuesday_hours }}
+
+    </div>
+
+    <div class="form-row">
+
+        <label>Wednesday</label>
+
+        {{ form.wednesday_hours }}
+
+    </div>
+
+    <div class="form-row">
+
+        <label>Thursday</label>
+
+        {{ form.thursday_hours }}
+
+    </div>
+
+    <div class="form-row">
+
+        <label>Friday</label>
+
+        {{ form.friday_hours }}
+
+    </div>
+
+    <div class="form-row">
+
+        <label>Saturday</label>
+
+        {{ form.saturday_hours }}
+
+    </div>
+
+    <div class="form-row">
+
+        <label>Sunday</label>
+
+        {{ form.sunday_hours }}
+
+    </div>
+
+</div>
             </div>
 
             <div class="form-section">
@@ -270,7 +357,7 @@ Dealer Profile Edit Page - Clean Image Upload
                 </div>
 
                 <div class="form-row">
-                    <label for="{{ form.business_phone.id_for_label }}">Business Phone</label>
+                    <label for="{{ form.business_phone.id_for_label }}">Dealer Phone Number</label>
                     {{ form.business_phone }}
                     {{ form.business_phone.errors }}
                 </div>
@@ -286,6 +373,73 @@ Dealer Profile Edit Page - Clean Image Upload
                     {{ form.address }}
                     {{ form.address.errors }}
                 </div>
+
+                <label class="checkbox-row">
+                    {{ form.show_phone }}
+                    Show phone number on dealer profile
+                </label>
+
+                <label class="checkbox-row">
+                    {{ form.show_email }}
+                    Show email address on dealer profile
+                </label>
+            </div>
+
+            <div class="form-section">
+                <h2>📱 Social Links</h2>
+
+                <div class="form-row">
+                    <label for="{{ form.facebook.id_for_label }}">Facebook</label>
+                    {{ form.facebook }}
+                    {{ form.facebook.errors }}
+                </div>
+
+                <div class="form-row">
+                    <label for="{{ form.instagram.id_for_label }}">Instagram</label>
+                    {{ form.instagram }}
+                    {{ form.instagram.errors }}
+                </div>
+
+                <div class="form-row">
+                    <label for="{{ form.tiktok.id_for_label }}">TikTok</label>
+                    {{ form.tiktok }}
+                    {{ form.tiktok.errors }}
+                </div>
+
+                <div class="form-row">
+                    <label for="{{ form.youtube.id_for_label }}">YouTube</label>
+                    {{ form.youtube }}
+                    {{ form.youtube.errors }}
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>🚗 Dealer Services</h2>
+
+                <label class="checkbox-row">
+                    {{ form.finance_available }}
+                    Finance Available
+                </label>
+
+                <label class="checkbox-row">
+                    {{ form.trade_in_available }}
+                    Trade Ins Accepted
+                </label>
+
+                <label class="checkbox-row">
+                    {{ form.extended_warranty }}
+                    Extended Warranty
+                </label>
+
+                <label class="checkbox-row">
+                    {{ form.delivery_available }}
+                    Delivery Available
+                </label>
+
+                <label class="checkbox-row">
+                    {{ form.test_drive_available }}
+                    Test Drive Available
+                </label>
             </div>
 
             <div class="action-row">

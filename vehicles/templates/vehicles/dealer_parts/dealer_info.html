@@ -1,59 +1,218 @@
-  <!-- START SECTION 2: DEALER INFO -->
-    <div class="dealer-info-grid">
+<!-- ==========================================
+MyCarMarket
+Version: v1.2.0
+File: vehicles/templates/vehicles/dealer_parts/dealer_info.html
+Dealer Info + Contact + Google Style Opening Hours
+========================================== -->
 
-        <div class="dealer-about-card">
-            <h2>About {{ business_name }}</h2>
+<div class="dealer-info-grid">
 
-            {% if dealer_profile and dealer_profile.business_description %}
-                <p>{{ dealer_profile.business_description }}</p>
-            {% else %}
-                <p>This dealer has not added a business description yet.</p>
-            {% endif %}
-        </div>
+    <div class="dealer-about-card">
 
-        <div class="dealer-contact-card">
+        <h2>About {{ business_name }}</h2>
 
-            <h2>Dealer Details</h2>
+        {% if dealer_profile and dealer_profile.business_description %}
+            <p>{{ dealer_profile.business_description }}</p>
+        {% else %}
+            <p>This dealer has not added a business description yet.</p>
+        {% endif %}
 
-            {% if dealer_profile %}
-                <div class="dealer-action-buttons">
+        {% if dealer_profile %}
 
-                    {% if dealer_profile.business_phone %}
-                        <a href="tel:{{ dealer_profile.business_phone }}" class="dealer-btn">
-                            📞 Call Dealer
+            <div class="dealer-services-box">
+
+                <h3>Dealer Services</h3>
+
+                <div class="dealer-services-grid">
+
+                    {% if dealer_profile.finance_available %}
+                        <span>💰 Finance Available</span>
+                    {% endif %}
+
+                    {% if dealer_profile.trade_in_available %}
+                        <span>🔁 Trade Ins Accepted</span>
+                    {% endif %}
+
+                    {% if dealer_profile.extended_warranty %}
+                        <span>🛡 Extended Warranty</span>
+                    {% endif %}
+
+                    {% if dealer_profile.delivery_available %}
+                        <span>🚚 Delivery Available</span>
+                    {% endif %}
+
+                    {% if dealer_profile.test_drive_available %}
+                        <span>🚗 Test Drive Available</span>
+                    {% endif %}
+
+                </div>
+
+                {% if not dealer_profile.finance_available and not dealer_profile.trade_in_available and not dealer_profile.extended_warranty and not dealer_profile.delivery_available and not dealer_profile.test_drive_available %}
+                    <p class="dealer-muted-text">
+                        Dealer services have not been added yet.
+                    </p>
+                {% endif %}
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+    <div class="dealer-contact-card">
+
+        <h2>Dealer Details</h2>
+
+        {% if dealer_profile %}
+
+            <div class="dealer-action-buttons">
+
+                {% if dealer_profile.show_phone and dealer_profile.business_phone and dealer_profile.business_phone != "na" %}
+                    <a href="tel:{{ dealer_profile.business_phone }}"
+                       class="dealer-btn">
+                        📞 Call Dealer
+                    </a>
+                {% endif %}
+
+                {% if dealer_profile.show_email and dealer_profile.business_email and dealer_profile.business_email != "na" %}
+                    <a href="mailto:{{ dealer_profile.business_email }}"
+                       class="dealer-btn">
+                        ✉ Email Dealer
+                    </a>
+                {% endif %}
+
+                {% if dealer_profile.website %}
+                    <a href="{{ dealer_profile.website }}"
+                       target="_blank"
+                       rel="noopener"
+                       class="dealer-btn">
+                        🌐 Website
+                    </a>
+                {% endif %}
+
+            </div>
+
+            <div class="dealer-detail-list">
+
+                <p>🚗 <strong>{{ total_cars }}</strong> Active Cars</p>
+
+                {% if dealer_profile.is_verified %}
+                    <p>✔ Verified Dealer</p>
+                {% endif %}
+
+                {% if dealer_profile.address and dealer_profile.address != "na" %}
+                    <p>📍 {{ dealer_profile.address }}</p>
+                {% endif %}
+
+                {% if dealer_profile.abn %}
+                    <p>🧾 ABN: {{ dealer_profile.abn }}</p>
+                {% endif %}
+
+                <p>📦 {{ dealer_profile.package_badge }}</p>
+
+            </div>
+
+            <div class="dealer-opening-hours">
+
+                <h3>Opening Hours</h3>
+
+                {% if dealer_profile.open_24_hours %}
+
+                    <p class="open-24-text">🟢 Open 24 hours</p>
+
+                {% else %}
+
+                    <div class="opening-hours-list">
+
+                        <p>
+                            <strong>Monday</strong>
+                            <span>{{ dealer_profile.monday_hours|default:"Not set" }}</span>
+                        </p>
+
+                        <p>
+                            <strong>Tuesday</strong>
+                            <span>{{ dealer_profile.tuesday_hours|default:"Not set" }}</span>
+                        </p>
+
+                        <p>
+                            <strong>Wednesday</strong>
+                            <span>{{ dealer_profile.wednesday_hours|default:"Not set" }}</span>
+                        </p>
+
+                        <p>
+                            <strong>Thursday</strong>
+                            <span>{{ dealer_profile.thursday_hours|default:"Not set" }}</span>
+                        </p>
+
+                        <p>
+                            <strong>Friday</strong>
+                            <span>{{ dealer_profile.friday_hours|default:"Not set" }}</span>
+                        </p>
+
+                        <p>
+                            <strong>Saturday</strong>
+                            <span>{{ dealer_profile.saturday_hours|default:"Not set" }}</span>
+                        </p>
+
+                        <p>
+                            <strong>Sunday</strong>
+                            <span>{{ dealer_profile.sunday_hours|default:"Not set" }}</span>
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+            {% if dealer_profile.facebook or dealer_profile.instagram or dealer_profile.tiktok or dealer_profile.youtube %}
+
+                <div class="dealer-social-links">
+
+                    <h3>Social Links</h3>
+
+                    {% if dealer_profile.facebook %}
+                        <a href="{{ dealer_profile.facebook }}"
+                           target="_blank"
+                           rel="noopener">
+                            Facebook
                         </a>
                     {% endif %}
 
-                    {% if dealer_profile.business_email %}
-                        <a href="mailto:{{ dealer_profile.business_email }}" class="dealer-btn">
-                            ✉ Email Dealer
+                    {% if dealer_profile.instagram %}
+                        <a href="{{ dealer_profile.instagram }}"
+                           target="_blank"
+                           rel="noopener">
+                            Instagram
                         </a>
                     {% endif %}
 
-                    {% if dealer_profile.website %}
-                        <a href="{{ dealer_profile.website }}" target="_blank" rel="noopener" class="dealer-btn">
-                            🌐 Website
+                    {% if dealer_profile.tiktok %}
+                        <a href="{{ dealer_profile.tiktok }}"
+                           target="_blank"
+                           rel="noopener">
+                            TikTok
+                        </a>
+                    {% endif %}
+
+                    {% if dealer_profile.youtube %}
+                        <a href="{{ dealer_profile.youtube }}"
+                           target="_blank"
+                           rel="noopener">
+                            YouTube
                         </a>
                     {% endif %}
 
                 </div>
+
             {% endif %}
 
-            <p>🚗 <strong>{{ total_cars }}</strong> Active Cars</p>
+        {% else %}
 
-            {% if dealer_profile and dealer_profile.is_verified %}
-                <p>✔ Verified Dealer</p>
-            {% endif %}
+            <p>Dealer profile information is not available.</p>
 
-            {% if dealer_profile and dealer_profile.address and dealer_profile.address != "na" %}
-                <p>📍 {{ dealer_profile.address }}</p>
-            {% endif %}
-
-            {% if dealer_profile %}
-                <p>📦 {{ dealer_profile.package_badge }}</p>
-            {% endif %}
-
-        </div>
+        {% endif %}
 
     </div>
-    <!-- END SECTION 2: DEALER INFO -->
+
+</div>
