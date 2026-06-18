@@ -1,17 +1,16 @@
 <!-- ==========================================
 MyCarMarket
-Version: v1.2.3
+Version: v1.2.4
 File: templates/includes/navbar.html
-Professional Navbar + Dealer Menu Cleanup
+Professional Navbar + My Cars Rename
+NOTE:
+Notification link removed because notifications URL is not ready yet.
 ========================================== -->
 
 <div class="navbar">
 
-    <a href="{% url 'home' %}"
-       class="logo">
-
+    <a href="{% url 'home' %}" class="logo">
         🚗 MyCarMarket
-
     </a>
 
     <div class="nav-links">
@@ -28,16 +27,6 @@ Professional Navbar + Dealer Menu Cleanup
             Sell Car
         </a>
 
-        <!-- ==========================================
-        NOTE:
-        Public Dealers menu should show for:
-        1. Not logged-in users
-        2. Logged-in normal users
-
-        It should NOT show for dealer users,
-        because dealer users already have Dealer Hub.
-        ========================================== -->
-
         {% if not user.is_authenticated or not user.dealer_profile.is_dealer %}
 
             <a href="{% url 'dealers' %}">
@@ -53,7 +42,7 @@ Professional Navbar + Dealer Menu Cleanup
             </a>
 
             <a href="{% url 'my_listings' %}">
-                📊 Dashboard
+                🚗 My Cars
             </a>
 
             {% if user.dealer_profile.is_dealer %}

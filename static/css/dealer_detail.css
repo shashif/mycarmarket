@@ -1,155 +1,9 @@
 /* ==========================================
-MyCarMarket v1.2.2
-Dealer Hero Alignment Fix
+MyCarMarket
+Version: v1.2.5
+File: static/css/dealer_detail.css
+Dealer Detail Page + Mobile Responsive Polish
 ========================================== */
-
-.dealer-profile-panel {
-    padding: 0 35px 35px;
-}
-
-.dealer-top-row {
-    display: grid;
-    grid-template-columns: 140px 1fr auto;
-
-    gap: 30px;
-
-    align-items: start;
-
-    margin-top: -95px;
-
-    position: relative;
-
-    z-index: 10;
-}
-
-.dealer-logo-column {
-    width: 140px;
-}
-
-.dealer-title-column {
-    padding-top: 70px;
-}
-
-.dealer-title-column h1 {
-    margin: 0;
-
-    font-size: 38px;
-}
-
-.dealer-panel-divider {
-    margin: 25px 0;
-
-    border-top: 1px solid #e5e7eb;
-}
-
-.dealer-bottom-row {
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    gap: 20px;
-
-    flex-wrap: wrap;
-}
-
-.dealer-stats-row {
-    display: flex;
-
-    flex-wrap: nowrap;
-
-    gap: 12px;
-}
-
-.dealer-stat-box {
-    width: 150px;
-}
-
-.dealer-share-buttons {
-    display: flex;
-
-    flex-wrap: wrap;
-
-    justify-content: flex-end;
-
-    gap: 8px;
-}
-
-.dealer-share-buttons a,
-.dealer-share-buttons button {
-    margin: 0;
-}
-
-.dealer-hero-actions {
-    display: flex;
-
-    gap: 12px;
-}
-
-.dealer-hero-actions .dealer-action-btn {
-    min-width: 220px;
-}
-
-@media (max-width: 992px) {
-
-    .dealer-top-row {
-
-        grid-template-columns: 1fr;
-
-        margin-top: -40px;
-    }
-
-    .dealer-title-column {
-
-        padding-top: 0;
-    }
-
-    .dealer-bottom-row {
-
-        flex-direction: column;
-
-        align-items: flex-start;
-    }
-
-    .dealer-stats-row {
-
-        flex-wrap: wrap;
-    }
-
-    .dealer-share-box {
-
-        width: 100%;
-    }
-
-    .dealer-share-buttons {
-
-        justify-content: flex-start;
-    }
-}
-
-@media (max-width: 768px) {
-
-    .dealer-profile-panel {
-
-        padding: 0 20px 25px;
-    }
-
-    .dealer-stat-box {
-
-        width: 100%;
-    }
-
-    .dealer-hero-actions {
-
-        width: 100%;
-    }
-
-    .dealer-hero-actions .dealer-action-btn {
-
-        width: 100%;
-    }
-}
 
 .dealer-page-wrapper {
     width: 92%;
@@ -157,9 +11,7 @@ Dealer Hero Alignment Fix
     margin: 35px auto;
 }
 
-/* ==========================================
-OPENING HOURS
-========================================== */
+/* OPENING HOURS */
 
 .dealer-opening-hours-card {
     background: #ffffff;
@@ -220,9 +72,7 @@ OPENING HOURS
     text-align: right;
 }
 
-/* ==========================================
-DEALER HERO
-========================================== */
+/* DEALER HERO */
 
 .dealer-hero-card {
     background: white;
@@ -304,6 +154,7 @@ DEALER HERO
     margin: 65px 0 0;
     font-size: 38px;
     color: #111827;
+    overflow-wrap: break-word;
 }
 
 .dealer-slogan {
@@ -354,6 +205,7 @@ DEALER HERO
     gap: 12px;
     margin-top: 18px;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .dealer-stat-box {
@@ -393,6 +245,7 @@ DEALER HERO
     font-weight: 700;
     color: white;
     transition: 0.25s;
+    min-height: 46px;
 }
 
 .dealer-action-btn:hover {
@@ -447,9 +300,7 @@ DEALER HERO
     color: white;
 }
 
-/* ==========================================
-DEALER INFO
-========================================== */
+/* DEALER INFO */
 
 .dealer-info-grid {
     display: grid;
@@ -625,9 +476,7 @@ DEALER INFO
     background: #2563eb;
 }
 
-/* ==========================================
-TRUST CENTRE
-========================================== */
+/* TRUST CENTRE */
 
 .dealer-trust-centre {
     margin-bottom: 35px;
@@ -664,9 +513,7 @@ TRUST CENTRE
     font-weight: bold;
 }
 
-/* ==========================================
-INVENTORY
-========================================== */
+/* INVENTORY */
 
 .section-title {
     font-size: 28px;
@@ -749,6 +596,8 @@ INVENTORY
     margin: 0 0 8px;
     font-size: 20px;
     color: #111827;
+    line-height: 1.3;
+    overflow-wrap: break-word;
 }
 
 .car-meta {
@@ -791,9 +640,7 @@ INVENTORY
     color: #111827;
 }
 
-/* ==========================================
-TABLET
-========================================== */
+/* TABLET */
 
 @media (max-width: 900px) {
     .dealer-header-content {
@@ -827,9 +674,7 @@ TABLET
     }
 }
 
-/* ==========================================
-MOBILE
-========================================== */
+/* MOBILE */
 
 @media (max-width: 768px) {
     .dealer-page-wrapper {
@@ -943,6 +788,15 @@ MOBILE
 
     .premium-car-info {
         padding: 16px;
+    }
+
+    .icon-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .price-row {
+        flex-direction: column;
+        align-items: flex-start;
     }
 
     .price-row strong {

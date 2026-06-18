@@ -1,27 +1,9 @@
 /* ==========================================
 MyCarMarket
-Version: v1.0.0
-Global Footer
+Version: v1.2.5
+File: static/css/style.css
+Global Style + Mobile Responsive Polish
 ========================================== */
-
-.footer {
-    background: #111827;
-    color: white;
-    text-align: center;
-    padding: 35px 20px;
-    margin-top: 50px;
-}
-
-.footer a {
-    color: #d1d5db;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.footer a:hover {
-    color: white;
-    text-decoration: underline;
-}
 
 body {
     font-family: Arial, sans-serif;
@@ -31,9 +13,7 @@ body {
     color: #111827;
 }
 
-/* ==========================================
-NAVBAR
-========================================== */
+/* NAVBAR */
 
 .navbar {
     background: #111827;
@@ -49,12 +29,14 @@ NAVBAR
     font-weight: bold;
     color: white;
     text-decoration: none;
+    white-space: nowrap;
 }
 
 .nav-links {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    justify-content: flex-end;
 }
 
 .nav-links a {
@@ -86,30 +68,15 @@ NAVBAR
     color: #93c5fd;
 }
 
-/* ==========================================
-CONTAINER
-========================================== */
+/* CONTAINER */
 
 .container {
     width: 90%;
+    max-width: 1250px;
     margin: 40px auto;
 }
 
-/* ==========================================
-FOOTER
-========================================== */
-
-.footer {
-    background: #111827;
-    color: white;
-    text-align: center;
-    padding: 25px;
-    margin-top: 40px;
-}
-
-/* ==========================================
-BUTTONS
-========================================== */
+/* BUTTONS */
 
 .view-btn,
 .search-btn,
@@ -147,9 +114,7 @@ BUTTONS
     background: #1d4ed8;
 }
 
-/* ==========================================
-BADGES
-========================================== */
+/* BADGES */
 
 .featured-badge {
     position: absolute;
@@ -177,9 +142,7 @@ BADGES
     z-index: 2;
 }
 
-/* ==========================================
-ADS READY
-========================================== */
+/* ADS */
 
 .ad-banner {
     background: white;
@@ -215,33 +178,92 @@ ADS READY
     color: #6b7280;
 }
 
-/* ==========================================
-MOBILE
-========================================== */
+/* FOOTER */
 
-@media (max-width: 768px) {
+.footer {
+    background: #111827;
+    color: white;
+    text-align: center;
+    padding: 35px 20px;
+    margin-top: 50px;
+}
 
+.footer a {
+    color: #d1d5db;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+/* TABLET */
+
+@media (max-width: 992px) {
     .navbar {
-        padding: 18px 20px;
+        padding: 18px 30px;
         flex-direction: column;
-        gap: 15px;
+        gap: 14px;
     }
 
     .nav-links {
         justify-content: center;
     }
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 16px 14px;
+    }
+
+    .logo {
+        font-size: 22px;
+    }
+
+    .nav-links {
+        width: 100%;
+        gap: 8px;
+    }
 
     .nav-links a,
     .nav-links button {
-        margin: 6px 8px;
-        font-size: 14px;
+        margin: 4px;
+        font-size: 13px;
+        background: rgba(255,255,255,0.08);
+        padding: 8px 10px;
+        border-radius: 999px;
+    }
+
+    .nav-links form {
+        display: inline-flex;
     }
 
     .container {
-        width: 95%;
+        width: 94%;
+        margin: 24px auto;
     }
 
-    .search-btn {
+    .search-btn,
+    .btn {
         width: 100%;
+        box-sizing: border-box;
+    }
+
+    .ad-banner {
+        padding: 14px;
+    }
+
+    .ad-placeholder {
+        min-height: 70px;
+        font-size: 13px;
+    }
+
+    .footer {
+        padding: 28px 16px;
+        font-size: 13px;
     }
 }

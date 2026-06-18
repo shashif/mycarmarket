@@ -1,13 +1,20 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.0.7
+# Version: v1.2.6
+# Date: 19 Jun 2026
+# Time: Melbourne AEST
 # File: core/views.py
-# Homepage Featured Vehicles + Premium Listing Polish
+# Description: Homepage Featured Vehicles + Saved Car Status Fix
 # ==========================================
 
 from django.shortcuts import render
+
 from core.models import SiteSettings
-from vehicles.models import Car
+
+from vehicles.models import (
+    Car,
+    FavouriteCar
+)
 
 
 # ==========================================
@@ -15,6 +22,7 @@ from vehicles.models import Car
 # ==========================================
 
 def home(request):
+
     featured_cars = Car.objects.filter(
         is_approved=True,
         is_active=True,
@@ -33,6 +41,19 @@ def home(request):
         '-created_at'
     )[:6]
 
+    favourite_car_ids = []
+
+    if request.user.is_authenticated:
+
+        favourite_car_ids = list(
+            FavouriteCar.objects.filter(
+                user=request.user
+            ).values_list(
+                'car_id',
+                flat=True
+            )
+        )
+
     settings = SiteSettings.objects.first()
 
     return render(
@@ -41,6 +62,7 @@ def home(request):
         {
             'featured_cars': featured_cars,
             'latest_cars': latest_cars,
+            'favourite_car_ids': favourite_car_ids,
             'settings': settings,
         }
     )
@@ -51,6 +73,7 @@ def home(request):
 # ==========================================
 
 def sell_car(request):
+
     return render(
         request,
         'core/sell_car.html'
@@ -62,6 +85,7 @@ def sell_car(request):
 # ==========================================
 
 def dealers(request):
+
     return render(
         request,
         'core/dealers.html'
@@ -73,6 +97,7 @@ def dealers(request):
 # ==========================================
 
 def terms_conditions(request):
+
     return render(
         request,
         'core/terms_conditions.html'
@@ -84,6 +109,7 @@ def terms_conditions(request):
 # ==========================================
 
 def privacy_policy(request):
+
     return render(
         request,
         'core/privacy_policy.html'
@@ -95,6 +121,7 @@ def privacy_policy(request):
 # ==========================================
 
 def contact_us(request):
+
     return render(
         request,
         'core/contact_us.html'
@@ -106,6 +133,7 @@ def contact_us(request):
 # ==========================================
 
 def custom_404(request, exception):
+
     return render(
         request,
         '404.html',

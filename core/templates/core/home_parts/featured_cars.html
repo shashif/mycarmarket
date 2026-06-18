@@ -2,21 +2,12 @@
 
 <!-- =========================================
 MyCarMarket
-Version: v1.0.7
+Version: v1.3.0
+Date: 19 Jun 2026
+Time: Melbourne AEST
 File: core/templates/core/home_parts/featured_cars.html
-Homepage Featured Vehicles Section
+Description: Featured Vehicles Cards + Working Save Button
 ========================================= -->
-
-<div class="home-section-header">
-    <div>
-        <h2 class="section-title">⭐ Featured Vehicles</h2>
-        <p class="section-subtitle">Premium and highlighted listings from trusted sellers.</p>
-    </div>
-
-    <a href="{% url 'car_list' %}?sort_by=newest" class="section-view-all">
-        View All Cars
-    </a>
-</div>
 
 <div class="premium-car-grid">
 
@@ -26,7 +17,12 @@ Homepage Featured Vehicles Section
 
             <div class="premium-car-image-wrap">
 
-                <a href="{% url 'car_detail' car.slug %}" class="car-image-link">
+                {% if car.slug %}
+                    <a href="{% url 'car_detail' car.slug %}" class="car-image-link">
+                {% else %}
+                    <div class="car-image-link">
+                {% endif %}
+
                     {% with car.images.first as car_image %}
                         {% if car_image %}
                             <img src="{{ car_image.image.url }}" alt="{{ car.title }}">
@@ -34,21 +30,72 @@ Homepage Featured Vehicles Section
                             <div class="no-image-box">No Image Available</div>
                         {% endif %}
                     {% endwith %}
-                </a>
 
-                <span class="featured-badge">⭐ Featured</span>
+                {% if car.slug %}
+                    </a>
+                {% else %}
+                    </div>
+                {% endif %}
+
+                {% if car.is_featured %}
+                    <span class="featured-badge">⭐ Featured</span>
+                {% endif %}
 
                 {% if car.is_verified_listing %}
                     <span class="verified-badge">✓ Verified</span>
+                {% endif %}
+
+                {% if car.slug %}
+
+                    {% if user.is_authenticated %}
+
+                        <form method="POST"
+                              action="{% url 'toggle_favourite' car.slug %}"
+                              class="favourite-form">
+
+                            {% csrf_token %}
+
+                            <input type="hidden"
+                                   name="next"
+                                   value="{{ request.path }}">
+
+                            <button type="submit"
+                                    class="favourite-btn"
+                                    title="Save this car">
+
+                                {% if car.id in favourite_car_ids %}
+                                    ❤️
+                                {% else %}
+                                    🤍
+                                {% endif %}
+
+                            </button>
+
+                        </form>
+
+                    {% else %}
+
+                        <a href="{% url 'login' %}?next={{ request.path }}"
+                           class="favourite-login-btn"
+                           title="Login to save this car">
+                            🤍
+                        </a>
+
+                    {% endif %}
+
                 {% endif %}
 
             </div>
 
             <div class="premium-car-info">
 
-                <a href="{% url 'car_detail' car.slug %}" class="car-title-link">
+                {% if car.slug %}
+                    <a href="{% url 'car_detail' car.slug %}" class="car-title-link">
+                        <h3>{{ car.title }}</h3>
+                    </a>
+                {% else %}
                     <h3>{{ car.title }}</h3>
-                </a>
+                {% endif %}
 
                 <p class="car-meta">
                     🚘 {{ car.year }} • {{ car.make }} {{ car.model }}
@@ -83,9 +130,15 @@ Homepage Featured Vehicles Section
                     <strong>${{ car.price }}</strong>
                 </div>
 
-                <a href="{% url 'car_detail' car.slug %}" class="view-details-btn">
-                    View Details
-                </a>
+                {% if car.slug %}
+                    <a href="{% url 'car_detail' car.slug %}" class="view-details-btn">
+                        View Details
+                    </a>
+                {% else %}
+                    <span class="view-details-btn">
+                        Details Unavailable
+                    </span>
+                {% endif %}
 
             </div>
 
@@ -95,7 +148,7 @@ Homepage Featured Vehicles Section
 
         <div class="empty-home-section">
             <h3>No featured cars yet</h3>
-            <p>Mark cars as featured from the admin panel to show them here.</p>
+            <p>Mark cars as featured from the admin panel.</p>
         </div>
 
     {% endfor %}

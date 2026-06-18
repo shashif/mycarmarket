@@ -1,9 +1,40 @@
 /* ==========================================
 MyCarMarket
-Version: v1.0.6
+Version: v1.2.5
 File: static/css/car_list.css
-Favourite Button on Car List Cards + Marketplace Polish
+Card Height + Badge Polish
 ========================================== */
+
+/* Make cards equal height */
+.car-card,
+.premium-car-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Make content fill remaining space */
+.car-content,
+.premium-car-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+/* Keep View Details button aligned at bottom */
+.view-details-btn {
+    margin-top: auto;
+}
+
+/* Fix Verified badge width */
+.verified-badge {
+    width: auto;
+    max-width: fit-content;
+    display: inline-block;
+    left: 14px;
+    right: auto;
+    top: 58px;
+}
 
 body {
     margin: 0;
@@ -36,9 +67,7 @@ body {
     color: #d1d5db;
 }
 
-/* ==========================================
-FILTER BOX
-========================================== */
+/* FILTER BOX */
 
 .filter-box {
     background: white;
@@ -100,9 +129,7 @@ FILTER BOX
     background: #d1d5db;
 }
 
-/* ==========================================
-CAR GRID
-========================================== */
+/* CAR GRID */
 
 .car-grid,
 .premium-car-grid {
@@ -165,9 +192,7 @@ CAR GRID
     font-weight: bold;
 }
 
-/* ==========================================
-BADGES
-========================================== */
+/* BADGES */
 
 .featured-badge {
     position: absolute;
@@ -195,9 +220,7 @@ BADGES
     z-index: 5;
 }
 
-/* ==========================================
-FAVOURITE BUTTON
-========================================== */
+/* FAVOURITE BUTTON */
 
 .favourite-form {
     position: absolute;
@@ -230,9 +253,7 @@ FAVOURITE BUTTON
     background: #f9fafb;
 }
 
-/* ==========================================
-CAR CONTENT
-========================================== */
+/* CAR CONTENT */
 
 .car-content,
 .premium-car-info {
@@ -274,9 +295,7 @@ CAR CONTENT
     overflow-wrap: break-word;
 }
 
-/* ==========================================
-DEALER INFO
-========================================== */
+/* DEALER INFO */
 
 .dealer-info {
     margin: 10px 0 14px;
@@ -318,15 +337,13 @@ DEALER INFO
     border: 2px solid #f59e0b;
 }
 
-/* ==========================================
-CAR DETAILS
-========================================== */
+/* CAR DETAILS */
 
 .icon-info-grid,
 .info-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    gap: 9px;
     margin: 12px 0 18px;
 }
 
@@ -364,9 +381,7 @@ CAR DETAILS
     gap: 10px;
 }
 
-/* ==========================================
-VIEW DETAILS BUTTON
-========================================== */
+/* VIEW DETAILS BUTTON */
 
 .view-details-btn {
     display: block;
@@ -387,9 +402,7 @@ VIEW DETAILS BUTTON
     background: #2563eb;
 }
 
-/* ==========================================
-EMPTY + PAGINATION
-========================================== */
+/* EMPTY + PAGINATION */
 
 .empty-box {
     background: white;
@@ -422,9 +435,7 @@ EMPTY + PAGINATION
     color: white;
 }
 
-/* ==========================================
-TABLET RESPONSIVE
-========================================== */
+/* TABLET */
 
 @media (max-width: 1000px) {
     .filter-grid {
@@ -437,9 +448,7 @@ TABLET RESPONSIVE
     }
 }
 
-/* ==========================================
-MOBILE RESPONSIVE
-========================================== */
+/* MOBILE */
 
 @media (max-width: 650px) {
     .page-wrapper {
@@ -527,8 +536,23 @@ MOBILE RESPONSIVE
         padding: 9px;
     }
 
+    .price-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
     .price,
     .price-row strong {
         font-size: 22px;
+    }
+
+    .pagination a,
+    .pagination span {
+        padding: 9px 12px;
+        font-size: 13px;
+    }
+
+    .empty-box {
+        padding: 28px 18px;
     }
 }

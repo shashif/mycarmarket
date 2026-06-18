@@ -1,9 +1,68 @@
-/* ==========================================
-MyCarMarket
-Version: v1.0.7
-Homepage Featured Vehicles + Premium Listing Polish
-ADD BELOW EXISTING CSS
-========================================== */
+/****************************************
+SAVE BUTTON CLICK FIX
+Version: v1.2.7
+Date: 19 Jun 2026
+Melbourne, Australia
+****************************************/
+
+.favourite-form,
+.favourite-btn,
+.favourite-login-btn {
+    pointer-events: auto;
+}
+
+.favourite-form {
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    z-index: 5;
+    margin: 0;
+}
+
+.favourite-btn,
+.favourite-login-btn {
+
+    width: 42px;
+
+    height: 42px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    color: #111827;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-decoration: none;
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+    box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+
+    transition: all 0.2s ease;
+}
+
+.favourite-btn:hover,
+.favourite-login-btn:hover {
+
+    transform: scale(1.08);
+
+    background: #fef2f2;
+}
+
+.favourite-btn:active {
+
+    transform: scale(0.95);
+}
 
 .home-section-header {
     display: flex;
@@ -80,19 +139,7 @@ ADD BELOW EXISTING CSS
     border-radius: 20px;
     text-align: center;
     color: #6b7280;
-}
-
-@media (max-width: 768px) {
-
-    .home-section-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .section-view-all {
-        width: 100%;
-        text-align: center;
-    }
+    box-sizing: border-box;
 }
 
 .ad-banner {
@@ -133,9 +180,7 @@ ADD BELOW EXISTING CSS
     position: relative;
 }
 
-/* ==========================================
-SEARCH BOX
-========================================== */
+/* SEARCH BOX */
 
 .search-box {
     padding: 25px;
@@ -145,6 +190,7 @@ SEARCH BOX
     z-index: 10;
     background: white;
     box-shadow: 0 20px 45px rgba(0,0,0,0.15);
+    box-sizing: border-box;
 }
 
 .search-title {
@@ -162,11 +208,10 @@ SEARCH BOX
     font-size: 17px;
     border: 1px solid #d1d5db;
     border-radius: 10px;
+    min-width: 0;
 }
 
-/* ==========================================
-VEHICLE TYPE GRID
-========================================== */
+/* VEHICLE TYPE GRID */
 
 .type-grid {
     display: grid;
@@ -205,9 +250,7 @@ VEHICLE TYPE GRID
     font-weight: bold;
 }
 
-/* ==========================================
-STATS
-========================================== */
+/* STATS */
 
 .stats {
     display: grid;
@@ -229,9 +272,7 @@ STATS
     margin-bottom: 8px;
 }
 
-/* ==========================================
-SECTION TITLE
-========================================== */
+/* SECTION TITLE */
 
 .section-title {
     font-size: 30px;
@@ -239,10 +280,7 @@ SECTION TITLE
     margin-bottom: 20px;
 }
 
-/* ==========================================
-PREMIUM UNIFIED CAR CARDS
-Same style as Buy Cars / Search Results page
-========================================== */
+/* PREMIUM CAR CARDS */
 
 .premium-car-grid {
     display: grid;
@@ -398,9 +436,7 @@ Same style as Buy Cars / Search Results page
     color: #111827;
 }
 
-/* ==========================================
-CALL TO ACTION
-========================================== */
+/* CALL TO ACTION */
 
 .cta {
     background: #111827;
@@ -427,9 +463,7 @@ CALL TO ACTION
     margin-top: 15px;
 }
 
-/* ==========================================
-RESPONSIVE
-========================================== */
+/* RESPONSIVE */
 
 @media (max-width: 1100px) {
     .premium-car-grid,
@@ -449,6 +483,8 @@ RESPONSIVE
 
     .search-box {
         margin-top: -35px;
+        padding: 20px;
+        border-radius: 18px;
     }
 
     .search-form,
@@ -457,8 +493,49 @@ RESPONSIVE
         grid-template-columns: 1fr;
     }
 
+    .search-input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
     .type-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .home-section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .section-title {
+        font-size: 24px;
+    }
+
+    .section-subtitle {
+        margin-top: 0;
+        font-size: 14px;
+    }
+
+    .section-view-all {
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    .premium-car-image-wrap,
+    .no-image-box {
+        height: 190px;
+    }
+
+    .price-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .price-row strong {
+        font-size: 22px;
     }
 
     .cta {
