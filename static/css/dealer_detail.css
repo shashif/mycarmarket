@@ -1,9 +1,155 @@
 /* ==========================================
-MyCarMarket
-Version: v1.1.9
-File: static/css/dealer_detail.css
-Facebook Style Dealer Cover Page
+MyCarMarket v1.2.2
+Dealer Hero Alignment Fix
 ========================================== */
+
+.dealer-profile-panel {
+    padding: 0 35px 35px;
+}
+
+.dealer-top-row {
+    display: grid;
+    grid-template-columns: 140px 1fr auto;
+
+    gap: 30px;
+
+    align-items: start;
+
+    margin-top: -95px;
+
+    position: relative;
+
+    z-index: 10;
+}
+
+.dealer-logo-column {
+    width: 140px;
+}
+
+.dealer-title-column {
+    padding-top: 70px;
+}
+
+.dealer-title-column h1 {
+    margin: 0;
+
+    font-size: 38px;
+}
+
+.dealer-panel-divider {
+    margin: 25px 0;
+
+    border-top: 1px solid #e5e7eb;
+}
+
+.dealer-bottom-row {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+    flex-wrap: wrap;
+}
+
+.dealer-stats-row {
+    display: flex;
+
+    flex-wrap: nowrap;
+
+    gap: 12px;
+}
+
+.dealer-stat-box {
+    width: 150px;
+}
+
+.dealer-share-buttons {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    justify-content: flex-end;
+
+    gap: 8px;
+}
+
+.dealer-share-buttons a,
+.dealer-share-buttons button {
+    margin: 0;
+}
+
+.dealer-hero-actions {
+    display: flex;
+
+    gap: 12px;
+}
+
+.dealer-hero-actions .dealer-action-btn {
+    min-width: 220px;
+}
+
+@media (max-width: 992px) {
+
+    .dealer-top-row {
+
+        grid-template-columns: 1fr;
+
+        margin-top: -40px;
+    }
+
+    .dealer-title-column {
+
+        padding-top: 0;
+    }
+
+    .dealer-bottom-row {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .dealer-stats-row {
+
+        flex-wrap: wrap;
+    }
+
+    .dealer-share-box {
+
+        width: 100%;
+    }
+
+    .dealer-share-buttons {
+
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .dealer-profile-panel {
+
+        padding: 0 20px 25px;
+    }
+
+    .dealer-stat-box {
+
+        width: 100%;
+    }
+
+    .dealer-hero-actions {
+
+        width: 100%;
+    }
+
+    .dealer-hero-actions .dealer-action-btn {
+
+        width: 100%;
+    }
+}
 
 .dealer-page-wrapper {
     width: 92%;
@@ -12,7 +158,70 @@ Facebook Style Dealer Cover Page
 }
 
 /* ==========================================
-DEALER HERO - FACEBOOK STYLE
+OPENING HOURS
+========================================== */
+
+.dealer-opening-hours-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 24px;
+    margin: 24px 0;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+.opening-hours-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+}
+
+.opening-hours-header h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #111827;
+}
+
+.open-badge {
+    background: #dcfce7;
+    color: #166534;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 14px;
+}
+
+.opening-hours-list {
+    display: grid;
+    gap: 10px;
+}
+
+.opening-hour-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.opening-hour-row:last-child {
+    border-bottom: none;
+}
+
+.opening-hour-row span {
+    color: #374151;
+    font-weight: 700;
+}
+
+.opening-hour-row strong {
+    color: #111827;
+    text-align: right;
+}
+
+/* ==========================================
+DEALER HERO
 ========================================== */
 
 .dealer-hero-card {
@@ -49,7 +258,6 @@ DEALER HERO - FACEBOOK STYLE
     object-position: bottom;
 }
 
-/* Profile area */
 .dealer-header-content {
     padding: 0 35px 35px;
     display: flex;
@@ -68,31 +276,23 @@ DEALER HERO - FACEBOOK STYLE
     z-index: 5;
 }
 
-
+.dealer-logo,
 .dealer-logo-placeholder {
-    width: 135px;
-    height: 135px;
-    border-radius: 24px;
-    background: white;
+    width: 140px;
+    height: 140px;
+    border-radius: 20px;
     border: 5px solid white;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
     flex-shrink: 0;
 }
 
 .dealer-logo {
-    width: 140px;
-    height: 140px;
-
-    border-radius: 20px;
-
     object-fit: contain;
-
-    border: 5px solid #fff;
-
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    background: white;
 }
 
 .dealer-logo-placeholder {
+    background: white;
     color: #111827;
     display: flex;
     align-items: center;
@@ -104,6 +304,13 @@ DEALER HERO - FACEBOOK STYLE
     margin: 65px 0 0;
     font-size: 38px;
     color: #111827;
+}
+
+.dealer-slogan {
+    margin: 8px 0 10px;
+    font-size: 16px;
+    color: #2563eb;
+    font-weight: 700;
 }
 
 .dealer-subtitle {
@@ -165,6 +372,47 @@ DEALER HERO - FACEBOOK STYLE
 .dealer-stat-box span {
     font-size: 12px;
     color: #6b7280;
+}
+
+.dealer-title-area .dealer-action-buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+    margin-bottom: 0;
+}
+
+.dealer-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 16px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 700;
+    color: white;
+    transition: 0.25s;
+}
+
+.dealer-action-btn:hover {
+    transform: translateY(-2px);
+}
+
+.dealer-action-btn.primary {
+    background: #2563eb;
+}
+
+.dealer-action-btn.secondary {
+    background: #16a34a;
+}
+
+.dealer-action-btn.dark {
+    background: #111827;
+}
+
+.dealer-action-btn.whatsapp {
+    background: #25d366;
 }
 
 .dealer-share-box {
@@ -234,11 +482,74 @@ DEALER INFO
     line-height: 1.6;
 }
 
+.dealer-about-slogan {
+    background: #eff6ff;
+    color: #1e40af;
+    padding: 14px 18px;
+    border-radius: 14px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.dealer-owner-card {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    margin: 28px 0;
+    padding: 20px;
+    border-radius: 18px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+}
+
+.dealer-owner-card img,
+.dealer-owner-placeholder {
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.dealer-owner-card img {
+    object-fit: cover;
+    border: 4px solid white;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+}
+
+.dealer-owner-placeholder {
+    background: #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 38px;
+}
+
+.dealer-owner-card h3 {
+    margin: 0;
+    font-size: 20px;
+    color: #111827;
+}
+
+.dealer-owner-card p {
+    margin: 6px 0;
+    font-weight: 700;
+    color: #2563eb;
+}
+
+.dealer-owner-card span {
+    color: #6b7280;
+    font-size: 14px;
+}
+
 .dealer-action-buttons {
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin-bottom: 20px;
+}
+
+.sidebar-actions {
+    flex-direction: column;
 }
 
 .dealer-btn {
@@ -594,6 +905,29 @@ MOBILE
         border-radius: 18px;
     }
 
+    .dealer-owner-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .dealer-title-area .dealer-action-buttons {
+        flex-direction: column;
+    }
+
+    .dealer-action-btn {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .opening-hour-row {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .opening-hour-row strong {
+        text-align: left;
+    }
+
     .trust-score-big {
         font-size: 42px;
     }
@@ -614,36 +948,4 @@ MOBILE
     .price-row strong {
         font-size: 22px;
     }
-
-    .dealer-opening-hours {
-    margin-top: 24px;
-    padding-top: 18px;
-    border-top: 1px solid #e5e7eb;
-}
-
-.dealer-opening-hours h3 {
-    margin-bottom: 14px;
-    color: #111827;
-}
-
-.opening-hours-list p {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    margin: 9px 0;
-    color: #374151;
-}
-
-.opening-hours-list strong {
-    color: #111827;
-}
-
-.opening-hours-list span {
-    text-align: right;
-}
-
-.open-24-text {
-    color: #15803d;
-    font-weight: bold;
-}
 }

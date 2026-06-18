@@ -1,8 +1,8 @@
 <!-- ==========================================
 MyCarMarket
-Version: v1.2.0
+Version: v1.2.2
 File: vehicles/templates/vehicles/dealer_profile_edit.html
-Dealer Profile Edit Page - Full Dealer Editor + Opening Hours
+Dealer Profile Edit Page + Professional Dealer Fields
 ========================================== -->
 
 <!DOCTYPE html>
@@ -108,7 +108,8 @@ Dealer Profile Edit Page - Full Dealer Editor + Opening Hours
             color: #374151;
         }
 
-        .current-logo {
+        .current-logo,
+        .current-owner-photo {
             width: 120px;
             height: 120px;
             object-fit: cover;
@@ -130,6 +131,25 @@ Dealer Profile Edit Page - Full Dealer Editor + Opening Hours
             color: #6b7280;
             font-size: 14px;
             line-height: 1.5;
+        }
+
+        .day-row {
+            margin-bottom: 20px;
+        }
+
+        .day-hours {
+            display: grid;
+            grid-template-columns: 120px 1fr 1fr;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .day-hours .checkbox-row {
+            margin-bottom: 0;
+        }
+
+        .day-hours select {
+            width: 100%;
         }
 
         .action-row {
@@ -172,6 +192,10 @@ Dealer Profile Edit Page - Full Dealer Editor + Opening Hours
             .profile-edit-card { padding: 22px; }
             .profile-edit-header h1 { font-size: 28px; }
             .current-banner { height: 180px; }
+
+            .day-hours {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -186,7 +210,7 @@ Dealer Profile Edit Page - Full Dealer Editor + Opening Hours
 
         <div class="profile-edit-header">
             <h1>Edit Dealer Profile</h1>
-            <p>Update your dealership details, contact information, services and branding.</p>
+            <p>Update your dealership details, professional profile, contact information, services, opening hours and branding.</p>
         </div>
 
         <form method="POST" enctype="multipart/form-data">
@@ -215,63 +239,149 @@ Dealer Profile Edit Page - Full Dealer Editor + Opening Hours
                 </div>
             </div>
 
-           <div class="form-section">
-    <h2>🕒 Opening Hours</h2>
+            <div class="form-section">
+                <h2>⭐ Professional Dealer Information</h2>
 
-    <label class="checkbox-row">
-        {{ form.open_24_hours }}
-        Open 24 Hours
-    </label>
+                <div class="form-row">
+                    <label for="{{ form.business_slogan.id_for_label }}">Business Slogan</label>
+                    {{ form.business_slogan }}
+                    {{ form.business_slogan.errors }}
+                </div>
 
-    <div class="form-row">
-        <label>Monday</label>
-        {{ form.monday_closed }} Closed
-        {{ form.monday_open_time }}
-        {{ form.monday_close_time }}
-    </div>
+                <div class="form-row">
+                    <label for="{{ form.years_in_business.id_for_label }}">Years In Business</label>
+                    {{ form.years_in_business }}
+                    {{ form.years_in_business.errors }}
+                </div>
 
-    <div class="form-row">
-        <label>Tuesday</label>
-        {{ form.tuesday_closed }} Closed
-        {{ form.tuesday_open_time }}
-        {{ form.tuesday_close_time }}
-    </div>
+                <div class="form-row">
+                    <label for="{{ form.dealer_owner_name.id_for_label }}">Dealer Owner Name</label>
+                    {{ form.dealer_owner_name }}
+                    {{ form.dealer_owner_name.errors }}
+                </div>
 
-    <div class="form-row">
-        <label>Wednesday</label>
-        {{ form.wednesday_closed }} Closed
-        {{ form.wednesday_open_time }}
-        {{ form.wednesday_close_time }}
-    </div>
+                <div class="form-row">
+                    <label for="{{ form.dealer_owner_title.id_for_label }}">Dealer Owner Title</label>
+                    {{ form.dealer_owner_title }}
+                    {{ form.dealer_owner_title.errors }}
+                </div>
 
-    <div class="form-row">
-        <label>Thursday</label>
-        {{ form.thursday_closed }} Closed
-        {{ form.thursday_open_time }}
-        {{ form.thursday_close_time }}
-    </div>
+                <div class="form-row">
+                    <label for="id_dealer_owner_photo">Dealer Owner Photo</label>
 
-    <div class="form-row">
-        <label>Friday</label>
-        {{ form.friday_closed }} Closed
-        {{ form.friday_open_time }}
-        {{ form.friday_close_time }}
-    </div>
+                    {% if dealer_profile.dealer_owner_photo %}
+                        <div class="current-file">
+                            <p><strong>Current Owner Photo</strong></p>
+                            <img src="{{ dealer_profile.dealer_owner_photo.url }}"
+                                 class="current-owner-photo"
+                                 alt="Current dealer owner photo">
+                        </div>
+                    {% else %}
+                        <div class="current-file">
+                            <p><strong>No owner photo uploaded yet</strong></p>
+                        </div>
+                    {% endif %}
 
-    <div class="form-row">
-        <label>Saturday</label>
-        {{ form.saturday_closed }} Closed
-        {{ form.saturday_open_time }}
-        {{ form.saturday_close_time }}
-    </div>
+                    <input type="file"
+                           name="dealer_owner_photo"
+                           id="id_dealer_owner_photo"
+                           class="form-control">
 
-    <div class="form-row">
-        <label>Sunday</label>
-        {{ form.sunday_closed }} Closed
-        {{ form.sunday_open_time }}
-        {{ form.sunday_close_time }}
-    </div>
-</div>
+                    {{ form.dealer_owner_photo.errors }}
+                </div>
+
+                <div class="form-row">
+                    <label for="{{ form.google_maps_link.id_for_label }}">Google Maps Link</label>
+                    {{ form.google_maps_link }}
+                    {{ form.google_maps_link.errors }}
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>🕒 Opening Hours</h2>
+
+                <label class="checkbox-row">
+                    {{ form.open_24_hours }}
+                    Open 24 Hours
+                </label>
+
+                <div class="form-row day-row">
+                    <label>Monday</label>
+                    <div class="day-hours">
+                        <label class="checkbox-row">{{ form.monday_closed }} Closed</label>
+                        {{ form.monday_open_time }}
+                        {{ form.monday_close_time }}
+                    </div>
+                    {{ form.monday_open_time.errors }}
+                    {{ form.monday_close_time.errors }}
+                </div>
+
+                <div class="form-row day-row">
+                    <label>Tuesday</label>
+                    <div class="day-hours">
+                        <label class="checkbox-row">{{ form.tuesday_closed }} Closed</label>
+                        {{ form.tuesday_open_time }}
+                        {{ form.tuesday_close_time }}
+                    </div>
+                    {{ form.tuesday_open_time.errors }}
+                    {{ form.tuesday_close_time.errors }}
+                </div>
+
+                <div class="form-row day-row">
+                    <label>Wednesday</label>
+                    <div class="day-hours">
+                        <label class="checkbox-row">{{ form.wednesday_closed }} Closed</label>
+                        {{ form.wednesday_open_time }}
+                        {{ form.wednesday_close_time }}
+                    </div>
+                    {{ form.wednesday_open_time.errors }}
+                    {{ form.wednesday_close_time.errors }}
+                </div>
+
+                <div class="form-row day-row">
+                    <label>Thursday</label>
+                    <div class="day-hours">
+                        <label class="checkbox-row">{{ form.thursday_closed }} Closed</label>
+                        {{ form.thursday_open_time }}
+                        {{ form.thursday_close_time }}
+                    </div>
+                    {{ form.thursday_open_time.errors }}
+                    {{ form.thursday_close_time.errors }}
+                </div>
+
+                <div class="form-row day-row">
+                    <label>Friday</label>
+                    <div class="day-hours">
+                        <label class="checkbox-row">{{ form.friday_closed }} Closed</label>
+                        {{ form.friday_open_time }}
+                        {{ form.friday_close_time }}
+                    </div>
+                    {{ form.friday_open_time.errors }}
+                    {{ form.friday_close_time.errors }}
+                </div>
+
+                <div class="form-row day-row">
+                    <label>Saturday</label>
+                    <div class="day-hours">
+                        <label class="checkbox-row">{{ form.saturday_closed }} Closed</label>
+                        {{ form.saturday_open_time }}
+                        {{ form.saturday_close_time }}
+                    </div>
+                    {{ form.saturday_open_time.errors }}
+                    {{ form.saturday_close_time.errors }}
+                </div>
+
+                <div class="form-row day-row">
+                    <label>Sunday</label>
+                    <div class="day-hours">
+                        <label class="checkbox-row">{{ form.sunday_closed }} Closed</label>
+                        {{ form.sunday_open_time }}
+                        {{ form.sunday_close_time }}
+                    </div>
+                    {{ form.sunday_open_time.errors }}
+                    {{ form.sunday_close_time.errors }}
+                </div>
+            </div>
 
             <div class="form-section">
                 <h2>🖼️ Branding</h2>

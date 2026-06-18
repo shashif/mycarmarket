@@ -1,0 +1,61 @@
+<!-- =========================================
+MyCarMarket
+Version: v1.2.1
+File: vehicles/templates/vehicles/dealer_parts/dealer_opening_hours.html
+Dealer Opening Hours Display
+========================================= -->
+
+{% if dealer_profile %}
+
+<section class="dealer-opening-hours-card">
+
+    <div class="opening-hours-header">
+        <h2>🕒 Opening Hours</h2>
+
+        {% if dealer_profile.open_24_hours %}
+            <span class="open-badge">🟢 Open 24 Hours</span>
+        {% endif %}
+    </div>
+
+    <div class="opening-hours-list">
+
+        <div class="opening-hour-row">
+            <span>Monday</span>
+            <strong>{{ dealer_profile.monday_display_hours }}</strong>
+        </div>
+
+        <div class="opening-hour-row">
+            <span>Tuesday</span>
+            <strong>{{ dealer_profile.tuesday_display_hours }}</strong>
+        </div>
+
+        <div class="opening-hour-row">
+            <span>Wednesday</span>
+            <strong>{{ dealer_profile.wednesday_display_hours }}</strong>
+        </div>
+
+        <div class="opening-hour-row">
+            <span>Thursday</span>
+            <strong>{{ dealer_profile.thursday_display_hours }}</strong>
+        </div>
+
+        <div class="opening-hour-row">
+            <span>Friday</span>
+            <strong>{{ dealer_profile.friday_display_hours }}</strong>
+        </div>
+
+        <div class="opening-hour-row">
+            <span>Saturday</span>
+            <strong>{{ dealer_profile.saturday_display_hours }}</strong>
+        </div>
+
+        <div class="opening-hour-row">
+            <span>Sunday</span>
+            <strong>{{ dealer_profile.sunday_display_hours }}</strong>
+        </div>
+
+    </div>
+
+</section>
+
+{% endif %}

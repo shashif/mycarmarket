@@ -1,234 +1,173 @@
 <!-- ==========================================
 MyCarMarket
-Version: v1.1.9
+Version: v1.2.2
 File: vehicles/templates/vehicles/dealer_parts/dealer_hero.html
-Facebook Style Dealer Hero + Adjustable Cover Photo
+Clean Professional Dealer Hero
 ========================================== -->
-
-<!-- START SECTION 1: DEALER HERO -->
 
 <div class="dealer-hero-card">
 
     {% if dealer_profile and dealer_profile.banner %}
-
         <div class="dealer-banner">
-
-            <img
-                src="{{ dealer_profile.banner.url }}"
-                alt="{{ business_name }}"
-                class="banner-position-{{ dealer_profile.banner_position|default:'center' }}"
-            >
-
+            <img src="{{ dealer_profile.banner.url }}"
+                 alt="{{ business_name }}"
+                 class="banner-position-{{ dealer_profile.banner_position|default:'center' }}">
         </div>
-
     {% else %}
-
         <div class="dealer-banner dealer-banner-empty">
-
             <span>MyCarMarket Dealer</span>
-
         </div>
-
     {% endif %}
 
-    <div class="dealer-header-content">
+    <div class="dealer-profile-panel">
 
-        <div class="dealer-main-info">
+        <div class="dealer-top-row">
 
-            {% if dealer_profile and dealer_profile.logo %}
+            <div class="dealer-logo-column">
 
-                <img
-                    class="dealer-logo"
-                    src="{{ dealer_profile.logo.url }}"
-                    alt="{{ business_name }}"
-                >
+                {% if dealer_profile and dealer_profile.logo %}
+                    <img class="dealer-logo"
+                         src="{{ dealer_profile.logo.url }}"
+                         alt="{{ business_name }}">
+                {% else %}
+                    <div class="dealer-logo-placeholder">🏢</div>
+                {% endif %}
 
-            {% else %}
+            </div>
 
-                <div class="dealer-logo-placeholder">
+            <div class="dealer-title-column">
 
-                    🏢
+                <h1>{{ business_name }}</h1>
 
-                </div>
-
-            {% endif %}
-
-            <div class="dealer-title-area">
-
-                <h1>
-
-                    {{ business_name }}
-
-                </h1>
+                {% if dealer_profile and dealer_profile.business_slogan %}
+                    <p class="dealer-slogan">
+                        {{ dealer_profile.business_slogan }}
+                    </p>
+                {% endif %}
 
                 <div class="dealer-badges">
 
                     {% if dealer_profile and dealer_profile.is_verified %}
-
-                        <span class="dealer-verified">
-
-                            ✔ Verified Dealer
-
-                        </span>
-
+                        <span class="dealer-verified">✔ Verified Dealer</span>
                     {% endif %}
 
                     {% if dealer_profile and dealer_profile.is_featured_dealer %}
-
-                        <span class="dealer-featured">
-
-                            ⭐ Featured Dealer
-
-                        </span>
-
+                        <span class="dealer-featured">⭐ Featured Dealer</span>
                     {% endif %}
 
                     {% if dealer_profile %}
-
-                        <span class="dealer-package">
-
-                            {{ dealer_profile.package_badge }}
-
-                        </span>
-
+                        <span class="dealer-package">{{ dealer_profile.package_badge }}</span>
                     {% endif %}
 
                 </div>
 
                 <p class="dealer-subtitle">
-
-                    Trusted dealer on MyCarMarket Australia
-
+                    {% if dealer_profile and dealer_profile.address %}
+                        📍 {{ dealer_profile.address }}
+                    {% else %}
+                        Trusted dealer on MyCarMarket Australia
+                    {% endif %}
                 </p>
 
-                <div class="dealer-stats-row">
+            </div>
 
-                    <div class="dealer-stat-box">
+            <div class="dealer-share-box">
 
-                        <strong>
+                <p>Share dealer profile</p>
 
-                            {{ total_cars }}
+                <div class="dealer-share-buttons">
 
-                        </strong>
+                    <a target="_blank"
+                       rel="noopener"
+                       href="https://www.facebook.com/sharer/sharer.php?u={{ share_url|urlencode }}">
+                        Facebook
+                    </a>
 
-                        <span>
+                    <a target="_blank"
+                       rel="noopener"
+                       href="https://twitter.com/intent/tweet?text={{ share_text|urlencode }}&url={{ share_url|urlencode }}">
+                        X
+                    </a>
 
-                            Cars
+                    <a target="_blank"
+                       rel="noopener"
+                       href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url|urlencode }}">
+                        LinkedIn
+                    </a>
 
-                        </span>
+                    <a target="_blank"
+                       rel="noopener"
+                       href="https://wa.me/?text={{ share_text|urlencode }}%20{{ share_url|urlencode }}">
+                        WhatsApp
+                    </a>
 
-                    </div>
-
-                    <div class="dealer-stat-box">
-
-                        <strong>
-
-                            {{ member_since }}
-
-                        </strong>
-
-                        <span>
-
-                            Member Since
-
-                        </span>
-
-                    </div>
-
-                    <div class="dealer-stat-box">
-
-                        <strong>
-
-                            {% if dealer_profile and dealer_profile.is_verified %}
-
-                                Verified
-
-                            {% else %}
-
-                                Standard
-
-                            {% endif %}
-
-                        </strong>
-
-                        <span>
-
-                            Status
-
-                        </span>
-
-                    </div>
+                    <button type="button"
+                            class="copy-dealer-link-btn"
+                            onclick="copyDealerLink()">
+                        Copy Link
+                    </button>
 
                 </div>
-
-              
 
             </div>
 
         </div>
 
-        <div class="dealer-share-box">
+        <div class="dealer-panel-divider"></div>
 
-            <p>
+        <div class="dealer-bottom-row">
 
-                Share dealer profile
+            <div class="dealer-stats-row">
 
-            </p>
+                <div class="dealer-stat-box">
+                    <strong>{{ total_cars }}</strong>
+                    <span>Cars</span>
+                </div>
 
-            <a
-                target="_blank"
-                rel="noopener"
-                href="https://www.facebook.com/sharer/sharer.php?u={{ share_url|urlencode }}"
-            >
+                <div class="dealer-stat-box">
+                    <strong>{{ member_since }}</strong>
+                    <span>Member Since</span>
+                </div>
 
-                Facebook
+                <div class="dealer-stat-box">
+                    <strong>
+                        {% if dealer_profile and dealer_profile.years_in_business %}
+                            {{ dealer_profile.years_in_business }}+
+                        {% else %}
+                            New
+                        {% endif %}
+                    </strong>
+                    <span>Years in Business</span>
+                </div>
 
-            </a>
+                <div class="dealer-stat-box">
+                    <strong>
+                        {% if dealer_profile and dealer_profile.is_verified %}
+                            Verified
+                        {% else %}
+                            Standard
+                        {% endif %}
+                    </strong>
+                    <span>Status</span>
+                </div>
 
-            <a
-                target="_blank"
-                rel="noopener"
-                href="https://twitter.com/intent/tweet?text={{ share_text|urlencode }}&url={{ share_url|urlencode }}"
-            >
+            </div>
 
-                X
+            <div class="dealer-hero-actions">
 
-            </a>
+                {% if dealer_profile and dealer_profile.google_maps_link %}
+                    <a href="{{ dealer_profile.google_maps_link }}"
+                       target="_blank"
+                       rel="noopener"
+                       class="dealer-action-btn dark">
+                        📍 Get Directions
+                    </a>
+                {% endif %}
 
-            <a
-                target="_blank"
-                rel="noopener"
-                href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url|urlencode }}"
-            >
-
-                LinkedIn
-
-            </a>
-
-            <a
-                target="_blank"
-                rel="noopener"
-                href="https://wa.me/?text={{ share_text|urlencode }}%20{{ share_url|urlencode }}"
-            >
-
-                WhatsApp
-
-            </a>
-
-            <button
-                type="button"
-                class="copy-dealer-link-btn"
-                onclick="copyDealerLink()"
-            >
-
-                Copy Link
-
-            </button>
+            </div>
 
         </div>
 
     </div>
 
 </div>
-
-<!-- END SECTION 1: DEALER HERO -->

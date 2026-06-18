@@ -1,8 +1,8 @@
 <!-- ==========================================
 MyCarMarket
-Version: v1.2.0
+Version: v1.2.2
 File: vehicles/templates/vehicles/dealer_parts/dealer_info.html
-Dealer Info + Contact + Google Style Opening Hours
+Professional Dealer Info + Owner Card + Contact
 ========================================== -->
 
 <div class="dealer-info-grid">
@@ -11,10 +11,43 @@ Dealer Info + Contact + Google Style Opening Hours
 
         <h2>About {{ business_name }}</h2>
 
+        {% if dealer_profile and dealer_profile.business_slogan %}
+            <p class="dealer-about-slogan">
+                {{ dealer_profile.business_slogan }}
+            </p>
+        {% endif %}
+
         {% if dealer_profile and dealer_profile.business_description %}
             <p>{{ dealer_profile.business_description }}</p>
         {% else %}
             <p>This dealer has not added a business description yet.</p>
+        {% endif %}
+
+        {% if dealer_profile and dealer_profile.dealer_owner_name %}
+
+            <div class="dealer-owner-card">
+
+                {% if dealer_profile.dealer_owner_photo %}
+                    <img src="{{ dealer_profile.dealer_owner_photo.url }}"
+                         alt="{{ dealer_profile.dealer_owner_name }}">
+                {% else %}
+                    <div class="dealer-owner-placeholder">
+                        👤
+                    </div>
+                {% endif %}
+
+                <div>
+                    <h3>{{ dealer_profile.dealer_owner_name }}</h3>
+
+                    {% if dealer_profile.dealer_owner_title %}
+                        <p>{{ dealer_profile.dealer_owner_title }}</p>
+                    {% endif %}
+
+                    <span>Dealer representative</span>
+                </div>
+
+            </div>
+
         {% endif %}
 
         {% if dealer_profile %}
@@ -65,7 +98,7 @@ Dealer Info + Contact + Google Style Opening Hours
 
         {% if dealer_profile %}
 
-            <div class="dealer-action-buttons">
+            <div class="dealer-action-buttons sidebar-actions">
 
                 {% if dealer_profile.show_phone and dealer_profile.business_phone and dealer_profile.business_phone != "na" %}
                     <a href="tel:{{ dealer_profile.business_phone }}"
@@ -90,6 +123,15 @@ Dealer Info + Contact + Google Style Opening Hours
                     </a>
                 {% endif %}
 
+                {% if dealer_profile.google_maps_link %}
+                    <a href="{{ dealer_profile.google_maps_link }}"
+                       target="_blank"
+                       rel="noopener"
+                       class="dealer-btn">
+                        📍 Directions
+                    </a>
+                {% endif %}
+
             </div>
 
             <div class="dealer-detail-list">
@@ -108,54 +150,13 @@ Dealer Info + Contact + Google Style Opening Hours
                     <p>🧾 ABN: {{ dealer_profile.abn }}</p>
                 {% endif %}
 
+                {% if dealer_profile.years_in_business %}
+                    <p>🏆 {{ dealer_profile.years_in_business }}+ Years in Business</p>
+                {% endif %}
+
                 <p>📦 {{ dealer_profile.package_badge }}</p>
 
             </div>
-
-           <div class="dealer-opening-hours">
-
-    <h3>Opening Hours</h3>
-
-    <div class="opening-hours-list">
-
-        <p>
-            <strong>Monday</strong>
-            <span>{{ dealer_profile.monday_display_hours }}</span>
-        </p>
-
-        <p>
-            <strong>Tuesday</strong>
-            <span>{{ dealer_profile.tuesday_display_hours }}</span>
-        </p>
-
-        <p>
-            <strong>Wednesday</strong>
-            <span>{{ dealer_profile.wednesday_display_hours }}</span>
-        </p>
-
-        <p>
-            <strong>Thursday</strong>
-            <span>{{ dealer_profile.thursday_display_hours }}</span>
-        </p>
-
-        <p>
-            <strong>Friday</strong>
-            <span>{{ dealer_profile.friday_display_hours }}</span>
-        </p>
-
-        <p>
-            <strong>Saturday</strong>
-            <span>{{ dealer_profile.saturday_display_hours }}</span>
-        </p>
-
-        <p>
-            <strong>Sunday</strong>
-            <span>{{ dealer_profile.sunday_display_hours }}</span>
-        </p>
-
-    </div>
-
-</div>
 
             {% if dealer_profile.facebook or dealer_profile.instagram or dealer_profile.tiktok or dealer_profile.youtube %}
 

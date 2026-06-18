@@ -1,12 +1,11 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.2.1
+# Version: v1.2.2
 # File: vehicles/forms/dealer_profile_form.py
-# Full Dealer Profile Edit Form + Dropdown Opening Hours
+# Full Dealer Profile Edit Form + Professional Dealer Fields
 # ==========================================
 
 from django import forms
-
 from vehicles.models import DealerProfile
 
 
@@ -42,147 +41,41 @@ TIME_CHOICES = [
 ]
 
 
+def time_select_field():
+    return forms.TimeField(
+        required=False,
+        input_formats=['%H:%M'],
+        widget=forms.Select(
+            choices=TIME_CHOICES,
+            attrs={
+                'class': 'form-control',
+            }
+        )
+    )
+
+
 class DealerProfileForm(forms.ModelForm):
 
-    monday_open_time = forms.TimeField(
-        required=False,
-        widget=forms.Select(
-            choices=TIME_CHOICES,
-            attrs={
-                'class': 'form-control',
-            }
-        )
-    )
+    monday_open_time = time_select_field()
+    monday_close_time = time_select_field()
 
-    monday_close_time = forms.TimeField(
-        required=False,
-        widget=forms.Select(
-            choices=TIME_CHOICES,
-            attrs={
-                'class': 'form-control',
-            }
-        )
-    )
+    tuesday_open_time = time_select_field()
+    tuesday_close_time = time_select_field()
 
-    tuesday_open_time = forms.TimeField(
-        required=False,
-        widget=forms.Select(
-            choices=TIME_CHOICES,
-            attrs={
-                'class': 'form-control',
-            }
-        )
-    )
+    wednesday_open_time = time_select_field()
+    wednesday_close_time = time_select_field()
 
-    tuesday_close_time = forms.TimeField(
-        required=False,
-        widget=forms.Select(
-            choices=TIME_CHOICES,
-            attrs={
-                'class': 'form-control',
-            }
-        )
-    )
+    thursday_open_time = time_select_field()
+    thursday_close_time = time_select_field()
 
-    wednesday_open_time = forms.TimeField(
-        required=False,
-        widget=forms.Select(
-            choices=TIME_CHOICES,
-            attrs={
-                'class': 'form-control',
-            }
-        )
-    )
+    friday_open_time = time_select_field()
+    friday_close_time = time_select_field()
 
-    wednesday_close_time = forms.TimeField(
-        required=False,
-        widget=forms.Select(
-            choices=TIME_CHOICES,
-            attrs={
-                'class': 'form-control',
-            }
-        )
-    )
+    saturday_open_time = time_select_field()
+    saturday_close_time = time_select_field()
 
-    thursday_open_time = forms.TimeField(
-        required=False,
-        widget=forms.Select(
-            choices=TIME_CHOICES,
-            attrs={
-                'class': 'form-control',
-            }
-        )
-    )
-
-    thursday_close_time = forms.TimeField(
-        required=False,
-        widget=forms.Select(
-            choices=TIME_CHOICES,
-            attrs={
-                'class': 'form-control',
-            }
-        )
-    )
-
-    friday_open_time = forms.TimeField(
-        required=False,
-        widget=forms.Select(
-            choices=TIME_CHOICES,
-            attrs={
-                'class': 'form-control',
-            }
-        )
-    )
-
-    friday_close_time = forms.TimeField(
-        required=False,
-        widget=forms.Select(
-            choices=TIME_CHOICES,
-            attrs={
-                'class': 'form-control',
-            }
-        )
-    )
-
-    saturday_open_time = forms.TimeField(
-        required=False,
-        widget=forms.Select(
-            choices=TIME_CHOICES,
-            attrs={
-                'class': 'form-control',
-            }
-        )
-    )
-
-    saturday_close_time = forms.TimeField(
-        required=False,
-        widget=forms.Select(
-            choices=TIME_CHOICES,
-            attrs={
-                'class': 'form-control',
-            }
-        )
-    )
-
-    sunday_open_time = forms.TimeField(
-        required=False,
-        widget=forms.Select(
-            choices=TIME_CHOICES,
-            attrs={
-                'class': 'form-control',
-            }
-        )
-    )
-
-    sunday_close_time = forms.TimeField(
-        required=False,
-        widget=forms.Select(
-            choices=TIME_CHOICES,
-            attrs={
-                'class': 'form-control',
-            }
-        )
-    )
+    sunday_open_time = time_select_field()
+    sunday_close_time = time_select_field()
 
     class Meta:
 
@@ -191,7 +84,15 @@ class DealerProfileForm(forms.ModelForm):
         fields = [
 
             'business_name',
+            'business_slogan',
             'business_description',
+
+            'years_in_business',
+            'dealer_owner_name',
+            'dealer_owner_title',
+            'dealer_owner_photo',
+            'google_maps_link',
+
             'logo',
             'banner',
             'banner_position',
@@ -256,11 +157,53 @@ class DealerProfileForm(forms.ModelForm):
                 }
             ),
 
+            'business_slogan': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Example: Quality used cars you can trust',
+                }
+            ),
+
             'business_description': forms.Textarea(
                 attrs={
                     'class': 'form-control',
                     'rows': 5,
                     'placeholder': 'Write about your dealership',
+                }
+            ),
+
+            'years_in_business': forms.NumberInput(
+                attrs={
+                    'class': 'form-control',
+                    'min': 0,
+                    'placeholder': 'Example: 5',
+                }
+            ),
+
+            'dealer_owner_name': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Owner / Manager Name',
+                }
+            ),
+
+            'dealer_owner_title': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Example: Dealer Principal',
+                }
+            ),
+
+            'dealer_owner_photo': forms.ClearableFileInput(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+
+            'google_maps_link': forms.URLInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Paste Google Maps business/profile link',
                 }
             ),
 
@@ -317,15 +260,19 @@ class DealerProfileForm(forms.ModelForm):
                 }
             ),
 
-            'open_24_hours': forms.CheckboxInput(),
+            'open_24_hours': forms.CheckboxInput(
+                attrs={
+                    'class': 'form-check-input',
+                }
+            ),
 
-            'monday_closed': forms.CheckboxInput(),
-            'tuesday_closed': forms.CheckboxInput(),
-            'wednesday_closed': forms.CheckboxInput(),
-            'thursday_closed': forms.CheckboxInput(),
-            'friday_closed': forms.CheckboxInput(),
-            'saturday_closed': forms.CheckboxInput(),
-            'sunday_closed': forms.CheckboxInput(),
+            'monday_closed': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'tuesday_closed': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'wednesday_closed': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'thursday_closed': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'friday_closed': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'saturday_closed': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'sunday_closed': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
 
             'facebook': forms.URLInput(
                 attrs={
@@ -355,14 +302,14 @@ class DealerProfileForm(forms.ModelForm):
                 }
             ),
 
-            'show_email': forms.CheckboxInput(),
-            'show_phone': forms.CheckboxInput(),
+            'show_email': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'show_phone': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
 
-            'finance_available': forms.CheckboxInput(),
-            'trade_in_available': forms.CheckboxInput(),
-            'extended_warranty': forms.CheckboxInput(),
-            'delivery_available': forms.CheckboxInput(),
-            'test_drive_available': forms.CheckboxInput(),
+            'finance_available': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'trade_in_available': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'extended_warranty': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'delivery_available': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'test_drive_available': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
 
 

@@ -1,8 +1,8 @@
 <!-- =========================================
 MyCarMarket
-Version: v1.1.8
+Version: v1.2.1
 File: vehicles/templates/vehicles/dealer_detail.html
-Dealer Profile Split Template + Edit Profile Button
+Dealer Profile + Opening Hours
 ========================================= -->
 
 {% load static %}
@@ -18,39 +18,41 @@ Dealer Profile Split Template + Edit Profile Button
     <title>{{ business_name }} - Dealer Profile | MyCarMarket Australia</title>
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/dealer_detail.css' %}?v=104">
+    <link rel="stylesheet" href="{% static 'css/dealer_detail.css' %}?v=105">
 </head>
 
 <body>
 
-    {% include 'includes/navbar.html' %}
+{% include 'includes/navbar.html' %}
 
-    <main class="dealer-page-wrapper">
+<main class="dealer-page-wrapper">
 
-        {% include 'vehicles/dealer_parts/dealer_hero.html' %}
+    {% include 'vehicles/dealer_parts/dealer_hero.html' %}
 
-        {% if request.user == dealer %}
-            <div style="margin: 20px 0;">
-                <a href="{% url 'edit_dealer_profile' %}"
-                   class="btn">
-                    ✏️ Edit Dealer Profile
-                </a>
-            </div>
-        {% endif %}
+    {% if request.user == dealer %}
+        <div style="margin: 20px 0;">
+            <a href="{% url 'edit_dealer_profile' %}"
+               class="btn">
+                ✏️ Edit Dealer Profile
+            </a>
+        </div>
+    {% endif %}
 
-        {% include 'vehicles/dealer_parts/dealer_info.html' %}
+    {% include 'vehicles/dealer_parts/dealer_info.html' %}
 
-        {% include 'vehicles/dealer_parts/dealer_trust_centre.html' %}
+    {% include 'vehicles/dealer_parts/dealer_opening_hours.html' %}
 
-        {% include 'vehicles/dealer_parts/dealer_trust_card.html' %}
+    {% include 'vehicles/dealer_parts/dealer_trust_centre.html' %}
 
-        {% include 'vehicles/dealer_parts/dealer_inventory.html' %}
+    {% include 'vehicles/dealer_parts/dealer_trust_card.html' %}
 
-    </main>
+    {% include 'vehicles/dealer_parts/dealer_inventory.html' %}
 
-    {% include 'includes/footer.html' %}
+</main>
 
-    {% include 'vehicles/dealer_parts/dealer_scripts.html' %}
+{% include 'includes/footer.html' %}
+
+{% include 'vehicles/dealer_parts/dealer_scripts.html' %}
 
 </body>
 

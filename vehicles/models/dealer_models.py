@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.2.1
+# Version: v1.2.2
 # File: vehicles/models/dealer_models.py
-# Dealer Profile Model + Smart Opening Hours Picker
+# Dealer Profile Model + Professional Dealer Page Fields
 # ==========================================
 
 from django.db import models
@@ -33,6 +33,36 @@ class DealerProfile(models.Model):
 
     business_name = models.CharField(max_length=150, blank=True)
     business_description = models.TextField(blank=True)
+
+    business_slogan = models.CharField(
+        max_length=160,
+        blank=True
+    )
+
+    years_in_business = models.PositiveIntegerField(
+        default=0
+    )
+
+    dealer_owner_name = models.CharField(
+        max_length=120,
+        blank=True
+    )
+
+    dealer_owner_title = models.CharField(
+        max_length=120,
+        blank=True,
+        default='Dealer Principal'
+    )
+
+    dealer_owner_photo = models.ImageField(
+        upload_to='dealer_owner_photos/',
+        blank=True,
+        null=True
+    )
+
+    google_maps_link = models.URLField(
+        blank=True
+    )
 
     logo = models.ImageField(
         upload_to='dealer_logos/',
@@ -73,8 +103,6 @@ class DealerProfile(models.Model):
         blank=True
     )
 
-    # Old fields kept safely for existing data.
-    # Do not delete until final cleanup.
     opening_hours = models.CharField(
         max_length=255,
         blank=True
@@ -122,9 +150,7 @@ class DealerProfile(models.Model):
         default='Closed'
     )
 
-    open_24_hours = models.BooleanField(
-        default=False
-    )
+    open_24_hours = models.BooleanField(default=False)
 
     monday_closed = models.BooleanField(default=False)
     monday_open_time = models.TimeField(null=True, blank=True)
