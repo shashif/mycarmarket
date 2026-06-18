@@ -1,6 +1,9 @@
-# Version: v1.1.7
+# ==========================================
+# MyCarMarket
+# Version: v1.2.3
 # File: vehicles/views/car_detail_views.py
-# Dealer Trust + Enquiry + Favourite Status + Required Phone + Email Notifications
+# Dealer Trust + Enquiry + Favourite Status + Dealer Link + Email Notifications
+# ==========================================
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
@@ -105,7 +108,15 @@ def car_detail(request, slug):
 
         if form.is_valid():
             enquiry = form.save(commit=False)
+
             enquiry.car = car
+
+            # ==========================================
+            # Dealer link for Dealer Hub enquiries
+            # ==========================================
+
+            enquiry.dealer = car.seller
+
             enquiry.save()
 
             seller_email = ''

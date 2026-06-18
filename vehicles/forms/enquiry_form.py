@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.1.7
+# Version: v1.2.3
 # File: vehicles/forms/enquiry_form.py
-# Enquiry Form - Phone Required
+# Dealer Enquiry Form - Phone Required
 # ==========================================
 
 from django import forms
@@ -52,16 +52,12 @@ class EnquiryForm(forms.ModelForm):
             'message': forms.Textarea(
                 attrs={
                     'class': 'form-control',
-                    'rows': 6,
-                    'placeholder': 'Your Message',
+                    'rows': 5,
+                    'placeholder': 'Hi, I am interested in this vehicle. Is it still available?',
                     'required': 'required',
                 }
             ),
         }
-
-    # ==========================================
-    # PHONE VALIDATION
-    # ==========================================
 
     def clean_phone(self):
 

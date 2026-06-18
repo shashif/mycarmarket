@@ -147,20 +147,26 @@ Seller Details Removed
             {% endfor %}
         {% endif %}
 
-        <form method="POST" class="contact-form">
+       <form method="POST" class="contact-form">
 
-            {% csrf_token %}
+    {% csrf_token %}
 
-            {{ form.name }}
-            {{ form.email }}
-            {{ form.phone }}
-            {{ form.message }}
+    {% if form.errors %}
+        <div class="success-message" style="background:#fee2e2;color:#991b1b;">
+            {{ form.errors }}
+        </div>
+    {% endif %}
 
-            <button type="submit" class="btn">
-                Send Enquiry
-            </button>
+    {{ form.name }}
+    {{ form.email }}
+    {{ form.phone }}
+    {{ form.message }}
 
-        </form>
+    <button type="submit" class="btn">
+        Send Enquiry
+    </button>
+
+</form>
 
     </div>
 
