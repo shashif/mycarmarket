@@ -1,8 +1,8 @@
 <!-- ==========================================
 MyCarMarket
-Version: v1.2.2
+Version: v1.2.3
 File: templates/includes/navbar.html
-Professional Navbar
+Professional Navbar + Dealer Menu Cleanup
 ========================================== -->
 
 <div class="navbar">
@@ -28,9 +28,23 @@ Professional Navbar
             Sell Car
         </a>
 
-        <a href="{% url 'dealers' %}">
-            🏢 Dealers
-        </a>
+        <!-- ==========================================
+        NOTE:
+        Public Dealers menu should show for:
+        1. Not logged-in users
+        2. Logged-in normal users
+
+        It should NOT show for dealer users,
+        because dealer users already have Dealer Hub.
+        ========================================== -->
+
+        {% if not user.is_authenticated or not user.dealer_profile.is_dealer %}
+
+            <a href="{% url 'dealers' %}">
+                🏢 Dealers
+            </a>
+
+        {% endif %}
 
         {% if user.is_authenticated %}
 
@@ -57,7 +71,6 @@ Professional Navbar
                 {% csrf_token %}
 
                 <button type="submit"
-
                         style="
                         background:none;
                         border:none;
