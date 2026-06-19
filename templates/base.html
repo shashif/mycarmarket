@@ -1,8 +1,8 @@
 <!-- =========================================
 MyCarMarket
-Version: v1.0.0
+Version: v1.3.1
 File: templates/base.html
-Master Base Template
+Master Base Template + Global UX Tools
 ========================================= -->
 
 {% load static %}
@@ -11,7 +11,6 @@ Master Base Template
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
@@ -22,24 +21,18 @@ Master Base Template
         {% endblock %}
     </title>
 
-    <!-- Main CSS -->
-    <link rel="stylesheet"
-          href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-    <!-- Page Specific CSS -->
     {% block extra_css %}
     {% endblock %}
 
-    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-FGGQZ4WXDT"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-FGGQZ4WXDT');
     </script>
-
 </head>
 
 <body>
@@ -47,9 +40,32 @@ Master Base Template
     {% block content %}
     {% endblock %}
 
+
+    <!-- Global Loader -->
+    <div id="global-loader">
+        <div class="loader-circle"></div>
+    </div>
+
+
+    <!-- Toast Message -->
+    <div id="toast"></div>
+
+
+    <!-- Scroll To Top Button -->
+    <button id="scrollTopBtn" type="button">
+        ⬆
+    </button>
+
+
+    <!-- Global JS -->
+    <script src="{% static 'js/loading.js' %}"></script>
+    <script src="{% static 'js/toast.js' %}"></script>
+    <script src="{% static 'js/scroll_top.js' %}"></script>
+    <script src="{% static 'js/favourite.js' %}"></script>
+
     {% block extra_js %}
     {% endblock %}
-<script src="{% static 'js/favourite.js' %}"></script>
+
 </body>
 
 </html>

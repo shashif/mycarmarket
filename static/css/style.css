@@ -1,9 +1,222 @@
 /* ==========================================
 MyCarMarket
-Version: v1.2.5
+Version: v1.3.1
 File: static/css/style.css
-Global Style + Mobile Responsive Polish
+UX Improvements
+Global Loader + Toast + Scroll To Top
 ========================================== */
+
+
+/* ==========================================
+GLOBAL LOADER
+========================================== */
+
+#global-loader{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:100%;
+
+    background:rgba(255,255,255,0.7);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:99999;
+}
+
+
+.loader-circle{
+
+    width:50px;
+
+    height:50px;
+
+    border:5px solid #ddd;
+
+    border-top:5px solid #2563eb;
+
+    border-radius:50%;
+
+    animation:spin 1s linear infinite;
+}
+
+
+@keyframes spin{
+
+    from{
+
+        transform:rotate(0deg);
+
+    }
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+
+/* ==========================================
+TOAST NOTIFICATION
+========================================== */
+
+#toast{
+
+    position:fixed;
+
+    top:30px;
+
+    right:30px;
+
+    background:#111827;
+
+    color:#ffffff;
+
+    padding:15px 25px;
+
+    border-radius:10px;
+
+    display:none;
+
+    z-index:99999;
+
+    box-shadow:0 8px 20px rgba(0,0,0,0.2);
+}
+
+
+/* ==========================================
+SCROLL TO TOP BUTTON
+========================================== */
+
+#scrollTopBtn{
+
+    position:fixed;
+
+    bottom:25px;
+
+    right:25px;
+
+    width:50px;
+
+    height:50px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#2563eb;
+
+    color:#ffffff;
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    display:none;
+
+    z-index:99999;
+
+    box-shadow:0 6px 18px rgba(0,0,0,0.2);
+
+    transition:0.3s;
+}
+
+
+#scrollTopBtn:hover{
+
+    background:#1d4ed8;
+
+}
+
+#global-loader{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:100%;
+
+    background:rgba(255,255,255,0.7);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:99999;
+}
+
+.loader-circle{
+
+    width:50px;
+
+    height:50px;
+
+    border:5px solid #ddd;
+
+    border-top:5px solid #2563eb;
+
+    border-radius:50%;
+
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+
+/* Toast */
+
+#toast{
+
+    position:fixed;
+
+    top:30px;
+
+    right:30px;
+
+    background:#111827;
+
+    color:#fff;
+
+    padding:15px 25px;
+
+    border-radius:10px;
+
+    display:none;
+
+    z-index:99999;
+}
+
+
+
 
 body {
     font-family: Arial, sans-serif;
