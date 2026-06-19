@@ -1,9 +1,31 @@
-/****************************************
-SAVE BUTTON CLICK FIX
-Version: v1.2.7
-Date: 19 Jun 2026
-Melbourne, Australia
-****************************************/
+/* =========================================
+MyCarMarket
+Version: v1.3.2
+File: static/css/home.css
+Guest Favourite Button Fix
+========================================= */
+
+.favourite-login-btn{
+    position:absolute;
+    bottom:12px;
+    right:12px;
+    width:42px;
+    height:42px;
+    background:white;
+    color:#dc2626;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    font-size:22px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.2);
+    z-index:20;
+}
+
+.favourite-login-btn:hover{
+    transform:scale(1.08);
+}
 
 .favourite-form,
 .favourite-btn,

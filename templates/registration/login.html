@@ -1,8 +1,17 @@
+<!-- ==========================================
+MyCarMarket
+Version: v1.3.2
+File: templates/registration/login.html
+Login UX + Browser Password Save Support
+========================================== -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Login - MyCarMarket</title>
 
     <style>
@@ -28,14 +37,21 @@
             color:#111827;
         }
 
+        label{
+            font-weight:bold;
+            display:block;
+            margin-bottom:6px;
+            color:#374151;
+        }
+
         input{
             width:100%;
             padding:12px;
-            margin-top:5px;
             margin-bottom:15px;
             border:1px solid #d1d5db;
             border-radius:8px;
             box-sizing:border-box;
+            font-size:15px;
         }
 
         .btn{
@@ -72,16 +88,39 @@
         }
     </style>
 </head>
+
 <body>
 
 <div class="container">
 
     <h1>Login</h1>
 
-    <form method="POST">
+    <form method="POST" autocomplete="on">
         {% csrf_token %}
 
-        {{ form.as_p }}
+        {% if form.errors %}
+            <ul class="errorlist">
+                <li>Invalid username or password. Please try again.</li>
+            </ul>
+        {% endif %}
+
+        <label for="id_username">Username</label>
+        <input
+            type="text"
+            name="username"
+            id="id_username"
+            autocomplete="username"
+            required
+        >
+
+        <label for="id_password">Password</label>
+        <input
+            type="password"
+            name="password"
+            id="id_password"
+            autocomplete="current-password"
+            required
+        >
 
         <button type="submit" class="btn">
             Login
