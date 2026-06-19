@@ -4,9 +4,8 @@
 MyCarMarket
 Version: v1.3.0
 Date: 19 Jun 2026
-Time: Melbourne AEST
 File: core/templates/core/home_parts/latest_cars.html
-Description: Latest Vehicles Cards + Working Save Button
+Description: Latest Vehicles Cards + AJAX Save Button
 ========================================= -->
 
 <div class="premium-car-grid">
@@ -51,7 +50,7 @@ Description: Latest Vehicles Cards + Working Save Button
 
                         <form method="POST"
                               action="{% url 'toggle_favourite' car.slug %}"
-                              class="favourite-form">
+                              class="favourite-form ajax-favourite-form">
 
                             {% csrf_token %}
 
@@ -60,7 +59,7 @@ Description: Latest Vehicles Cards + Working Save Button
                                    value="{{ request.path }}">
 
                             <button type="submit"
-                                    class="favourite-btn"
+                                    class="favourite-btn {% if car.id in favourite_car_ids %}saved{% endif %}"
                                     title="Save this car">
 
                                 {% if car.id in favourite_car_ids %}

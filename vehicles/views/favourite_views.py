@@ -1,19 +1,21 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.0.6
+# Version: v1.3.0
 # File: vehicles/views/favourite_views.py
-# Favourite Cars Save / Unsave / List + Smart Redirect
+# Favourite Cars Save / Unsave / List + AJAX Support
 # ==========================================
 
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.http import JsonResponse
 
 from vehicles.models import Car, FavouriteCar
 
 
 @login_required
 def toggle_favourite(request, slug):
+
     car = get_object_or_404(
         Car,
         slug=slug,
@@ -27,10 +29,21 @@ def toggle_favourite(request, slug):
     )
 
     if created:
-        messages.success(request, 'Car saved to your favourites.')
+        is_favourited = True
+        message = 'Car saved to your favourites.'
     else:
         favourite.delete()
-        messages.success(request, 'Car removed from your favourites.')
+        is_favourited = False
+        message = 'Car removed from your favourites.'
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return JsonResponse({
+            'success': True,
+            'is_favourited': is_favourited,
+            'message': message
+        })
+
+    messages.success(request, message)
 
     next_url = request.POST.get('next') or request.GET.get('next')
 
@@ -45,6 +58,7 @@ def toggle_favourite(request, slug):
 
 @login_required
 def saved_cars(request):
+
     favourites = FavouriteCar.objects.filter(
         user=request.user,
         car__is_approved=True,

@@ -49,29 +49,29 @@ Description: Featured Vehicles Cards + Working Save Button
 
                     {% if user.is_authenticated %}
 
-                        <form method="POST"
-                              action="{% url 'toggle_favourite' car.slug %}"
-                              class="favourite-form">
+                     <form method="POST"
+      action="{% url 'toggle_favourite' car.slug %}"
+      class="favourite-form ajax-favourite-form">
 
-                            {% csrf_token %}
+    {% csrf_token %}
 
-                            <input type="hidden"
-                                   name="next"
-                                   value="{{ request.path }}">
+    <input type="hidden"
+           name="next"
+           value="{{ request.path }}">
 
-                            <button type="submit"
-                                    class="favourite-btn"
-                                    title="Save this car">
+    <button type="submit"
+            class="favourite-btn {% if car.id in favourite_car_ids %}saved{% endif %}"
+            title="Save this car">
 
-                                {% if car.id in favourite_car_ids %}
-                                    ❤️
-                                {% else %}
-                                    🤍
-                                {% endif %}
+        {% if car.id in favourite_car_ids %}
+            ❤️
+        {% else %}
+            🤍
+        {% endif %}
 
-                            </button>
+    </button>
 
-                        </form>
+</form>
 
                     {% else %}
 
