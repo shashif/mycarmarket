@@ -2,11 +2,30 @@
 
 <!-- =========================================
 MyCarMarket
-Version: v1.3.0
+Version: v1.3.3
 Date: 19 Jun 2026
 File: core/templates/core/home_parts/latest_cars.html
-Description: Latest Vehicles Cards + AJAX Save Button
+Description: Latest Vehicles Heading + Cards + AJAX Save Button
 ========================================= -->
+
+<div class="home-section-header">
+
+    <div>
+        <h2 class="section-title">
+            🚗 Latest Vehicles
+        </h2>
+
+        <p class="section-subtitle">
+            Newest listings across Australia, with featured cars prioritised.
+        </p>
+    </div>
+
+    <a href="{% url 'car_list' %}"
+       class="section-view-all">
+        Browse All Cars
+    </a>
+
+</div>
 
 <div class="premium-car-grid">
 

@@ -2,153 +2,103 @@
 
 <!-- =========================================
 MyCarMarket
-Version: v1.3.0
-Date: 19 Jun 2026
-Time: Melbourne AEST
+Version: v1.3.3
 File: core/templates/core/home_parts/featured_cars.html
-Description: Featured Vehicles Cards + Working Save Button
+Featured Vehicles + AJAX Save Button
 ========================================= -->
+
+<div class="home-section-header">
+
+    <div>
+
+        <h2 class="section-title">
+            ⭐ Featured Vehicles
+        </h2>
+
+        <p class="section-subtitle">
+            Premium listings from trusted sellers across Australia.
+        </p>
+
+    </div>
+
+</div>
 
 <div class="premium-car-grid">
 
     {% for car in featured_cars %}
 
-        <div class="premium-car-card featured-home-card">
+        <a href="{% url 'car_detail' car.slug %}"
+           class="premium-car-card">
 
             <div class="premium-car-image-wrap">
 
-                {% if car.slug %}
-                    <a href="{% url 'car_detail' car.slug %}" class="car-image-link">
-                {% else %}
-                    <div class="car-image-link">
-                {% endif %}
+                {% with car.images.first as car_image %}
 
-                    {% with car.images.first as car_image %}
-                        {% if car_image %}
-                            <img src="{{ car_image.image.url }}" alt="{{ car.title }}">
-                        {% else %}
-                            <div class="no-image-box">No Image Available</div>
-                        {% endif %}
-                    {% endwith %}
+                    {% if car_image %}
 
-                {% if car.slug %}
-                    </a>
-                {% else %}
-                    </div>
-                {% endif %}
-
-                {% if car.is_featured %}
-                    <span class="featured-badge">⭐ Featured</span>
-                {% endif %}
-
-                {% if car.is_verified_listing %}
-                    <span class="verified-badge">✓ Verified</span>
-                {% endif %}
-
-                {% if car.slug %}
-
-                    {% if user.is_authenticated %}
-
-                     <form method="POST"
-      action="{% url 'toggle_favourite' car.slug %}"
-      class="favourite-form ajax-favourite-form">
-
-    {% csrf_token %}
-
-    <input type="hidden"
-           name="next"
-           value="{{ request.path }}">
-
-    <button type="submit"
-            class="favourite-btn {% if car.id in favourite_car_ids %}saved{% endif %}"
-            title="Save this car">
-
-        {% if car.id in favourite_car_ids %}
-            ❤️
-        {% else %}
-            🤍
-        {% endif %}
-
-    </button>
-
-</form>
+                        <img src="{{ car_image.image.url }}"
+                             alt="{{ car.title }}">
 
                     {% else %}
 
-                        <a href="{% url 'login' %}?next={{ request.path }}"
-                           class="favourite-login-btn"
-                           title="Login to save this car">
-                            🤍
-                        </a>
+                        <div class="no-image-box">
+
+                            No Image Available
+
+                        </div>
 
                     {% endif %}
 
+                {% endwith %}
+
+                {% if car.is_featured %}
+                    <span class="featured-badge">
+                        ⭐ Featured
+                    </span>
+                {% endif %}
+
+                {% if car.is_verified_listing %}
+                    <span class="verified-badge">
+                        ✓ Verified
+                    </span>
                 {% endif %}
 
             </div>
 
             <div class="premium-car-info">
 
-                {% if car.slug %}
-                    <a href="{% url 'car_detail' car.slug %}" class="car-title-link">
-                        <h3>{{ car.title }}</h3>
-                    </a>
-                {% else %}
-                    <h3>{{ car.title }}</h3>
-                {% endif %}
+                <h3>{{ car.title }}</h3>
 
                 <p class="car-meta">
-                    🚘 {{ car.year }} • {{ car.make }} {{ car.model }}
-                </p>
 
-                <div class="dealer-info">
-                    <p class="dealer-name">
-                        🏢 {{ car.seller_business_name }}
-                    </p>
+                    🚘 {{ car.year }}
 
-                    {% if car.seller_is_verified %}
-                        <span class="dealer-verified">✔ Verified Dealer</span>
-                    {% endif %}
+                    •
 
-                    {% if car.seller_is_featured_dealer %}
-                        <span class="dealer-featured">⭐ Featured Dealer</span>
-                    {% endif %}
-                </div>
+                    {{ car.make }} {{ car.model }}
 
-                <div class="icon-info-grid">
-                    <span>🛣 {{ car.kilometres }} km</span>
-                    <span>⚙️ {{ car.transmission|default:"N/A" }}</span>
-                    <span>⛽ {{ car.fuel_type|default:"N/A" }}</span>
-                    <span>👁 {{ car.views_count }} views</span>
-                </div>
-
-                <p class="car-location">
-                    📍 {{ car.display_location|default:"Location not specified" }}
                 </p>
 
                 <div class="price-row">
-                    <strong>${{ car.price }}</strong>
-                </div>
 
-                {% if car.slug %}
-                    <a href="{% url 'car_detail' car.slug %}" class="view-details-btn">
-                        View Details
-                    </a>
-                {% else %}
-                    <span class="view-details-btn">
-                        Details Unavailable
-                    </span>
-                {% endif %}
+                    <strong>
+
+                        ${{ car.price }}
+
+                    </strong>
+
+                </div>
 
             </div>
 
-        </div>
+        </a>
 
     {% empty %}
 
         <div class="empty-home-section">
-            <h3>No featured cars yet</h3>
-            <p>Mark cars as featured from the admin panel.</p>
+
+            <h3>No featured cars available.</h3>
+
         </div>
 
     {% endfor %}

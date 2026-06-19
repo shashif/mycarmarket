@@ -53,7 +53,7 @@ Mobile Responsive Review + Marketplace Polish
     {% endif %}
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/car_detail.css' %}?v=996">
+    <link rel="stylesheet" href="{% static 'css/car_detail.css' %}?v=1333">
 </head>
 
 <body>
@@ -131,8 +131,9 @@ Mobile Responsive Review + Marketplace Polish
             </div>
         </div>
     </div>
-
+ {% include 'vehicles/recently_viewed_cars.html' %}
     {% include 'vehicles/similar_cars.html' %}
+   
 
 </div>
 

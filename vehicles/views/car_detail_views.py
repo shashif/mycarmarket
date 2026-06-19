@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.2.3
+# Version: v1.3.3
 # File: vehicles/views/car_detail_views.py
-# Dealer Trust + Enquiry + Favourite Status + Dealer Link + Email Notifications
+# Dealer Trust + Enquiry + Favourite Status + Recently Viewed Cars Fix
 # ==========================================
 
 from django.shortcuts import render, get_object_or_404, redirect
@@ -16,9 +16,11 @@ from vehicles.forms import EnquiryForm
 
 
 def car_detail(request, slug):
+
     car = get_object_or_404(Car, slug=slug)
 
     if not car.is_approved:
+
         if not request.user.is_authenticated:
             messages.error(request, 'This listing is waiting for admin approval.')
             return redirect('car_list')
@@ -30,10 +32,40 @@ def car_detail(request, slug):
     car.views_count += 1
     car.save(update_fields=['views_count'])
 
+    # Recently Viewed Cars
+    recently_viewed = request.session.get('recently_viewed_cars', [])
+
+    if car.id in recently_viewed:
+        recently_viewed.remove(car.id)
+
+    recently_viewed.insert(0, car.id)
+
+    request.session['recently_viewed_cars'] = recently_viewed[:6]
+    request.session.modified = True
+
+    recent_ids = request.session.get('recently_viewed_cars', [])
+
+    recently_viewed_cars = []
+
+    for recent_id in recent_ids:
+        if recent_id != car.id:
+            recent_car = Car.objects.filter(
+                id=recent_id,
+                is_approved=True,
+                is_active=True
+            ).first()
+
+            if recent_car:
+                recently_viewed_cars.append(recent_car)
+
     images = car.images.all()
 
     share_url = request.build_absolute_uri()
-    share_text = f"Check out this {car.year} {car.make} {car.model} on MyCarMarket Australia"
+
+    share_text = (
+        f"Check out this {car.year} {car.make} {car.model} "
+        f"on MyCarMarket Australia"
+    )
 
     is_favourite = False
 
@@ -49,6 +81,7 @@ def car_detail(request, slug):
     dealer_years_active = 0
 
     if car.seller:
+
         dealer_active_cars_count = Car.objects.filter(
             seller=car.seller,
             is_approved=True,
@@ -65,12 +98,10 @@ def car_detail(request, slug):
         dealer_member_since = car.seller.date_joined
 
         today = timezone.now()
+
         dealer_years_active = today.year - dealer_member_since.year
 
-        if (
-            today.month,
-            today.day
-        ) < (
+        if (today.month, today.day) < (
             dealer_member_since.month,
             dealer_member_since.day
         ):
@@ -104,29 +135,26 @@ def car_detail(request, slug):
         ).exclude(pk=car.pk).order_by('-created_at')[:6]
 
     if request.method == 'POST':
+
         form = EnquiryForm(request.POST)
 
         if form.is_valid():
+
             enquiry = form.save(commit=False)
-
             enquiry.car = car
-
-            # ==========================================
-            # Dealer link for Dealer Hub enquiries
-            # ==========================================
-
             enquiry.dealer = car.seller
-
             enquiry.save()
 
             seller_email = ''
 
             if car.seller and car.seller.email:
                 seller_email = car.seller.email
+
             elif car.seller_email:
                 seller_email = car.seller_email
 
             if seller_email:
+
                 subject = f"New enquiry for {car.title} - MyCarMarket Australia"
 
                 message = (
@@ -169,6 +197,7 @@ def car_detail(request, slug):
             return redirect('car_detail', slug=car.slug)
 
     else:
+
         initial_message = (
             f"Hi, I am interested in this car:\n\n"
             f"{car.year} {car.make} {car.model}\n"
@@ -191,6 +220,7 @@ def car_detail(request, slug):
             'car': car,
             'images': images,
             'similar_cars': similar_cars,
+            'recently_viewed_cars': recently_viewed_cars,
             'form': form,
             'share_url': share_url,
             'share_text': share_text,
@@ -201,8 +231,3 @@ def car_detail(request, slug):
             'dealer_years_active': dealer_years_active,
         }
     )
-
-
-# ==========================================
-# END CAR DETAIL VIEW
-# ==========================================

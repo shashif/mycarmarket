@@ -1,0 +1,91 @@
+<!-- =========================================
+MyCarMarket
+Version: v1.3.3
+File: vehicles/templates/vehicles/recently_viewed_cars.html
+Recently Viewed Cars - Matching Similar Cars Design
+========================================= -->
+
+{% if recently_viewed_cars %}
+
+<div class="similar-section">
+
+    <h2 class="section-title">👀 Recently Viewed Cars</h2>
+
+    <div class="similar-grid">
+
+        {% for recent in recently_viewed_cars %}
+
+        <a href="{% url 'car_detail' recent.slug %}" class="similar-card-link">
+
+            <div class="similar-card">
+
+                <div class="similar-image-wrap">
+
+                    {% if recent.is_featured %}
+                        <div class="similar-badge-featured">
+                            ⭐ Featured
+                        </div>
+                    {% endif %}
+
+                    {% if recent.is_verified_listing %}
+                        <div class="similar-badge-verified">
+                            🛡 Verified
+                        </div>
+                    {% endif %}
+
+                    {% with recent.images.first as recent_image %}
+                        {% if recent_image %}
+                            <img
+                                src="{{ recent_image.image.url }}"
+                                class="similar-image"
+                                alt="{{ recent.title }}"
+                            >
+                        {% else %}
+                            <div class="similar-no-image">
+                                No Image Available
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+
+                </div>
+
+                <div class="similar-content">
+
+                    <div class="similar-price">
+                        ${{ recent.price }}
+                    </div>
+
+                    <div class="similar-title">
+                        {{ recent.title }}
+                    </div>
+
+                    <div class="similar-meta-grid">
+                        <span>📅 {{ recent.year }}</span>
+                        <span>🛣 {{ recent.kilometres }} km</span>
+                        <span>⚙ {{ recent.transmission|default:"N/A"|title }}</span>
+                        <span>⛽ {{ recent.fuel_type|default:"N/A"|title }}</span>
+                    </div>
+
+                    {% if recent.display_location %}
+                        <div class="similar-location">
+                            📍 {{ recent.display_location }}
+                        </div>
+                    {% else %}
+                        <div class="similar-location">
+                            📍 Location not specified
+                        </div>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </a>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endif %}
