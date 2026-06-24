@@ -1,9 +1,15 @@
 /* ==========================================
 MyCarMarket
-Version: v0.9.9.3
+Version: v1.4.1
 File: static/css/car_form.css
-Car Form Styles
+Car Form + Mobile Responsive
 ========================================== */
+
+
+/* --------------------------------------------------
+SECTION 01 : PAGE BASE
+START
+-------------------------------------------------- */
 
 body {
     font-family: Arial, sans-serif;
@@ -12,26 +18,74 @@ body {
 }
 
 .container {
+    width: 92%;
     max-width: 1000px;
-    margin: 40px auto;
+    margin: 35px auto;
+}
+
+/* --------------------------------------------------
+SECTION 01 : PAGE BASE
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 02 : FORM CONTAINER
+START
+-------------------------------------------------- */
+
+.form-card {
     background: white;
     padding: 30px;
-    border-radius: 16px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
 }
+
+/* --------------------------------------------------
+SECTION 02 : FORM CONTAINER
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 03 : HEADINGS
+START
+-------------------------------------------------- */
 
 h1,
 h2 {
     color: #111827;
 }
 
+h1 {
+    font-size: 34px;
+}
+
+h2 {
+    font-size: 26px;
+}
+
+/* --------------------------------------------------
+SECTION 03 : HEADINGS
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 04 : FORM INPUTS
+START
+-------------------------------------------------- */
+
 form p {
-    margin-bottom: 15px;
+    margin-bottom: 18px;
 }
 
 label {
     display: block;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     font-weight: bold;
 }
 
@@ -41,30 +95,60 @@ select {
     width: 100%;
     padding: 12px;
     border: 1px solid #d1d5db;
-    border-radius: 8px;
+    border-radius: 10px;
     box-sizing: border-box;
+    font-size: 15px;
 }
+
+textarea {
+    resize: vertical;
+}
+
+/* --------------------------------------------------
+SECTION 04 : FORM INPUTS
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 05 : BUTTONS
+START
+-------------------------------------------------- */
 
 .btn {
     background: #2563eb;
     color: white;
     border: none;
     padding: 14px 30px;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
     font-size: 16px;
     font-weight: bold;
+    transition: 0.2s;
 }
 
 .btn:hover {
     background: #1d4ed8;
 }
 
+/* --------------------------------------------------
+SECTION 05 : BUTTONS
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 06 : IMAGE MANAGEMENT
+START
+-------------------------------------------------- */
+
 .image-section {
     margin: 30px 0;
     padding: 22px;
     background: #f9fafb;
-    border-radius: 14px;
+    border-radius: 16px;
     border: 1px solid #e5e7eb;
 }
 
@@ -77,7 +161,7 @@ select {
 
 .image-card {
     background: white;
-    border-radius: 12px;
+    border-radius: 14px;
     padding: 12px;
     border: 1px solid #e5e7eb;
 }
@@ -100,6 +184,18 @@ select {
     margin-right: 6px;
 }
 
+/* --------------------------------------------------
+SECTION 06 : IMAGE MANAGEMENT
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 07 : PRIMARY IMAGE BADGE
+START
+-------------------------------------------------- */
+
 .primary-badge {
     display: inline-block;
     background: #16a34a;
@@ -110,6 +206,18 @@ select {
     margin-bottom: 8px;
 }
 
+/* --------------------------------------------------
+SECTION 07 : PRIMARY IMAGE BADGE
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 08 : UPLOAD BOX
+START
+-------------------------------------------------- */
+
 .upload-box {
     margin-top: 25px;
     padding: 20px;
@@ -118,8 +226,128 @@ select {
     border: 1px dashed #2563eb;
 }
 
+/* --------------------------------------------------
+SECTION 08 : UPLOAD BOX
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 09 : HELP TEXT
+START
+-------------------------------------------------- */
+
 .help-text {
     color: #6b7280;
     font-size: 14px;
     margin-top: 8px;
+    line-height: 1.5;
 }
+
+/* --------------------------------------------------
+SECTION 09 : HELP TEXT
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 10 : TABLET RESPONSIVE
+START
+max-width: 900px
+-------------------------------------------------- */
+
+@media (max-width:900px){
+
+    .container{
+        width:94%;
+    }
+
+}
+
+/* --------------------------------------------------
+SECTION 10 : TABLET RESPONSIVE
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 11 : MOBILE RESPONSIVE
+START
+max-width:650px
+-------------------------------------------------- */
+
+@media (max-width:650px){
+
+    .container{
+        width:94%;
+        margin:22px auto;
+    }
+
+    .form-card{
+        padding:20px;
+        border-radius:18px;
+    }
+
+    h1{
+        font-size:28px;
+    }
+
+    h2{
+        font-size:22px;
+    }
+
+    .image-section{
+        padding:18px;
+    }
+
+    .image-grid{
+        grid-template-columns:1fr;
+    }
+
+    .image-card img{
+        height:180px;
+    }
+
+    .btn{
+        width:100%;
+        box-sizing:border-box;
+    }
+
+}
+
+/* --------------------------------------------------
+SECTION 11 : MOBILE RESPONSIVE
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 12 : SMALL MOBILE RESPONSIVE
+START
+max-width:420px
+-------------------------------------------------- */
+
+@media (max-width:420px){
+
+    h1{
+        font-size:24px;
+    }
+
+    h2{
+        font-size:20px;
+    }
+
+    .image-card img{
+        height:160px;
+    }
+
+}
+
+/* --------------------------------------------------
+SECTION 12 : SMALL MOBILE RESPONSIVE
+END
+-------------------------------------------------- */

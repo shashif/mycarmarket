@@ -1,40 +1,15 @@
 /* ==========================================
 MyCarMarket
-Version: v1.2.5
+Version: v1.2.6
 File: static/css/car_list.css
-Card Height + Badge Polish
+Car List Page + Mobile Responsive Polish
 ========================================== */
 
-/* Make cards equal height */
-.car-card,
-.premium-car-card {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
 
-/* Make content fill remaining space */
-.car-content,
-.premium-car-info {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-
-/* Keep View Details button aligned at bottom */
-.view-details-btn {
-    margin-top: auto;
-}
-
-/* Fix Verified badge width */
-.verified-badge {
-    width: auto;
-    max-width: fit-content;
-    display: inline-block;
-    left: 14px;
-    right: auto;
-    top: 58px;
-}
+/* --------------------------------------------------
+SECTION 01 : GLOBAL PAGE BASE
+START
+-------------------------------------------------- */
 
 body {
     margin: 0;
@@ -48,6 +23,18 @@ body {
     max-width: 1250px;
     margin: 35px auto;
 }
+
+/* --------------------------------------------------
+SECTION 01 : GLOBAL PAGE BASE
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 02 : PAGE HEADER
+START
+-------------------------------------------------- */
 
 .page-header {
     background: linear-gradient(135deg, #111827, #1f2937);
@@ -67,7 +54,17 @@ body {
     color: #d1d5db;
 }
 
-/* FILTER BOX */
+/* --------------------------------------------------
+SECTION 02 : PAGE HEADER
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 03 : FILTER BOX
+START
+-------------------------------------------------- */
 
 .filter-box {
     background: white;
@@ -129,7 +126,17 @@ body {
     background: #d1d5db;
 }
 
-/* CAR GRID */
+/* --------------------------------------------------
+SECTION 03 : FILTER BOX
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 04 : CAR GRID
+START
+-------------------------------------------------- */
 
 .car-grid,
 .premium-car-grid {
@@ -140,7 +147,9 @@ body {
 
 .car-card,
 .premium-car-card {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     background: white;
     color: inherit;
     text-decoration: none;
@@ -156,6 +165,18 @@ body {
     transform: translateY(-5px);
     box-shadow: 0 16px 35px rgba(0,0,0,0.14);
 }
+
+/* --------------------------------------------------
+SECTION 04 : CAR GRID
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 05 : IMAGE AREA
+START
+-------------------------------------------------- */
 
 .image-box,
 .premium-car-image-wrap {
@@ -192,7 +213,17 @@ body {
     font-weight: bold;
 }
 
-/* BADGES */
+/* --------------------------------------------------
+SECTION 05 : IMAGE AREA
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 06 : CAR BADGES
+START
+-------------------------------------------------- */
 
 .featured-badge {
     position: absolute;
@@ -211,6 +242,10 @@ body {
     position: absolute;
     top: 58px;
     left: 14px;
+    right: auto;
+    width: auto;
+    max-width: fit-content;
+    display: inline-block;
     background: #16a34a;
     color: white;
     padding: 7px 12px;
@@ -220,7 +255,17 @@ body {
     z-index: 5;
 }
 
-/* FAVOURITE BUTTON */
+/* --------------------------------------------------
+SECTION 06 : CAR BADGES
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 07 : FAVOURITE BUTTON
+START
+-------------------------------------------------- */
 
 .favourite-form {
     position: absolute;
@@ -253,10 +298,23 @@ body {
     background: #f9fafb;
 }
 
-/* CAR CONTENT */
+/* --------------------------------------------------
+SECTION 07 : FAVOURITE BUTTON
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 08 : CAR CONTENT
+START
+-------------------------------------------------- */
 
 .car-content,
 .premium-car-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
     padding: 20px;
 }
 
@@ -295,7 +353,17 @@ body {
     overflow-wrap: break-word;
 }
 
-/* DEALER INFO */
+/* --------------------------------------------------
+SECTION 08 : CAR CONTENT
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 09 : DEALER INFO
+START
+-------------------------------------------------- */
 
 .dealer-info {
     margin: 10px 0 14px;
@@ -337,7 +405,17 @@ body {
     border: 2px solid #f59e0b;
 }
 
-/* CAR DETAILS */
+/* --------------------------------------------------
+SECTION 09 : DEALER INFO
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 10 : CAR DETAILS GRID
+START
+-------------------------------------------------- */
 
 .icon-info-grid,
 .info-grid {
@@ -381,11 +459,21 @@ body {
     gap: 10px;
 }
 
-/* VIEW DETAILS BUTTON */
+/* --------------------------------------------------
+SECTION 10 : CAR DETAILS GRID
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 11 : VIEW DETAILS BUTTON
+START
+-------------------------------------------------- */
 
 .view-details-btn {
     display: block;
-    margin-top: 18px;
+    margin-top: auto;
     width: 100%;
     box-sizing: border-box;
     text-align: center;
@@ -402,7 +490,17 @@ body {
     background: #2563eb;
 }
 
-/* EMPTY + PAGINATION */
+/* --------------------------------------------------
+SECTION 11 : VIEW DETAILS BUTTON
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 12 : EMPTY BOX + PAGINATION
+START
+-------------------------------------------------- */
 
 .empty-box {
     background: white;
@@ -435,7 +533,18 @@ body {
     color: white;
 }
 
-/* TABLET */
+/* --------------------------------------------------
+SECTION 12 : EMPTY BOX + PAGINATION
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 13 : TABLET RESPONSIVE
+START
+max-width: 1000px
+-------------------------------------------------- */
 
 @media (max-width: 1000px) {
     .filter-grid {
@@ -448,31 +557,45 @@ body {
     }
 }
 
-/* MOBILE */
+/* --------------------------------------------------
+SECTION 13 : TABLET RESPONSIVE
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 14 : MOBILE RESPONSIVE
+START
+max-width: 650px
+-------------------------------------------------- */
 
 @media (max-width: 650px) {
     .page-wrapper {
         width: 94%;
-        margin: 22px auto;
+        margin: 20px auto;
     }
 
     .page-header {
-        padding: 28px 22px;
+        padding: 24px 18px;
         border-radius: 18px;
+        margin-bottom: 20px;
     }
 
     .page-header h1 {
-        font-size: 28px;
+        font-size: 26px;
         line-height: 1.2;
     }
 
     .page-header p {
         font-size: 14px;
+        line-height: 1.5;
     }
 
     .filter-box {
-        padding: 18px;
+        padding: 16px;
         border-radius: 18px;
+        margin-bottom: 22px;
     }
 
     .filter-grid,
@@ -481,14 +604,31 @@ body {
         grid-template-columns: 1fr;
     }
 
+    .filter-grid {
+        gap: 12px;
+    }
+
+    .filter-grid input,
+    .filter-grid select {
+        padding: 12px;
+        font-size: 14px;
+    }
+
     .filter-actions {
         flex-direction: column;
+        gap: 10px;
     }
 
     .filter-actions button,
     .filter-actions a {
         width: 100%;
         box-sizing: border-box;
+        padding: 12px;
+    }
+
+    .car-card,
+    .premium-car-card {
+        border-radius: 18px;
     }
 
     .premium-car-image-wrap,
@@ -518,6 +658,11 @@ body {
         top: 52px;
     }
 
+    .favourite-form {
+        top: 12px;
+        right: 12px;
+    }
+
     .favourite-btn,
     .favourite-login-btn {
         width: 40px;
@@ -525,8 +670,19 @@ body {
         font-size: 20px;
     }
 
+    .dealer-name {
+        font-size: 13px;
+    }
+
+    .dealer-verified,
+    .dealer-featured {
+        font-size: 11px;
+        padding: 5px 8px;
+    }
+
     .icon-info-grid,
     .info-grid {
+        grid-template-columns: 1fr;
         gap: 8px;
     }
 
@@ -546,6 +702,15 @@ body {
         font-size: 22px;
     }
 
+    .view-details-btn {
+        padding: 12px;
+        border-radius: 12px;
+    }
+
+    .pagination {
+        margin-top: 26px;
+    }
+
     .pagination a,
     .pagination span {
         padding: 9px 12px;
@@ -554,5 +719,47 @@ body {
 
     .empty-box {
         padding: 28px 18px;
+        border-radius: 18px;
     }
 }
+
+/* --------------------------------------------------
+SECTION 14 : MOBILE RESPONSIVE
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 15 : SMALL MOBILE RESPONSIVE
+START
+max-width: 420px
+-------------------------------------------------- */
+
+@media (max-width: 420px) {
+    .page-header h1 {
+        font-size: 23px;
+    }
+
+    .premium-car-image-wrap,
+    .image-box,
+    .no-image,
+    .no-image-box {
+        height: 170px;
+    }
+
+    .premium-car-info h3,
+    .car-title {
+        font-size: 18px;
+    }
+
+    .price,
+    .price-row strong {
+        font-size: 20px;
+    }
+}
+
+/* --------------------------------------------------
+SECTION 15 : SMALL MOBILE RESPONSIVE
+END
+-------------------------------------------------- */

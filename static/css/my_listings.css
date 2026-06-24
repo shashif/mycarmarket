@@ -1,263 +1,482 @@
- <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f6f8;
-            color: #111827;
-        }
+/* ==========================================
+MyCarMarket
+Version: v1.4.1
+File: static/css/my_listings.css
+Seller / Dealer Dashboard Styles
+========================================== */
 
-        .container {
-            width: 90%;
-            margin: 35px auto;
-        }
 
-        .page-title {
-            font-size: 34px;
-            margin-bottom: 10px;
-        }
+/* --------------------------------------------------
+SECTION 01 : PAGE BASE
+START
+-------------------------------------------------- */
 
-        .subtitle {
-            color: #6b7280;
-            margin-bottom: 30px;
-        }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    color: #111827;
+}
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-bottom: 35px;
-        }
+.container {
+    width: 90%;
+    max-width: 1250px;
+    margin: 35px auto;
+}
 
-        .stat-card,
-        .analytics-box,
-        .empty-box {
-            background: white;
-            padding: 25px;
-            border-radius: 18px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-        }
+/* --------------------------------------------------
+SECTION 01 : PAGE BASE
+END
+-------------------------------------------------- */
 
-        .stat-card h2 {
-            margin: 0;
-            font-size: 34px;
-            color: #2563eb;
-        }
 
-        .stat-card p {
-            margin: 8px 0 0;
-            color: #6b7280;
-            font-weight: bold;
-        }
 
-        .package-box {
-            margin-bottom: 35px;
-        }
+/* --------------------------------------------------
+SECTION 02 : PAGE TITLE
+START
+-------------------------------------------------- */
 
-        .package-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-            margin-top: 18px;
-        }
+.page-title {
+    font-size: 34px;
+    margin-bottom: 10px;
+}
 
-        .package-item {
-            background: #f3f4f6;
-            padding: 18px;
-            border-radius: 14px;
-        }
+.subtitle {
+    color: #6b7280;
+    margin-bottom: 30px;
+}
 
-        .package-item strong {
-            display: block;
-            font-size: 24px;
-            color: #2563eb;
-            margin-bottom: 6px;
-        }
+/* --------------------------------------------------
+SECTION 02 : PAGE TITLE
+END
+-------------------------------------------------- */
 
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin-bottom: 35px;
-        }
 
-        .analytics-box h2 {
-            margin-top: 0;
-            font-size: 24px;
-        }
 
-        .rank-row,
-        .lead-row {
-            border-bottom: 1px solid #e5e7eb;
-            padding: 12px 0;
-        }
+/* --------------------------------------------------
+SECTION 03 : STATS CARDS
+START
+-------------------------------------------------- */
 
-        .rank-row:last-child,
-        .lead-row:last-child {
-            border-bottom: none;
-        }
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 35px;
+}
 
-        .lead-meta {
-            color: #6b7280;
-            font-size: 14px;
-            line-height: 1.6;
-        }
+.stat-card,
+.analytics-box,
+.empty-box {
+    background: white;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
 
-        .section-title {
-            font-size: 28px;
-            margin: 30px 0 18px;
-        }
+.stat-card h2 {
+    margin: 0;
+    font-size: 34px;
+    color: #2563eb;
+}
 
-        .listing-card {
-            background: white;
-            border-radius: 18px;
-            padding: 20px;
-            margin-bottom: 20px;
-            display: grid;
-            grid-template-columns: 220px 1fr;
-            gap: 22px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-        }
+.stat-card p {
+    margin: 8px 0 0;
+    color: #6b7280;
+    font-weight: bold;
+}
 
-        .listing-image {
-            width: 220px;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 14px;
-            background: #e5e7eb;
-        }
+/* --------------------------------------------------
+SECTION 03 : STATS CARDS
+END
+-------------------------------------------------- */
 
-        .no-image {
-            width: 220px;
-            height: 150px;
-            background: #e5e7eb;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #6b7280;
-            font-weight: bold;
-        }
 
-        .listing-title {
-            font-size: 22px;
-            margin: 0 0 8px;
-        }
 
-        .price {
-            color: #059669;
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
+/* --------------------------------------------------
+SECTION 04 : PACKAGE BOX
+START
+-------------------------------------------------- */
 
-        .meta {
-            color: #4b5563;
-            margin-bottom: 12px;
-            line-height: 1.6;
-        }
+.package-box {
+    margin-bottom: 35px;
+}
 
-        .badge {
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: bold;
-            margin-right: 6px;
-            margin-top: 6px;
-        }
+.package-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 18px;
+}
 
-        .active {
-            background: #dcfce7;
-            color: #166534;
-        }
+.package-item {
+    background: #f3f4f6;
+    padding: 18px;
+    border-radius: 14px;
+}
 
-        .inactive {
-            background: #fee2e2;
-            color: #991b1b;
-        }
+.package-item strong {
+    display: block;
+    font-size: 24px;
+    color: #2563eb;
+    margin-bottom: 6px;
+}
 
-        .featured {
-            background: #fef3c7;
-            color: #92400e;
-        }
+/* --------------------------------------------------
+SECTION 04 : PACKAGE BOX
+END
+-------------------------------------------------- */
 
-        .pending {
-            background: #ffedd5;
-            color: #9a3412;
-        }
 
-        .approved {
-            background: #dbeafe;
-            color: #1d4ed8;
-        }
 
-        .actions {
-            margin-top: 15px;
-        }
+/* --------------------------------------------------
+SECTION 05 : DASHBOARD ANALYTICS
+START
+-------------------------------------------------- */
 
-        .actions a,
-        .upgrade-btn {
-            display: inline-block;
-            text-decoration: none;
-            padding: 10px 15px;
-            border-radius: 10px;
-            font-weight: bold;
-            margin-right: 8px;
-        }
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-bottom: 35px;
+}
 
-        .view-btn {
-            background: #2563eb;
-            color: white;
-        }
+.analytics-box h2 {
+    margin-top: 0;
+    font-size: 24px;
+}
 
-        .edit-btn {
-            background: #f59e0b;
-            color: #111827;
-        }
+.rank-row,
+.lead-row {
+    border-bottom: 1px solid #e5e7eb;
+    padding: 12px 0;
+}
 
-        .delete-btn {
-            background: #dc2626;
-            color: white;
-        }
+.rank-row:last-child,
+.lead-row:last-child {
+    border-bottom: none;
+}
 
-        .sell-btn,
-        .upgrade-btn {
-            display: inline-block;
-            background: #2563eb;
-            color: white;
-            text-decoration: none;
-            padding: 14px 24px;
-            border-radius: 12px;
-            font-weight: bold;
-            margin-top: 15px;
-        }
+.lead-meta {
+    color: #6b7280;
+    font-size: 14px;
+    line-height: 1.6;
+}
 
-        .upgrade-btn:hover,
-        .sell-btn:hover,
-        .view-btn:hover {
-            background: #1d4ed8;
-        }
+/* --------------------------------------------------
+SECTION 05 : DASHBOARD ANALYTICS
+END
+-------------------------------------------------- */
 
-        .empty-box {
-            padding: 35px;
-            text-align: center;
-        }
 
-        @media (max-width: 1000px) {
-            .stats-grid,
-            .dashboard-grid,
-            .package-grid {
-                grid-template-columns: 1fr;
-            }
 
-            .listing-card {
-                grid-template-columns: 1fr;
-            }
+/* --------------------------------------------------
+SECTION 06 : LISTINGS
+START
+-------------------------------------------------- */
 
-            .listing-image,
-            .no-image {
-                width: 100%;
-                height: 220px;
-            }
-        }
-    </style>
+.section-title {
+    font-size: 28px;
+    margin: 30px 0 18px;
+}
+
+.listing-card {
+    background: white;
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 22px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.listing-image {
+    width: 220px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 14px;
+    background: #e5e7eb;
+}
+
+.no-image {
+    width: 220px;
+    height: 150px;
+    background: #e5e7eb;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+    font-weight: bold;
+}
+
+.listing-title {
+    font-size: 22px;
+    margin: 0 0 8px;
+}
+
+.price {
+    color: #059669;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.meta {
+    color: #4b5563;
+    margin-bottom: 12px;
+    line-height: 1.6;
+}
+
+/* --------------------------------------------------
+SECTION 06 : LISTINGS
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 07 : BADGES
+START
+-------------------------------------------------- */
+
+.badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-right: 6px;
+    margin-top: 6px;
+}
+
+.active {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.inactive {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.featured {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.pending {
+    background: #ffedd5;
+    color: #9a3412;
+}
+
+.approved {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+/* --------------------------------------------------
+SECTION 07 : BADGES
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 08 : ACTION BUTTONS
+START
+-------------------------------------------------- */
+
+.actions {
+    margin-top: 15px;
+}
+
+.actions a,
+.upgrade-btn {
+    display: inline-block;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-weight: bold;
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
+
+.view-btn {
+    background: #2563eb;
+    color: white;
+}
+
+.edit-btn {
+    background: #f59e0b;
+    color: #111827;
+}
+
+.delete-btn {
+    background: #dc2626;
+    color: white;
+}
+
+.sell-btn,
+.upgrade-btn {
+    display: inline-block;
+    background: #2563eb;
+    color: white;
+    text-decoration: none;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.upgrade-btn:hover,
+.sell-btn:hover,
+.view-btn:hover {
+    background: #1d4ed8;
+}
+
+/* --------------------------------------------------
+SECTION 08 : ACTION BUTTONS
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 09 : EMPTY BOX
+START
+-------------------------------------------------- */
+
+.empty-box {
+    padding: 35px;
+    text-align: center;
+}
+
+/* --------------------------------------------------
+SECTION 09 : EMPTY BOX
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 10 : TABLET RESPONSIVE
+START
+max-width: 1000px
+-------------------------------------------------- */
+
+@media (max-width: 1000px) {
+    .stats-grid,
+    .dashboard-grid,
+    .package-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .listing-card {
+        grid-template-columns: 1fr;
+    }
+
+    .listing-image,
+    .no-image {
+        width: 100%;
+        height: 220px;
+    }
+}
+
+/* --------------------------------------------------
+SECTION 10 : TABLET RESPONSIVE
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 11 : MOBILE RESPONSIVE
+START
+max-width: 650px
+-------------------------------------------------- */
+
+@media (max-width: 650px) {
+    .container {
+        width: 94%;
+        margin: 22px auto;
+    }
+
+    .page-title {
+        font-size: 26px;
+        line-height: 1.2;
+    }
+
+    .subtitle {
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 22px;
+    }
+
+    .stat-card,
+    .analytics-box,
+    .empty-box {
+        padding: 18px;
+        border-radius: 18px;
+    }
+
+    .stat-card h2 {
+        font-size: 28px;
+    }
+
+    .package-item {
+        padding: 16px;
+    }
+
+    .package-item strong {
+        font-size: 21px;
+    }
+
+    .section-title {
+        font-size: 24px;
+    }
+
+    .listing-card {
+        padding: 16px;
+        border-radius: 18px;
+        gap: 16px;
+    }
+
+    .listing-image,
+    .no-image {
+        height: 190px;
+    }
+
+    .listing-title {
+        font-size: 20px;
+    }
+
+    .price {
+        font-size: 22px;
+    }
+
+    .meta {
+        font-size: 14px;
+    }
+
+    .actions {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .actions a,
+    .upgrade-btn,
+    .sell-btn {
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+        margin-right: 0;
+    }
+}
+
+/* --------------------------------------------------
+SECTION 11 : MOBILE RESPONSIVE
+END
+-------------------------------------------------- */

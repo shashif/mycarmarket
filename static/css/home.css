@@ -1,8 +1,13 @@
 /* =========================================
 MyCarMarket
-Version: v1.3.2
+Version: v1.4.0
 File: static/css/home.css
-Guest Favourite Button Fix
+Homepage Mobile Responsive Polish
+========================================= */
+
+
+/* =========================================
+START SECTION 1: FAVOURITE BUTTONS
 ========================================= */
 
 .favourite-login-btn{
@@ -29,542 +34,810 @@ Guest Favourite Button Fix
 
 .favourite-form,
 .favourite-btn,
-.favourite-login-btn {
-    pointer-events: auto;
+.favourite-login-btn{
+    pointer-events:auto;
 }
 
-.favourite-form {
-    position: absolute;
-    bottom: 14px;
-    right: 14px;
-    z-index: 5;
-    margin: 0;
+.favourite-form{
+    position:absolute;
+    bottom:14px;
+    right:14px;
+    z-index:5;
+    margin:0;
 }
 
 .favourite-btn,
-.favourite-login-btn {
-
-    width: 42px;
-
-    height: 42px;
-
-    border: none;
-
-    border-radius: 50%;
-
-    background: #ffffff;
-
-    color: #111827;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    text-decoration: none;
-
-    font-size: 22px;
-
-    cursor: pointer;
-
-    box-shadow: 0 6px 18px rgba(0,0,0,0.22);
-
-    transition: all 0.2s ease;
+.favourite-login-btn{
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:50%;
+    background:#ffffff;
+    color:#111827;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    font-size:22px;
+    cursor:pointer;
+    box-shadow:0 6px 18px rgba(0,0,0,0.22);
+    transition:all 0.2s ease;
 }
 
 .favourite-btn:hover,
-.favourite-login-btn:hover {
-
-    transform: scale(1.08);
-
-    background: #fef2f2;
+.favourite-login-btn:hover{
+    transform:scale(1.08);
+    background:#fef2f2;
 }
 
-.favourite-btn:active {
-
-    transform: scale(0.95);
+.favourite-btn:active{
+    transform:scale(0.95);
 }
 
-.home-section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 25px 0 18px;
-    gap: 20px;
+/* =========================================
+END SECTION 1: FAVOURITE BUTTONS
+========================================= */
+
+
+/* =========================================
+START SECTION 2: SECTION HEADERS
+========================================= */
+
+.home-section-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:25px 0 18px;
+    gap:20px;
 }
 
-.section-subtitle {
-    color: #6b7280;
-    margin-top: -8px;
-    margin-bottom: 0;
-    font-size: 15px;
+.section-title{
+    font-size:30px;
+    color:#111827;
+    margin-bottom:20px;
 }
 
-.section-view-all {
-    background: #111827;
-    color: white;
-    text-decoration: none;
-    padding: 12px 18px;
-    border-radius: 12px;
-    font-weight: bold;
-    white-space: nowrap;
-    transition: 0.2s;
+.section-subtitle{
+    color:#6b7280;
+    margin-top:-8px;
+    margin-bottom:0;
+    font-size:15px;
 }
 
-.section-view-all:hover {
-    background: #2563eb;
+.section-view-all{
+    background:#111827;
+    color:white;
+    text-decoration:none;
+    padding:12px 18px;
+    border-radius:12px;
+    font-weight:bold;
+    white-space:nowrap;
+    transition:0.2s;
 }
 
-.featured-home-card {
-    border: 2px solid #f59e0b;
+.section-view-all:hover{
+    background:#2563eb;
 }
 
-.car-title-link {
-    text-decoration: none;
-    color: inherit;
+/* =========================================
+END SECTION 2: SECTION HEADERS
+========================================= */
+
+
+/* =========================================
+START SECTION 3: HERO + SEARCH
+========================================= */
+
+.market-hero{
+    width:100%;
+    height:450px;
+    overflow:hidden;
+    background:#111827;
 }
 
-.car-title-link:hover h3 {
-    color: #2563eb;
+.market-hero-img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
 }
 
-.car-image-link {
-    display: block;
-    width: 100%;
-    height: 100%;
+.hero-search-container{
+    position:relative;
 }
 
-.view-details-btn {
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-    text-align: center;
-    background: #111827;
-    color: white;
-    text-decoration: none;
-    padding: 13px;
-    border-radius: 12px;
-    font-weight: bold;
-    margin-top: 18px;
-    transition: 0.2s;
+.search-box{
+    padding:25px;
+    border-radius:22px;
+    margin-top:-70px;
+    position:relative;
+    z-index:10;
+    background:white;
+    box-shadow:0 20px 45px rgba(0,0,0,0.15);
+    box-sizing:border-box;
 }
 
-.view-details-btn:hover {
-    background: #2563eb;
+.search-title{
+    margin-top:0;
 }
 
-.empty-home-section {
-    width: 100%;
-    background: white;
-    padding: 40px;
-    border-radius: 20px;
-    text-align: center;
-    color: #6b7280;
-    box-sizing: border-box;
+.search-form{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:12px;
 }
 
-.ad-banner {
-    margin: 30px 0;
+.search-input{
+    padding:16px;
+    font-size:17px;
+    border:1px solid #d1d5db;
+    border-radius:10px;
+    min-width:0;
 }
 
-.custom-banner-ad {
-    width: 100%;
-    max-height: 220px;
-    object-fit: cover;
-    display: block;
-    border-radius: 18px;
+/* =========================================
+END SECTION 3: HERO + SEARCH
+========================================= */
+
+
+/* =========================================
+START SECTION 4: VEHICLE TYPE GRID
+========================================= */
+
+.type-grid{
+    display:grid;
+    grid-template-columns:repeat(10, 1fr);
+    gap:12px;
+    margin-top:25px;
 }
 
-.ad-label {
-    font-size: 12px;
-    color: #6b7280;
-    margin-bottom: 8px;
-    font-weight: bold;
-    text-transform: uppercase;
+.type-card{
+    background:white;
+    border-radius:16px;
+    padding:15px 8px;
+    text-align:center;
+    text-decoration:none;
+    color:#111827;
+    box-shadow:0 8px 24px rgba(0,0,0,0.08);
+    transition:0.25s;
 }
 
-.market-hero {
-    width: 100%;
-    height: 450px;
-    overflow: hidden;
-    background: #111827;
+.type-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 14px 35px rgba(0,0,0,0.12);
 }
 
-.market-hero-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+.type-img{
+    width:90px;
+    height:50px;
+    object-fit:contain;
+    display:block;
+    margin:0 auto 8px;
 }
 
-.hero-search-container {
-    position: relative;
+.type-card span{
+    display:block;
+    font-size:13px;
+    font-weight:bold;
 }
 
-/* SEARCH BOX */
+/* =========================================
+END SECTION 4: VEHICLE TYPE GRID
+========================================= */
 
-.search-box {
-    padding: 25px;
-    border-radius: 22px;
-    margin-top: -70px;
-    position: relative;
-    z-index: 10;
-    background: white;
-    box-shadow: 0 20px 45px rgba(0,0,0,0.15);
-    box-sizing: border-box;
+
+/* =========================================
+START SECTION 5: STATS
+========================================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:22px;
+    margin:40px 0;
 }
 
-.search-title {
-    margin-top: 0;
+.stat-card{
+    background:white;
+    padding:25px;
+    border-radius:16px;
+    text-align:center;
+    box-shadow:0 8px 24px rgba(0,0,0,0.08);
+    transition:0.2s;
 }
 
-.search-form {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 12px;
+.stat-card:hover{
+    transform:translateY(-4px);
 }
 
-.search-input {
-    padding: 16px;
-    font-size: 17px;
-    border: 1px solid #d1d5db;
-    border-radius: 10px;
-    min-width: 0;
+.stat-card h2{
+    color:#2563eb;
+    margin:0 0 8px;
+    font-size:32px;
 }
 
-/* VEHICLE TYPE GRID */
-
-.type-grid {
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    gap: 12px;
-    margin-top: 25px;
+.stat-card p{
+    margin:0;
+    color:#374151;
+    font-size:15px;
+    line-height:1.4;
 }
 
-.type-card {
-    background: white;
-    border-radius: 16px;
-    padding: 15px 8px;
-    text-align: center;
-    text-decoration: none;
-    color: #111827;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-    transition: 0.25s;
+/* =========================================
+END SECTION 5: STATS
+========================================= */
+
+
+/* =========================================
+START SECTION 6: ADS
+========================================= */
+
+.ad-banner{
+    margin:30px 0;
 }
 
-.type-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 14px 35px rgba(0,0,0,0.12);
+.custom-banner-ad{
+    width:100%;
+    max-height:220px;
+    object-fit:cover;
+    display:block;
+    border-radius:18px;
 }
 
-.type-img {
-    width: 90px;
-    height: 50px;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto 8px;
+.ad-label{
+    font-size:12px;
+    color:#6b7280;
+    margin-bottom:8px;
+    font-weight:bold;
+    text-transform:uppercase;
 }
 
-.type-card span {
-    display: block;
-    font-size: 13px;
-    font-weight: bold;
+/* =========================================
+END SECTION 6: ADS
+========================================= */
+
+
+/* =========================================
+START SECTION 7: PREMIUM CAR CARDS
+========================================= */
+
+.premium-car-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:24px;
+    margin-bottom:45px;
 }
 
-/* STATS */
-
-.stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 22px;
-    margin: 40px 0;
+.premium-car-card{
+    display:block;
+    background:white;
+    color:inherit;
+    text-decoration:none;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 10px 28px rgba(0,0,0,0.10);
+    transition:0.25s;
 }
 
-.stat-card {
-    background: white;
-    padding: 25px;
-    border-radius: 16px;
-    text-align: center;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+.premium-car-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 16px 36px rgba(0,0,0,0.14);
 }
 
-.stat-card h2 {
-    color: #2563eb;
-    margin-bottom: 8px;
+.featured-home-card{
+    border:2px solid #f59e0b;
 }
 
-/* SECTION TITLE */
-
-.section-title {
-    font-size: 30px;
-    color: #111827;
-    margin-bottom: 20px;
+.car-title-link{
+    text-decoration:none;
+    color:inherit;
 }
 
-/* PREMIUM CAR CARDS */
-
-.premium-car-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-bottom: 45px;
+.car-title-link:hover h3{
+    color:#2563eb;
 }
 
-.premium-car-card {
-    display: block;
-    background: white;
-    color: inherit;
-    text-decoration: none;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 10px 28px rgba(0,0,0,0.10);
-    transition: 0.25s;
+.car-image-link{
+    display:block;
+    width:100%;
+    height:100%;
 }
 
-.premium-car-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 36px rgba(0,0,0,0.14);
+.premium-car-image-wrap{
+    position:relative;
+    height:220px;
+    overflow:hidden;
+    background:#e5e7eb;
 }
 
-.premium-car-image-wrap {
-    position: relative;
-    height: 220px;
-    overflow: hidden;
-    background: #e5e7eb;
+.premium-car-image-wrap img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 
-.premium-car-image-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.no-image-box{
+    height:220px;
+    background:#e5e7eb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#6b7280;
+    font-weight:bold;
 }
 
-.no-image-box {
-    height: 220px;
-    background: #e5e7eb;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #6b7280;
-    font-weight: bold;
+.featured-badge{
+    position:absolute;
+    top:14px;
+    left:14px;
+    background:#f59e0b;
+    color:white;
+    padding:7px 12px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:bold;
+    z-index:2;
 }
 
-.featured-badge {
-    position: absolute;
-    top: 14px;
-    left: 14px;
-    background: #f59e0b;
-    color: white;
-    padding: 7px 12px;
-    border-radius: 999px;
-    font-size: 13px;
-    font-weight: bold;
-    z-index: 2;
+.verified-badge{
+    position:absolute;
+    top:14px;
+    right:14px;
+    background:#16a34a;
+    color:white;
+    padding:7px 12px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:bold;
+    z-index:2;
 }
 
-.verified-badge {
-    position: absolute;
-    top: 14px;
-    right: 14px;
-    background: #16a34a;
-    color: white;
-    padding: 7px 12px;
-    border-radius: 999px;
-    font-size: 13px;
-    font-weight: bold;
-    z-index: 2;
+.premium-car-info{
+    padding:18px;
 }
 
-.premium-car-info {
-    padding: 18px;
+.premium-car-info h3{
+    margin:0 0 8px;
+    font-size:20px;
+    color:#111827;
 }
 
-.premium-car-info h3 {
-    margin: 0 0 8px;
-    font-size: 20px;
-    color: #111827;
+.car-meta{
+    color:#374151;
+    margin:6px 0 12px;
+    font-size:14px;
 }
 
-.car-meta {
-    color: #374151;
-    margin: 6px 0 12px;
-    font-size: 14px;
+.dealer-info{
+    margin:10px 0 12px;
 }
 
-.dealer-info {
-    margin: 10px 0 12px;
-}
-
-.dealer-name {
-    margin: 0 0 8px;
-    color: #374151;
-    font-size: 14px;
-    font-weight: bold;
+.dealer-name{
+    margin:0 0 8px;
+    color:#374151;
+    font-size:14px;
+    font-weight:bold;
 }
 
 .dealer-verified,
-.dealer-featured {
-    display: inline-block;
-    padding: 6px 10px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: bold;
-    margin-right: 5px;
-    margin-bottom: 5px;
+.dealer-featured{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:bold;
+    margin-right:5px;
+    margin-bottom:5px;
 }
 
-.dealer-verified {
-    background: #dcfce7;
-    color: #166534;
+.dealer-verified{
+    background:#dcfce7;
+    color:#166534;
 }
 
-.dealer-featured {
-    background: #fef3c7;
-    color: #92400e;
+.dealer-featured{
+    background:#fef3c7;
+    color:#92400e;
 }
 
-.icon-info-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-    margin: 12px 0;
+.icon-info-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:8px;
+    margin:12px 0;
 }
 
-.icon-info-grid span {
-    background: #f3f4f6;
-    color: #374151;
-    padding: 8px;
-    border-radius: 10px;
-    font-size: 13px;
+.icon-info-grid span{
+    background:#f3f4f6;
+    color:#374151;
+    padding:8px;
+    border-radius:10px;
+    font-size:13px;
 }
 
-.car-location {
-    color: #374151;
-    margin: 12px 0;
-    font-size: 14px;
+.car-location{
+    color:#374151;
+    margin:12px 0;
+    font-size:14px;
 }
 
-.price-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 12px;
-    gap: 10px;
+.price-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:12px;
+    gap:10px;
 }
 
-.price-row strong {
-    font-size: 24px;
-    color: #111827;
+.price-row strong{
+    font-size:24px;
+    color:#111827;
 }
 
-/* CALL TO ACTION */
-
-.cta {
-    background: #111827;
-    color: white;
-    padding: 45px;
-    border-radius: 18px;
-    text-align: center;
-    margin: 45px 0;
+.view-details-btn{
+    display:block;
+    width:100%;
+    box-sizing:border-box;
+    text-align:center;
+    background:#111827;
+    color:white;
+    text-decoration:none;
+    padding:13px;
+    border-radius:12px;
+    font-weight:bold;
+    margin-top:18px;
+    transition:0.2s;
 }
 
-.cta h2 {
-    font-size: 32px;
-    margin-bottom: 10px;
+.view-details-btn:hover{
+    background:#2563eb;
 }
 
-.cta a {
-    display: inline-block;
-    background: #2563eb;
-    color: white;
-    padding: 14px 28px;
-    border-radius: 10px;
-    text-decoration: none;
-    font-weight: bold;
-    margin-top: 15px;
+.empty-home-section{
+    width:100%;
+    background:white;
+    padding:40px;
+    border-radius:20px;
+    text-align:center;
+    color:#6b7280;
+    box-sizing:border-box;
 }
 
-/* RESPONSIVE */
+/* =========================================
+END SECTION 7: PREMIUM CAR CARDS
+========================================= */
 
-@media (max-width: 1100px) {
+
+/* =========================================
+START SECTION 8: CALL TO ACTION
+========================================= */
+
+.cta{
+    background:#111827;
+    color:white;
+    padding:45px;
+    border-radius:18px;
+    text-align:center;
+    margin:45px 0;
+}
+
+.cta h2{
+    font-size:32px;
+    margin-bottom:10px;
+}
+
+.cta a{
+    display:inline-block;
+    background:#2563eb;
+    color:white;
+    padding:14px 28px;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:bold;
+    margin-top:15px;
+}
+
+/* =========================================
+END SECTION 8: CALL TO ACTION
+========================================= */
+
+
+/* =========================================
+START SECTION 9: TABLET RESPONSIVE
+========================================= */
+
+@media (max-width:1100px){
+
     .premium-car-grid,
-    .stats {
-        grid-template-columns: repeat(2, 1fr);
+    .stats{
+        grid-template-columns:repeat(2, 1fr);
     }
 
-    .type-grid {
-        grid-template-columns: repeat(5, 1fr);
+    .type-grid{
+        grid-template-columns:repeat(5, 1fr);
     }
+
 }
 
-@media (max-width: 768px) {
-    .market-hero {
-        height: 280px;
+/* =========================================
+END SECTION 9: TABLET RESPONSIVE
+========================================= */
+
+
+/* =========================================
+START SECTION 10: MOBILE RESPONSIVE
+========================================= */
+
+@media (max-width:768px){
+
+    /* HERO */
+
+    .market-hero{
+        height:150px;
     }
 
-    .search-box {
-        margin-top: -35px;
-        padding: 20px;
-        border-radius: 18px;
+    .market-hero-img{
+        object-position:center;
+    }
+
+    /* SEARCH */
+
+    .search-box{
+        margin-top:-18px;
+
+        padding:16px;
+
+        border-radius:16px;
+    }
+
+    .search-title{
+        font-size:18px;
+
+        margin-bottom:12px;
     }
 
     .search-form,
-    .premium-car-grid,
-    .stats {
-        grid-template-columns: 1fr;
+    .premium-car-grid{
+        grid-template-columns:1fr;
     }
 
-    .search-input {
-        width: 100%;
-        box-sizing: border-box;
+    .search-input{
+        width:100%;
+
+        padding:13px;
+
+        font-size:14px;
+
+        box-sizing:border-box;
     }
 
-    .type-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
+    .search-form button,
+    .search-form .btn{
+        width:100%;
+
+        padding:12px;
     }
 
-    .home-section-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
+    /* VEHICLE TYPES */
+
+    .type-grid{
+        grid-template-columns:repeat(2,1fr);
+
+        gap:8px;
+
+        margin-top:18px;
     }
 
-    .section-title {
-        font-size: 24px;
+    .type-card{
+        padding:10px 6px;
+
+        border-radius:12px;
     }
 
-    .section-subtitle {
-        margin-top: 0;
-        font-size: 14px;
+    .type-img{
+        width:72px;
+
+        height:38px;
+
+        margin-bottom:5px;
     }
 
-    .section-view-all {
-        width: 100%;
-        text-align: center;
-        box-sizing: border-box;
+    .type-card span{
+        font-size:12px;
+    }
+
+    /* STATS */
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+
+        gap:10px;
+
+        margin:22px 0;
+    }
+
+    .stat-card{
+        padding:14px 10px;
+
+        border-radius:14px;
+    }
+
+    .stat-card h2{
+        font-size:18px;
+
+        margin:0 0 4px;
+    }
+
+    .stat-card p{
+        font-size:11px;
+
+        line-height:1.3;
+    }
+
+    /* SECTION HEADERS */
+
+    .home-section-header{
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:6px;
+
+        margin:22px 0 12px;
+    }
+
+    .section-title{
+        font-size:20px;
+
+        margin-bottom:8px;
+    }
+
+    .section-subtitle{
+        margin-top:0;
+
+        font-size:13px;
+
+        line-height:1.4;
+    }
+
+    .section-view-all{
+        width:100%;
+
+        text-align:center;
+
+        box-sizing:border-box;
+
+        padding:11px;
+    }
+
+    /* CARDS */
+
+    .premium-car-grid{
+        gap:14px;
+
+        margin-bottom:24px;
+    }
+
+    .premium-car-card{
+        border-radius:16px;
     }
 
     .premium-car-image-wrap,
-    .no-image-box {
-        height: 190px;
+    .no-image-box{
+        height:165px;
     }
 
-    .price-row {
-        flex-direction: column;
-        align-items: flex-start;
+    .premium-car-info{
+        padding:12px;
     }
 
-    .price-row strong {
-        font-size: 22px;
+    .premium-car-info h3{
+        font-size:16px;
+
+        line-height:1.3;
     }
 
-    .cta {
-        padding: 30px 20px;
+    .car-meta,
+    .dealer-name,
+    .car-location{
+        font-size:12px;
     }
 
-    .cta h2 {
-        font-size: 26px;
+    .dealer-verified,
+    .dealer-featured{
+        font-size:11px;
+
+        padding:5px 8px;
     }
+
+    .icon-info-grid{
+        grid-template-columns:repeat(2,1fr);
+
+        gap:6px;
+    }
+
+    .icon-info-grid span{
+        font-size:11px;
+
+        padding:7px;
+    }
+
+    .price-row{
+        flex-direction:column;
+
+        align-items:flex-start;
+    }
+
+    .price-row strong{
+        font-size:18px;
+    }
+
+    .view-details-btn{
+        padding:10px;
+
+        margin-top:10px;
+
+        border-radius:10px;
+
+        font-size:13px;
+    }
+
+    /* BADGES */
+
+    .featured-badge,
+    .verified-badge{
+        font-size:10px;
+
+        padding:5px 8px;
+    }
+
+    /* FAVOURITES */
+
+    .favourite-btn,
+    .favourite-login-btn{
+        width:36px;
+
+        height:36px;
+
+        font-size:18px;
+    }
+
+    /* ADS */
+
+    .custom-banner-ad{
+        max-height:140px;
+
+        border-radius:14px;
+    }
+
+    /* CTA */
+
+    .cta{
+        padding:24px 18px;
+
+        margin:28px 0;
+
+        border-radius:16px;
+    }
+
+    .cta h2{
+        font-size:22px;
+    }
+
+    .cta p{
+        font-size:13px;
+
+        line-height:1.5;
+    }
+
+    .cta a{
+        padding:12px 22px;
+
+        font-size:13px;
+    }
+
 }
+
+/* =========================================
+END SECTION 10: MOBILE RESPONSIVE
+========================================= */

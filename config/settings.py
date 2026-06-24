@@ -30,7 +30,7 @@ DEBUG = os.environ.get(
 
 ALLOWED_HOSTS = os.environ.get(
     'DJANGO_ALLOWED_HOSTS',
-    '127.0.0.1,localhost,mycarmarket.com.au,www.mycarmarket.com.au'
+    '127.0.0.1,localhost,0.0.0.0,mycarmarket.com.au,www.mycarmarket.com.au'
 ).split(',')
 
 

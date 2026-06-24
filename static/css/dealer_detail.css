@@ -1,9 +1,15 @@
 /* ==========================================
 MyCarMarket
-Version: v1.2.5
+Version: v1.2.6
 File: static/css/dealer_detail.css
 Dealer Detail Page + Mobile Responsive Polish
 ========================================== */
+
+
+/* --------------------------------------------------
+SECTION 01 : PAGE WRAPPER
+START
+-------------------------------------------------- */
 
 .dealer-page-wrapper {
     width: 92%;
@@ -11,7 +17,17 @@ Dealer Detail Page + Mobile Responsive Polish
     margin: 35px auto;
 }
 
-/* OPENING HOURS */
+/* --------------------------------------------------
+SECTION 01 : PAGE WRAPPER
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 02 : OPENING HOURS
+START
+-------------------------------------------------- */
 
 .dealer-opening-hours-card {
     background: #ffffff;
@@ -72,7 +88,17 @@ Dealer Detail Page + Mobile Responsive Polish
     text-align: right;
 }
 
-/* DEALER HERO */
+/* --------------------------------------------------
+SECTION 02 : OPENING HOURS
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 03 : DEALER HERO
+START
+-------------------------------------------------- */
 
 .dealer-hero-card {
     background: white;
@@ -226,6 +252,18 @@ Dealer Detail Page + Mobile Responsive Polish
     color: #6b7280;
 }
 
+/* --------------------------------------------------
+SECTION 03 : DEALER HERO
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 04 : ACTION BUTTONS + SHARE
+START
+-------------------------------------------------- */
+
 .dealer-title-area .dealer-action-buttons {
     display: flex;
     flex-direction: row;
@@ -300,7 +338,17 @@ Dealer Detail Page + Mobile Responsive Polish
     color: white;
 }
 
-/* DEALER INFO */
+/* --------------------------------------------------
+SECTION 04 : ACTION BUTTONS + SHARE
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 05 : DEALER INFORMATION
+START
+-------------------------------------------------- */
 
 .dealer-info-grid {
     display: grid;
@@ -392,6 +440,22 @@ Dealer Detail Page + Mobile Responsive Polish
     font-size: 14px;
 }
 
+.dealer-detail-list p {
+    margin: 10px 0;
+}
+
+/* --------------------------------------------------
+SECTION 05 : DEALER INFORMATION
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 06 : SERVICES + SOCIAL LINKS
+START
+-------------------------------------------------- */
+
 .dealer-action-buttons {
     display: flex;
     flex-direction: column;
@@ -450,10 +514,6 @@ Dealer Detail Page + Mobile Responsive Polish
     font-style: italic;
 }
 
-.dealer-detail-list p {
-    margin: 10px 0;
-}
-
 .dealer-social-links {
     margin-top: 22px;
     padding-top: 18px;
@@ -476,7 +536,17 @@ Dealer Detail Page + Mobile Responsive Polish
     background: #2563eb;
 }
 
-/* TRUST CENTRE */
+/* --------------------------------------------------
+SECTION 06 : SERVICES + SOCIAL LINKS
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 07 : TRUST CENTRE
+START
+-------------------------------------------------- */
 
 .dealer-trust-centre {
     margin-bottom: 35px;
@@ -513,7 +583,17 @@ Dealer Detail Page + Mobile Responsive Polish
     font-weight: bold;
 }
 
-/* INVENTORY */
+/* --------------------------------------------------
+SECTION 07 : TRUST CENTRE
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 08 : INVENTORY / CAR CARDS
+START
+-------------------------------------------------- */
 
 .section-title {
     font-size: 28px;
@@ -640,9 +720,165 @@ Dealer Detail Page + Mobile Responsive Polish
     color: #111827;
 }
 
-/* TABLET */
+/* --------------------------------------------------
+SECTION 08 : INVENTORY / CAR CARDS
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 09 : DEALER REVIEWS
+START
+-------------------------------------------------- */
+
+.dealer-reviews-section {
+    background: #ffffff;
+    padding: 28px;
+    border-radius: 22px;
+    margin: 35px 0;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.dealer-section-header {
+    margin-bottom: 25px;
+}
+
+.dealer-section-header h2 {
+    margin: 0;
+    color: #111827;
+}
+
+.dealer-section-header p {
+    color: #6b7280;
+    margin-top: 8px;
+}
+
+.dealer-review-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.dealer-review-form label {
+    font-weight: 700;
+    color: #111827;
+}
+
+.dealer-review-form select,
+.dealer-review-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.dealer-review-form textarea {
+    resize: vertical;
+}
+
+.dealer-review-card {
+    background: #f9fafb;
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 18px;
+    border: 1px solid #e5e7eb;
+}
+
+.dealer-review-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.dealer-review-top strong {
+    color: #111827;
+}
+
+.dealer-review-top span {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.dealer-review-stars {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.dealer-review-card p {
+    color: #374151;
+    line-height: 1.6;
+}
+
+.dealer-review-login-box {
+    background: #eff6ff;
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 25px;
+}
+
+.dealer-review-empty {
+    text-align: center;
+    color: #6b7280;
+    padding: 20px;
+}
+
+.dealer-review-actions {
+    margin-top: 18px;
+}
+
+.dealer-review-actions form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.dealer-review-actions input,
+.dealer-review-actions select {
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+}
+
+.dealer-review-actions button {
+    background: #2563eb;
+    color: #ffffff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.dealer-review-actions button:hover {
+    opacity: 0.9;
+}
+
+/* --------------------------------------------------
+SECTION 09 : DEALER REVIEWS
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 10 : TABLET RESPONSIVE
+START
+max-width: 900px
+-------------------------------------------------- */
 
 @media (max-width: 900px) {
+    .dealer-page-wrapper {
+        width: 94%;
+    }
+
     .dealer-header-content {
         flex-direction: column;
         align-items: flex-start;
@@ -674,62 +910,125 @@ Dealer Detail Page + Mobile Responsive Polish
     }
 }
 
-/* MOBILE */
+/* --------------------------------------------------
+SECTION 10 : TABLET RESPONSIVE
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 11 : MOBILE RESPONSIVE
+START
+max-width: 768px
+-------------------------------------------------- */
 
 @media (max-width: 768px) {
     .dealer-page-wrapper {
         width: 94%;
-        margin: 24px auto;
+        margin: 18px auto;
+    }
+
+    .dealer-hero-card {
+        border-radius: 18px;
+        margin-bottom: 22px;
     }
 
     .dealer-banner {
-        height: 210px;
+        height: 190px;
     }
 
     .dealer-header-content {
-        padding: 0 20px 24px;
+        padding: 0 16px 22px;
         flex-direction: column;
         align-items: flex-start;
+        gap: 14px;
     }
 
     .dealer-main-info {
         flex-direction: column;
         align-items: flex-start;
-        margin-top: -48px;
+        margin-top: -42px;
         gap: 12px;
+        width: 100%;
     }
 
     .dealer-logo,
     .dealer-logo-placeholder {
-        width: 100px;
-        height: 100px;
-        border-radius: 20px;
+        width: 92px;
+        height: 92px;
+        border-radius: 18px;
+        border: 4px solid #ffffff;
     }
 
     .dealer-logo-placeholder {
-        font-size: 42px;
+        font-size: 38px;
+    }
+
+    .dealer-title-area {
+        width: 100%;
     }
 
     .dealer-header-content h1 {
         margin: 0;
-        font-size: 28px;
-        line-height: 1.2;
+        font-size: 25px;
+        line-height: 1.25;
+    }
+
+    .dealer-slogan {
+        font-size: 14px;
     }
 
     .dealer-subtitle {
         font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .dealer-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .dealer-verified,
+    .dealer-featured,
+    .dealer-package {
+        margin: 0;
+        font-size: 12px;
+    }
+
+    .dealer-stats-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        width: 100%;
     }
 
     .dealer-stat-box {
-        width: 100%;
         min-width: auto;
+        padding: 12px;
         box-sizing: border-box;
+    }
+
+    .dealer-title-area .dealer-action-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .dealer-action-btn {
+        width: 100%;
+        box-sizing: border-box;
+        min-height: 44px;
     }
 
     .dealer-share-box {
         width: 100%;
         text-align: left;
-        margin-top: 10px;
+        margin-top: 4px;
+    }
+
+    .dealer-share-box p {
+        text-align: left;
     }
 
     .dealer-share-box a,
@@ -745,49 +1044,61 @@ Dealer Detail Page + Mobile Responsive Polish
     .dealer-contact-card,
     .dealer-trust-centre,
     .dealer-trust-card,
+    .dealer-opening-hours-card,
+    .dealer-reviews-section,
     .empty-box {
-        padding: 20px;
+        padding: 18px;
         border-radius: 18px;
     }
 
     .dealer-owner-card {
         flex-direction: column;
         text-align: center;
+        padding: 18px;
     }
 
-    .dealer-title-area .dealer-action-buttons {
-        flex-direction: column;
+    .opening-hours-header {
+        align-items: flex-start;
     }
 
-    .dealer-action-btn {
-        width: 100%;
-        box-sizing: border-box;
+    .opening-hours-header h2 {
+        font-size: 21px;
     }
 
     .opening-hour-row {
         flex-direction: column;
         gap: 4px;
+        padding: 10px 0;
     }
 
     .opening-hour-row strong {
         text-align: left;
+        font-size: 14px;
     }
 
     .trust-score-big {
-        font-size: 42px;
+        font-size: 40px;
     }
 
     .section-title {
-        font-size: 24px;
+        font-size: 23px;
+    }
+
+    .premium-car-card {
+        border-radius: 18px;
     }
 
     .premium-car-image-wrap,
     .no-image-box {
-        height: 190px;
+        height: 185px;
     }
 
     .premium-car-info {
-        padding: 16px;
+        padding: 15px;
+    }
+
+    .premium-car-info h3 {
+        font-size: 18px;
     }
 
     .icon-info-grid {
@@ -802,246 +1113,63 @@ Dealer Detail Page + Mobile Responsive Polish
     .price-row strong {
         font-size: 22px;
     }
-}
 
-
-/* ==========================================
-DEALER REVIEWS
-========================================== */
-
-.dealer-reviews-section{
-
-    background:#ffffff;
-
-    padding:28px;
-
-    border-radius:22px;
-
-    margin:35px 0;
-
-    box-shadow:0 8px 24px rgba(0,0,0,0.08);
-
-}
-
-.dealer-section-header{
-
-    margin-bottom:25px;
-
-}
-
-.dealer-section-header h2{
-
-    margin:0;
-
-    color:#111827;
-
-}
-
-.dealer-section-header p{
-
-    color:#6b7280;
-
-    margin-top:8px;
-
-}
-
-.dealer-review-form{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:12px;
-
-    margin-bottom:30px;
-
-}
-
-.dealer-review-form label{
-
-    font-weight:700;
-
-    color:#111827;
-
-}
-
-.dealer-review-form select,
-
-.dealer-review-form textarea{
-
-    width:100%;
-
-    padding:12px;
-
-    border:1px solid #d1d5db;
-
-    border-radius:12px;
-
-    font-size:15px;
-
-    box-sizing:border-box;
-
-}
-
-.dealer-review-form textarea{
-
-    resize:vertical;
-
-}
-
-.dealer-review-card{
-
-    background:#f9fafb;
-
-    padding:20px;
-
-    border-radius:16px;
-
-    margin-bottom:18px;
-
-    border:1px solid #e5e7eb;
-
-}
-
-.dealer-review-top{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    gap:12px;
-
-    margin-bottom:10px;
-
-    flex-wrap:wrap;
-
-}
-
-.dealer-review-top strong{
-
-    color:#111827;
-
-}
-
-.dealer-review-top span{
-
-    color:#6b7280;
-
-    font-size:14px;
-
-}
-
-.dealer-review-stars{
-
-    font-size:20px;
-
-    margin-bottom:10px;
-
-}
-
-.dealer-review-card p{
-
-    color:#374151;
-
-    line-height:1.6;
-
-}
-
-.dealer-review-login-box{
-
-    background:#eff6ff;
-
-    padding:20px;
-
-    border-radius:16px;
-
-    margin-bottom:25px;
-
-}
-
-.dealer-review-empty{
-
-    text-align:center;
-
-    color:#6b7280;
-
-    padding:20px;
-
-}
-
-.dealer-review-actions{
-
-    margin-top:18px;
-
-}
-
-.dealer-review-actions form{
-
-    display:flex;
-
-    flex-wrap:wrap;
-
-    gap:10px;
-
-    margin-top:10px;
-
-}
-
-.dealer-review-actions input,
-
-.dealer-review-actions select{
-
-    padding:10px;
-
-    border:1px solid #d1d5db;
-
-    border-radius:10px;
-
-}
-
-.dealer-review-actions button{
-
-    background:#2563eb;
-
-    color:#ffffff;
-
-    border:none;
-
-    padding:10px 16px;
-
-    border-radius:10px;
-
-    cursor:pointer;
-
-    font-weight:700;
-
-}
-
-.dealer-review-actions button:hover{
-
-    opacity:0.9;
-
-}
-
-
-/* MOBILE */
-
-@media (max-width:768px){
-
-    .dealer-review-top{
-
-        flex-direction:column;
-
-        align-items:flex-start;
-
+    .dealer-review-top {
+        flex-direction: column;
+        align-items: flex-start;
     }
 
-    .dealer-review-actions form{
-
-        flex-direction:column;
-
+    .dealer-review-actions form {
+        flex-direction: column;
     }
 
+    .dealer-review-actions input,
+    .dealer-review-actions select,
+    .dealer-review-actions button {
+        width: 100%;
+        box-sizing: border-box;
+    }
 }
+
+/* --------------------------------------------------
+SECTION 11 : MOBILE RESPONSIVE
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 12 : SMALL MOBILE
+START
+max-width: 420px
+-------------------------------------------------- */
+
+@media (max-width: 420px) {
+    .dealer-banner {
+        height: 165px;
+    }
+
+    .dealer-header-content h1 {
+        font-size: 22px;
+    }
+
+    .dealer-stats-row {
+        grid-template-columns: 1fr;
+    }
+
+    .dealer-logo,
+    .dealer-logo-placeholder {
+        width: 82px;
+        height: 82px;
+    }
+
+    .premium-car-image-wrap,
+    .no-image-box {
+        height: 165px;
+    }
+}
+
+/* --------------------------------------------------
+SECTION 12 : SMALL MOBILE
+END
+-------------------------------------------------- */

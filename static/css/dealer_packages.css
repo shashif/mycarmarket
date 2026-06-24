@@ -1,9 +1,15 @@
 /* ==========================================
 MyCarMarket
-Version: v0.9.9.4
+Version: v1.4.1
 File: static/css/dealer_packages.css
-Dealer Packages Styles
+Dealer Packages Page + Mobile Polish
 ========================================== */
+
+
+/* --------------------------------------------------
+SECTION 01 : GLOBAL PAGE BASE
+START
+-------------------------------------------------- */
 
 body {
     margin: 0;
@@ -17,6 +23,18 @@ body {
     max-width: 1250px;
     margin: 40px auto;
 }
+
+/* --------------------------------------------------
+SECTION 01 : GLOBAL PAGE BASE
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 02 : HERO SECTION
+START
+-------------------------------------------------- */
 
 .hero {
     background: linear-gradient(135deg, #111827, #1f2937);
@@ -36,7 +54,20 @@ body {
     color: #d1d5db;
     font-size: 18px;
     margin-top: 12px;
+    line-height: 1.5;
 }
+
+/* --------------------------------------------------
+SECTION 02 : HERO SECTION
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 03 : BENEFITS SECTION
+START
+-------------------------------------------------- */
 
 .benefits {
     display: grid;
@@ -58,6 +89,23 @@ body {
     color: #2563eb;
 }
 
+.benefit-card p {
+    color: #374151;
+    line-height: 1.5;
+}
+
+/* --------------------------------------------------
+SECTION 03 : BENEFITS SECTION
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 04 : PACKAGE GRID
+START
+-------------------------------------------------- */
+
 .package-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -74,17 +122,30 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 360px;
+    transition: 0.25s;
 }
 
 .package-card:hover {
     border-color: #2563eb;
     transform: translateY(-5px);
-    transition: 0.25s;
 }
 
 .package-card h2 {
     margin: 0;
+    font-size: 24px;
 }
+
+/* --------------------------------------------------
+SECTION 04 : PACKAGE GRID
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 05 : PRICE + FEATURES
+START
+-------------------------------------------------- */
 
 .price {
     font-size: 34px;
@@ -109,7 +170,20 @@ ul {
 li {
     margin: 10px 0;
     font-size: 14px;
+    line-height: 1.5;
 }
+
+/* --------------------------------------------------
+SECTION 05 : PRICE + FEATURES
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 06 : BUTTONS
+START
+-------------------------------------------------- */
 
 .btn {
     display: block;
@@ -123,10 +197,28 @@ li {
     text-decoration: none;
     font-weight: bold;
     text-align: center;
+    transition: 0.2s;
 }
+
+.btn:hover {
+    background: #1d4ed8;
+}
+
+/* --------------------------------------------------
+SECTION 06 : BUTTONS
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 07 : POPULAR PACKAGE
+START
+-------------------------------------------------- */
 
 .popular {
     border-color: #f59e0b;
+    position: relative;
 }
 
 .popular-label {
@@ -140,28 +232,150 @@ li {
     font-weight: bold;
 }
 
+/* --------------------------------------------------
+SECTION 07 : POPULAR PACKAGE
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 08 : NOTE BOX
+START
+-------------------------------------------------- */
+
 .note {
     margin-top: 35px;
     background: #ecfdf5;
     border-left: 5px solid #16a34a;
     padding: 20px;
     border-radius: 14px;
+    color: #065f46;
+    line-height: 1.6;
 }
+
+/* --------------------------------------------------
+SECTION 08 : NOTE BOX
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 09 : TABLET RESPONSIVE
+START
+max-width: 1000px
+-------------------------------------------------- */
 
 @media (max-width: 1000px) {
     .package-grid,
     .benefits {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .package-card {
+        min-height: auto;
+    }
 }
 
+/* --------------------------------------------------
+SECTION 09 : TABLET RESPONSIVE
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 10 : MOBILE RESPONSIVE
+START
+max-width: 600px
+-------------------------------------------------- */
+
 @media (max-width: 600px) {
-    .package-grid,
-    .benefits {
-        grid-template-columns: 1fr;
+    .wrapper {
+        width: 94%;
+        margin: 22px auto;
+    }
+
+    .hero {
+        padding: 28px 18px;
+        border-radius: 18px;
+        margin-bottom: 24px;
     }
 
     .hero h1 {
+        font-size: 28px;
+        line-height: 1.2;
+    }
+
+    .hero p {
+        font-size: 14px;
+    }
+
+    .package-grid,
+    .benefits {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .benefit-card,
+    .package-card {
+        padding: 20px;
+        border-radius: 18px;
+    }
+
+    .package-card h2 {
+        font-size: 22px;
+    }
+
+    .price {
         font-size: 30px;
+        margin: 14px 0;
+    }
+
+    li {
+        font-size: 13px;
+    }
+
+    .btn {
+        padding: 12px;
+    }
+
+    .note {
+        padding: 16px;
+        font-size: 14px;
     }
 }
+
+/* --------------------------------------------------
+SECTION 10 : MOBILE RESPONSIVE
+END
+-------------------------------------------------- */
+
+
+
+/* --------------------------------------------------
+SECTION 11 : SMALL MOBILE RESPONSIVE
+START
+max-width: 420px
+-------------------------------------------------- */
+
+@media (max-width: 420px) {
+    .hero h1 {
+        font-size: 24px;
+    }
+
+    .price {
+        font-size: 27px;
+    }
+
+    .benefit-card,
+    .package-card {
+        padding: 18px;
+    }
+}
+
+/* --------------------------------------------------
+SECTION 11 : SMALL MOBILE RESPONSIVE
+END
+-------------------------------------------------- */
