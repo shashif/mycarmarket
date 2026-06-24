@@ -14,3 +14,4 @@ media/
 
 # Virtual Environment
 venv/
+staticfiles/
