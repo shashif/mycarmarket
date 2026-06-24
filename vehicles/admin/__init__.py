@@ -11,3 +11,4 @@ from .enquiry_admin import *
 from .favourite_admin import *
 from .dealer_admin import *
 from .payment_admin import *
+from .dealer_review_admin import *

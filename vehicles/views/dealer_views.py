@@ -1,19 +1,26 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.9.3
+# Version: v1.4.0
 # File: vehicles/views/dealer_views.py
-# Premium Dealer Profile + Dealer Trust Centre
+# Premium Dealer Profile + Dealer Trust Centre + Dealer Reviews
 # ==========================================
 
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from django.utils import timezone
 
-from vehicles.models import Car
+from vehicles.models import (
+    Car,
+    DealerReview,
+)
 
 
 def dealer_detail(request, username):
-    dealer = get_object_or_404(User, username=username)
+
+    dealer = get_object_or_404(
+        User,
+        username=username
+    )
 
     dealer_profile = None
 
@@ -33,6 +40,24 @@ def dealer_detail(request, username):
     total_cars = cars.count()
     total_views = sum(car.views_count for car in cars)
     total_enquiries = sum(car.enquiries.count() for car in cars)
+
+    reviews = DealerReview.objects.filter(
+        dealer=dealer
+    )
+
+    total_reviews = reviews.count()
+
+    average_rating = 0
+
+    if total_reviews:
+
+        average_rating = round(
+            sum(
+                review.rating
+                for review in reviews
+            ) / total_reviews,
+            1
+        )
 
     member_since = dealer.date_joined.year
 
@@ -54,6 +79,15 @@ def dealer_detail(request, username):
     if dealer_profile and dealer_profile.is_featured_dealer:
         trust_score += 10
 
+    if total_reviews:
+        trust_score += min(
+            total_reviews * 2,
+            10
+        )
+
+    if average_rating >= 4.5 and total_reviews >= 3:
+        trust_score += 10
+
     if trust_score > 100:
         trust_score = 100
 
@@ -73,6 +107,11 @@ def dealer_detail(request, username):
             'dealer_profile': dealer_profile,
             'cars': cars,
             'featured_cars': featured_cars,
+
+            'reviews': reviews,
+            'total_reviews': total_reviews,
+            'average_rating': average_rating,
+
             'total_cars': total_cars,
             'total_views': total_views,
             'total_enquiries': total_enquiries,

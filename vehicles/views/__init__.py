@@ -16,3 +16,10 @@ from .dealer_package_select_views import dealer_package_select
 from .dealer_profile_edit_views import edit_dealer_profile
 from .dealer_dashboard_views import dealer_dashboard
 from .enquiry_views import dealer_enquiries
+
+# NEW
+from .dealer_review_views import (
+    add_review,
+    edit_review,
+    delete_review,
+)

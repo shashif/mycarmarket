@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.2.3
+# Version: v1.4.0
 # File: vehicles/urls.py
-# SEO URLs + Dealer Dashboard + Dealer Enquiry + Dealer Profile + Payments
+# SEO URLs + Dealer Dashboard + Dealer Reviews + Payments
 # ==========================================
 
 from django.urls import path
@@ -26,12 +26,6 @@ urlpatterns = [
     # ==========================================
     # Dealer Enquiry System
     # ==========================================
-
-    # path(
-    #     'car/<slug:slug>/enquiry/',
-    #     views.submit_enquiry,
-    #     name='submit_enquiry'
-    # ),
 
     path(
         'dealer/enquiries/',
@@ -65,6 +59,28 @@ urlpatterns = [
         'dealer/profile/edit/',
         views.edit_dealer_profile,
         name='edit_dealer_profile'
+    ),
+
+    # ==========================================
+    # Dealer Reviews
+    # ==========================================
+
+    path(
+        'dealer/<str:username>/review/add/',
+        views.add_review,
+        name='add_dealer_review'
+    ),
+
+    path(
+        'dealer/review/<int:review_id>/edit/',
+        views.edit_review,
+        name='edit_dealer_review'
+    ),
+
+    path(
+        'dealer/review/<int:review_id>/delete/',
+        views.delete_review,
+        name='delete_dealer_review'
     ),
 
     path(

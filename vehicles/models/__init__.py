@@ -22,3 +22,4 @@ from .payment_models import (
 )
 
 from .notification_models import Notification
+from .dealer_review_models import DealerReview

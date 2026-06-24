@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!-- =========================================</p>
+<p class="p1">MyCarMarket</p>
+<p class="p1">Version: v1.4.0</p>
+<p class="p1">File: vehicles/templates/vehicles/dealer_parts/dealer_reviews.html</p>
+<p class="p1">Dealer Reviews Section</p>
+<p class="p1">========================================= --&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;section class="dealer-reviews-section"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="dealer-section-header"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h2&gt;⭐ Dealer Reviews&lt;/h2&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{% if total_reviews &gt; 0 %}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{{ average_rating }} out of 5 from {{ total_reviews }} review{{ total_reviews|pluralize }}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{% else %}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>No reviews yet</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{% endif %}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>{% if user.is_authenticated and user != dealer %}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;form method="POST"</p>
+<p class="p1"><span class="Apple-converted-space">              </span>action="{% url 'add_dealer_review' dealer.username %}"</p>
+<p class="p1"><span class="Apple-converted-space">              </span>class="dealer-review-form"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>{% csrf_token %}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label&gt;Rating&lt;/label&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;select name="rating" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="5"&gt;⭐⭐⭐⭐⭐ 5 Stars&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="4"&gt;⭐⭐⭐⭐ 4 Stars&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="3"&gt;⭐⭐⭐ 3 Stars&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="2"&gt;⭐⭐ 2 Stars&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="1"&gt;⭐ 1 Star&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/select&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label&gt;Review&lt;/label&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;textarea name="comment"</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>rows="4"</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>placeholder="Write your review about this dealer..."</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>required&gt;&lt;/textarea&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button type="submit" class="btn"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>Submit Review</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/button&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/form&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>{% elif not user.is_authenticated %}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="dealer-review-login-box"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p&gt;Please login to write a dealer review.&lt;/p&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;a href="{% url 'login' %}?next={{ request.path }}"</p>
+<p class="p1"><span class="Apple-converted-space">               </span>class="btn"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>Login to Review</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>{% endif %}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="dealer-reviews-list"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>{% for review in reviews %}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="dealer-review-card"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="dealer-review-top"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;strong&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{{ review.reviewer.get_full_name|default:review.reviewer.username }}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/strong&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{{ review.created_at|date:"d M Y" }}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="dealer-review-stars"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{% if review.rating == 5 %}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>⭐⭐⭐⭐⭐</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{% elif review.rating == 4 %}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>⭐⭐⭐⭐</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{% elif review.rating == 3 %}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>⭐⭐⭐</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{% elif review.rating == 2 %}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>⭐⭐</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{% else %}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>⭐</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{% endif %}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{{ review.comment }}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/p&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>{% if user == review.reviewer %}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="dealer-review-actions"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;form method="POST"</p>
+<p class="p1"><span class="Apple-converted-space">                              </span>action="{% url 'edit_dealer_review' review.id %}"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>{% csrf_token %}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;select name="rating" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;option value="5" {% if review.rating == 5 %}selected{% endif %}&gt;5&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;option value="4" {% if review.rating == 4 %}selected{% endif %}&gt;4&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;option value="3" {% if review.rating == 3 %}selected{% endif %}&gt;3&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;option value="2" {% if review.rating == 2 %}selected{% endif %}&gt;2&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;option value="1" {% if review.rating == 1 %}selected{% endif %}&gt;1&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/select&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;input type="text"</p>
+<p class="p1"><span class="Apple-converted-space">                                   </span>name="comment"</p>
+<p class="p1"><span class="Apple-converted-space">                                   </span>value="{{ review.comment }}"</p>
+<p class="p1"><span class="Apple-converted-space">                                   </span>required&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;button type="submit"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>Update</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/form&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;form method="POST"</p>
+<p class="p1"><span class="Apple-converted-space">                              </span>action="{% url 'delete_dealer_review' review.id %}"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>{% csrf_token %}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;button type="submit"</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>onclick="return confirm('Delete this review?')"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>Delete</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/form&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{% endif %}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>{% empty %}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="dealer-review-empty"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p&gt;No reviews yet. Be the first to review this dealer.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>{% endfor %}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/section&gt;</p>
+</body>
+</html>
