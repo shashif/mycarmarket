@@ -803,3 +803,245 @@ Dealer Detail Page + Mobile Responsive Polish
         font-size: 22px;
     }
 }
+
+
+/* ==========================================
+DEALER REVIEWS
+========================================== */
+
+.dealer-reviews-section{
+
+    background:#ffffff;
+
+    padding:28px;
+
+    border-radius:22px;
+
+    margin:35px 0;
+
+    box-shadow:0 8px 24px rgba(0,0,0,0.08);
+
+}
+
+.dealer-section-header{
+
+    margin-bottom:25px;
+
+}
+
+.dealer-section-header h2{
+
+    margin:0;
+
+    color:#111827;
+
+}
+
+.dealer-section-header p{
+
+    color:#6b7280;
+
+    margin-top:8px;
+
+}
+
+.dealer-review-form{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+    margin-bottom:30px;
+
+}
+
+.dealer-review-form label{
+
+    font-weight:700;
+
+    color:#111827;
+
+}
+
+.dealer-review-form select,
+
+.dealer-review-form textarea{
+
+    width:100%;
+
+    padding:12px;
+
+    border:1px solid #d1d5db;
+
+    border-radius:12px;
+
+    font-size:15px;
+
+    box-sizing:border-box;
+
+}
+
+.dealer-review-form textarea{
+
+    resize:vertical;
+
+}
+
+.dealer-review-card{
+
+    background:#f9fafb;
+
+    padding:20px;
+
+    border-radius:16px;
+
+    margin-bottom:18px;
+
+    border:1px solid #e5e7eb;
+
+}
+
+.dealer-review-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:10px;
+
+    flex-wrap:wrap;
+
+}
+
+.dealer-review-top strong{
+
+    color:#111827;
+
+}
+
+.dealer-review-top span{
+
+    color:#6b7280;
+
+    font-size:14px;
+
+}
+
+.dealer-review-stars{
+
+    font-size:20px;
+
+    margin-bottom:10px;
+
+}
+
+.dealer-review-card p{
+
+    color:#374151;
+
+    line-height:1.6;
+
+}
+
+.dealer-review-login-box{
+
+    background:#eff6ff;
+
+    padding:20px;
+
+    border-radius:16px;
+
+    margin-bottom:25px;
+
+}
+
+.dealer-review-empty{
+
+    text-align:center;
+
+    color:#6b7280;
+
+    padding:20px;
+
+}
+
+.dealer-review-actions{
+
+    margin-top:18px;
+
+}
+
+.dealer-review-actions form{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-top:10px;
+
+}
+
+.dealer-review-actions input,
+
+.dealer-review-actions select{
+
+    padding:10px;
+
+    border:1px solid #d1d5db;
+
+    border-radius:10px;
+
+}
+
+.dealer-review-actions button{
+
+    background:#2563eb;
+
+    color:#ffffff;
+
+    border:none;
+
+    padding:10px 16px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-weight:700;
+
+}
+
+.dealer-review-actions button:hover{
+
+    opacity:0.9;
+
+}
+
+
+/* MOBILE */
+
+@media (max-width:768px){
+
+    .dealer-review-top{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+    .dealer-review-actions form{
+
+        flex-direction:column;
+
+    }
+
+}
