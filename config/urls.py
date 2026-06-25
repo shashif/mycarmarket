@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.0.0 Launch Candidate
+# Version: v1.4.1
 # File: config/urls.py
-# Sitemap + Robots + Static Media + Custom 404
+# Sitemap + Robots + Static Media + Custom 404 + Favicon Fix
 # ==========================================
 
 from django.contrib import admin
@@ -10,6 +10,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
+from django.views.generic import RedirectView
 
 from vehicles.sitemaps import CarSitemap
 from core.views_robots import robots_txt
@@ -21,6 +22,14 @@ sitemaps = {
 
 
 urlpatterns = [
+    path(
+        'favicon.ico',
+        RedirectView.as_view(
+            url='/static/favicon/favicon.ico',
+            permanent=True
+        ),
+    ),
+
     path('admin/', admin.site.urls),
 
     path('', include('core.urls')),
