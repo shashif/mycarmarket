@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.0.6
+# Version: v1.4.2
 # File: vehicles/views/car_list_views.py
-# Featured Cars First + Verified Cars Priority + Favourite Button Support
+# Featured Cars Filter + Pagination Support
 # ==========================================
 
 from django.shortcuts import render
@@ -13,6 +13,7 @@ from vehicles.models import Car, FavouriteCar
 
 
 def car_list(request):
+
     cars = Car.objects.filter(
         is_approved=True,
         is_active=True
@@ -33,7 +34,14 @@ def car_list(request):
     fuel_type = request.GET.get('fuel_type', '').strip()
     body_type = request.GET.get('body_type', '').strip()
 
+    featured = request.GET.get('featured', '').strip()
+
     sort_by = request.GET.get('sort_by', 'newest').strip()
+
+    if featured == '1':
+        cars = cars.filter(
+            is_featured=True
+        )
 
     if query:
         cars = cars.filter(
@@ -131,10 +139,14 @@ def car_list(request):
     favourite_car_ids = []
 
     if request.user.is_authenticated:
+
         favourite_car_ids = list(
             FavouriteCar.objects.filter(
                 user=request.user
-            ).values_list('car_id', flat=True)
+            ).values_list(
+                'car_id',
+                flat=True
+            )
         )
 
     paginator = Paginator(cars, 6)
@@ -158,6 +170,7 @@ def car_list(request):
             'transmission': transmission,
             'fuel_type': fuel_type,
             'body_type': body_type,
+            'featured': featured,
             'sort_by': sort_by,
             'favourite_car_ids': favourite_car_ids,
         }

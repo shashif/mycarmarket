@@ -1,9 +1,8 @@
 <!-- =========================================
 MyCarMarket
-Version: v0.8.9
+Version: v1.4.2
 File: vehicles/templates/vehicles/includes/detail_sidebar.html
-Dealer Trust Cleanup
-Seller Details Removed
+Dealer Trust + Admin Controlled Google Sidebar Ad
 ========================================= -->
 
 <div>
@@ -71,10 +70,12 @@ Seller Details Removed
     ========================================= -->
 
 
-    <!-- =========================================
-    SECTION 2 START
-    Advertisement
-    ========================================= -->
+<!-- =========================================
+SECTION 2 START
+Admin Controlled Car Detail Sidebar Google Ad
+========================================= -->
+
+{% if settings and settings.car_detail_sidebar_google_ad_active and settings.google_adsense_publisher_id and settings.car_detail_sidebar_google_slot_id %}
 
     <div class="ad-banner sidebar-ad-box">
 
@@ -82,18 +83,25 @@ Seller Details Removed
             Advertisement
         </div>
 
-        <div class="ad-placeholder">
-            <div>
-                <strong>Google AdSense Sidebar Ad</strong><br>
-                <span>300 x 250 Ad Space</span>
-            </div>
-        </div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="{{ settings.google_adsense_publisher_id }}"
+             data-ad-slot="{{ settings.car_detail_sidebar_google_slot_id }}"
+             data-ad-format="rectangle"
+             data-full-width-responsive="true">
+        </ins>
+
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
 
     </div>
 
-    <!-- =========================================
-    SECTION 2 END
-    ========================================= -->
+{% endif %}
+
+<!-- =========================================
+SECTION 2 END
+========================================= -->
 
 
     <!-- =========================================
@@ -147,26 +155,26 @@ Seller Details Removed
             {% endfor %}
         {% endif %}
 
-       <form method="POST" class="contact-form">
+        <form method="POST" class="contact-form">
 
-    {% csrf_token %}
+            {% csrf_token %}
 
-    {% if form.errors %}
-        <div class="success-message" style="background:#fee2e2;color:#991b1b;">
-            {{ form.errors }}
-        </div>
-    {% endif %}
+            {% if form.errors %}
+                <div class="success-message" style="background:#fee2e2;color:#991b1b;">
+                    {{ form.errors }}
+                </div>
+            {% endif %}
 
-    {{ form.name }}
-    {{ form.email }}
-    {{ form.phone }}
-    {{ form.message }}
+            {{ form.name }}
+            {{ form.email }}
+            {{ form.phone }}
+            {{ form.message }}
 
-    <button type="submit" class="btn">
-        Send Enquiry
-    </button>
+            <button type="submit" class="btn">
+                Send Enquiry
+            </button>
 
-</form>
+        </form>
 
     </div>
 

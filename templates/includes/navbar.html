@@ -1,16 +1,22 @@
 <!-- ==========================================
 MyCarMarket
-Version: v1.2.4
+Version: v1.4.4
 File: templates/includes/navbar.html
-Professional Navbar + My Cars Rename
-NOTE:
-Notification link removed because notifications URL is not ready yet.
+Professional Navbar + Logo Image
 ========================================== -->
+
+{% load static %}
 
 <div class="navbar">
 
     <a href="{% url 'home' %}" class="logo">
-        🚗 MyCarMarket
+
+        <img
+            src="{% static 'images/logo.png' %}"
+            alt="MyCarMarket"
+            class="navbar-logo"
+        >
+
     </a>
 
     <div class="nav-links">
@@ -53,24 +59,27 @@ Notification link removed because notifications URL is not ready yet.
 
             {% endif %}
 
-            <form method="POST"
-                  action="{% url 'logout' %}"
-                  style="display:inline;">
+            <form
+                method="POST"
+                action="{% url 'logout' %}"
+                style="display:inline;"
+            >
 
                 {% csrf_token %}
 
-                <button type="submit"
-                        style="
+                <button
+                    type="submit"
+                    style="
                         background:none;
                         border:none;
                         color:white;
                         font-weight:bold;
                         margin-left:22px;
                         cursor:pointer;
-                        font-size:inherit;">
-
+                        font-size:inherit;
+                    "
+                >
                     Logout
-
                 </button>
 
             </form>

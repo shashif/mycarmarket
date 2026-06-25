@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.3.3
+# Version: v1.4.2
 # File: vehicles/views/car_detail_views.py
-# Dealer Trust + Enquiry + Favourite Status + Recently Viewed Cars Fix
+# Dealer Trust + Enquiry + Favourite + Recently Viewed + Admin Ad Settings
 # ==========================================
 
 from django.shortcuts import render, get_object_or_404, redirect
@@ -10,6 +10,8 @@ from django.contrib import messages
 from django.utils import timezone
 from django.core.mail import send_mail
 from django.conf import settings
+
+from core.models import SiteSettings
 
 from vehicles.models import Car, FavouriteCar
 from vehicles.forms import EnquiryForm
@@ -32,7 +34,6 @@ def car_detail(request, slug):
     car.views_count += 1
     car.save(update_fields=['views_count'])
 
-    # Recently Viewed Cars
     recently_viewed = request.session.get('recently_viewed_cars', [])
 
     if car.id in recently_viewed:
@@ -213,6 +214,8 @@ def car_detail(request, slug):
             }
         )
 
+    settings_obj = SiteSettings.objects.first()
+
     return render(
         request,
         'vehicles/car_detail.html',
@@ -229,5 +232,6 @@ def car_detail(request, slug):
             'dealer_featured_cars_count': dealer_featured_cars_count,
             'dealer_member_since': dealer_member_since,
             'dealer_years_active': dealer_years_active,
+            'settings': settings_obj,
         }
     )

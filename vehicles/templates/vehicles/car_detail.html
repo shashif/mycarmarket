@@ -11,49 +11,122 @@ Mobile Responsive Review + Marketplace Polish
 <html lang="en">
 
 <head>
+
     <title>
         {{ car.year }} {{ car.make }} {{ car.model }} For Sale{% if car.suburb %} in {{ car.suburb }}{% endif %} | MyCarMarket Australia
     </title>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description"
-          content="{{ car.year }} {{ car.make }} {{ car.model }} for sale{% if car.display_location %} in {{ car.display_location }}{% endif %}. {{ car.kilometres }} km, {{ car.transmission|default:'transmission not specified' }}, {{ car.fuel_type|default:'fuel type not specified' }}. View photos and contact seller on MyCarMarket Australia.">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <meta name="keywords"
-          content="{{ car.year }} {{ car.make }} {{ car.model }}, {{ car.make }} {{ car.model }} for sale, used cars Australia, cars for sale Australia, {% if car.suburb %}cars for sale {{ car.suburb }},{% endif %} {% if car.state %}cars for sale {{ car.state }}{% endif %}">
+    <meta
+        name="description"
+        content="{{ car.year }} {{ car.make }} {{ car.model }} for sale{% if car.display_location %} in {{ car.display_location }}{% endif %}. {{ car.kilometres }} km, {{ car.transmission|default:'transmission not specified' }}, {{ car.fuel_type|default:'fuel type not specified' }}. View photos and contact seller on MyCarMarket Australia."
+    >
 
-    <link rel="canonical" href="{{ share_url }}">
+    <meta
+        name="keywords"
+        content="{{ car.year }} {{ car.make }} {{ car.model }}, {{ car.make }} {{ car.model }} for sale, used cars Australia, cars for sale Australia, {% if car.suburb %}cars for sale {{ car.suburb }},{% endif %}{% if car.state %} cars for sale {{ car.state }}{% endif %}"
+    >
 
-    <meta property="og:title"
-          content="{{ car.year }} {{ car.make }} {{ car.model }} For Sale | MyCarMarket Australia">
+    <link
+        rel="canonical"
+        href="{{ share_url }}"
+    >
 
-    <meta property="og:description"
-          content="{{ car.year }} {{ car.make }} {{ car.model }} for sale{% if car.display_location %} in {{ car.display_location }}{% endif %}. Price ${{ car.price }}, {{ car.kilometres }} km.">
+    <!-- ==========================================
+    Open Graph
+    ========================================== -->
+
+    <meta
+        property="og:title"
+        content="{{ car.year }} {{ car.make }} {{ car.model }} For Sale | MyCarMarket Australia"
+    >
+
+    <meta
+        property="og:description"
+        content="{{ car.year }} {{ car.make }} {{ car.model }} for sale{% if car.display_location %} in {{ car.display_location }}{% endif %}. Price ${{ car.price }}, {{ car.kilometres }} km."
+    >
 
     {% if car.primary_image %}
-        <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ car.primary_image }}">
+        <meta
+            property="og:image"
+            content="{{ request.scheme }}://{{ request.get_host }}{{ car.primary_image }}"
+        >
     {% endif %}
 
-    <meta property="og:url" content="{{ share_url }}">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="MyCarMarket Australia">
+    <meta
+        property="og:url"
+        content="{{ share_url }}"
+    >
 
-    <meta name="twitter:card" content="summary_large_image">
+    <meta
+        property="og:type"
+        content="website"
+    >
 
-    <meta name="twitter:title"
-          content="{{ car.year }} {{ car.make }} {{ car.model }} For Sale | MyCarMarket Australia">
+    <meta
+        property="og:site_name"
+        content="MyCarMarket Australia"
+    >
 
-    <meta name="twitter:description"
-          content="{{ car.year }} {{ car.make }} {{ car.model }} for sale{% if car.display_location %} in {{ car.display_location }}{% endif %}. Price ${{ car.price }}, {{ car.kilometres }} km.">
+    <!-- ==========================================
+    Twitter Card
+    ========================================== -->
+
+    <meta
+        name="twitter:card"
+        content="summary_large_image"
+    >
+
+    <meta
+        name="twitter:title"
+        content="{{ car.year }} {{ car.make }} {{ car.model }} For Sale | MyCarMarket Australia"
+    >
+
+    <meta
+        name="twitter:description"
+        content="{{ car.year }} {{ car.make }} {{ car.model }} for sale{% if car.display_location %} in {{ car.display_location }}{% endif %}. Price ${{ car.price }}, {{ car.kilometres }} km."
+    >
 
     {% if car.primary_image %}
-        <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{{ car.primary_image }}">
+        <meta
+            name="twitter:image"
+            content="{{ request.scheme }}://{{ request.get_host }}{{ car.primary_image }}"
+        >
     {% endif %}
 
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/car_detail.css' %}?v=1333">
+    <!-- ==========================================
+    Global CSS
+    ========================================== -->
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/style.css' %}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/car_detail.css' %}?v=143"
+    >
+
+    <!-- ==========================================
+    Google AdSense
+    Car Detail Sidebar
+    ========================================== -->
+
+    {% if settings and settings.car_detail_sidebar_google_ad_active and settings.google_adsense_publisher_id %}
+        <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ settings.google_adsense_publisher_id }}"
+            crossorigin="anonymous">
+        </script>
+    {% endif %}
+
 </head>
 
 <body>
@@ -121,16 +194,7 @@ Mobile Responsive Review + Marketplace Polish
 
     </div>
 
-    <div class="ad-banner">
-        <div class="ad-label">Advertisement</div>
 
-        <div class="ad-placeholder">
-            <div>
-                <strong>Google AdSense Responsive Ad</strong><br>
-                <span>728 x 90 or responsive ad space</span>
-            </div>
-        </div>
-    </div>
  {% include 'vehicles/recently_viewed_cars.html' %}
     {% include 'vehicles/similar_cars.html' %}
    

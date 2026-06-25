@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.0.3
+# Version: v1.4.4
 # File: core/models.py
-# Homepage Hero + Custom / Google AdSense ID Switch
+# Homepage + Car Detail Admin Ad Settings
 # ==========================================
 
 from django.db import models
@@ -62,13 +62,28 @@ class SiteSettings(models.Model):
     google_adsense_publisher_id = models.CharField(
         max_length=100,
         blank=True,
-        help_text='Example: ca-pub-1234567890123456'
+        help_text='Google AdSense Publisher ID. Example: ca-pub-1234567890123456'
     )
 
     google_adsense_slot_id = models.CharField(
         max_length=100,
         blank=True,
-        help_text='Example: 1234567890'
+        help_text='Google AdSense Slot ID for the Homepage banner. Recommended ad size: Responsive Leaderboard (728 × 90 or responsive). Example: 1234567890'
+    )
+
+    # ==========================================
+    # CAR DETAIL SIDEBAR AD SETTINGS
+    # ==========================================
+
+    car_detail_sidebar_google_ad_active = models.BooleanField(
+        default=False,
+        help_text='Enable or disable the Google AdSense sidebar advertisement on the Car Detail page.'
+    )
+
+    car_detail_sidebar_google_slot_id = models.CharField(
+        max_length=100,
+        blank=True,
+        help_text='Google AdSense Slot ID for the Car Detail sidebar. Recommended ad size: 300 × 250 Medium Rectangle (responsive supported). Example: 1234567890'
     )
 
     # ==========================================

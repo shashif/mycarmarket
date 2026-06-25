@@ -2,9 +2,9 @@
 
 <!-- =========================================
 MyCarMarket
-Version: v1.3.3
+Version: v1.4.2
 File: core/templates/core/home_parts/featured_cars.html
-Featured Vehicles + AJAX Save Button
+Featured Vehicles + View All Featured Cars
 ========================================= -->
 
 <div class="home-section-header">
@@ -21,6 +21,11 @@ Featured Vehicles + AJAX Save Button
 
     </div>
 
+    <a href="{% url 'car_list' %}?featured=1"
+       class="section-view-all">
+        View All Featured Cars
+    </a>
+
 </div>
 
 <div class="premium-car-grid">
@@ -35,18 +40,11 @@ Featured Vehicles + AJAX Save Button
                 {% with car.images.first as car_image %}
 
                     {% if car_image %}
-
-                        <img src="{{ car_image.image.url }}"
-                             alt="{{ car.title }}">
-
+                        <img src="{{ car_image.image.url }}" alt="{{ car.title }}">
                     {% else %}
-
                         <div class="no-image-box">
-
                             No Image Available
-
                         </div>
-
                     {% endif %}
 
                 {% endwith %}
@@ -70,23 +68,11 @@ Featured Vehicles + AJAX Save Button
                 <h3>{{ car.title }}</h3>
 
                 <p class="car-meta">
-
-                    🚘 {{ car.year }}
-
-                    •
-
-                    {{ car.make }} {{ car.model }}
-
+                    🚘 {{ car.year }} • {{ car.make }} {{ car.model }}
                 </p>
 
                 <div class="price-row">
-
-                    <strong>
-
-                        ${{ car.price }}
-
-                    </strong>
-
+                    <strong>${{ car.price }}</strong>
                 </div>
 
             </div>
@@ -96,9 +82,7 @@ Featured Vehicles + AJAX Save Button
     {% empty %}
 
         <div class="empty-home-section">
-
             <h3>No featured cars available.</h3>
-
         </div>
 
     {% endfor %}
