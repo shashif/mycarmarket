@@ -1173,3 +1173,162 @@ max-width: 420px
 SECTION 12 : SMALL MOBILE
 END
 -------------------------------------------------- */
+
+
+/* ==========================================
+SECTION 13 : DEALER HERO PANEL FIX
+File: static/css/dealer_detail.css
+========================================== */
+
+.dealer-profile-panel {
+    background: #ffffff;
+    padding: 0 28px 28px;
+}
+
+.dealer-top-row {
+    display: grid;
+    grid-template-columns: 150px 1fr auto;
+    gap: 22px;
+    align-items: start;
+}
+
+.dealer-logo-column {
+    margin-top: -62px;
+    position: relative;
+    z-index: 5;
+}
+
+.dealer-title-column {
+    padding-top: 26px;
+    min-width: 0;
+}
+
+.dealer-title-column h1 {
+    margin: 0 0 12px;
+    font-size: 34px;
+    line-height: 1.15;
+    color: #111827;
+    overflow-wrap: break-word;
+}
+
+.dealer-title-column .dealer-subtitle {
+    margin: 10px 0 0;
+}
+
+.dealer-share-box {
+    padding-top: 28px;
+    margin-top: 0;
+    text-align: right;
+    min-width: 290px;
+}
+
+.dealer-share-buttons {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.dealer-share-box a,
+.copy-dealer-link-btn {
+    margin-left: 0;
+}
+
+.dealer-panel-divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 22px 0;
+}
+
+.dealer-bottom-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 22px;
+    flex-wrap: wrap;
+}
+
+.dealer-hero-actions {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.dealer-hero-actions .dealer-action-btn {
+    background: #111827;
+    color: #ffffff;
+}
+
+@media (max-width: 900px) {
+
+    .dealer-top-row {
+        grid-template-columns: 130px 1fr;
+    }
+
+    .dealer-share-box {
+        grid-column: 1 / -1;
+        text-align: left;
+        min-width: 0;
+        padding-top: 0;
+    }
+
+    .dealer-share-buttons {
+        justify-content: flex-start;
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .dealer-profile-panel {
+        padding: 0 16px 22px;
+    }
+
+    .dealer-top-row {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .dealer-logo-column {
+        margin-top: -46px;
+    }
+
+    .dealer-title-column {
+        padding-top: 0;
+        width: 100%;
+    }
+
+    .dealer-title-column h1 {
+        font-size: 25px;
+    }
+
+    .dealer-share-box {
+        width: 100%;
+        text-align: left;
+    }
+
+    .dealer-share-buttons {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .dealer-share-box a,
+    .copy-dealer-link-btn {
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+    }
+
+    .dealer-bottom-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .dealer-hero-actions {
+        justify-content: stretch;
+    }
+
+}
