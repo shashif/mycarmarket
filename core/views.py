@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.4.2
+# Version: v1.6.0
 # File: core/views.py
-# Description: Homepage 12 Featured Vehicles + Random Per Session
+# Description: Homepage + Custom Error Pages
 # ==========================================
 
 import random
@@ -154,15 +154,33 @@ def contact_us(request):
 
 
 # ==========================================
-# CUSTOM 404 PAGE
+# CUSTOM ERROR PAGES
 # ==========================================
 
-def custom_404(request, exception):
+def custom_403(request, exception=None):
 
     return render(
         request,
-        '404.html',
+        'errors/403.html',
+        status=403
+    )
+
+
+def custom_404(request, exception=None):
+
+    return render(
+        request,
+        'errors/404.html',
         status=404
+    )
+
+
+def custom_500(request):
+
+    return render(
+        request,
+        'errors/500.html',
+        status=500
     )
 
 

@@ -1,0 +1,95 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}
+{{ title }} | MyCarMarket Admin
+{% endblock %}
+
+{% block branding %}
+<div style="display:flex; align-items:center; gap:14px;">
+    <img
+        src="{% static 'images/logo.png' %}"
+        alt="MyCarMarket"
+        style="height:45px; width:auto; object-fit:contain;"
+    >
+
+    <div>
+        <h1 style="margin:0; font-size:22px; font-weight:800; color:white;">
+            MyCarMarket Admin
+        </h1>
+
+        <div style="font-size:12px; color:#bfdbfe; margin-top:3px;">
+            Version v1.6.0
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+
+<style>
+    #header{
+        background:#111827;
+        color:white;
+        min-height:70px;
+    }
+
+    #branding h1{
+        color:white;
+    }
+
+    #user-tools{
+        color:#dbeafe;
+    }
+
+    #user-tools a{
+        color:#bfdbfe;
+    }
+
+    .module h2,
+    .module caption,
+    .inline-group h2{
+        background:#2563eb;
+    }
+
+    div.breadcrumbs{
+        background:#1f2937;
+        color:#dbeafe;
+    }
+
+    div.breadcrumbs a{
+        color:white;
+    }
+
+    a:link,
+    a:visited{
+        color:#2563eb;
+    }
+
+    .button,
+    input[type=submit],
+    input[type=button],
+    .submit-row input,
+    a.button{
+        background:#2563eb;
+        border-radius:8px;
+        border:none;
+        font-weight:700;
+    }
+
+    .button:hover,
+    input[type=submit]:hover,
+    input[type=button]:hover,
+    .submit-row input:hover,
+    a.button:hover{
+        background:#1d4ed8;
+    }
+
+    .button.default,
+    input[type=submit].default,
+    .submit-row input.default{
+        background:#111827;
+    }
+</style>
+{% endblock %}

@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.4.1
+# Version: v1.6.0
 # File: config/urls.py
-# Sitemap + Robots + Static Media + Custom 404 + Favicon Fix
+# Sitemap + Robots + Static Media + Custom Error Pages + Favicon Fix
 # ==========================================
 
 from django.contrib import admin
@@ -57,7 +57,9 @@ urlpatterns = [
 # CUSTOM ERROR PAGES
 # ==========================================
 
+handler403 = 'core.views.custom_403'
 handler404 = 'core.views.custom_404'
+handler500 = 'core.views.custom_500'
 
 
 # ==========================================
