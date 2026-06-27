@@ -1,509 +1,302 @@
 <!-- ==========================================
 MyCarMarket
-Version: v1.5.1
+Version: v1.5.5
 File: templates/registration/login.html
-Premium Login Page - Clean Left Panel Fix
+Homepage Theme Login Page + Back Home Link
 ========================================== -->
 
+{% extends "base.html" %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
+{% block title %}
+Login - MyCarMarket Australia
+{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
+{% block extra_css %}
+<style>
+    .login-page{
+        min-height:calc(100vh - 90px);
+        background:#eef2f7;
+    }
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    .login-hero{
+        min-height:720px;
+        background:
+            linear-gradient(
+                rgba(15,23,42,0.45),
+                rgba(15,23,42,0.45)
+            ),
+            url("{% static 'images/hero-car.png' %}");
+        background-size:cover;
+        background-position:center;
+        display:flex;
+        align-items:center;
+        justify-content:flex-end;
+        padding:70px 7%;
+    }
 
-    <title>Login - MyCarMarket Australia</title>
+    .login-card{
+        width:100%;
+        max-width:520px;
+        background:white;
+        border-radius:28px;
+        padding:42px;
+        box-shadow:0 25px 70px rgba(15,23,42,0.35);
+        overflow:hidden;
+    }
 
-    <link rel="icon" type="image/x-icon" href="{% static 'favicon/favicon.ico' %}">
+    .login-back-home{
+        margin-bottom:20px;
+    }
 
-    <style>
-        *{
-            box-sizing:border-box;
-        }
+    .login-back-home a{
+        display:inline-flex;
+        align-items:center;
+        gap:6px;
+        color:#2563eb;
+        text-decoration:none;
+        font-size:15px;
+        font-weight:800;
+        transition:0.2s;
+    }
 
-        body{
-            margin:0;
-            font-family:Arial, sans-serif;
-            background:#eef2f7;
-            color:#111827;
-        }
+    .login-back-home a:hover{
+        color:#1d4ed8;
+        transform:translateX(-2px);
+    }
 
-        .auth-page{
-            min-height:100vh;
-            display:flex;
-            flex-direction:column;
-        }
+    .login-card h1{
+        margin:0;
+        text-align:center;
+        font-size:38px;
+        color:#111827;
+        font-weight:900;
+    }
 
-        .auth-top{
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            padding:18px 7%;
-            background:white;
-            border-bottom:1px solid #e5e7eb;
-        }
+    .login-subtitle{
+        text-align:center;
+        color:#6b7280;
+        margin:12px 0 34px;
+        font-size:16px;
+    }
 
-        .auth-logo img{
-            height:58px;
-            max-width:230px;
-            object-fit:contain;
-            display:block;
-        }
+    .login-card label{
+        display:block;
+        margin-bottom:9px;
+        font-weight:800;
+        color:#111827;
+        font-size:15px;
+    }
 
-        .back-home{
-            text-decoration:none;
-            color:#111827;
-            font-weight:700;
-            font-size:15px;
-        }
+    .login-input-wrap{
+        position:relative;
+        width:100%;
+        margin-bottom:20px;
+    }
 
-        .back-home:hover{
-            color:#2563eb;
-        }
+    .login-input-wrap input{
+        width:100%;
+        max-width:100%;
+        height:58px;
+        padding:0 52px 0 18px;
+        border:1px solid #cbd5e1;
+        border-radius:12px;
+        font-size:16px;
+        outline:none;
+        background:white;
+        box-sizing:border-box;
+    }
 
-        .auth-main{
-            flex:1;
-            display:grid;
-            grid-template-columns:1fr 1fr;
-            gap:50px;
-            align-items:center;
-            padding:55px 7%;
-        }
+    .login-input-wrap input:focus{
+        border-color:#2563eb;
+        box-shadow:0 0 0 4px rgba(37,99,235,0.12);
+    }
 
-        .auth-left{
-            min-height:520px;
-            border-radius:28px;
-            background:linear-gradient(135deg,#0f172a,#1d4ed8);
-            color:white;
-            padding:46px;
-            display:flex;
-            align-items:flex-end;
-            box-shadow:0 25px 65px rgba(15,23,42,0.25);
-            position:relative;
-            overflow:hidden;
-        }
+    .login-input-icon{
+        position:absolute;
+        right:18px;
+        top:50%;
+        transform:translateY(-50%);
+        color:#64748b;
+        font-size:18px;
+    }
 
-        .auth-left::before{
-            content:"";
-            position:absolute;
-            width:360px;
-            height:360px;
-            border-radius:50%;
-            background:rgba(255,255,255,0.12);
-            top:-120px;
-            right:-100px;
-        }
+    .login-password-toggle{
+        position:absolute;
+        right:16px;
+        top:50%;
+        transform:translateY(-50%);
+        border:none;
+        background:transparent;
+        cursor:pointer;
+        font-size:18px;
+    }
 
-        .auth-left::after{
-            content:"🚗";
-            position:absolute;
-            font-size:160px;
-            opacity:0.08;
-            right:45px;
-            top:80px;
-        }
+    .login-form-row{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        gap:12px;
+        margin:4px 0 26px;
+    }
 
-        .auth-left-content{
-            position:relative;
-            z-index:2;
-            max-width:620px;
-        }
+    .login-remember{
+        display:flex !important;
+        align-items:center;
+        gap:9px;
+        color:#374151;
+        font-size:15px;
+        margin:0 !important;
+    }
 
-        .badge{
-            display:inline-block;
-            background:rgba(255,255,255,0.16);
-            border:1px solid rgba(255,255,255,0.28);
-            padding:9px 15px;
-            border-radius:999px;
-            font-size:14px;
-            font-weight:700;
-            margin-bottom:20px;
-        }
+    .login-remember input{
+        width:18px;
+        height:18px;
+        accent-color:#2563eb;
+    }
 
-        .auth-left h2{
-            font-size:42px;
-            line-height:1.15;
-            margin:0 0 18px;
-            color:white;
-        }
+    .login-forgot-link{
+        color:#2563eb;
+        text-decoration:none;
+        font-weight:800;
+        font-size:15px;
+        white-space:nowrap;
+    }
 
-        .auth-left p{
-            font-size:17px;
-            line-height:1.7;
-            margin:0;
-            color:#e5e7eb;
-        }
+    .login-forgot-link:hover{
+        text-decoration:underline;
+    }
 
-        .trust-row{
-            display:grid;
-            grid-template-columns:repeat(3,1fr);
-            gap:14px;
-            margin-top:30px;
-        }
+    .login-btn{
+        width:100%;
+        max-width:100%;
+        height:60px;
+        border:none;
+        border-radius:12px;
+        background:#2563eb;
+        color:white;
+        font-size:18px;
+        font-weight:900;
+        cursor:pointer;
+        box-shadow:0 14px 32px rgba(37,99,235,0.30);
+    }
 
-        .trust-card{
-            background:rgba(255,255,255,0.14);
-            border:1px solid rgba(255,255,255,0.22);
-            padding:16px;
-            border-radius:16px;
-        }
+    .login-btn:hover{
+        background:#1d4ed8;
+        transform:translateY(-1px);
+    }
 
-        .trust-card strong{
-            display:block;
-            font-size:18px;
-            margin-bottom:6px;
-            color:white;
-        }
+    .login-divider{
+        display:flex;
+        align-items:center;
+        gap:14px;
+        margin:30px 0 24px;
+        color:#9ca3af;
+        font-size:15px;
+    }
 
-        .trust-card span{
-            color:#e5e7eb;
-            font-size:13px;
-            line-height:1.4;
+    .login-divider span{
+        height:1px;
+        background:#e5e7eb;
+        flex:1;
+    }
+
+    .login-register-link{
+        text-align:center;
+        color:#374151;
+        font-size:16px;
+    }
+
+    .login-register-link a{
+        color:#2563eb;
+        text-decoration:none;
+        font-weight:900;
+    }
+
+    .login-register-link a:hover{
+        text-decoration:underline;
+    }
+
+    .login-secure-box{
+        margin-top:28px;
+        display:flex;
+        gap:14px;
+        align-items:flex-start;
+        background:#f8fafc;
+        border:1px solid #e5e7eb;
+        padding:18px;
+        border-radius:16px;
+        color:#4b5563;
+        font-size:15px;
+        line-height:1.5;
+    }
+
+    .login-secure-icon{
+        width:36px;
+        height:36px;
+        min-width:36px;
+        border-radius:50%;
+        background:#dbeafe;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        color:#2563eb;
+        font-weight:900;
+    }
+
+    .login-errorlist{
+        list-style:none;
+        padding:14px 16px;
+        margin:0 0 20px;
+        background:#fee2e2;
+        color:#991b1b;
+        border-radius:12px;
+        font-size:14px;
+    }
+
+    @media(max-width:768px){
+        .login-hero{
+            justify-content:center;
+            padding:40px 16px;
+            min-height:620px;
         }
 
         .login-card{
-            width:100%;
-            max-width:520px;
-            margin-left:auto;
-            background:white;
-            border:1px solid #e5e7eb;
-            border-radius:24px;
-            padding:38px;
-            box-shadow:0 22px 60px rgba(15,23,42,0.14);
+            padding:30px 22px;
+            border-radius:22px;
         }
 
-        .card-logo{
-            text-align:center;
-            margin-bottom:18px;
+        .login-card h1{
+            font-size:30px;
         }
 
-        .card-logo img{
-            height:78px;
-            max-width:260px;
-            object-fit:contain;
-        }
-
-        h1{
-            text-align:center;
-            margin:0;
-            font-size:34px;
-            color:#111827;
-        }
-
-        .subtitle{
-            text-align:center;
-            color:#6b7280;
-            margin:10px 0 30px;
-            font-size:16px;
-        }
-
-        label{
-            display:block;
-            margin-bottom:8px;
-            font-weight:700;
-            color:#111827;
-            font-size:15px;
-        }
-
-        .input-wrap{
-            position:relative;
-            margin-bottom:18px;
-        }
-
-        .input-wrap input{
-            width:100%;
-            padding:15px 48px 15px 16px;
-            border:1px solid #cbd5e1;
-            border-radius:12px;
-            font-size:15px;
-            outline:none;
-            background:white;
-        }
-
-        .input-wrap input:focus{
-            border-color:#2563eb;
-            box-shadow:0 0 0 4px rgba(37,99,235,0.12);
-        }
-
-        .input-icon{
-            position:absolute;
-            right:16px;
-            top:50%;
-            transform:translateY(-50%);
-            color:#6b7280;
-            font-size:18px;
-        }
-
-        .password-toggle{
-            position:absolute;
-            right:14px;
-            top:50%;
-            transform:translateY(-50%);
-            border:none;
-            background:transparent;
-            cursor:pointer;
-            color:#6b7280;
-            font-size:18px;
-        }
-
-        .form-row{
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            gap:12px;
-            margin:5px 0 22px;
-        }
-
-        .remember{
-            display:flex;
-            align-items:center;
-            gap:8px;
-            color:#374151;
-            font-size:14px;
-            margin:0;
-        }
-
-        .remember input{
-            width:16px;
-            height:16px;
-            accent-color:#2563eb;
-        }
-
-        .forgot-link{
-            color:#2563eb;
-            text-decoration:none;
-            font-weight:700;
-            font-size:14px;
-            white-space:nowrap;
-        }
-
-        .forgot-link:hover{
-            text-decoration:underline;
-        }
-
-        .btn{
-            width:100%;
-            border:none;
-            border-radius:12px;
-            padding:15px;
-            background:linear-gradient(135deg,#2563eb,#0047d9);
-            color:white;
-            font-size:16px;
-            font-weight:800;
-            cursor:pointer;
-            box-shadow:0 10px 25px rgba(37,99,235,0.25);
-        }
-
-        .btn:hover{
-            transform:translateY(-1px);
-            box-shadow:0 14px 30px rgba(37,99,235,0.32);
-        }
-
-        .divider{
-            display:flex;
-            align-items:center;
-            gap:14px;
-            margin:28px 0 22px;
-            color:#9ca3af;
-            font-size:14px;
-        }
-
-        .divider span{
-            height:1px;
-            background:#e5e7eb;
-            flex:1;
-        }
-
-        .register-link{
-            text-align:center;
-            color:#374151;
-            font-size:15px;
-        }
-
-        .register-link a{
-            color:#2563eb;
-            text-decoration:none;
-            font-weight:800;
-        }
-
-        .register-link a:hover{
-            text-decoration:underline;
-        }
-
-        .secure-box{
-            margin-top:26px;
-            display:flex;
-            gap:12px;
+        .login-form-row{
+            flex-direction:column;
             align-items:flex-start;
-            background:#f8fafc;
-            border:1px solid #e5e7eb;
-            padding:16px;
-            border-radius:14px;
-            color:#4b5563;
-            font-size:14px;
-            line-height:1.5;
         }
+    }
+</style>
+{% endblock %}
 
-        .secure-icon{
-            width:34px;
-            height:34px;
-            min-width:34px;
-            border-radius:50%;
-            background:#dbeafe;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            color:#2563eb;
-            font-weight:900;
-        }
+{% block content %}
 
-        .errorlist{
-            list-style:none;
-            padding:12px 14px;
-            margin:0 0 18px;
-            background:#fee2e2;
-            color:#991b1b;
-            border-radius:10px;
-            font-size:14px;
-        }
+<section class="login-page">
 
-        .auth-footer{
-            background:#0f172a;
-            color:white;
-            padding:22px 7%;
-            text-align:center;
-            font-size:14px;
-        }
+    <div class="login-hero">
 
-        .auth-footer a{
-            color:#bfdbfe;
-            text-decoration:none;
-            margin:0 8px;
-        }
+        <div class="login-card">
 
-        .auth-footer a:hover{
-            text-decoration:underline;
-        }
-
-        @media(max-width:980px){
-            .auth-main{
-                grid-template-columns:1fr;
-            }
-
-            .login-card{
-                max-width:100%;
-                margin:0;
-            }
-
-            .auth-left{
-                min-height:380px;
-            }
-        }
-
-        @media(max-width:600px){
-            .auth-top{
-                padding:16px 20px;
-            }
-
-            .auth-logo img{
-                height:48px;
-            }
-
-            .back-home{
-                font-size:14px;
-            }
-
-            .auth-main{
-                padding:30px 16px;
-            }
-
-            .auth-left{
-                display:none;
-            }
-
-            .login-card{
-                padding:28px 22px;
-                border-radius:18px;
-            }
-
-            .card-logo img{
-                height:68px;
-            }
-
-            h1{
-                font-size:28px;
-            }
-
-            .form-row{
-                flex-direction:column;
-                align-items:flex-start;
-            }
-        }
-    </style>
-</head>
-
-<body>
-
-<div class="auth-page">
-
-    <header class="auth-top">
-        <a href="/" class="auth-logo">
-            <img src="{% static 'images/logo.png' %}" alt="MyCarMarket Australia">
-        </a>
-
-        <a href="/" class="back-home">
-            🏠 Back to Home
-        </a>
-    </header>
-
-    <main class="auth-main">
-
-        <section class="auth-left">
-            <div class="auth-left-content">
-                <span class="badge">
-                    Australia Wide Car Marketplace
-                </span>
-
-                <h2>
-                    Buy, sell and connect with confidence.
-                </h2>
-
-                <p>
-                    Manage your listings, save your favourite cars, contact sellers,
-                    and grow your dealership presence across Australia.
-                </p>
-
-                <div class="trust-row">
-                    <div class="trust-card">
-                        <strong>Secure</strong>
-                        <span>Protected account access</span>
-                    </div>
-
-                    <div class="trust-card">
-                        <strong>Fast</strong>
-                        <span>Manage cars easily</span>
-                    </div>
-
-                    <div class="trust-card">
-                        <strong>Trusted</strong>
-                        <span>Built for Australia</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="login-card">
-
-            <div class="card-logo">
-                <img src="{% static 'images/logo.png' %}" alt="MyCarMarket Australia">
+            <div class="login-back-home">
+                <a href="{% url 'home' %}">
+                    ← Back to Home
+                </a>
             </div>
 
-            <h1>Welcome Back</h1>
+            <h1>
+                Welcome Back
+            </h1>
 
-            <p class="subtitle">
+            <p class="login-subtitle">
                 Login to continue to MyCarMarket Australia
             </p>
 
@@ -511,16 +304,18 @@ Premium Login Page - Clean Left Panel Fix
                 {% csrf_token %}
 
                 {% if form.errors %}
-                    <ul class="errorlist">
+                    <ul class="login-errorlist">
                         <li>
                             Invalid username or password. Please try again.
                         </li>
                     </ul>
                 {% endif %}
 
-                <label for="id_username">Username</label>
+                <label for="id_username">
+                    Username
+                </label>
 
-                <div class="input-wrap">
+                <div class="login-input-wrap">
                     <input
                         type="text"
                         name="username"
@@ -529,12 +324,17 @@ Premium Login Page - Clean Left Panel Fix
                         placeholder="Enter your username"
                         required
                     >
-                    <span class="input-icon">👤</span>
+
+                    <span class="login-input-icon">
+                        👤
+                    </span>
                 </div>
 
-                <label for="id_password">Password</label>
+                <label for="id_password">
+                    Password
+                </label>
 
-                <div class="input-wrap">
+                <div class="login-input-wrap">
                     <input
                         type="password"
                         name="password"
@@ -546,7 +346,7 @@ Premium Login Page - Clean Left Panel Fix
 
                     <button
                         type="button"
-                        class="password-toggle"
+                        class="login-password-toggle"
                         onclick="togglePassword()"
                         aria-label="Show or hide password"
                     >
@@ -554,56 +354,56 @@ Premium Login Page - Clean Left Panel Fix
                     </button>
                 </div>
 
-                <div class="form-row">
-                    <label class="remember">
+                <div class="login-form-row">
+
+                    <label class="login-remember">
                         <input type="checkbox" name="remember_me" checked>
                         Remember me
                     </label>
 
-                    <a href="{% url 'password_reset' %}" class="forgot-link">
+                    <a href="{% url 'password_reset' %}" class="login-forgot-link">
                         Forgot password?
                     </a>
+
                 </div>
 
-                <button type="submit" class="btn">
+                <button type="submit" class="login-btn">
                     🔐 Login
                 </button>
+
             </form>
 
-            <div class="divider">
+            <div class="login-divider">
                 <span></span>
                 or
                 <span></span>
             </div>
 
-            <div class="register-link">
+            <div class="login-register-link">
                 Don't have an account?
                 <a href="{% url 'register' %}">
                     Register here
                 </a>
             </div>
 
-            <div class="secure-box">
-                <div class="secure-icon">✓</div>
+            <div class="login-secure-box">
+
+                <div class="login-secure-icon">
+                    ✓
+                </div>
 
                 <div>
                     Your information is secure with us. MyCarMarket never shares
                     your personal details with anyone.
                 </div>
+
             </div>
 
-        </section>
+        </div>
 
-    </main>
+    </div>
 
-    <footer class="auth-footer">
-        © 2026 MyCarMarket Australia.
-        <a href="/privacy/">Privacy Policy</a>
-        |
-        <a href="/terms/">Terms & Conditions</a>
-    </footer>
-
-</div>
+</section>
 
 <script>
     function togglePassword(){
@@ -617,5 +417,4 @@ Premium Login Page - Clean Left Panel Fix
     }
 </script>
 
-</body>
-</html>
+{% endblock %}
