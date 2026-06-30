@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.4.2
+# Version: v1.4.3
 # File: vehicles/views/car_detail_views.py
-# Dealer Trust + Enquiry + Favourite + Recently Viewed + Admin Ad Settings
+# Car Detail + Finance Calculator + Enquiry + Favourite + Recently Viewed
 # ==========================================
 
 from django.shortcuts import render, get_object_or_404, redirect
@@ -33,6 +33,73 @@ def car_detail(request, slug):
 
     car.views_count += 1
     car.save(update_fields=['views_count'])
+
+    # ==========================================
+    # FINANCE CALCULATOR
+    # ==========================================
+
+    car_price = float(car.price)
+
+    deposit = request.GET.get('deposit', '')
+    interest_rate = request.GET.get('interest_rate', '')
+    loan_years = request.GET.get('loan_years', '')
+
+    try:
+        deposit_value = float(deposit) if deposit else 0
+    except ValueError:
+        deposit_value = 0
+
+    try:
+        interest_rate_value = float(interest_rate) if interest_rate else 8.99
+    except ValueError:
+        interest_rate_value = 8.99
+
+    try:
+        loan_years_value = int(loan_years) if loan_years else 5
+    except ValueError:
+        loan_years_value = 5
+
+    if deposit_value < 0:
+        deposit_value = 0
+
+    if deposit_value > car_price:
+        deposit_value = car_price
+
+    if interest_rate_value < 0:
+        interest_rate_value = 0
+
+    if loan_years_value < 1:
+        loan_years_value = 1
+
+    loan_amount = car_price - deposit_value
+    total_months = loan_years_value * 12
+    monthly_rate = interest_rate_value / 100 / 12
+
+    if loan_amount > 0 and monthly_rate > 0:
+        monthly_payment = (
+            loan_amount
+            * monthly_rate
+            * ((1 + monthly_rate) ** total_months)
+        ) / (((1 + monthly_rate) ** total_months) - 1)
+    else:
+        monthly_payment = loan_amount / total_months if total_months > 0 else 0
+
+    total_repayment = monthly_payment * total_months
+    total_interest = total_repayment - loan_amount
+
+    finance_data = {
+        'deposit': round(deposit_value, 2),
+        'interest_rate': interest_rate_value,
+        'loan_years': loan_years_value,
+        'loan_amount': round(loan_amount, 2),
+        'monthly_payment': round(monthly_payment, 2),
+        'total_repayment': round(total_repayment, 2),
+        'total_interest': round(total_interest, 2),
+    }
+
+    # ==========================================
+    # RECENTLY VIEWED
+    # ==========================================
 
     recently_viewed = request.session.get('recently_viewed_cars', [])
 
@@ -203,6 +270,7 @@ def car_detail(request, slug):
             f"Hi, I am interested in this car:\n\n"
             f"{car.year} {car.make} {car.model}\n"
             f"Price: ${car.price}\n"
+            f"Estimated finance from ${finance_data['monthly_payment']} per month\n"
             f"Kilometres: {car.kilometres} km\n"
             f"Location: {car.display_location()}\n\n"
             f"Please contact me with more information."
@@ -233,5 +301,6 @@ def car_detail(request, slug):
             'dealer_member_since': dealer_member_since,
             'dealer_years_active': dealer_years_active,
             'settings': settings_obj,
+            'finance_data': finance_data,
         }
     )
