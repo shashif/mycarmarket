@@ -1,8 +1,8 @@
 <!-- ==========================================
 MyCarMarket
-Version: v0.9.9.3
+Version: v1.4.5
 File: vehicles/templates/vehicles/car_form.html
-Car Form HTML + External CSS
+Car Form + Seller AI Listing Assistant
 ========================================== -->
 
 <!DOCTYPE html>
@@ -13,7 +13,7 @@ Car Form HTML + External CSS
     <title>Sell / Edit Car - MyCarMarket</title>
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/car_form.css' %}">
+    <link rel="stylesheet" href="{% static 'css/car_form.css' %}?v=145">
 </head>
 
 <body>
@@ -28,71 +28,152 @@ Car Form HTML + External CSS
         <h1>Sell Your Car</h1>
     {% endif %}
 
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
+    <div class="form-layout">
 
-        {{ form.as_p }}
+        <div class="form-main">
 
-        {% if car and car.images.all %}
-            <div class="image-section">
-                <h2>Current Images</h2>
-                <p class="help-text">
-                    Choose primary image or delete old images.
-                </p>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
 
-                <div class="image-grid">
-                    {% for image in car.images.all %}
-                        <div class="image-card">
-                            <img src="{{ image.image.url }}" alt="Car image">
+                {{ form.as_p }}
 
-                            {% if image.is_primary %}
-                                <div class="primary-badge">Primary Image</div>
-                            {% endif %}
+                {% if car and car.images.all %}
+                    <div class="image-section">
+                        <h2>Current Images</h2>
+                        <p class="help-text">
+                            Choose primary image or delete old images.
+                        </p>
 
-                            <div class="image-actions">
-                                <label>
-                                    <input type="radio"
-                                           name="primary_image"
-                                           value="{{ image.id }}"
-                                           {% if image.is_primary %}checked{% endif %}>
-                                    Set as primary
-                                </label>
+                        <div class="image-grid">
+                            {% for image in car.images.all %}
+                                <div class="image-card">
+                                    <img src="{{ image.image.url }}" alt="Car image">
 
-                                <label>
-                                    <input type="checkbox"
-                                           name="delete_images"
-                                           value="{{ image.id }}">
-                                    Delete this image
-                                </label>
-                            </div>
+                                    {% if image.is_primary %}
+                                        <div class="primary-badge">Primary Image</div>
+                                    {% endif %}
+
+                                    <div class="image-actions">
+                                        <label>
+                                            <input type="radio"
+                                                   name="primary_image"
+                                                   value="{{ image.id }}"
+                                                   {% if image.is_primary %}checked{% endif %}>
+                                            Set as primary
+                                        </label>
+
+                                        <label>
+                                            <input type="checkbox"
+                                                   name="delete_images"
+                                                   value="{{ image.id }}">
+                                            Delete this image
+                                        </label>
+                                    </div>
+                                </div>
+                            {% endfor %}
                         </div>
-                    {% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="upload-box">
+                    {% if car %}
+                        <label>Upload New Images</label>
+                        <input type="file" name="images" multiple accept="image/*">
+
+                        <p class="help-text">
+                            New images will be added without removing old images. Image quality will be kept original.
+                        </p>
+                    {% else %}
+                        <label>Upload Car Images</label>
+                        <input type="file" name="images" multiple accept="image/*">
+                    {% endif %}
                 </div>
-            </div>
-        {% endif %}
 
-        <div class="upload-box">
-            {% if car %}
-                <label>Upload New Images</label>
-                <input type="file" name="images" multiple accept="image/*">
+                <button type="submit" class="btn">
+                    {% if car %}
+                        Update Listing
+                    {% else %}
+                        Publish Listing
+                    {% endif %}
+                </button>
+            </form>
 
-                <p class="help-text">
-                    New images will be added without removing old images. Image quality will be kept original.
-                </p>
-            {% else %}
-                <label>Upload Car Images</label>
-                <input type="file" name="images" multiple accept="image/*">
-            {% endif %}
         </div>
 
-        <button type="submit" class="btn">
-            {% if car %}
-                Update Listing
-            {% else %}
-                Publish Listing
-            {% endif %}
-        </button>
-    </form>
+        <aside class="ai-listing-assistant">
+
+            <div class="ai-assistant-card">
+                <h2>🤖 AI Listing Assistant</h2>
+
+                <p class="ai-helper-text">
+                    Smart suggestions to help improve your car listing.
+                </p>
+
+                <div class="ai-section">
+                    <h3>Suggested Title</h3>
+                    <p class="ai-suggestion">
+                        {{ ai_listing_assistant.suggested_title }}
+                    </p>
+                </div>
+
+                <div class="ai-section">
+                    <h3>Suggested Description</h3>
+                    <p class="ai-description">
+                        {{ ai_listing_assistant.suggested_description }}
+                    </p>
+                </div>
+
+                <div class="ai-section">
+                    <h3>Price Guidance</h3>
+
+                    {% if ai_listing_assistant.price_guidance.has_data %}
+                        <div class="price-guidance-box">
+                            <p>
+                                Suggested range:
+                            </p>
+
+                            <strong>
+                                $ {{ ai_listing_assistant.price_guidance.low_price }}
+                                -
+                                $ {{ ai_listing_assistant.price_guidance.high_price }}
+                            </strong>
+
+                            <small>
+                                Average similar listing:
+                                $ {{ ai_listing_assistant.price_guidance.average_price }}
+                            </small>
+                        </div>
+
+                        <p class="ai-small-note">
+                            Based on {{ ai_listing_assistant.price_guidance.comparison_count }}
+                            similar active listings.
+                        </p>
+                    {% else %}
+                        <p class="ai-description">
+                            {{ ai_listing_assistant.price_guidance.message }}
+                        </p>
+                    {% endif %}
+                </div>
+
+                <div class="ai-section">
+                    <h3>Listing Tips</h3>
+
+                    <ul class="ai-tips">
+                        {% for tip in ai_listing_assistant.tips %}
+                            <li>{{ tip }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <p class="ai-disclaimer">
+                    Suggestions are automatically generated from your listing information
+                    and MyCarMarket data only. They are guides, not valuations.
+                </p>
+            </div>
+
+        </aside>
+
+    </div>
 
 </div>
 

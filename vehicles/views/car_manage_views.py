@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.9.7
+# Version: v1.4.5
 # File: vehicles/views/car_manage_views.py
-# Advanced Image Management + Featured Ad Limits + Dashboard Analytics
+# Seller AI Listing Assistant + Image Management + Featured Limits + Dashboard Analytics
 # ==========================================
 
 from datetime import timedelta
@@ -11,10 +11,15 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.db.models import Avg
 
 from vehicles.models import Car, Enquiry
 from vehicles.forms import CarForm
 
+
+# ==========================================
+# DEALER / PACKAGE HELPERS
+# ==========================================
 
 def user_is_dealer(user):
     return (
@@ -120,6 +125,171 @@ def user_can_feature_car(user, car=None):
     return featured_cars.count() < featured_limit
 
 
+# ==========================================
+# SELLER AI LISTING ASSISTANT
+# No external AI API
+# Uses MyCarMarket listing data only
+# ==========================================
+
+def build_seller_ai_assistant(form=None, car=None):
+
+    title = ''
+    make = ''
+    model = ''
+    year = ''
+    kilometres = ''
+    body_type = ''
+    transmission = ''
+    fuel_type = ''
+    price = None
+
+    if car:
+        title = car.title or ''
+        make = car.make or ''
+        model = car.model or ''
+        year = car.year or ''
+        kilometres = car.kilometres or ''
+        body_type = car.body_type or ''
+        transmission = car.transmission or ''
+        fuel_type = car.fuel_type or ''
+        price = car.price
+
+    if form and form.is_bound:
+        title = form.data.get('title', title)
+        make = form.data.get('make', make)
+        model = form.data.get('model', model)
+        year = form.data.get('year', year)
+        kilometres = form.data.get('kilometres', kilometres)
+        body_type = form.data.get('body_type', body_type)
+        transmission = form.data.get('transmission', transmission)
+        fuel_type = form.data.get('fuel_type', fuel_type)
+        price = form.data.get('price', price)
+
+    has_basic_data = bool(make and model and year)
+
+    suggested_title = ''
+    suggested_description = ''
+    price_guidance = None
+    tips = []
+
+    if has_basic_data:
+
+        suggested_title_parts = [
+            str(year),
+            make,
+            model,
+        ]
+
+        if transmission:
+            suggested_title_parts.append(transmission)
+
+        if body_type:
+            suggested_title_parts.append(body_type)
+
+        suggested_title = ' '.join(suggested_title_parts)
+
+        suggested_description = (
+            f"{year} {make} {model} available for sale on MyCarMarket Australia. "
+            f"This vehicle comes with {transmission or 'transmission details not specified'} "
+            f"transmission and {fuel_type or 'fuel type not specified'} fuel type. "
+            f"It has travelled approximately {kilometres or 'N/A'} km. "
+            f"Contact the seller today for more information or to arrange an inspection."
+        )
+
+        comparable_cars = Car.objects.filter(
+            is_approved=True,
+            is_active=True,
+            make__iexact=make,
+            model__iexact=model
+        )
+
+        try:
+            year_value = int(year)
+
+            comparable_cars = comparable_cars.filter(
+                year__gte=year_value - 2,
+                year__lte=year_value + 2
+            )
+
+        except (ValueError, TypeError):
+            pass
+
+        comparable_count = comparable_cars.count()
+
+        if comparable_count >= 3:
+            average_price = comparable_cars.aggregate(
+                average_price=Avg('price')
+            )['average_price']
+
+            if average_price:
+                average_price_value = float(average_price)
+
+                low_price = average_price_value * 0.92
+                high_price = average_price_value * 1.08
+
+                price_guidance = {
+                    'has_data': True,
+                    'low_price': round(low_price, 2),
+                    'high_price': round(high_price, 2),
+                    'average_price': round(average_price_value, 2),
+                    'comparison_count': comparable_count,
+                    'message': (
+                        'Suggested price range is based on similar active listings '
+                        'currently available on MyCarMarket Australia.'
+                    ),
+                }
+
+        if not price_guidance:
+            price_guidance = {
+                'has_data': False,
+                'message': (
+                    'Not enough similar listings are available yet to suggest a reliable price range.'
+                ),
+            }
+
+    else:
+        suggested_title = 'Example: 2022 Toyota Hilux SR5 Auto 4x4'
+        suggested_description = (
+            'Enter the make, model, year, kilometres and vehicle details to receive smarter listing suggestions.'
+        )
+
+        price_guidance = {
+            'has_data': False,
+            'message': (
+                'Add make, model and year to receive price guidance when enough similar listings are available.'
+            ),
+        }
+
+    if not title:
+        tips.append('Add a clear title with year, make, model and variant.')
+
+    if not price:
+        tips.append('Add a realistic asking price to attract serious buyers.')
+
+    if not kilometres:
+        tips.append('Add kilometres so buyers can compare the vehicle properly.')
+
+    if not transmission:
+        tips.append('Select transmission type.')
+
+    if not fuel_type:
+        tips.append('Select fuel type.')
+
+    tips.append('Upload clear photos from the front, rear, side, interior and odometer.')
+    tips.append('Mention service history, registration status and any accident history clearly.')
+
+    return {
+        'suggested_title': suggested_title,
+        'suggested_description': suggested_description,
+        'price_guidance': price_guidance,
+        'tips': tips,
+    }
+
+
+# ==========================================
+# CREATE CAR
+# ==========================================
+
 @login_required
 def create_car(request):
     clean_expired_featured_ads()
@@ -133,6 +303,8 @@ def create_car(request):
 
     if request.method == 'POST':
         form = CarForm(request.POST, request.FILES)
+
+        ai_listing_assistant = build_seller_ai_assistant(form=form)
 
         if form.is_valid():
             car = form.save(commit=False)
@@ -172,15 +344,21 @@ def create_car(request):
 
     else:
         form = CarForm()
+        ai_listing_assistant = build_seller_ai_assistant(form=form)
 
     return render(
         request,
         'vehicles/car_form.html',
         {
-            'form': form
+            'form': form,
+            'ai_listing_assistant': ai_listing_assistant,
         }
     )
 
+
+# ==========================================
+# MY LISTINGS
+# ==========================================
 
 @login_required
 def my_listings(request):
@@ -255,6 +433,10 @@ def my_listings(request):
     )
 
 
+# ==========================================
+# EDIT CAR
+# ==========================================
+
 @login_required
 def edit_car(request, pk):
     clean_expired_featured_ads()
@@ -270,6 +452,11 @@ def edit_car(request, pk):
             request.POST,
             request.FILES,
             instance=car
+        )
+
+        ai_listing_assistant = build_seller_ai_assistant(
+            form=form,
+            car=car
         )
 
         if form.is_valid():
@@ -331,15 +518,25 @@ def edit_car(request, pk):
     else:
         form = CarForm(instance=car)
 
+        ai_listing_assistant = build_seller_ai_assistant(
+            form=form,
+            car=car
+        )
+
     return render(
         request,
         'vehicles/car_form.html',
         {
             'form': form,
             'car': car,
+            'ai_listing_assistant': ai_listing_assistant,
         }
     )
 
+
+# ==========================================
+# DELETE CAR
+# ==========================================
 
 @login_required
 def delete_car(request, pk):
