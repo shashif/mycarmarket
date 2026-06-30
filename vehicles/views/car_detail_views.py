@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.4.3
+# Version: v1.4.4
 # File: vehicles/views/car_detail_views.py
-# Car Detail + Finance Calculator + Enquiry + Favourite + Recently Viewed
+# Car Detail + Finance Calculator + Safe AI Price Insight + Enquiry + Favourite + Recently Viewed
 # ==========================================
 
 from django.shortcuts import render, get_object_or_404, redirect
@@ -10,6 +10,7 @@ from django.contrib import messages
 from django.utils import timezone
 from django.core.mail import send_mail
 from django.conf import settings
+from django.db.models import Avg
 
 from core.models import SiteSettings
 
@@ -96,6 +97,114 @@ def car_detail(request, slug):
         'total_repayment': round(total_repayment, 2),
         'total_interest': round(total_interest, 2),
     }
+
+    # ==========================================
+    # SAFE AI PRICE INSIGHT
+    # Minimum 5 comparable cars required
+    # Uses MyCarMarket listings only
+    # No external AI API
+    # ==========================================
+
+    minimum_comparable_count = 5
+
+    ai_comparable_cars = Car.objects.filter(
+        is_approved=True,
+        is_active=True,
+        make__iexact=car.make,
+        model__iexact=car.model,
+        year__gte=car.year - 2,
+        year__lte=car.year + 2
+    ).exclude(pk=car.pk)
+
+    ai_comparison_type = 'similar make, model and year'
+
+    if ai_comparable_cars.count() < minimum_comparable_count:
+        ai_comparable_cars = Car.objects.filter(
+            is_approved=True,
+            is_active=True,
+            make__iexact=car.make,
+            model__iexact=car.model
+        ).exclude(pk=car.pk)
+
+        ai_comparison_type = 'similar make and model'
+
+    if ai_comparable_cars.count() < minimum_comparable_count:
+        ai_comparable_cars = Car.objects.filter(
+            is_approved=True,
+            is_active=True,
+            make__iexact=car.make,
+            body_type=car.body_type
+        ).exclude(pk=car.pk)
+
+        ai_comparison_type = 'similar make and body type'
+
+    comparable_count = ai_comparable_cars.count()
+
+    ai_price_insight = {
+        'has_data': False,
+        'label': 'Not Enough Data',
+        'status': 'neutral',
+        'average_market_price': None,
+        'current_price': round(car_price, 2),
+        'price_difference': None,
+        'comparison_count': comparable_count,
+        'comparison_type': ai_comparison_type,
+        'message': (
+            'There are not enough similar vehicles listed on '
+            'MyCarMarket Australia to provide a reliable price insight yet.'
+        ),
+    }
+
+    if comparable_count >= minimum_comparable_count:
+
+        average_market_price = ai_comparable_cars.aggregate(
+            average_price=Avg('price')
+        )['average_price']
+
+        if average_market_price:
+            average_market_price_value = float(average_market_price)
+            price_difference = car_price - average_market_price_value
+
+            difference_percent = (
+                price_difference / average_market_price_value
+            ) * 100 if average_market_price_value > 0 else 0
+
+            if difference_percent <= -8:
+                label = 'Great Value'
+                status = 'great'
+                message = (
+                    'This vehicle appears to be priced below similar vehicles '
+                    'currently listed on MyCarMarket Australia.'
+                )
+
+            elif difference_percent >= 8:
+                label = 'Above Market'
+                status = 'above'
+                message = (
+                    'This vehicle appears to be priced above similar vehicles '
+                    'currently listed on MyCarMarket Australia. Buyers may wish '
+                    'to compare other available listings.'
+                )
+
+            else:
+                label = 'Fair Price'
+                status = 'fair'
+                message = (
+                    'This vehicle appears to be priced within the typical range '
+                    'for similar vehicles currently listed on MyCarMarket Australia.'
+                )
+
+            ai_price_insight = {
+                'has_data': True,
+                'label': label,
+                'status': status,
+                'average_market_price': round(average_market_price_value, 2),
+                'current_price': round(car_price, 2),
+                'price_difference': round(price_difference, 2),
+                'comparison_count': comparable_count,
+                'comparison_type': ai_comparison_type,
+                'message': message,
+            }
 
     # ==========================================
     # RECENTLY VIEWED
@@ -302,5 +411,6 @@ def car_detail(request, slug):
             'dealer_years_active': dealer_years_active,
             'settings': settings_obj,
             'finance_data': finance_data,
+            'ai_price_insight': ai_price_insight,
         }
     )

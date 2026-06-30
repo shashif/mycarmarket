@@ -1,0 +1,78 @@
+<!-- =========================================
+MyCarMarket
+Version: v1.4.4
+File: vehicles/templates/vehicles/includes/detail_ai_price_insight.html
+AI Price Insight Include
+========================================= -->
+
+<div class="ai-price-box">
+
+    <div class="ai-price-header">
+        <div>
+            <h3>🤖 AI Price Insight</h3>
+            <p>
+                Generated from similar active listings on MyCarMarket Australia.
+            </p>
+        </div>
+
+        <span class="ai-price-badge {{ ai_price_insight.status }}">
+            {{ ai_price_insight.label }}
+        </span>
+    </div>
+
+    {% if ai_price_insight.has_data %}
+
+        <div class="ai-price-stats">
+
+            <div class="ai-price-stat">
+                <span>Average Market Price</span>
+                <strong>$ {{ ai_price_insight.average_market_price }}</strong>
+            </div>
+
+            <div class="ai-price-stat">
+                <span>This Vehicle</span>
+                <strong>$ {{ ai_price_insight.current_price }}</strong>
+            </div>
+
+            <div class="ai-price-stat">
+                <span>Difference</span>
+
+                {% if ai_price_insight.price_difference < 0 %}
+                    <strong class="positive">
+                        -$ {{ ai_price_insight.price_difference|stringformat:"s"|slice:"1:" }}
+                    </strong>
+                {% elif ai_price_insight.price_difference > 0 %}
+                    <strong class="negative">
+                        +$ {{ ai_price_insight.price_difference }}
+                    </strong>
+                {% else %}
+                    <strong>$ 0</strong>
+                {% endif %}
+            </div>
+
+        </div>
+
+        <p class="ai-price-message">
+            {{ ai_price_insight.message }}
+        </p>
+
+        <div class="ai-price-meta">
+            Compared with {{ ai_price_insight.comparison_count }}
+            listing{% if ai_price_insight.comparison_count != 1 %}s{% endif %}
+            using {{ ai_price_insight.comparison_type|lower }}.
+        </div>
+
+    {% else %}
+
+        <p class="ai-price-message">
+            {{ ai_price_insight.message }}
+        </p>
+
+    {% endif %}
+
+    <p class="ai-price-note">
+        This insight is automatically generated from MyCarMarket listing data only.
+        It is a guide, not a valuation or financial advice.
+    </p>
+
+</div>
