@@ -19,6 +19,7 @@ load_dotenv(BASE_DIR / '.env')
 
 # ==========================================
 # SECTION 01: SECURITY
+# START
 # ==========================================
 
 SECRET_KEY = os.environ.get(
@@ -41,12 +42,19 @@ CSRF_TRUSTED_ORIGINS = os.environ.get(
     'http://127.0.0.1:8000,http://localhost:8000,https://mycarmarket.com.au,https://www.mycarmarket.com.au'
 ).split(',')
 
+# ==========================================
+# SECTION 01: SECURITY
+# END
+# ==========================================
+
 
 # ==========================================
 # SECTION 02: APPLICATIONS
+# START
 # ==========================================
 
 INSTALLED_APPS = [
+
     'core',
     'vehicles',
     'accounts',
@@ -62,9 +70,15 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
 ]
 
+# ==========================================
+# SECTION 02: APPLICATIONS
+# END
+# ==========================================
+
 
 # ==========================================
 # SECTION 03: MIDDLEWARE
+# START
 # ==========================================
 
 MIDDLEWARE = [
@@ -79,17 +93,29 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# ==========================================
+# SECTION 03: MIDDLEWARE
+# END
+# ==========================================
+
 
 # ==========================================
 # SECTION 04: URLS / WSGI
+# START
 # ==========================================
 
 ROOT_URLCONF = 'config.urls'
 WSGI_APPLICATION = 'config.wsgi.application'
 
+# ==========================================
+# SECTION 04: URLS / WSGI
+# END
+# ==========================================
+
 
 # ==========================================
 # SECTION 05: TEMPLATES
+# START
 # ==========================================
 
 TEMPLATES = [
@@ -112,9 +138,15 @@ TEMPLATES = [
     },
 ]
 
+# ==========================================
+# SECTION 05: TEMPLATES
+# END
+# ==========================================
+
 
 # ==========================================
 # SECTION 06: DATABASE
+# START
 # ==========================================
 
 DATABASE_URL = os.environ.get('DATABASE_URL', '').strip()
@@ -135,9 +167,15 @@ else:
         }
     }
 
+# ==========================================
+# SECTION 06: DATABASE
+# END
+# ==========================================
+
 
 # ==========================================
 # SECTION 07: PASSWORD VALIDATION
+# START
 # ==========================================
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -155,9 +193,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# ==========================================
+# SECTION 07: PASSWORD VALIDATION
+# END
+# ==========================================
+
 
 # ==========================================
 # SECTION 08: LANGUAGE / TIME
+# START
 # ==========================================
 
 LANGUAGE_CODE = 'en-us'
@@ -167,9 +211,15 @@ USE_TZ = True
 
 SITE_ID = 1
 
+# ==========================================
+# SECTION 08: LANGUAGE / TIME
+# END
+# ==========================================
+
 
 # ==========================================
 # SECTION 09: STATIC / MEDIA FILES
+# START
 # ==========================================
 
 STATIC_URL = '/static/'
@@ -184,18 +234,30 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# ==========================================
+# SECTION 09: STATIC / MEDIA FILES
+# END
+# ==========================================
+
 
 # ==========================================
 # SECTION 10: AUTH REDIRECTS
+# START
 # ==========================================
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'car_list'
 LOGOUT_REDIRECT_URL = 'car_list'
 
+# ==========================================
+# SECTION 10: AUTH REDIRECTS
+# END
+# ==========================================
+
 
 # ==========================================
 # SECTION 11: EMAIL SETTINGS
+# START
 # ==========================================
 
 EMAIL_BACKEND = os.environ.get(
@@ -219,9 +281,15 @@ CONTACT_EMAIL = os.environ.get(
     'support@mycarmarket.com.au'
 )
 
+# ==========================================
+# SECTION 11: EMAIL SETTINGS
+# END
+# ==========================================
+
 
 # ==========================================
 # SECTION 12: SITE URL
+# START
 # ==========================================
 
 SITE_URL = os.environ.get(
@@ -229,26 +297,44 @@ SITE_URL = os.environ.get(
     'http://127.0.0.1:8000'
 )
 
+# ==========================================
+# SECTION 12: SITE URL
+# END
+# ==========================================
+
 
 # ==========================================
 # SECTION 13: GOOGLE SERVICES
+# START
 # ==========================================
 
 GOOGLE_ANALYTICS_ID = os.environ.get('GOOGLE_ANALYTICS_ID', '')
 GOOGLE_ADSENSE_ID = os.environ.get('GOOGLE_ADSENSE_ID', '')
 GOOGLE_SITE_VERIFICATION = os.environ.get('GOOGLE_SITE_VERIFICATION', '')
 
+# ==========================================
+# SECTION 13: GOOGLE SERVICES
+# END
+# ==========================================
+
 
 # ==========================================
 # SECTION 14: GOOGLE RECAPTCHA
+# START
 # ==========================================
 
 RECAPTCHA_SITE_KEY = os.environ.get('RECAPTCHA_SITE_KEY', '')
 RECAPTCHA_SECRET_KEY = os.environ.get('RECAPTCHA_SECRET_KEY', '')
 
+# ==========================================
+# SECTION 14: GOOGLE RECAPTCHA
+# END
+# ==========================================
+
 
 # ==========================================
 # SECTION 15: PRODUCTION SECURITY SETTINGS
+# START
 # ==========================================
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -274,9 +360,15 @@ if not DEBUG:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
 
+# ==========================================
+# SECTION 15: PRODUCTION SECURITY SETTINGS
+# END
+# ==========================================
+
 
 # ==========================================
 # SECTION 16: LOGGING
+# START
 # ==========================================
 
 LOG_DIR = BASE_DIR / 'logs'
@@ -314,9 +406,20 @@ LOGGING = {
     },
 }
 
+# ==========================================
+# SECTION 16: LOGGING
+# END
+# ==========================================
+
 
 # ==========================================
 # SECTION 17: DEFAULT AUTO FIELD
+# START
 # ==========================================
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# ==========================================
+# SECTION 17: DEFAULT AUTO FIELD
+# END
+# ==========================================

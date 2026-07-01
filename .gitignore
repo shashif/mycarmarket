@@ -15,3 +15,7 @@ media/
 # Virtual Environment
 venv/
 staticfiles/logs/*.log
+
+# Production generated files
+staticfiles/
+logs/*.log
