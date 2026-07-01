@@ -1,8 +1,8 @@
 <!-- ==========================================
 MyCarMarket
-Version: v1.4.5
+Version: v1.4.6
 File: vehicles/templates/vehicles/car_form.html
-Car Form + Seller AI Listing Assistant
+Description: Car Form + Seller AI Listing Assistant + Smart Price Guide
 ========================================== -->
 
 <!DOCTYPE html>
@@ -13,7 +13,7 @@ Car Form + Seller AI Listing Assistant
     <title>Sell / Edit Car - MyCarMarket</title>
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/car_form.css' %}?v=145">
+    <link rel="stylesheet" href="{% static 'css/car_form.css' %}?v=146">
 </head>
 
 <body>
@@ -30,6 +30,11 @@ Car Form + Seller AI Listing Assistant
 
     <div class="form-layout">
 
+        <!-- ==========================================
+        SECTION 01: MAIN FORM
+        START
+        ========================================== -->
+
         <div class="form-main">
 
             <form method="POST" enctype="multipart/form-data">
@@ -37,9 +42,82 @@ Car Form + Seller AI Listing Assistant
 
                 {{ form.as_p }}
 
+                <!-- ==========================================
+                SECTION 02: SMART PRICE GUIDE
+                START
+                ========================================== -->
+
+                <div class="smart-price-box" id="smartPriceBox" style="display:none;">
+
+                    <h2>💰 Smart Price Guide</h2>
+
+                    <p class="smart-price-subtitle">
+                        Estimated market value based on similar MyCarMarket listings.
+                    </p>
+
+                    <div class="smart-price-loading" id="smartPriceLoading">
+                        Checking similar vehicles...
+                    </div>
+
+                    <div class="smart-price-result" id="smartPriceResult" style="display:none;">
+
+                        <p>Estimated Market Range</p>
+
+                        <strong>
+                            $<span id="smartPriceMin">0</span>
+                            -
+                            $<span id="smartPriceMax">0</span>
+                        </strong>
+
+                        <p class="recommended-price">
+                            ⭐ Recommended Price:
+                            <strong>
+                                $<span id="smartPriceRecommended">0</span>
+                            </strong>
+                        </p>
+
+                        <p class="smart-price-note">
+                            Based on
+                            <span id="smartPriceCount">0</span>
+                            similar vehicles.
+                        </p>
+
+                        <p class="smart-price-confidence">
+                            <span id="smartPriceStars"></span>
+                            <span id="smartPriceConfidence"></span>
+                        </p>
+
+                        <button
+                            type="button"
+                            class="btn"
+                            id="useSuggestedPriceBtn">
+                            Use Suggested Price
+                        </button>
+
+                    </div>
+
+                    <div
+                        class="smart-price-error"
+                        id="smartPriceError"
+                        style="display:none;">
+                    </div>
+
+                </div>
+
+                <!-- ==========================================
+                SECTION 02: SMART PRICE GUIDE
+                END
+                ========================================== -->
+
+                <!-- ==========================================
+                SECTION 03: CURRENT IMAGES
+                START
+                ========================================== -->
+
                 {% if car and car.images.all %}
                     <div class="image-section">
                         <h2>Current Images</h2>
+
                         <p class="help-text">
                             Choose primary image or delete old images.
                         </p>
@@ -50,24 +128,30 @@ Car Form + Seller AI Listing Assistant
                                     <img src="{{ image.image.url }}" alt="Car image">
 
                                     {% if image.is_primary %}
-                                        <div class="primary-badge">Primary Image</div>
+                                        <div class="primary-badge">
+                                            Primary Image
+                                        </div>
                                     {% endif %}
 
                                     <div class="image-actions">
+
                                         <label>
-                                            <input type="radio"
-                                                   name="primary_image"
-                                                   value="{{ image.id }}"
-                                                   {% if image.is_primary %}checked{% endif %}>
+                                            <input
+                                                type="radio"
+                                                name="primary_image"
+                                                value="{{ image.id }}"
+                                                {% if image.is_primary %}checked{% endif %}>
                                             Set as primary
                                         </label>
 
                                         <label>
-                                            <input type="checkbox"
-                                                   name="delete_images"
-                                                   value="{{ image.id }}">
+                                            <input
+                                                type="checkbox"
+                                                name="delete_images"
+                                                value="{{ image.id }}">
                                             Delete this image
                                         </label>
+
                                     </div>
                                 </div>
                             {% endfor %}
@@ -75,19 +159,50 @@ Car Form + Seller AI Listing Assistant
                     </div>
                 {% endif %}
 
+                <!-- ==========================================
+                SECTION 03: CURRENT IMAGES
+                END
+                ========================================== -->
+
+                <!-- ==========================================
+                SECTION 04: IMAGE UPLOAD
+                START
+                ========================================== -->
+
                 <div class="upload-box">
                     {% if car %}
                         <label>Upload New Images</label>
-                        <input type="file" name="images" multiple accept="image/*">
+
+                        <input
+                            type="file"
+                            name="images"
+                            multiple
+                            accept="image/*">
 
                         <p class="help-text">
-                            New images will be added without removing old images. Image quality will be kept original.
+                            New images will be added without removing old images.
+                            Image quality will be kept original.
                         </p>
                     {% else %}
                         <label>Upload Car Images</label>
-                        <input type="file" name="images" multiple accept="image/*">
+
+                        <input
+                            type="file"
+                            name="images"
+                            multiple
+                            accept="image/*">
                     {% endif %}
                 </div>
+
+                <!-- ==========================================
+                SECTION 04: IMAGE UPLOAD
+                END
+                ========================================== -->
+
+                <!-- ==========================================
+                SECTION 05: SUBMIT BUTTON
+                START
+                ========================================== -->
 
                 <button type="submit" class="btn">
                     {% if car %}
@@ -96,9 +211,25 @@ Car Form + Seller AI Listing Assistant
                         Publish Listing
                     {% endif %}
                 </button>
+
+                <!-- ==========================================
+                SECTION 05: SUBMIT BUTTON
+                END
+                ========================================== -->
+
             </form>
 
         </div>
+
+        <!-- ==========================================
+        SECTION 01: MAIN FORM
+        END
+        ========================================== -->
+
+        <!-- ==========================================
+        SECTION 06: AI LISTING ASSISTANT
+        START
+        ========================================== -->
 
         <aside class="ai-listing-assistant">
 
@@ -111,6 +242,7 @@ Car Form + Seller AI Listing Assistant
 
                 <div class="ai-section">
                     <h3>Suggested Title</h3>
+
                     <p class="ai-suggestion">
                         {{ ai_listing_assistant.suggested_title }}
                     </p>
@@ -118,6 +250,7 @@ Car Form + Seller AI Listing Assistant
 
                 <div class="ai-section">
                     <h3>Suggested Description</h3>
+
                     <p class="ai-description">
                         {{ ai_listing_assistant.suggested_description }}
                     </p>
@@ -128,9 +261,7 @@ Car Form + Seller AI Listing Assistant
 
                     {% if ai_listing_assistant.price_guidance.has_data %}
                         <div class="price-guidance-box">
-                            <p>
-                                Suggested range:
-                            </p>
+                            <p>Suggested range:</p>
 
                             <strong>
                                 $ {{ ai_listing_assistant.price_guidance.low_price }}
@@ -145,7 +276,8 @@ Car Form + Seller AI Listing Assistant
                         </div>
 
                         <p class="ai-small-note">
-                            Based on {{ ai_listing_assistant.price_guidance.comparison_count }}
+                            Based on
+                            {{ ai_listing_assistant.price_guidance.comparison_count }}
                             similar active listings.
                         </p>
                     {% else %}
@@ -173,9 +305,30 @@ Car Form + Seller AI Listing Assistant
 
         </aside>
 
+        <!-- ==========================================
+        SECTION 06: AI LISTING ASSISTANT
+        END
+        ========================================== -->
+
     </div>
 
 </div>
+
+<!-- ==========================================
+SECTION 07: SMART PRICE JAVASCRIPT
+START
+========================================== -->
+
+<script>
+    window.PRICE_SUGGESTION_API_URL = "{% url 'price_suggestion_api' %}";
+</script>
+
+<script src="{% static 'js/price_suggestion.js' %}?v=146"></script>
+
+<!-- ==========================================
+SECTION 07: SMART PRICE JAVASCRIPT
+END
+========================================== -->
 
 </body>
 </html>

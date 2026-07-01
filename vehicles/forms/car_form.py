@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.9.5
+# Version: v1.4.6
 # File: vehicles/forms/car_form.py
-# Car Form
+# Description: Car Form + Better Field Order for Smart Price Guide
 # ==========================================
 
 from django import forms
@@ -19,7 +19,6 @@ class CarForm(forms.ModelForm):
             'make',
             'model',
             'year',
-            'price',
             'kilometres',
             'body_type',
             'transmission',
@@ -27,6 +26,7 @@ class CarForm(forms.ModelForm):
             'state',
             'suburb',
             'description',
+            'price',
             'seller_name',
             'seller_email',
             'seller_phone',
@@ -47,10 +47,6 @@ class CarForm(forms.ModelForm):
             }),
 
             'year': forms.NumberInput(attrs={
-                'class': 'form-control'
-            }),
-
-            'price': forms.NumberInput(attrs={
                 'class': 'form-control'
             }),
 
@@ -82,6 +78,11 @@ class CarForm(forms.ModelForm):
             'description': forms.Textarea(attrs={
                 'class': 'form-control',
                 'rows': 5
+            }),
+
+            'price': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter asking price'
             }),
 
             'seller_name': forms.TextInput(attrs={

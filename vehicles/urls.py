@@ -156,4 +156,14 @@ urlpatterns = [
         views.delete_car,
         name='delete_car'
     ),
+
+    # ==========================================
+# Smart Price Suggestion API
+# ==========================================
+
+path(
+    'api/price-suggestion/',
+    views.price_suggestion_api,
+    name='price_suggestion_api'
+),
 ]

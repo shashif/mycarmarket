@@ -16,6 +16,7 @@ from .dealer_package_select_views import dealer_package_select
 from .dealer_profile_edit_views import edit_dealer_profile
 from .dealer_dashboard_views import dealer_dashboard
 from .enquiry_views import dealer_enquiries
+from .price_suggestion_views import price_suggestion_api
 
 # NEW
 from .dealer_review_views import (
