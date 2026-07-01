@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.9.4
+# Version: v1.5.0
 # File: vehicles/admin/__init__.py
-# Admin Imports
+# Description: Admin Imports + Dealer Package Admin
 # ==========================================
 
 from .car_image_admin import *
@@ -12,3 +12,5 @@ from .favourite_admin import *
 from .dealer_admin import *
 from .payment_admin import *
 from .dealer_review_admin import *
+from .package_admin import *
+from .stripe_settings_admin import StripeSettingsAdmin

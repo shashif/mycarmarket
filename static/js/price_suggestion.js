@@ -1,6 +1,6 @@
 /* ==========================================
 MyCarMarket
-Version: v1.4.6
+Version: v1.4.7
 File: static/js/price_suggestion.js
 Description: Smart Price Suggestion AJAX for Seller Form
 ========================================== */
@@ -31,18 +31,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let latestRecommendedPrice = null;
     let timer = null;
+    let controller = null;
 
     if (!smartPriceBox) {
-        console.log("Smart Price Guide box not found.");
         return;
     }
 
     function getFieldValue(field) {
-        if (!field) {
-            return "";
-        }
-
-        return field.value.trim();
+        return field ? field.value.trim() : "";
     }
 
     function hasMinimumData() {
@@ -55,6 +51,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function formatNumber(value) {
         return Number(value).toLocaleString("en-AU");
+    }
+
+    function hideBox() {
+        smartPriceBox.style.display = "none";
     }
 
     function showLoading() {
@@ -77,11 +77,13 @@ document.addEventListener("DOMContentLoaded", function () {
         smartPriceRecommended.innerText = formatNumber(data.recommended);
         smartPriceCount.innerText = data.count;
 
-        smartPriceStars.innerText = "★".repeat(data.stars);
-        smartPriceConfidence.innerText = data.confidence + " Confidence";
+        smartPriceStars.innerText = "★".repeat(data.stars || 1);
+        smartPriceConfidence.innerText = (data.confidence || "Low") + " Confidence";
     }
 
     function showError(message) {
+        latestRecommendedPrice = null;
+
         smartPriceBox.style.display = "block";
         smartPriceLoading.style.display = "none";
         smartPriceResult.style.display = "none";
@@ -91,13 +93,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function fetchPriceSuggestion() {
         if (!hasMinimumData()) {
+            hideBox();
             return;
         }
 
         if (!window.PRICE_SUGGESTION_API_URL) {
-            showError("Price suggestion API URL missing.");
+            showError("Price suggestion is not available right now.");
             return;
         }
+
+        if (controller) {
+            controller.abort();
+        }
+
+        controller = new AbortController();
 
         showLoading();
 
@@ -111,8 +120,14 @@ document.addEventListener("DOMContentLoaded", function () {
             state: getFieldValue(stateField),
         });
 
-        fetch(window.PRICE_SUGGESTION_API_URL + "?" + params.toString())
+        fetch(window.PRICE_SUGGESTION_API_URL + "?" + params.toString(), {
+            signal: controller.signal
+        })
             .then(function (response) {
+                if (!response.ok) {
+                    throw new Error("Network error");
+                }
+
                 return response.json();
             })
             .then(function (data) {
@@ -122,7 +137,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     showError(data.message || "No price suggestion available yet.");
                 }
             })
-            .catch(function () {
+            .catch(function (error) {
+                if (error.name === "AbortError") {
+                    return;
+                }
+
                 showError("Unable to load price suggestion right now.");
             });
     }
@@ -132,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         timer = setTimeout(function () {
             fetchPriceSuggestion();
-        }, 600);
+        }, 500);
     }
 
     [
@@ -145,8 +164,8 @@ document.addEventListener("DOMContentLoaded", function () {
         stateField,
     ].forEach(function (field) {
         if (field) {
+            field.addEventListener("input", schedulePriceSuggestion);
             field.addEventListener("change", schedulePriceSuggestion);
-            field.addEventListener("keyup", schedulePriceSuggestion);
         }
     });
 

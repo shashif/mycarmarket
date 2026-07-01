@@ -1,22 +1,110 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.2.2
+# Version: v1.5.0
 # File: vehicles/models/dealer_models.py
-# Dealer Profile Model + Professional Dealer Page Fields
+# Description: Dealer Profile + Admin Editable Dealer Packages
 # ==========================================
 
 from django.db import models
 from django.contrib.auth.models import User
 
 
+# ==========================================
+# SECTION 01: DEALER PACKAGE MODEL
+# START
+# ==========================================
+
+class DealerPackage(models.Model):
+
+    PACKAGE_CHOICES = [
+        ('free', 'Free'),
+        ('starter', 'Starter'),
+        ('professional', 'Professional'),
+        ('premium', 'Premium'),
+        ('enterprise', 'Enterprise'),
+    ]
+
+    name = models.CharField(
+        max_length=20,
+        choices=PACKAGE_CHOICES,
+        unique=True
+    )
+
+    display_name = models.CharField(
+        max_length=100
+    )
+
+    monthly_price = models.DecimalField(
+        max_digits=8,
+        decimal_places=2,
+        default=0
+    )
+
+    max_listings = models.PositiveIntegerField(
+        default=3
+    )
+
+    featured_ads_allowed = models.PositiveIntegerField(
+        default=0
+    )
+
+    is_featured_dealer = models.BooleanField(
+        default=False
+    )
+
+    priority_support = models.BooleanField(
+        default=False
+    )
+
+    is_active = models.BooleanField(
+        default=True
+    )
+
+    sort_order = models.PositiveIntegerField(
+        default=0
+    )
+
+    description = models.TextField(
+        blank=True
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True
+    )
+
+    class Meta:
+        ordering = [
+            'sort_order',
+            'monthly_price',
+        ]
+
+    def __str__(self):
+        return f"{self.display_name} - ${self.monthly_price} AUD"
+
+
+# ==========================================
+# SECTION 01: DEALER PACKAGE MODEL
+# END
+# ==========================================
+
+
+# ==========================================
+# SECTION 02: DEALER PROFILE MODEL
+# START
+# ==========================================
+
 class DealerProfile(models.Model):
 
     PACKAGE_CHOICES = [
         ('free', 'Free'),
-        ('starter', 'Starter - $99 AUD'),
-        ('professional', 'Professional - $299 AUD'),
-        ('premium', 'Premium - $599 AUD'),
-        ('enterprise', 'Enterprise - $999 AUD'),
+        ('starter', 'Starter'),
+        ('professional', 'Professional'),
+        ('premium', 'Premium'),
+        ('enterprise', 'Enterprise'),
     ]
 
     BANNER_POSITION_CHOICES = [
@@ -33,20 +121,9 @@ class DealerProfile(models.Model):
 
     business_name = models.CharField(max_length=150, blank=True)
     business_description = models.TextField(blank=True)
-
-    business_slogan = models.CharField(
-        max_length=160,
-        blank=True
-    )
-
-    years_in_business = models.PositiveIntegerField(
-        default=0
-    )
-
-    dealer_owner_name = models.CharField(
-        max_length=120,
-        blank=True
-    )
+    business_slogan = models.CharField(max_length=160, blank=True)
+    years_in_business = models.PositiveIntegerField(default=0)
+    dealer_owner_name = models.CharField(max_length=120, blank=True)
 
     dealer_owner_title = models.CharField(
         max_length=120,
@@ -60,9 +137,7 @@ class DealerProfile(models.Model):
         null=True
     )
 
-    google_maps_link = models.URLField(
-        blank=True
-    )
+    google_maps_link = models.URLField(blank=True)
 
     logo = models.ImageField(
         upload_to='dealer_logos/',
@@ -83,30 +158,11 @@ class DealerProfile(models.Model):
     )
 
     website = models.URLField(blank=True)
-
-    business_phone = models.CharField(
-        max_length=30,
-        blank=True
-    )
-
-    business_email = models.EmailField(
-        blank=True
-    )
-
-    address = models.CharField(
-        max_length=255,
-        blank=True
-    )
-
-    abn = models.CharField(
-        max_length=30,
-        blank=True
-    )
-
-    opening_hours = models.CharField(
-        max_length=255,
-        blank=True
-    )
+    business_phone = models.CharField(max_length=30, blank=True)
+    business_email = models.EmailField(blank=True)
+    address = models.CharField(max_length=255, blank=True)
+    abn = models.CharField(max_length=30, blank=True)
+    opening_hours = models.CharField(max_length=255, blank=True)
 
     monday_hours = models.CharField(
         max_length=100,
@@ -210,7 +266,6 @@ class DealerProfile(models.Model):
     )
 
     is_featured_dealer = models.BooleanField(default=False)
-
     max_listings = models.PositiveIntegerField(default=3)
     featured_ads_allowed = models.PositiveIntegerField(default=0)
     priority_support = models.BooleanField(default=False)
@@ -249,7 +304,10 @@ class DealerProfile(models.Model):
             return 'Closed'
 
         if open_time and close_time:
-            return f"{open_time.strftime('%I:%M %p')} - {close_time.strftime('%I:%M %p')}"
+            return (
+                f"{open_time.strftime('%I:%M %p')} - "
+                f"{close_time.strftime('%I:%M %p')}"
+            )
 
         return 'Not set'
 
@@ -310,5 +368,11 @@ class DealerProfile(models.Model):
 
 
 # ==========================================
-# END DEALER PROFILE MODEL
+# SECTION 02: DEALER PROFILE MODEL
+# END
+# ==========================================
+
+
+# ==========================================
+# END FILE
 # ==========================================

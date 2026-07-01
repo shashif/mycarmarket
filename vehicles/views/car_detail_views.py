@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.4.4
+# Version: v1.5.3
 # File: vehicles/views/car_detail_views.py
-# Car Detail + Finance Calculator + Safe AI Price Insight + Enquiry + Favourite + Recently Viewed
+# Description: Car Detail + Finance Calculator + Enquiry Email + Moderation Protection
 # ==========================================
 
 from django.shortcuts import render, get_object_or_404, redirect
@@ -18,25 +18,60 @@ from vehicles.models import Car, FavouriteCar
 from vehicles.forms import EnquiryForm
 
 
+# ==========================================
+# SECTION 01: CAR DETAIL VIEW
+# START
+# ==========================================
+
 def car_detail(request, slug):
 
     car = get_object_or_404(Car, slug=slug)
 
-    if not car.is_approved:
+    # ==========================================
+    # SECTION 02: MODERATION PROTECTION
+    # START
+    # ==========================================
+
+    if car.moderation_status != 'approved':
 
         if not request.user.is_authenticated:
-            messages.error(request, 'This listing is waiting for admin approval.')
+            messages.error(
+                request,
+                'This listing is currently unavailable.'
+            )
             return redirect('car_list')
 
-        if car.seller != request.user and not request.user.is_staff:
-            messages.error(request, 'This listing is waiting for admin approval.')
+        if (
+            car.seller != request.user
+            and not request.user.is_staff
+        ):
+            messages.error(
+                request,
+                'This listing is currently unavailable.'
+            )
             return redirect('car_list')
+
+    # ==========================================
+    # SECTION 02: MODERATION PROTECTION
+    # END
+    # ==========================================
+
+    # ==========================================
+    # SECTION 03: VIEW COUNT
+    # START
+    # ==========================================
 
     car.views_count += 1
     car.save(update_fields=['views_count'])
 
     # ==========================================
-    # FINANCE CALCULATOR
+    # SECTION 03: VIEW COUNT
+    # END
+    # ==========================================
+
+    # ==========================================
+    # SECTION 04: FINANCE CALCULATOR
+    # START
     # ==========================================
 
     car_price = float(car.price)
@@ -99,10 +134,13 @@ def car_detail(request, slug):
     }
 
     # ==========================================
-    # SAFE AI PRICE INSIGHT
-    # Minimum 5 comparable cars required
-    # Uses MyCarMarket listings only
-    # No external AI API
+    # SECTION 04: FINANCE CALCULATOR
+    # END
+    # ==========================================
+
+    # ==========================================
+    # SECTION 05: AI PRICE INSIGHT
+    # START
     # ==========================================
 
     minimum_comparable_count = 5
@@ -110,6 +148,7 @@ def car_detail(request, slug):
     ai_comparable_cars = Car.objects.filter(
         is_approved=True,
         is_active=True,
+        moderation_status='approved',
         make__iexact=car.make,
         model__iexact=car.model,
         year__gte=car.year - 2,
@@ -122,6 +161,7 @@ def car_detail(request, slug):
         ai_comparable_cars = Car.objects.filter(
             is_approved=True,
             is_active=True,
+            moderation_status='approved',
             make__iexact=car.make,
             model__iexact=car.model
         ).exclude(pk=car.pk)
@@ -132,6 +172,7 @@ def car_detail(request, slug):
         ai_comparable_cars = Car.objects.filter(
             is_approved=True,
             is_active=True,
+            moderation_status='approved',
             make__iexact=car.make,
             body_type=car.body_type
         ).exclude(pk=car.pk)
@@ -182,8 +223,7 @@ def car_detail(request, slug):
                 status = 'above'
                 message = (
                     'This vehicle appears to be priced above similar vehicles '
-                    'currently listed on MyCarMarket Australia. Buyers may wish '
-                    'to compare other available listings.'
+                    'currently listed on MyCarMarket Australia.'
                 )
 
             else:
@@ -207,7 +247,13 @@ def car_detail(request, slug):
             }
 
     # ==========================================
-    # RECENTLY VIEWED
+    # SECTION 05: AI PRICE INSIGHT
+    # END
+    # ==========================================
+
+    # ==========================================
+    # SECTION 06: RECENTLY VIEWED CARS
+    # START
     # ==========================================
 
     recently_viewed = request.session.get('recently_viewed_cars', [])
@@ -229,14 +275,24 @@ def car_detail(request, slug):
             recent_car = Car.objects.filter(
                 id=recent_id,
                 is_approved=True,
-                is_active=True
+                is_active=True,
+                moderation_status='approved'
             ).first()
 
             if recent_car:
                 recently_viewed_cars.append(recent_car)
 
-    images = car.images.all()
+    # ==========================================
+    # SECTION 06: RECENTLY VIEWED CARS
+    # END
+    # ==========================================
 
+    # ==========================================
+    # SECTION 07: SHARE + FAVOURITE
+    # START
+    # ==========================================
+
+    images = car.images.all()
     share_url = request.build_absolute_uri()
 
     share_text = (
@@ -252,6 +308,16 @@ def car_detail(request, slug):
             car=car
         ).exists()
 
+    # ==========================================
+    # SECTION 07: SHARE + FAVOURITE
+    # END
+    # ==========================================
+
+    # ==========================================
+    # SECTION 08: DEALER STATS
+    # START
+    # ==========================================
+
     dealer_active_cars_count = 0
     dealer_featured_cars_count = 0
     dealer_member_since = None
@@ -262,18 +328,19 @@ def car_detail(request, slug):
         dealer_active_cars_count = Car.objects.filter(
             seller=car.seller,
             is_approved=True,
-            is_active=True
+            is_active=True,
+            moderation_status='approved'
         ).count()
 
         dealer_featured_cars_count = Car.objects.filter(
             seller=car.seller,
             is_approved=True,
             is_active=True,
+            moderation_status='approved',
             is_featured=True
         ).count()
 
         dealer_member_since = car.seller.date_joined
-
         today = timezone.now()
 
         dealer_years_active = today.year - dealer_member_since.year
@@ -284,9 +351,20 @@ def car_detail(request, slug):
         ):
             dealer_years_active -= 1
 
+    # ==========================================
+    # SECTION 08: DEALER STATS
+    # END
+    # ==========================================
+
+    # ==========================================
+    # SECTION 09: SIMILAR CARS
+    # START
+    # ==========================================
+
     similar_cars = Car.objects.filter(
         is_approved=True,
         is_active=True,
+        moderation_status='approved',
         make__iexact=car.make,
         body_type=car.body_type
     ).exclude(pk=car.pk).order_by('-created_at')[:6]
@@ -295,6 +373,7 @@ def car_detail(request, slug):
         similar_cars = Car.objects.filter(
             is_approved=True,
             is_active=True,
+            moderation_status='approved',
             make__iexact=car.make
         ).exclude(pk=car.pk).order_by('-created_at')[:6]
 
@@ -302,14 +381,26 @@ def car_detail(request, slug):
         similar_cars = Car.objects.filter(
             is_approved=True,
             is_active=True,
+            moderation_status='approved',
             body_type=car.body_type
         ).exclude(pk=car.pk).order_by('-created_at')[:6]
 
     if not similar_cars.exists():
         similar_cars = Car.objects.filter(
             is_approved=True,
-            is_active=True
+            is_active=True,
+            moderation_status='approved'
         ).exclude(pk=car.pk).order_by('-created_at')[:6]
+
+    # ==========================================
+    # SECTION 09: SIMILAR CARS
+    # END
+    # ==========================================
+
+    # ==========================================
+    # SECTION 10: ENQUIRY FORM + EMAIL
+    # START
+    # ==========================================
 
     if request.method == 'POST':
 
@@ -322,6 +413,8 @@ def car_detail(request, slug):
             enquiry.dealer = car.seller
             enquiry.save()
 
+            enquiry_reference = f"ENQ-{enquiry.id:06d}"
+
             seller_email = ''
 
             if car.seller and car.seller.email:
@@ -330,41 +423,118 @@ def car_detail(request, slug):
             elif car.seller_email:
                 seller_email = car.seller_email
 
-            if seller_email:
+            seller_subject = (
+                f"{enquiry_reference} - New enquiry for {car.title}"
+            )
 
-                subject = f"New enquiry for {car.title} - MyCarMarket Australia"
+            seller_message = (
+                f"Hello,\n\n"
+                f"You have received a new enquiry on MyCarMarket Australia.\n\n"
+                f"Enquiry Reference: {enquiry_reference}\n\n"
+                f"Car Details:\n"
+                f"{car.year} {car.make} {car.model}\n"
+                f"Title: {car.title}\n"
+                f"Price: ${car.price}\n"
+                f"Kilometres: {car.kilometres} km\n"
+                f"Location: {car.display_location()}\n\n"
+                f"Buyer Details:\n"
+                f"Name: {enquiry.name}\n"
+                f"Email: {enquiry.email}\n"
+                f"Phone: {enquiry.phone}\n\n"
+                f"Message:\n"
+                f"{enquiry.message}\n\n"
+                f"Listing Link:\n"
+                f"{share_url}\n\n"
+                f"Regards,\n"
+                f"MyCarMarket Australia"
+            )
 
-                message = (
-                    f"Hello,\n\n"
-                    f"You have received a new enquiry on MyCarMarket Australia.\n\n"
-                    f"Car Details:\n"
-                    f"{car.year} {car.make} {car.model}\n"
-                    f"Title: {car.title}\n"
-                    f"Price: ${car.price}\n"
-                    f"Kilometres: {car.kilometres} km\n"
-                    f"Location: {car.display_location()}\n\n"
-                    f"Buyer Details:\n"
-                    f"Name: {enquiry.name}\n"
-                    f"Email: {enquiry.email}\n"
-                    f"Phone: {enquiry.phone}\n\n"
-                    f"Message:\n"
-                    f"{enquiry.message}\n\n"
-                    f"Listing Link:\n"
-                    f"{share_url}\n\n"
-                    f"Regards,\n"
-                    f"MyCarMarket Australia"
-                )
+            buyer_subject = (
+                f"{enquiry_reference} - Your enquiry was sent"
+            )
 
-                try:
+            buyer_message = (
+                f"Hello {enquiry.name},\n\n"
+                f"Thank you for using MyCarMarket Australia.\n\n"
+                f"Your enquiry has been sent to the seller.\n\n"
+                f"Enquiry Reference: {enquiry_reference}\n\n"
+                f"Car Details:\n"
+                f"{car.year} {car.make} {car.model}\n"
+                f"Title: {car.title}\n"
+                f"Price: ${car.price}\n"
+                f"Kilometres: {car.kilometres} km\n"
+                f"Location: {car.display_location()}\n\n"
+                f"Your Message:\n"
+                f"{enquiry.message}\n\n"
+                f"Listing Link:\n"
+                f"{share_url}\n\n"
+                f"Regards,\n"
+                f"MyCarMarket Australia"
+            )
+
+            admin_subject = (
+                f"{enquiry_reference} - New enquiry received"
+            )
+
+            admin_message = (
+                f"New enquiry received on MyCarMarket Australia.\n\n"
+                f"Enquiry Reference: {enquiry_reference}\n\n"
+                f"Car: {car.year} {car.make} {car.model}\n"
+                f"Title: {car.title}\n"
+                f"Price: ${car.price}\n"
+                f"Location: {car.display_location()}\n\n"
+                f"Buyer:\n"
+                f"Name: {enquiry.name}\n"
+                f"Email: {enquiry.email}\n"
+                f"Phone: {enquiry.phone}\n\n"
+                f"Seller Email: {seller_email or 'No seller email'}\n\n"
+                f"Message:\n"
+                f"{enquiry.message}\n\n"
+                f"Listing Link:\n"
+                f"{share_url}"
+            )
+
+            try:
+                if seller_email:
                     send_mail(
-                        subject,
-                        message,
+                        seller_subject,
+                        seller_message,
                         settings.DEFAULT_FROM_EMAIL,
                         [seller_email],
-                        fail_silently=True
+                        fail_silently=False
                     )
-                except Exception:
-                    pass
+
+                if enquiry.email:
+                    send_mail(
+                        buyer_subject,
+                        buyer_message,
+                        settings.DEFAULT_FROM_EMAIL,
+                        [enquiry.email],
+                        fail_silently=False
+                    )
+
+                admin_email = getattr(
+                    settings,
+                    'CONTACT_EMAIL',
+                    ''
+                )
+
+                if admin_email:
+                    send_mail(
+                        admin_subject,
+                        admin_message,
+                        settings.DEFAULT_FROM_EMAIL,
+                        [admin_email],
+                        fail_silently=False
+                    )
+
+            except Exception:
+                messages.warning(
+                    request,
+                    'Your enquiry was saved, but email notification could not be sent.'
+                )
+
+                return redirect('car_detail', slug=car.slug)
 
             messages.success(
                 request,
@@ -391,6 +561,16 @@ def car_detail(request, slug):
             }
         )
 
+    # ==========================================
+    # SECTION 10: ENQUIRY FORM + EMAIL
+    # END
+    # ==========================================
+
+    # ==========================================
+    # SECTION 11: SITE SETTINGS + RENDER
+    # START
+    # ==========================================
+
     settings_obj = SiteSettings.objects.first()
 
     return render(
@@ -414,3 +594,19 @@ def car_detail(request, slug):
             'ai_price_insight': ai_price_insight,
         }
     )
+
+# ==========================================
+# SECTION 11: SITE SETTINGS + RENDER
+# END
+# ==========================================
+
+
+# ==========================================
+# SECTION 01: CAR DETAIL VIEW
+# END
+# ==========================================
+
+
+# ==========================================
+# END FILE
+# ==========================================

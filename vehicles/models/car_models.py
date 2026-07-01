@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.0.5
+# Version: v1.5.3
 # File: vehicles/models/car_models.py
-# Car + Car Image Models
+# Description: Car + Car Image Models + Vehicle Moderation Fields
 # ==========================================
 
 from django.db import models
@@ -53,6 +53,13 @@ STATE_CHOICES = [
     ('TAS', 'Tasmania'),
     ('ACT', 'Australian Capital Territory'),
     ('NT', 'Northern Territory'),
+]
+
+MODERATION_STATUS_CHOICES = [
+    ('pending', 'Pending Review'),
+    ('approved', 'Approved'),
+    ('rejected', 'Rejected'),
+    ('suspended', 'Suspended'),
 ]
 
 # ==========================================
@@ -120,7 +127,47 @@ class Car(models.Model):
 
     is_active = models.BooleanField(default=True)
     is_verified_listing = models.BooleanField(default=False)
+
     is_approved = models.BooleanField(default=False)
+
+    moderation_status = models.CharField(
+        max_length=20,
+        choices=MODERATION_STATUS_CHOICES,
+        default='pending'
+    )
+
+    approved_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='approved_cars'
+    )
+
+    approved_at = models.DateTimeField(
+        null=True,
+        blank=True
+    )
+
+    rejected_reason = models.TextField(
+        blank=True
+    )
+
+    admin_note = models.TextField(
+        blank=True
+    )
+
+    suspended_reason = models.TextField(
+        blank=True
+    )
+
+    is_reported = models.BooleanField(
+        default=False
+    )
+
+    report_count = models.PositiveIntegerField(
+        default=0
+    )
 
     views_count = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -130,6 +177,17 @@ class Car(models.Model):
     # ==========================================
 
     def save(self, *args, **kwargs):
+
+        if self.moderation_status == 'approved':
+            self.is_approved = True
+            self.is_active = True
+
+        if self.moderation_status in ['pending', 'rejected', 'suspended']:
+            self.is_approved = False
+
+        if self.moderation_status == 'suspended':
+            self.is_active = False
+
         if not self.slug:
             base_slug = slugify(
                 f"{self.year}-{self.make}-{self.model}-{self.title}"
@@ -148,6 +206,30 @@ class Car(models.Model):
             self.slug = slug
 
         super().save(*args, **kwargs)
+
+    # ==========================================
+    # MODERATION HELPERS
+    # ==========================================
+
+    def moderation_badge(self):
+
+        if self.moderation_status == 'approved':
+            return '✅ Approved'
+
+        if self.moderation_status == 'rejected':
+            return '❌ Rejected'
+
+        if self.moderation_status == 'suspended':
+            return '🚫 Suspended'
+
+        return '⏳ Pending Review'
+
+    def can_be_public(self):
+        return (
+            self.is_active
+            and self.is_approved
+            and self.moderation_status == 'approved'
+        )
 
     # ==========================================
     # DISPLAY HELPERS

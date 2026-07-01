@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.4.2
+# Version: v1.5.3
 # File: vehicles/views/car_list_views.py
-# Featured Cars Filter + Pagination Support
+# Description: Public Car List + Moderation Approved Vehicle Filter
 # ==========================================
 
 from django.shortcuts import render
@@ -16,7 +16,8 @@ def car_list(request):
 
     cars = Car.objects.filter(
         is_approved=True,
-        is_active=True
+        is_active=True,
+        moderation_status='approved'
     )
 
     query = request.GET.get('q', '').strip()

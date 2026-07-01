@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.4.3
+# Version: v1.5.1
 # File: core/admin.py
-# Site Settings Admin + Homepage + Car Detail Ads
+# Description: Site Settings Admin + Ads + Stripe Payment Settings
 # ==========================================
 
 from django.contrib import admin
@@ -53,7 +53,45 @@ class SiteSettingsAdmin(admin.ModelAdmin):
                 )
             }
         ),
+        (
+            'Stripe Main Settings',
+            {
+                'fields': (
+                    'stripe_enabled',
+                    'stripe_mode',
+                    'stripe_publishable_key',
+                    'stripe_secret_key',
+                    'stripe_webhook_secret',
+                )
+            }
+        ),
+        (
+            'Stripe Package Price IDs',
+            {
+                'fields': (
+                    'stripe_price_starter',
+                    'stripe_price_professional',
+                    'stripe_price_premium',
+                    'stripe_price_enterprise',
+                )
+            }
+        ),
+        (
+            'Payment Messages',
+            {
+                'fields': (
+                    'payment_success_message',
+                    'payment_cancelled_message',
+                )
+            }
+        ),
     )
+
+    def has_add_permission(self, request):
+        return not SiteSettings.objects.exists()
+
+    def has_delete_permission(self, request, obj=None):
+        return False
 
     def hero_image_preview(self, obj):
         if obj and obj.hero_image:
@@ -61,6 +99,7 @@ class SiteSettingsAdmin(admin.ModelAdmin):
                 '<img src="{}" style="max-height:120px;border-radius:10px;">',
                 obj.hero_image.url
             )
+
         return "No Hero Image"
 
     hero_image_preview.short_description = "Current Hero Image"
@@ -71,6 +110,7 @@ class SiteSettingsAdmin(admin.ModelAdmin):
                 '<img src="{}" style="max-height:120px;border-radius:10px;">',
                 obj.alternate_google_banner_ad.url
             )
+
         return "No Alternate Banner"
 
     alternate_banner_preview.short_description = "Current Alternate Banner"

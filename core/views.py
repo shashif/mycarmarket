@@ -2,7 +2,7 @@
 # MyCarMarket
 # Version: v1.6.0
 # File: core/views.py
-# Description: Homepage + Custom Error Pages
+# Description: Homepage + Custom Error Pages + Moderation Approved Filters
 # ==========================================
 
 import random
@@ -26,6 +26,7 @@ def home(request):
     featured_queryset = Car.objects.filter(
         is_approved=True,
         is_active=True,
+        moderation_status='approved',
         is_featured=True
     ).order_by(
         '-is_verified_listing',
@@ -54,12 +55,14 @@ def home(request):
         id__in=session_featured_ids,
         is_approved=True,
         is_active=True,
+        moderation_status='approved',
         is_featured=True
     )
 
     latest_cars = Car.objects.filter(
         is_approved=True,
-        is_active=True
+        is_active=True,
+        moderation_status='approved'
     ).order_by(
         '-is_featured',
         '-is_verified_listing',
