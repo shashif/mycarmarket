@@ -1,8 +1,8 @@
 <!-- ==========================================
 MyCarMarket
-Version: v1.4.6
+Version: v1.5.5
 File: vehicles/templates/vehicles/car_form.html
-Description: Car Form + Seller AI Listing Assistant + Smart Price Guide
+Description: Car Form + AI Smart Price Estimation + Seller AI Listing Assistant
 ========================================== -->
 
 <!DOCTYPE html>
@@ -13,7 +13,7 @@ Description: Car Form + Seller AI Listing Assistant + Smart Price Guide
     <title>Sell / Edit Car - MyCarMarket</title>
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/car_form.css' %}?v=146">
+    <link rel="stylesheet" href="{% static 'css/car_form.css' %}?v=155">
 </head>
 
 <body>
@@ -30,11 +30,6 @@ Description: Car Form + Seller AI Listing Assistant + Smart Price Guide
 
     <div class="form-layout">
 
-        <!-- ==========================================
-        SECTION 01: MAIN FORM
-        START
-        ========================================== -->
-
         <div class="form-main">
 
             <form method="POST" enctype="multipart/form-data">
@@ -43,16 +38,15 @@ Description: Car Form + Seller AI Listing Assistant + Smart Price Guide
                 {{ form.as_p }}
 
                 <!-- ==========================================
-                SECTION 02: SMART PRICE GUIDE
-                START
+                SECTION 02: AI SMART PRICE ESTIMATION
                 ========================================== -->
 
                 <div class="smart-price-box" id="smartPriceBox" style="display:none;">
 
-                    <h2>💰 Smart Price Guide</h2>
+                    <h2>🤖 AI Smart Price Estimation</h2>
 
                     <p class="smart-price-subtitle">
-                        Estimated market value based on similar MyCarMarket listings.
+                        Estimated price based on similar approved MyCarMarket listings.
                     </p>
 
                     <div class="smart-price-loading" id="smartPriceLoading">
@@ -61,7 +55,7 @@ Description: Car Form + Seller AI Listing Assistant + Smart Price Guide
 
                     <div class="smart-price-result" id="smartPriceResult" style="display:none;">
 
-                        <p>Estimated Market Range</p>
+                        <p>Estimated Fair Market Range</p>
 
                         <strong>
                             $<span id="smartPriceMin">0</span>
@@ -70,14 +64,14 @@ Description: Car Form + Seller AI Listing Assistant + Smart Price Guide
                         </strong>
 
                         <p class="recommended-price">
-                            ⭐ Recommended Price:
+                            ⭐ Suggested Listing Price:
                             <strong>
                                 $<span id="smartPriceRecommended">0</span>
                             </strong>
                         </p>
 
                         <p class="smart-price-note">
-                            Based on
+                            Compared with
                             <span id="smartPriceCount">0</span>
                             similar vehicles.
                         </p>
@@ -103,16 +97,6 @@ Description: Car Form + Seller AI Listing Assistant + Smart Price Guide
                     </div>
 
                 </div>
-
-                <!-- ==========================================
-                SECTION 02: SMART PRICE GUIDE
-                END
-                ========================================== -->
-
-                <!-- ==========================================
-                SECTION 03: CURRENT IMAGES
-                START
-                ========================================== -->
 
                 {% if car and car.images.all %}
                     <div class="image-section">
@@ -159,16 +143,6 @@ Description: Car Form + Seller AI Listing Assistant + Smart Price Guide
                     </div>
                 {% endif %}
 
-                <!-- ==========================================
-                SECTION 03: CURRENT IMAGES
-                END
-                ========================================== -->
-
-                <!-- ==========================================
-                SECTION 04: IMAGE UPLOAD
-                START
-                ========================================== -->
-
                 <div class="upload-box">
                     {% if car %}
                         <label>Upload New Images</label>
@@ -181,7 +155,6 @@ Description: Car Form + Seller AI Listing Assistant + Smart Price Guide
 
                         <p class="help-text">
                             New images will be added without removing old images.
-                            Image quality will be kept original.
                         </p>
                     {% else %}
                         <label>Upload Car Images</label>
@@ -194,16 +167,6 @@ Description: Car Form + Seller AI Listing Assistant + Smart Price Guide
                     {% endif %}
                 </div>
 
-                <!-- ==========================================
-                SECTION 04: IMAGE UPLOAD
-                END
-                ========================================== -->
-
-                <!-- ==========================================
-                SECTION 05: SUBMIT BUTTON
-                START
-                ========================================== -->
-
                 <button type="submit" class="btn">
                     {% if car %}
                         Update Listing
@@ -212,24 +175,9 @@ Description: Car Form + Seller AI Listing Assistant + Smart Price Guide
                     {% endif %}
                 </button>
 
-                <!-- ==========================================
-                SECTION 05: SUBMIT BUTTON
-                END
-                ========================================== -->
-
             </form>
 
         </div>
-
-        <!-- ==========================================
-        SECTION 01: MAIN FORM
-        END
-        ========================================== -->
-
-        <!-- ==========================================
-        SECTION 06: AI LISTING ASSISTANT
-        START
-        ========================================== -->
 
         <aside class="ai-listing-assistant">
 
@@ -298,37 +246,21 @@ Description: Car Form + Seller AI Listing Assistant + Smart Price Guide
                 </div>
 
                 <p class="ai-disclaimer">
-                    Suggestions are automatically generated from your listing information
-                    and MyCarMarket data only. They are guides, not valuations.
+                    AI estimates are only guides, not official valuations.
                 </p>
             </div>
 
         </aside>
 
-        <!-- ==========================================
-        SECTION 06: AI LISTING ASSISTANT
-        END
-        ========================================== -->
-
     </div>
 
 </div>
-
-<!-- ==========================================
-SECTION 07: SMART PRICE JAVASCRIPT
-START
-========================================== -->
 
 <script>
     window.PRICE_SUGGESTION_API_URL = "{% url 'price_suggestion_api' %}";
 </script>
 
-<script src="{% static 'js/price_suggestion.js' %}?v=146"></script>
-
-<!-- ==========================================
-SECTION 07: SMART PRICE JAVASCRIPT
-END
-========================================== -->
+<script src="{% static 'js/price_suggestion.js' %}?v=155"></script>
 
 </body>
 </html>

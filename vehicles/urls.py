@@ -1,12 +1,13 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.4.0
+# Version: v1.5.5
 # File: vehicles/urls.py
-# SEO URLs + Dealer Dashboard + Dealer Reviews + Payments
+# Description: SEO URLs + Dealer Dashboard + Reviews + Payments + AI Price Estimation
 # ==========================================
 
 from django.urls import path
 from . import views
+from vehicles.views.price_estimate_views import ai_price_estimate
 
 
 urlpatterns = [
@@ -21,6 +22,22 @@ urlpatterns = [
         'car/<slug:slug>/',
         views.car_detail,
         name='car_detail'
+    ),
+
+    # ==========================================
+    # AI Smart Price Estimation API
+    # ==========================================
+
+    path(
+        'ai-price-estimate/',
+        ai_price_estimate,
+        name='ai_price_estimate'
+    ),
+
+    path(
+        'api/price-suggestion/',
+        views.price_suggestion_api,
+        name='price_suggestion_api'
     ),
 
     # ==========================================
@@ -156,14 +173,4 @@ urlpatterns = [
         views.delete_car,
         name='delete_car'
     ),
-
-    # ==========================================
-# Smart Price Suggestion API
-# ==========================================
-
-path(
-    'api/price-suggestion/',
-    views.price_suggestion_api,
-    name='price_suggestion_api'
-),
 ]
