@@ -1,8 +1,8 @@
 <!-- =========================================
 MyCarMarket
-Version: v1.0.6
+Version: v1.5.4
 File: vehicles/templates/vehicles/car_list.html
-Favourite Button on Car List Cards
+Description: Car List Page + AI Search Display + Synced Filters
 ========================================= -->
 
 <!DOCTYPE html>
@@ -13,7 +13,7 @@ Favourite Button on Car List Cards
     <title>Cars for Sale - MyCarMarket Australia</title>
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/car_list.css' %}?v=106">
+    <link rel="stylesheet" href="{% static 'css/car_list.css' %}?v=154">
 </head>
 
 <body>
@@ -24,7 +24,7 @@ Favourite Button on Car List Cards
 
     <div class="page-header">
         <h1>Find Your Next Car</h1>
-        <p>Browse verified, featured and latest cars across Australia.</p>
+        <p>Search naturally, for example: “family SUV under 30k”.</p>
     </div>
 
     <div class="filter-box">
@@ -32,76 +32,118 @@ Favourite Button on Car List Cards
 
             <div class="filter-grid">
 
-                <input type="text" name="q" placeholder="Search make, model, title" value="{{ request.GET.q }}">
-                <input type="text" name="make" placeholder="Make" value="{{ request.GET.make }}">
-                <input type="text" name="model" placeholder="Model" value="{{ request.GET.model }}">
+                <input type="text"
+                       name="q"
+                       placeholder="Try: family SUV under 30k"
+                       value="{{ query }}">
+
+                <input type="text"
+                       name="make"
+                       placeholder="Make"
+                       value="{{ request.GET.make }}">
+
+                <input type="text"
+                       name="model"
+                       placeholder="Model"
+                       value="{{ request.GET.model }}">
 
                 <select name="body_type">
                     <option value="">Body Type</option>
-                    <option value="Sedan" {% if request.GET.body_type == "Sedan" %}selected{% endif %}>Sedan</option>
-                    <option value="SUV" {% if request.GET.body_type == "SUV" %}selected{% endif %}>SUV</option>
-                    <option value="Hatchback" {% if request.GET.body_type == "Hatchback" %}selected{% endif %}>Hatchback</option>
-                    <option value="Ute" {% if request.GET.body_type == "Ute" %}selected{% endif %}>Ute</option>
-                    <option value="Coupe" {% if request.GET.body_type == "Coupe" %}selected{% endif %}>Coupe</option>
-                    <option value="Convertible" {% if request.GET.body_type == "Convertible" %}selected{% endif %}>Convertible</option>
-                    <option value="Wagon" {% if request.GET.body_type == "Wagon" %}selected{% endif %}>Wagon</option>
-                    <option value="Van" {% if request.GET.body_type == "Van" %}selected{% endif %}>Van</option>
-                    <option value="Other" {% if request.GET.body_type == "Other" %}selected{% endif %}>Other</option>
+                    <option value="Sedan" {% if body_type == "Sedan" %}selected{% endif %}>Sedan</option>
+                    <option value="SUV" {% if body_type == "SUV" %}selected{% endif %}>SUV</option>
+                    <option value="Hatchback" {% if body_type == "Hatchback" %}selected{% endif %}>Hatchback</option>
+                    <option value="Ute" {% if body_type == "Ute" %}selected{% endif %}>Ute</option>
+                    <option value="Coupe" {% if body_type == "Coupe" %}selected{% endif %}>Coupe</option>
+                    <option value="Convertible" {% if body_type == "Convertible" %}selected{% endif %}>Convertible</option>
+                    <option value="Wagon" {% if body_type == "Wagon" %}selected{% endif %}>Wagon</option>
+                    <option value="Van" {% if body_type == "Van" %}selected{% endif %}>Van</option>
+                    <option value="Other" {% if body_type == "Other" %}selected{% endif %}>Other</option>
                 </select>
 
                 <select name="transmission">
                     <option value="">Transmission</option>
-                    <option value="Automatic" {% if request.GET.transmission == "Automatic" %}selected{% endif %}>Automatic</option>
-                    <option value="Manual" {% if request.GET.transmission == "Manual" %}selected{% endif %}>Manual</option>
+                    <option value="Automatic" {% if transmission == "Automatic" %}selected{% endif %}>Automatic</option>
+                    <option value="Manual" {% if transmission == "Manual" %}selected{% endif %}>Manual</option>
                 </select>
 
                 <select name="fuel_type">
                     <option value="">Fuel Type</option>
-                    <option value="Petrol" {% if request.GET.fuel_type == "Petrol" %}selected{% endif %}>Petrol</option>
-                    <option value="Diesel" {% if request.GET.fuel_type == "Diesel" %}selected{% endif %}>Diesel</option>
-                    <option value="Hybrid" {% if request.GET.fuel_type == "Hybrid" %}selected{% endif %}>Hybrid</option>
-                    <option value="Electric" {% if request.GET.fuel_type == "Electric" %}selected{% endif %}>Electric</option>
-                    <option value="LPG" {% if request.GET.fuel_type == "LPG" %}selected{% endif %}>LPG</option>
-                    <option value="Other" {% if request.GET.fuel_type == "Other" %}selected{% endif %}>Other</option>
+                    <option value="Petrol" {% if fuel_type == "Petrol" %}selected{% endif %}>Petrol</option>
+                    <option value="Diesel" {% if fuel_type == "Diesel" %}selected{% endif %}>Diesel</option>
+                    <option value="Hybrid" {% if fuel_type == "Hybrid" %}selected{% endif %}>Hybrid</option>
+                    <option value="Electric" {% if fuel_type == "Electric" %}selected{% endif %}>Electric</option>
+                    <option value="LPG" {% if fuel_type == "LPG" %}selected{% endif %}>LPG</option>
+                    <option value="Other" {% if fuel_type == "Other" %}selected{% endif %}>Other</option>
                 </select>
 
                 <select name="state">
                     <option value="">State</option>
-                    <option value="VIC" {% if request.GET.state == "VIC" %}selected{% endif %}>VIC</option>
-                    <option value="NSW" {% if request.GET.state == "NSW" %}selected{% endif %}>NSW</option>
-                    <option value="QLD" {% if request.GET.state == "QLD" %}selected{% endif %}>QLD</option>
-                    <option value="SA" {% if request.GET.state == "SA" %}selected{% endif %}>SA</option>
-                    <option value="WA" {% if request.GET.state == "WA" %}selected{% endif %}>WA</option>
-                    <option value="TAS" {% if request.GET.state == "TAS" %}selected{% endif %}>TAS</option>
-                    <option value="ACT" {% if request.GET.state == "ACT" %}selected{% endif %}>ACT</option>
-                    <option value="NT" {% if request.GET.state == "NT" %}selected{% endif %}>NT</option>
+                    <option value="VIC" {% if state == "VIC" %}selected{% endif %}>VIC</option>
+                    <option value="NSW" {% if state == "NSW" %}selected{% endif %}>NSW</option>
+                    <option value="QLD" {% if state == "QLD" %}selected{% endif %}>QLD</option>
+                    <option value="SA" {% if state == "SA" %}selected{% endif %}>SA</option>
+                    <option value="WA" {% if state == "WA" %}selected{% endif %}>WA</option>
+                    <option value="TAS" {% if state == "TAS" %}selected{% endif %}>TAS</option>
+                    <option value="ACT" {% if state == "ACT" %}selected{% endif %}>ACT</option>
+                    <option value="NT" {% if state == "NT" %}selected{% endif %}>NT</option>
                 </select>
 
-                <input type="text" name="suburb" placeholder="Suburb / City" value="{{ request.GET.suburb }}">
-                <input type="number" name="min_price" placeholder="Min Price" value="{{ request.GET.min_price }}">
-                <input type="number" name="max_price" placeholder="Max Price" value="{{ request.GET.max_price }}">
-                <input type="number" name="min_year" placeholder="Min Year" value="{{ request.GET.min_year }}">
-                <input type="number" name="max_year" placeholder="Max Year" value="{{ request.GET.max_year }}">
+                <input type="text"
+                       name="suburb"
+                       placeholder="Suburb / City"
+                       value="{{ suburb }}">
+
+                <input type="number"
+                       name="min_price"
+                       placeholder="Min Price"
+                       value="{{ min_price }}">
+
+                <input type="number"
+                       name="max_price"
+                       placeholder="Max Price"
+                       value="{{ max_price }}">
+
+                <input type="number"
+                       name="min_year"
+                       placeholder="Min Year"
+                       value="{{ min_year }}">
+
+                <input type="number"
+                       name="max_year"
+                       placeholder="Max Year"
+                       value="{{ max_year }}">
 
                 <select name="sort_by">
-                    <option value="newest" {% if request.GET.sort_by == "newest" %}selected{% endif %}>Newest First</option>
-                    <option value="price_low" {% if request.GET.sort_by == "price_low" %}selected{% endif %}>Price Low to High</option>
-                    <option value="price_high" {% if request.GET.sort_by == "price_high" %}selected{% endif %}>Price High to Low</option>
-                    <option value="km_low" {% if request.GET.sort_by == "km_low" %}selected{% endif %}>KM Low to High</option>
-                    <option value="km_high" {% if request.GET.sort_by == "km_high" %}selected{% endif %}>KM High to Low</option>
-                    <option value="year_new" {% if request.GET.sort_by == "year_new" %}selected{% endif %}>Year Newest</option>
-                    <option value="year_old" {% if request.GET.sort_by == "year_old" %}selected{% endif %}>Year Oldest</option>
+                    <option value="newest" {% if sort_by == "newest" %}selected{% endif %}>Newest First</option>
+                    <option value="price_low" {% if sort_by == "price_low" %}selected{% endif %}>Price Low to High</option>
+                    <option value="price_high" {% if sort_by == "price_high" %}selected{% endif %}>Price High to Low</option>
+                    <option value="km_low" {% if sort_by == "km_low" %}selected{% endif %}>KM Low to High</option>
+                    <option value="km_high" {% if sort_by == "km_high" %}selected{% endif %}>KM High to Low</option>
+                    <option value="year_new" {% if sort_by == "year_new" %}selected{% endif %}>Year Newest</option>
+                    <option value="year_old" {% if sort_by == "year_old" %}selected{% endif %}>Year Oldest</option>
                 </select>
 
             </div>
 
             <div class="filter-actions">
-                <button type="submit" class="search-btn">Search Cars</button>
+                <button type="submit" class="search-btn">AI Search Cars</button>
                 <a href="{% url 'car_list' %}" class="reset-btn">Reset</a>
             </div>
 
         </form>
     </div>
+
+    {% if ai_search_notes %}
+        <div class="ai-search-box">
+            <strong>🤖 AI Search understood:</strong>
+
+            <ul>
+                {% for note in ai_search_notes %}
+                    <li>{{ note }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
 
     {% if cars %}
 
@@ -134,7 +176,9 @@ Favourite Button on Car List Cards
                                   action="{% url 'toggle_favourite' car.slug %}"
                                   class="favourite-form">
                                 {% csrf_token %}
-                                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                                <input type="hidden"
+                                       name="next"
+                                       value="{{ request.get_full_path }}">
 
                                 <button type="submit"
                                         class="favourite-btn"
@@ -182,9 +226,9 @@ Favourite Button on Car List Cards
 
                         <div class="icon-info-grid">
                             <span>🛣 {{ car.kilometres }} km</span>
+                            <span>🚗 {{ car.body_type|default:"N/A" }}</span>
                             <span>⚙️ {{ car.transmission|default:"N/A" }}</span>
                             <span>⛽ {{ car.fuel_type|default:"N/A" }}</span>
-                            <span>👁 {{ car.views_count }} views</span>
                         </div>
 
                         <p class="car-location">
