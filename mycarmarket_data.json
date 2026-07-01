@@ -1,0 +1,1505 @@
+[
+{
+  "model": "core.sitesettings",
+  "pk": 1,
+  "fields": {
+    "hero_image": "site/hero-car_B4OHcJe.png",
+    "hero_title": "",
+    "hero_subtitle": "",
+    "homepage_ad_type": "custom",
+    "alternate_google_banner_ad": "site/0ddafc0a-f383-4b71-950d-8c2e4c5b2ed9_makGNdl.png",
+    "alternate_google_banner_link": "",
+    "google_adsense_publisher_id": "",
+    "google_adsense_slot_id": "",
+    "car_detail_sidebar_google_ad_active": true,
+    "car_detail_sidebar_google_slot_id": "",
+    "stripe_enabled": false,
+    "stripe_mode": "test",
+    "stripe_publishable_key": "",
+    "stripe_secret_key": "",
+    "stripe_webhook_secret": "",
+    "stripe_price_starter": "",
+    "stripe_price_professional": "",
+    "stripe_price_premium": "",
+    "stripe_price_enterprise": "",
+    "payment_success_message": "Payment successful. Your dealer package is now active.",
+    "payment_cancelled_message": "Payment was cancelled. You have not been charged."
+  }
+},
+{
+  "model": "vehicles.carimage",
+  "pk": 1,
+  "fields": {
+    "car": 1,
+    "image": "cars/2022-toyota-camry-trd-feature-carprousa_ykZroxG_6eQodfG..png",
+    "is_primary": false,
+    "sort_order": 1
+  }
+},
+{
+  "model": "vehicles.carimage",
+  "pk": 2,
+  "fields": {
+    "car": 1,
+    "image": "cars/d981a385a626b94a81920dcd67e170a63440ed3d_TFvn1I9.jpeg",
+    "is_primary": false,
+    "sort_order": 2
+  }
+},
+{
+  "model": "vehicles.carimage",
+  "pk": 3,
+  "fields": {
+    "car": 1,
+    "image": "cars/trd-wheels-on-camry-xle-read-comment-v0-cpk301ipjxya1_BWKu1ua.jpg",
+    "is_primary": false,
+    "sort_order": 3
+  }
+},
+{
+  "model": "vehicles.carimage",
+  "pk": 4,
+  "fields": {
+    "car": 2,
+    "image": "cars/7iskjg745r00v13l0cjaug45u.jpg",
+    "is_primary": false,
+    "sort_order": 0
+  }
+},
+{
+  "model": "vehicles.carimage",
+  "pk": 5,
+  "fields": {
+    "car": 2,
+    "image": "cars/2021-RANGER-XL-HEAVYDUTY-front.jpg",
+    "is_primary": false,
+    "sort_order": 0
+  }
+},
+{
+  "model": "vehicles.carimage",
+  "pk": 6,
+  "fields": {
+    "car": 2,
+    "image": "cars/nextgenranger_wildtrak_front-3qtr_static-g6ol.jpg",
+    "is_primary": false,
+    "sort_order": 0
+  }
+},
+{
+  "model": "vehicles.carimage",
+  "pk": 7,
+  "fields": {
+    "car": 3,
+    "image": "cars/6uj6mo6jbnidve7r99gjnquhu.jpg",
+    "is_primary": true,
+    "sort_order": 0
+  }
+},
+{
+  "model": "vehicles.carimage",
+  "pk": 8,
+  "fields": {
+    "car": 3,
+    "image": "cars/Tesla_Model_3_2021-012x.jpg",
+    "is_primary": false,
+    "sort_order": 1
+  }
+},
+{
+  "model": "vehicles.carimage",
+  "pk": 9,
+  "fields": {
+    "car": 3,
+    "image": "cars/tesla-model-3-2020-prijzen-01.jpg",
+    "is_primary": false,
+    "sort_order": 2
+  }
+},
+{
+  "model": "vehicles.carimage",
+  "pk": 14,
+  "fields": {
+    "car": 4,
+    "image": "cars/image_processing20260316-12-6ywzqh_sISiiir.jpg",
+    "is_primary": true,
+    "sort_order": 0
+  }
+},
+{
+  "model": "vehicles.carimage",
+  "pk": 15,
+  "fields": {
+    "car": 4,
+    "image": "cars/image_processing20260316-12-23msf8_4COn0Bg.jpg",
+    "is_primary": false,
+    "sort_order": 1
+  }
+},
+{
+  "model": "vehicles.carimage",
+  "pk": 16,
+  "fields": {
+    "car": 4,
+    "image": "cars/image_processing20260316-12-r7s0sy_KqnWRAA.jpg",
+    "is_primary": false,
+    "sort_order": 2
+  }
+},
+{
+  "model": "vehicles.carimage",
+  "pk": 17,
+  "fields": {
+    "car": 4,
+    "image": "cars/image_processing20260316-12-ui9cok_88sL8CK.jpg",
+    "is_primary": false,
+    "sort_order": 3
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$GsY5JFnIWNrMXBlgkCDZEg$t3Am/84nY5ROj9exbAOoyTTpCA8wX4F44N/IFnaf594=",
+    "last_login": "2026-07-01T03:04:13.534Z",
+    "is_superuser": true,
+    "username": "ashif",
+    "first_name": "",
+    "last_name": "",
+    "email": "shoriful.hasan@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-06-04T08:40:21.490Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$hANqlE4ZhAtZwWRdqLSzsH$xf15mGqaRNqfV4+GFbR+3fABStXn7QpMKzXalx08VBQ=",
+    "last_login": "2026-06-04T16:56:06.190Z",
+    "is_superuser": false,
+    "username": "test",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-04T16:52:51.740Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$wcxO3LgP0Wn8iTNJvTdtgm$NMyJlwbtqYD9HEONYMyrY7gwuiNt9kweLRulMoeGK08=",
+    "last_login": "2026-06-06T06:47:17.350Z",
+    "is_superuser": false,
+    "username": "test1",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-06T06:47:17.235Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$KtyjzW83D4HIaXoBvgFh61$ZaJS1VmLq5Z8jefRNwwrVYdnvCXWRdfyrCn0nHpdJJI=",
+    "last_login": "2026-06-30T14:50:27.032Z",
+    "is_superuser": false,
+    "username": "test2",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-07T02:48:28.965Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "45bs3dxlbh1fc683jpz6gab4a4wvzy3s",
+  "fields": {
+    "session_data": "eyJyZWNlbnRseV92aWV3ZWRfY2FycyI6WzFdfQ:1wauUh:kD-zRCz8Qs4JwY2Wyb-jVWp9aT8b2j9-2szu000p5-I",
+    "expire_date": "2026-07-04T12:08:15.337Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "f7xpgd25tvfmpzi3pbanjj066n22hant",
+  "fields": {
+    "session_data": ".eJxVjs0OgjAQhN-l54awhQrl6N0nMKTZbbeCPyUpoDHGdxciB73O981kXsLiPHV2HjnZ3otGgJC_GaG7cFyBP2M8DZkb4pR6ylYl2-iYHQbP1_3m_g10OHZLG03gPK8MUwAq2eWgS-MBvKkKvUQqGFNhzbryGAzmoKgmRZrNTlMgtYx2w41tYJzmxN46XA-PojkWUklopUjsOE7Xp733_PgaKwap2vcH97FNhw:1wemVZ:LomJclfnJnDXvbAgLA3xaJYOCrnFA1xRUo7yBo8Y31M",
+    "expire_date": "2026-07-15T04:25:09.071Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "mndh9byyjybyrj0meokvc2yz4pdvfsxw",
+  "fields": {
+    "session_data": "eyJyZWNlbnRseV92aWV3ZWRfY2FycyI6WzQsMSwzLDJdfQ:1waNe8:-H1WogXSvKI4ssq9m3XIQrsS1n0SycMngrIvpekxeqU",
+    "expire_date": "2026-07-03T01:03:48.790Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "ncmolw4zqb9s26pz7ub3vnj0uxc7jvge",
+  "fields": {
+    "session_data": ".eJxVjMsKwjAUBf8l6xLMO-nSvV8gEm6SW1stKSStIuK_20IXuj0zZ97EwzL3fqlY_JBISyRpfrcA8Y55A-kG-TrROOW5DIFuCt1ppacp4Xjc3b9AD7Vf30wxZFYmo4yOwjoOWvDgHD9olWRnOkguuKSYNcxpYM7IGK1GobgRTMc1WjBinseXfwz4xOQjlEras2h4wy6fLwVdQUc:1waNko:qKm5FnJoscquopoeIfJVJb52lS9w5sUA7Xx78NYhA2g",
+    "expire_date": "2026-07-03T01:10:42.516Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "pn264wp1zoe8jggajmfgo2kiqe06tp5d",
+  "fields": {
+    "session_data": "eyJob21lX2ZlYXR1cmVkX2Nhcl9pZHMiOlszLDIsNCwxXX0:1wccUN:vIDz68koulSkgCtyxndgWI-86BdwI8FtxhRdXKM3glg",
+    "expire_date": "2026-07-09T05:18:59.207Z"
+  }
+},
+{
+  "model": "sites.site",
+  "fields": {
+    "domain": "example.com",
+    "name": "example.com"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2026-06-04T08:45:41.942Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "car"
+    ],
+    "object_id": "1",
+    "object_repr": "Toyota Camry 2022",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 2,
+  "fields": {
+    "action_time": "2026-06-04T09:15:24.850Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "car"
+    ],
+    "object_id": "1",
+    "object_repr": "Toyota Camry 2022",
+    "action_flag": 2,
+    "change_message": "[{\"added\": {\"name\": \"car image\", \"object\": \"Toyota Camry 2022 Image\"}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 3,
+  "fields": {
+    "action_time": "2026-06-04T09:17:25.255Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "car"
+    ],
+    "object_id": "1",
+    "object_repr": "Toyota Camry 2022",
+    "action_flag": 2,
+    "change_message": "[{\"added\": {\"name\": \"car image\", \"object\": \"Toyota Camry 2022 Image\"}}, {\"added\": {\"name\": \"car image\", \"object\": \"Toyota Camry 2022 Image\"}}, {\"changed\": {\"name\": \"car image\", \"object\": \"Toyota Camry 2022 Image\", \"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 4,
+  "fields": {
+    "action_time": "2026-06-04T09:17:59.616Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "car"
+    ],
+    "object_id": "1",
+    "object_repr": "Toyota Camry 2022",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"name\": \"car image\", \"object\": \"Toyota Camry 2022 Image\", \"fields\": [\"Sort order\"]}}, {\"changed\": {\"name\": \"car image\", \"object\": \"Toyota Camry 2022 Image\", \"fields\": [\"Sort order\"]}}, {\"changed\": {\"name\": \"car image\", \"object\": \"Toyota Camry 2022 Image\", \"fields\": [\"Sort order\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 5,
+  "fields": {
+    "action_time": "2026-06-04T10:01:57.682Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "car"
+    ],
+    "object_id": "1",
+    "object_repr": "Toyota Camry 2022",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 6,
+  "fields": {
+    "action_time": "2026-06-04T12:59:15.421Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "car"
+    ],
+    "object_id": "2",
+    "object_repr": "2021 Ford Ranger XLT 4x4 Dual Cab",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}, {\"added\": {\"name\": \"car image\", \"object\": \"2021 Ford Ranger XLT 4x4 Dual Cab Image\"}}, {\"added\": {\"name\": \"car image\", \"object\": \"2021 Ford Ranger XLT 4x4 Dual Cab Image\"}}, {\"added\": {\"name\": \"car image\", \"object\": \"2021 Ford Ranger XLT 4x4 Dual Cab Image\"}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 7,
+  "fields": {
+    "action_time": "2026-06-04T14:25:02.336Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "car"
+    ],
+    "object_id": "1",
+    "object_repr": "Toyota Camry 2022",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Transmission\", \"Fuel type\", \"Body type\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 8,
+  "fields": {
+    "action_time": "2026-06-04T14:25:27.514Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "car"
+    ],
+    "object_id": "2",
+    "object_repr": "2021 Ford Ranger XLT 4x4 Dual Cab",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Transmission\", \"Fuel type\", \"Body type\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 9,
+  "fields": {
+    "action_time": "2026-06-04T14:33:27.663Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "car"
+    ],
+    "object_id": "2",
+    "object_repr": "2021 Ford Ranger XLT 4x4 Dual Cab",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Is featured\", \"Seller name\", \"Seller email\", \"Seller phone\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 10,
+  "fields": {
+    "action_time": "2026-06-05T01:40:22.960Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "car"
+    ],
+    "object_id": "3",
+    "object_repr": "2023 Tesla Model 3 Long Range",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"State\", \"Suburb\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 11,
+  "fields": {
+    "action_time": "2026-06-05T02:18:22.049Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "car"
+    ],
+    "object_id": "2",
+    "object_repr": "2021 Ford Ranger XLT 4x4 Dual Cab",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"State\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 12,
+  "fields": {
+    "action_time": "2026-06-05T02:18:49.492Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "car"
+    ],
+    "object_id": "1",
+    "object_repr": "Toyota Camry 2022",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"State\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 13,
+  "fields": {
+    "action_time": "2026-06-05T02:20:45.541Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "car"
+    ],
+    "object_id": "1",
+    "object_repr": "Toyota Camry 2022",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"State\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 14,
+  "fields": {
+    "action_time": "2026-06-05T02:40:13.043Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "car"
+    ],
+    "object_id": "2",
+    "object_repr": "2021 Ford Ranger XLT 4x4 Dual Cab",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Suburb\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 15,
+  "fields": {
+    "action_time": "2026-06-05T02:40:40.461Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "car"
+    ],
+    "object_id": "1",
+    "object_repr": "Toyota Camry 2022",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Suburb\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 16,
+  "fields": {
+    "action_time": "2026-06-07T14:51:05.130Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "car"
+    ],
+    "object_id": "4",
+    "object_repr": "2020 Toyota Corolla Ascent Sport Auto",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Is approved\", \"Is featured\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 17,
+  "fields": {
+    "action_time": "2026-06-07T14:51:30.188Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "car"
+    ],
+    "object_id": "3",
+    "object_repr": "2023 Tesla Model 3 Long Range",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Is approved\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 18,
+  "fields": {
+    "action_time": "2026-06-07T14:51:41.382Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "car"
+    ],
+    "object_id": "2",
+    "object_repr": "2021 Ford Ranger XLT 4x4 Dual Cab",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Is approved\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 19,
+  "fields": {
+    "action_time": "2026-06-07T14:51:53.069Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "car"
+    ],
+    "object_id": "1",
+    "object_repr": "Toyota Camry 2022",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Is approved\", \"Is verified listing\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 20,
+  "fields": {
+    "action_time": "2026-06-07T17:14:05.732Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "car"
+    ],
+    "object_id": "4",
+    "object_repr": "2020 Toyota Corolla Ascent Sport Auto",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Is verified listing\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 21,
+  "fields": {
+    "action_time": "2026-06-07T17:21:49.950Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "car"
+    ],
+    "object_id": "3",
+    "object_repr": "2023 Tesla Model 3 Long Range",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Is featured\", \"Is verified listing\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 22,
+  "fields": {
+    "action_time": "2026-06-08T10:17:36.432Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "car"
+    ],
+    "object_id": "4",
+    "object_repr": "2020 Toyota Corolla Ascent Sport Auto",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Seller\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 23,
+  "fields": {
+    "action_time": "2026-06-09T03:22:29.970Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "accounts",
+      "profile"
+    ],
+    "object_id": "1",
+    "object_repr": "ashif - dealer",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Account type\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 24,
+  "fields": {
+    "action_time": "2026-06-10T01:31:54.225Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "dealerprofile"
+    ],
+    "object_id": "1",
+    "object_repr": "alamsy automotive - free",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 25,
+  "fields": {
+    "action_time": "2026-06-10T01:33:35.839Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "dealerprofile"
+    ],
+    "object_id": "1",
+    "object_repr": "alamsy automotive - free",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"User\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 26,
+  "fields": {
+    "action_time": "2026-06-10T02:54:54.767Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "dealerprofile"
+    ],
+    "object_id": "1",
+    "object_repr": "alamsy automotive - starter",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Package\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 27,
+  "fields": {
+    "action_time": "2026-06-10T02:55:54.955Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "dealerprofile"
+    ],
+    "object_id": "1",
+    "object_repr": "alamsy automotive - starter",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Logo\", \"Banner\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 28,
+  "fields": {
+    "action_time": "2026-06-10T02:59:03.409Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "dealerprofile"
+    ],
+    "object_id": "1",
+    "object_repr": "alamsy automotive - starter",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Business description\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 29,
+  "fields": {
+    "action_time": "2026-06-10T02:59:25.801Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "dealerprofile"
+    ],
+    "object_id": "1",
+    "object_repr": "alamsy automotive - starter",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Address\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 30,
+  "fields": {
+    "action_time": "2026-06-13T01:53:12.627Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "core",
+      "sitesettings"
+    ],
+    "object_id": "1",
+    "object_repr": "Homepage Settings",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 31,
+  "fields": {
+    "action_time": "2026-06-13T02:02:44.174Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "core",
+      "sitesettings"
+    ],
+    "object_id": "1",
+    "object_repr": "Homepage Settings",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Hero image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 32,
+  "fields": {
+    "action_time": "2026-06-13T02:03:04.511Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "core",
+      "sitesettings"
+    ],
+    "object_id": "1",
+    "object_repr": "Homepage Settings",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Hero image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 33,
+  "fields": {
+    "action_time": "2026-06-13T02:15:38.167Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "core",
+      "sitesettings"
+    ],
+    "object_id": "2",
+    "object_repr": "Homepage Settings",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 34,
+  "fields": {
+    "action_time": "2026-06-13T02:16:14.862Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "core",
+      "sitesettings"
+    ],
+    "object_id": "1",
+    "object_repr": "Homepage Settings",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Alternate google banner ad\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 35,
+  "fields": {
+    "action_time": "2026-06-13T02:16:30.965Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "core",
+      "sitesettings"
+    ],
+    "object_id": "2",
+    "object_repr": "Homepage Settings",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 36,
+  "fields": {
+    "action_time": "2026-06-13T02:24:43.850Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "core",
+      "sitesettings"
+    ],
+    "object_id": "1",
+    "object_repr": "Homepage Settings",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Alternate google banner ad\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 37,
+  "fields": {
+    "action_time": "2026-06-13T02:26:43.523Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "core",
+      "sitesettings"
+    ],
+    "object_id": "1",
+    "object_repr": "Homepage Settings",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Alternate google banner ad\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 38,
+  "fields": {
+    "action_time": "2026-06-13T02:29:31.242Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "core",
+      "sitesettings"
+    ],
+    "object_id": "1",
+    "object_repr": "Homepage Settings",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Alternate google banner ad\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 39,
+  "fields": {
+    "action_time": "2026-06-13T02:30:11.663Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "core",
+      "sitesettings"
+    ],
+    "object_id": "1",
+    "object_repr": "Homepage Settings",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Alternate google banner ad\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 40,
+  "fields": {
+    "action_time": "2026-06-13T14:24:46.263Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "core",
+      "sitesettings"
+    ],
+    "object_id": "1",
+    "object_repr": "Homepage Settings",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Homepage ad type\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 41,
+  "fields": {
+    "action_time": "2026-06-13T14:28:44.504Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "core",
+      "sitesettings"
+    ],
+    "object_id": "1",
+    "object_repr": "Homepage Settings",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Homepage ad type\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 42,
+  "fields": {
+    "action_time": "2026-06-25T05:04:31.392Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "core",
+      "sitesettings"
+    ],
+    "object_id": "1",
+    "object_repr": "Homepage Settings",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Homepage ad type\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 43,
+  "fields": {
+    "action_time": "2026-06-25T05:04:53.267Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "core",
+      "sitesettings"
+    ],
+    "object_id": "1",
+    "object_repr": "Homepage Settings",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Homepage ad type\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 44,
+  "fields": {
+    "action_time": "2026-06-25T05:05:04.420Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "core",
+      "sitesettings"
+    ],
+    "object_id": "1",
+    "object_repr": "Homepage Settings",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Car detail sidebar google ad active\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 45,
+  "fields": {
+    "action_time": "2026-07-01T03:38:18.312Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "car"
+    ],
+    "object_id": "4",
+    "object_repr": "2020 Toyota Corolla Ascent Sport Auto",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Moderation status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 46,
+  "fields": {
+    "action_time": "2026-07-01T03:38:44.782Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "car"
+    ],
+    "object_id": "3",
+    "object_repr": "2023 Tesla Model 3 Long Range",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Moderation status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 47,
+  "fields": {
+    "action_time": "2026-07-01T03:38:56.218Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "car"
+    ],
+    "object_id": "2",
+    "object_repr": "2021 Ford Ranger XLT 4x4 Dual Cab",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Moderation status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 48,
+  "fields": {
+    "action_time": "2026-07-01T03:39:11.694Z",
+    "user": [
+      "ashif"
+    ],
+    "content_type": [
+      "vehicles",
+      "car"
+    ],
+    "object_id": "1",
+    "object_repr": "Toyota Camry 2022",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Moderation status\"]}}]"
+  }
+},
+{
+  "model": "accounts.profile",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "ashif"
+    ],
+    "account_type": "dealer",
+    "phone": null,
+    "business_name": null,
+    "created_at": "2026-06-09T03:18:38.841Z"
+  }
+},
+{
+  "model": "accounts.profile",
+  "pk": 2,
+  "fields": {
+    "user": [
+      "test"
+    ],
+    "account_type": "normal",
+    "phone": null,
+    "business_name": null,
+    "created_at": "2026-06-09T03:18:38.843Z"
+  }
+},
+{
+  "model": "accounts.profile",
+  "pk": 3,
+  "fields": {
+    "user": [
+      "test1"
+    ],
+    "account_type": "normal",
+    "phone": null,
+    "business_name": null,
+    "created_at": "2026-06-09T03:18:38.844Z"
+  }
+},
+{
+  "model": "accounts.profile",
+  "pk": 4,
+  "fields": {
+    "user": [
+      "test2"
+    ],
+    "account_type": "normal",
+    "phone": null,
+    "business_name": null,
+    "created_at": "2026-06-09T03:18:38.845Z"
+  }
+},
+{
+  "model": "vehicles.favouritecar",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "ashif"
+    ],
+    "car": 4,
+    "created_at": "2026-06-09T15:50:07.077Z"
+  }
+},
+{
+  "model": "vehicles.favouritecar",
+  "pk": 4,
+  "fields": {
+    "user": [
+      "ashif"
+    ],
+    "car": 3,
+    "created_at": "2026-06-09T15:58:54.176Z"
+  }
+},
+{
+  "model": "vehicles.favouritecar",
+  "pk": 7,
+  "fields": {
+    "user": [
+      "ashif"
+    ],
+    "car": 2,
+    "created_at": "2026-06-09T16:06:09.169Z"
+  }
+},
+{
+  "model": "vehicles.favouritecar",
+  "pk": 17,
+  "fields": {
+    "user": [
+      "test2"
+    ],
+    "car": 3,
+    "created_at": "2026-06-19T00:03:55.863Z"
+  }
+},
+{
+  "model": "vehicles.favouritecar",
+  "pk": 19,
+  "fields": {
+    "user": [
+      "test2"
+    ],
+    "car": 1,
+    "created_at": "2026-06-19T00:30:20.433Z"
+  }
+},
+{
+  "model": "vehicles.enquiry",
+  "pk": 1,
+  "fields": {
+    "dealer": [
+      "ashif"
+    ],
+    "car": 1,
+    "name": "MD Shoriful",
+    "email": "shoriful.hasan@gmail.com",
+    "phone": "0435548446",
+    "message": "Hi, I am interested in this car:\r\n\r\n2022 Toyota Camry\r\nPrice: $28999.00\r\nKilometres: 45000 km\r\nLocation: Hobart, TAS\r\n\r\nPlease contact me with more information.",
+    "created_at": "2026-06-18T15:43:08.552Z",
+    "is_read": false
+  }
+},
+{
+  "model": "vehicles.car",
+  "pk": 1,
+  "fields": {
+    "seller": [
+      "ashif"
+    ],
+    "title": "Toyota Camry 2022",
+    "slug": "2022-toyota-camry-toyota-camry-2022",
+    "make": "Toyota",
+    "model": "Camry",
+    "year": 2022,
+    "price": "28999.00",
+    "kilometres": 45000,
+    "body_type": "SUV",
+    "transmission": "Automatic",
+    "fuel_type": "Petrol",
+    "state": "TAS",
+    "suburb": "Hobart",
+    "description": "Excellent condition, clean car, ready to drive.",
+    "seller_name": "",
+    "seller_email": "",
+    "seller_phone": "",
+    "is_featured": true,
+    "featured_until": null,
+    "is_active": true,
+    "is_verified_listing": true,
+    "is_approved": true,
+    "moderation_status": "approved",
+    "approved_by": [
+      "ashif"
+    ],
+    "approved_at": "2026-07-01T03:39:11.693Z",
+    "rejected_reason": "",
+    "admin_note": "",
+    "suspended_reason": "",
+    "is_reported": false,
+    "report_count": 0,
+    "views_count": 57,
+    "created_at": "2026-06-04T08:45:41.940Z"
+  }
+},
+{
+  "model": "vehicles.car",
+  "pk": 2,
+  "fields": {
+    "seller": [
+      "ashif"
+    ],
+    "title": "2021 Ford Ranger XLT 4x4 Dual Cab",
+    "slug": "2021-ford-ranger-2021-ford-ranger-xlt-4x4-dual-cab",
+    "make": "Ford",
+    "model": "Ranger",
+    "year": 2021,
+    "price": "44990.00",
+    "kilometres": 68500,
+    "body_type": "Hatchback",
+    "transmission": "Automatic",
+    "fuel_type": "Hybrid",
+    "state": "QLD",
+    "suburb": "Springfield Lakes",
+    "description": "Powerful 4x4 dual cab ute with tow bar, canopy, bull bar and full service history. Perfect for work and weekend adventures.",
+    "seller_name": "Ashif",
+    "seller_email": "pg.ashif@gmail.com",
+    "seller_phone": "1234",
+    "is_featured": true,
+    "featured_until": null,
+    "is_active": true,
+    "is_verified_listing": false,
+    "is_approved": true,
+    "moderation_status": "approved",
+    "approved_by": [
+      "ashif"
+    ],
+    "approved_at": "2026-07-01T03:38:56.216Z",
+    "rejected_reason": "",
+    "admin_note": "",
+    "suspended_reason": "",
+    "is_reported": false,
+    "report_count": 0,
+    "views_count": 62,
+    "created_at": "2026-06-04T12:59:15.369Z"
+  }
+},
+{
+  "model": "vehicles.car",
+  "pk": 3,
+  "fields": {
+    "seller": [
+      "test"
+    ],
+    "title": "2023 Tesla Model 3 Long Range",
+    "slug": "2023-tesla-model-3-2023-tesla-model-3-long-range",
+    "make": "Tesla",
+    "model": "Model 3",
+    "year": 2023,
+    "price": "40000.00",
+    "kilometres": 2467,
+    "body_type": "Sedan",
+    "transmission": "Automatic",
+    "fuel_type": "Electric",
+    "state": "VIC",
+    "suburb": "Richmond",
+    "description": "Tesla Model 3 Long Range in excellent condition. Autopilot, premium interior, glass roof, fast charging and balance of factory warranty.",
+    "seller_name": "John Smith",
+    "seller_email": "john@example.com",
+    "seller_phone": "0411222333",
+    "is_featured": true,
+    "featured_until": null,
+    "is_active": true,
+    "is_verified_listing": true,
+    "is_approved": true,
+    "moderation_status": "approved",
+    "approved_by": [
+      "ashif"
+    ],
+    "approved_at": "2026-07-01T03:38:44.780Z",
+    "rejected_reason": "",
+    "admin_note": "",
+    "suspended_reason": "",
+    "is_reported": false,
+    "report_count": 0,
+    "views_count": 95,
+    "created_at": "2026-06-04T17:03:30.087Z"
+  }
+},
+{
+  "model": "vehicles.car",
+  "pk": 4,
+  "fields": {
+    "seller": [
+      "ashif"
+    ],
+    "title": "2020 Toyota Corolla Ascent Sport Auto",
+    "slug": "2020-toyota-corolla-ascent-sport-2020-toyota-corolla-ascent-sport-auto",
+    "make": "Toyota",
+    "model": "Corolla Ascent Sport",
+    "year": 2020,
+    "price": "22990.00",
+    "kilometres": 68500,
+    "body_type": "Hatchback",
+    "transmission": "Automatic",
+    "fuel_type": "Petrol",
+    "state": "VIC",
+    "suburb": "Melbourne",
+    "description": "2020 Toyota Corolla Ascent Sport Auto in excellent condition.\r\n\r\nPowered by a reliable 2.0L 4-cylinder petrol engine with automatic CVT transmission. Smooth driving experience, excellent fuel economy, and Toyota reliability.\r\n\r\nFeatures include:\r\n• Apple CarPlay & Android Auto\r\n• Reverse Camera\r\n• Bluetooth Connectivity\r\n• Adaptive Cruise Control\r\n• Lane Departure Warning\r\n• Automatic Emergency Braking\r\n• LED Daytime Running Lights\r\n• Alloy Wheels\r\n• Keyless Entry\r\n• Multi-Function Steering Wheel\r\n• 5-Star ANCAP Safety Rating\r\n\r\nWell maintained vehicle with full service history. Clean interior and exterior. Perfect first car, family car, or daily commuter.\r\n\r\nInspection and test drive welcome.:-)",
+    "seller_name": "Ashif",
+    "seller_email": "shoriful.hasan@gmail.com",
+    "seller_phone": "1",
+    "is_featured": false,
+    "featured_until": null,
+    "is_active": true,
+    "is_verified_listing": true,
+    "is_approved": true,
+    "moderation_status": "approved",
+    "approved_by": [
+      "ashif"
+    ],
+    "approved_at": "2026-07-01T03:38:18.310Z",
+    "rejected_reason": "",
+    "admin_note": "",
+    "suspended_reason": "",
+    "is_reported": false,
+    "report_count": 0,
+    "views_count": 88,
+    "created_at": "2026-06-07T03:10:40.235Z"
+  }
+},
+{
+  "model": "vehicles.dealerprofile",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "ashif"
+    ],
+    "business_name": "alamsy automotive",
+    "business_description": "Alamsy Automotive is a trusted Melbourne used car dealer specialising in quality passenger vehicles, SUVs and commercial cars. We offer competitive pricing, trade-ins and flexible finance options.",
+    "business_slogan": "",
+    "years_in_business": 0,
+    "dealer_owner_name": "",
+    "dealer_owner_title": "Dealer Principal",
+    "dealer_owner_photo": "dealer_owner_photos/suv.png",
+    "google_maps_link": "https://www.google.com/maps/place/Westbourne+Grammar+School/@-37.8544511,144.7302206,15z/data=!4m6!3m5!1s0x6ad68911189384ab:0x81c8b8ac8ee808c0!8m2!3d-37.850351!4d144.726175!16zL20vMDg2aHZo?entry=ttu&g",
+    "logo": "dealer_logos/hatchback.png",
+    "banner": "dealer_banners/sedan.png",
+    "banner_position": "top",
+    "website": "https://www.alam.com",
+    "business_phone": "0435548554",
+    "business_email": "alam@gmail.com",
+    "address": "Footscray VIC",
+    "abn": "123",
+    "opening_hours": "mon-thursday 8 to 5",
+    "monday_hours": "9:00 AM - 5:00 Pm",
+    "tuesday_hours": "9:00 AM - 5:00 PM",
+    "wednesday_hours": "9:00 AM - 5:00 PM",
+    "thursday_hours": "9:00 AM - 5:00 PM",
+    "friday_hours": "9:00 AM - 5:00 PM",
+    "saturday_hours": "Closed",
+    "sunday_hours": "Closed",
+    "open_24_hours": false,
+    "monday_closed": false,
+    "monday_open_time": null,
+    "monday_close_time": null,
+    "tuesday_closed": true,
+    "tuesday_open_time": null,
+    "tuesday_close_time": null,
+    "wednesday_closed": false,
+    "wednesday_open_time": null,
+    "wednesday_close_time": null,
+    "thursday_closed": false,
+    "thursday_open_time": null,
+    "thursday_close_time": null,
+    "friday_closed": false,
+    "friday_open_time": null,
+    "friday_close_time": null,
+    "saturday_closed": true,
+    "saturday_open_time": null,
+    "saturday_close_time": null,
+    "sunday_closed": true,
+    "sunday_open_time": null,
+    "sunday_close_time": null,
+    "facebook": "https://www.facebook.com/profile.php?id=61590039185036",
+    "instagram": "",
+    "tiktok": "",
+    "youtube": "",
+    "show_email": false,
+    "show_phone": false,
+    "finance_available": true,
+    "trade_in_available": true,
+    "extended_warranty": true,
+    "delivery_available": true,
+    "test_drive_available": true,
+    "package": "starter",
+    "is_dealer": true,
+    "is_verified": true,
+    "package_active": true,
+    "package_expiry": null,
+    "is_featured_dealer": true,
+    "max_listings": 50,
+    "featured_ads_allowed": 10,
+    "priority_support": true,
+    "created_at": "2026-06-10T01:31:54.224Z"
+  }
+}
+]
