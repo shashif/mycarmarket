@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Page Not Found - MyCarMarket Australia
+{% endblock %}
+
+{% block content %}
+
+<section style="
+    min-height:70vh;
+    background:#f4f7fb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:70px 20px;
+">
+
+    <div style="
+        max-width:720px;
+        width:100%;
+        background:white;
+        border-radius:28px;
+        padding:50px 35px;
+        text-align:center;
+        box-shadow:0 20px 60px rgba(15,23,42,0.14);
+    ">
+
+        <img
+            src="{% static 'images/logo.png' %}"
+            alt="MyCarMarket"
+            style="height:70px; object-fit:contain; margin-bottom:25px;"
+        >
+
+        <h1 style="
+            font-size:76px;
+            margin:0;
+            color:#2563eb;
+            font-weight:900;
+        ">
+            404
+        </h1>
+
+        <h2 style="
+            font-size:32px;
+            margin:10px 0 14px;
+            color:#111827;
+        ">
+            Page Not Found
+        </h2>
+
+        <p style="
+            font-size:17px;
+            color:#6b7280;
+            line-height:1.7;
+            margin:0 0 32px;
+        ">
+            Sorry, the page you are looking for doesn't exist or may have been moved.
+        </p>
+
+        <a
+            href="{% url 'home' %}"
+            style="
+                display:inline-block;
+                background:#2563eb;
+                color:white;
+                padding:15px 28px;
+                border-radius:12px;
+                text-decoration:none;
+                font-weight:800;
+                font-size:16px;
+            "
+        >
+            ← Back to Home
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -2,7 +2,7 @@
 # MyCarMarket
 # Version: v1.5.7
 # File: config/settings.py
-# Description: Production Deployment & Security Settings
+# Description: Production Deployment, Security & Logging Settings
 # ==========================================
 
 import os
@@ -18,7 +18,7 @@ load_dotenv(BASE_DIR / '.env')
 
 
 # ==========================================
-# SECURITY
+# SECTION 01: SECURITY
 # ==========================================
 
 SECRET_KEY = os.environ.get(
@@ -43,7 +43,7 @@ CSRF_TRUSTED_ORIGINS = os.environ.get(
 
 
 # ==========================================
-# APPLICATIONS
+# SECTION 02: APPLICATIONS
 # ==========================================
 
 INSTALLED_APPS = [
@@ -64,7 +64,7 @@ INSTALLED_APPS = [
 
 
 # ==========================================
-# MIDDLEWARE
+# SECTION 03: MIDDLEWARE
 # ==========================================
 
 MIDDLEWARE = [
@@ -81,7 +81,7 @@ MIDDLEWARE = [
 
 
 # ==========================================
-# URLS / WSGI
+# SECTION 04: URLS / WSGI
 # ==========================================
 
 ROOT_URLCONF = 'config.urls'
@@ -89,7 +89,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # ==========================================
-# TEMPLATES
+# SECTION 05: TEMPLATES
 # ==========================================
 
 TEMPLATES = [
@@ -114,7 +114,7 @@ TEMPLATES = [
 
 
 # ==========================================
-# DATABASE
+# SECTION 06: DATABASE
 # ==========================================
 
 DATABASE_URL = os.environ.get('DATABASE_URL', '').strip()
@@ -137,7 +137,7 @@ else:
 
 
 # ==========================================
-# PASSWORD VALIDATION
+# SECTION 07: PASSWORD VALIDATION
 # ==========================================
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -157,7 +157,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # ==========================================
-# LANGUAGE / TIME
+# SECTION 08: LANGUAGE / TIME
 # ==========================================
 
 LANGUAGE_CODE = 'en-us'
@@ -169,7 +169,7 @@ SITE_ID = 1
 
 
 # ==========================================
-# STATIC / MEDIA FILES
+# SECTION 09: STATIC / MEDIA FILES
 # ==========================================
 
 STATIC_URL = '/static/'
@@ -186,7 +186,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 
 # ==========================================
-# AUTH REDIRECTS
+# SECTION 10: AUTH REDIRECTS
 # ==========================================
 
 LOGIN_URL = 'login'
@@ -195,7 +195,7 @@ LOGOUT_REDIRECT_URL = 'car_list'
 
 
 # ==========================================
-# EMAIL SETTINGS
+# SECTION 11: EMAIL SETTINGS
 # ==========================================
 
 EMAIL_BACKEND = os.environ.get(
@@ -221,7 +221,7 @@ CONTACT_EMAIL = os.environ.get(
 
 
 # ==========================================
-# SITE URL
+# SECTION 12: SITE URL
 # ==========================================
 
 SITE_URL = os.environ.get(
@@ -231,7 +231,7 @@ SITE_URL = os.environ.get(
 
 
 # ==========================================
-# GOOGLE SERVICES
+# SECTION 13: GOOGLE SERVICES
 # ==========================================
 
 GOOGLE_ANALYTICS_ID = os.environ.get('GOOGLE_ANALYTICS_ID', '')
@@ -240,7 +240,7 @@ GOOGLE_SITE_VERIFICATION = os.environ.get('GOOGLE_SITE_VERIFICATION', '')
 
 
 # ==========================================
-# GOOGLE RECAPTCHA
+# SECTION 14: GOOGLE RECAPTCHA
 # ==========================================
 
 RECAPTCHA_SITE_KEY = os.environ.get('RECAPTCHA_SITE_KEY', '')
@@ -248,7 +248,7 @@ RECAPTCHA_SECRET_KEY = os.environ.get('RECAPTCHA_SECRET_KEY', '')
 
 
 # ==========================================
-# PRODUCTION SECURITY SETTINGS
+# SECTION 15: PRODUCTION SECURITY SETTINGS
 # ==========================================
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -276,7 +276,47 @@ if not DEBUG:
 
 
 # ==========================================
-# DEFAULT AUTO FIELD
+# SECTION 16: LOGGING
+# ==========================================
+
+LOG_DIR = BASE_DIR / 'logs'
+LOG_DIR.mkdir(exist_ok=True)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+
+    'formatters': {
+        'verbose': {
+            'format': '[{levelname}] {asctime} {name} {message}',
+            'style': '{',
+        },
+    },
+
+    'handlers': {
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': LOG_DIR / 'django.log',
+            'formatter': 'verbose',
+        },
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+
+    'loggers': {
+        'django': {
+            'handlers': ['file', 'console'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}
+
+
+# ==========================================
+# SECTION 17: DEFAULT AUTO FIELD
 # ==========================================
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

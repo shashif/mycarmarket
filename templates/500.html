@@ -1,0 +1,170 @@
+<!-- ==========================================
+MyCarMarket
+Version: v1.4.7
+File: templates/errors/500.html
+Description: Custom 500 Internal Server Error Page
+========================================== -->
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+500 - Server Error | MyCarMarket Australia
+{% endblock %}
+
+{% block content %}
+
+<section style="
+    min-height:70vh;
+    background:#f4f7fb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:70px 20px;
+">
+
+    <div style="
+        max-width:720px;
+        width:100%;
+        background:white;
+        border-radius:28px;
+        padding:50px 35px;
+        text-align:center;
+        box-shadow:0 20px 60px rgba(15,23,42,0.14);
+    ">
+
+        <!-- ==========================================
+        LOGO
+        ========================================== -->
+
+        <img
+            src="{% static 'images/logo.png' %}"
+            alt="MyCarMarket Australia"
+            style="
+                height:72px;
+                object-fit:contain;
+                margin-bottom:25px;
+            "
+        >
+
+        <!-- ==========================================
+        ERROR CODE
+        ========================================== -->
+
+        <h1 style="
+            font-size:82px;
+            font-weight:900;
+            margin:0;
+            color:#dc2626;
+            line-height:1;
+        ">
+            500
+        </h1>
+
+        <!-- ==========================================
+        TITLE
+        ========================================== -->
+
+        <h2 style="
+            font-size:34px;
+            margin:15px 0;
+            color:#111827;
+        ">
+            Internal Server Error
+        </h2>
+
+        <!-- ==========================================
+        MESSAGE
+        ========================================== -->
+
+        <p style="
+            font-size:17px;
+            color:#6b7280;
+            line-height:1.8;
+            margin:0 auto 35px;
+            max-width:560px;
+        ">
+            Sorry, something went wrong on our side while processing your request.
+
+            <br><br>
+
+            Please try again in a few moments.
+
+            If the problem continues, feel free to contact our support team at
+
+            <br>
+
+            <a
+                href="mailto:support@mycarmarket.com.au"
+                style="
+                    color:#2563eb;
+                    font-weight:700;
+                    text-decoration:none;
+                "
+            >
+                support@mycarmarket.com.au
+            </a>
+        </p>
+
+        <!-- ==========================================
+        ACTION BUTTONS
+        ========================================== -->
+
+        <div style="
+            display:flex;
+            gap:15px;
+            justify-content:center;
+            flex-wrap:wrap;
+        ">
+
+            <a
+                href="{% url 'home' %}"
+                style="
+                    display:inline-block;
+                    background:#2563eb;
+                    color:white;
+                    padding:15px 28px;
+                    border-radius:12px;
+                    text-decoration:none;
+                    font-weight:700;
+                    transition:.2s;
+                "
+            >
+                🏠 Back to Home
+            </a>
+
+            <button
+                onclick="history.back()"
+                style="
+                    border:none;
+                    background:#e5e7eb;
+                    color:#111827;
+                    padding:15px 28px;
+                    border-radius:12px;
+                    cursor:pointer;
+                    font-weight:700;
+                    transition:.2s;
+                "
+            >
+                ← Previous Page
+            </button>
+
+        </div>
+
+        <!-- ==========================================
+        SMALL FOOTNOTE
+        ========================================== -->
+
+        <p style="
+            margin-top:35px;
+            color:#9ca3af;
+            font-size:14px;
+        ">
+            Error Code: 500 • MyCarMarket Australia
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}

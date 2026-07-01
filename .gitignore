@@ -14,4 +14,4 @@ media/
 
 # Virtual Environment
 venv/
-staticfiles/
+staticfiles/logs/*.log

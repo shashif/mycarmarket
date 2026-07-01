@@ -1,0 +1,483 @@
+/* ==========================================
+MyCarMarket
+Version: v1.4.5
+File: static/css/car_form.css
+Car Form + Seller AI Listing Assistant + Mobile Responsive
+========================================== */
+
+
+/* --------------------------------------------------
+SECTION 01 : PAGE BASE
+START
+-------------------------------------------------- */
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    margin: 0;
+}
+
+.container {
+    width: 92%;
+    max-width: 1300px;
+    margin: 35px auto;
+}
+
+/* --------------------------------------------------
+SECTION 01 : PAGE BASE
+END
+-------------------------------------------------- */
+
+
+/* --------------------------------------------------
+SECTION 02 : FORM LAYOUT
+START
+-------------------------------------------------- */
+
+.form-layout{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:28px;
+    align-items:start;
+}
+
+.form-main{
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.08);
+}
+
+/* --------------------------------------------------
+SECTION 02 : FORM LAYOUT
+END
+-------------------------------------------------- */
+
+
+/* --------------------------------------------------
+SECTION 03 : HEADINGS
+START
+-------------------------------------------------- */
+
+h1,
+h2 {
+    color: #111827;
+}
+
+h1 {
+    font-size: 34px;
+}
+
+h2 {
+    font-size: 26px;
+}
+
+/* --------------------------------------------------
+SECTION 03 : HEADINGS
+END
+-------------------------------------------------- */
+
+
+/* --------------------------------------------------
+SECTION 04 : FORM INPUTS
+START
+-------------------------------------------------- */
+
+form p {
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-size: 15px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* --------------------------------------------------
+SECTION 04 : FORM INPUTS
+END
+-------------------------------------------------- */
+
+
+/* --------------------------------------------------
+SECTION 05 : BUTTONS
+START
+-------------------------------------------------- */
+
+.btn {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 14px 30px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.btn:hover {
+    background: #1d4ed8;
+}
+
+/* --------------------------------------------------
+SECTION 05 : BUTTONS
+END
+-------------------------------------------------- */
+
+
+/* --------------------------------------------------
+SECTION 06 : IMAGE MANAGEMENT
+START
+-------------------------------------------------- */
+
+.image-section {
+    margin: 30px 0;
+    padding: 22px;
+    background: #f9fafb;
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 18px;
+    margin-top: 18px;
+}
+
+.image-card {
+    background: white;
+    border-radius: 14px;
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+}
+
+.image-card img {
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.image-actions label {
+    font-weight: normal;
+    margin-bottom: 8px;
+}
+
+.image-actions input {
+    width: auto;
+    margin-right: 6px;
+}
+
+/* --------------------------------------------------
+SECTION 06 : IMAGE MANAGEMENT
+END
+-------------------------------------------------- */
+
+
+/* --------------------------------------------------
+SECTION 07 : PRIMARY IMAGE BADGE
+START
+-------------------------------------------------- */
+
+.primary-badge {
+    display: inline-block;
+    background: #16a34a;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+/* --------------------------------------------------
+SECTION 07 : PRIMARY IMAGE BADGE
+END
+-------------------------------------------------- */
+
+
+/* --------------------------------------------------
+SECTION 08 : UPLOAD BOX
+START
+-------------------------------------------------- */
+
+.upload-box {
+    margin-top: 25px;
+    padding: 20px;
+    background: #eff6ff;
+    border-radius: 14px;
+    border: 1px dashed #2563eb;
+}
+
+/* --------------------------------------------------
+SECTION 08 : UPLOAD BOX
+END
+-------------------------------------------------- */
+
+
+/* --------------------------------------------------
+SECTION 09 : HELP TEXT
+START
+-------------------------------------------------- */
+
+.help-text {
+    color: #6b7280;
+    font-size: 14px;
+    margin-top: 8px;
+    line-height: 1.5;
+}
+
+/* --------------------------------------------------
+SECTION 09 : HELP TEXT
+END
+-------------------------------------------------- */
+
+
+/* --------------------------------------------------
+SECTION 10 : SELLER AI LISTING ASSISTANT
+START
+-------------------------------------------------- */
+
+.ai-listing-assistant{
+    position:sticky;
+    top:90px;
+}
+
+.ai-assistant-card{
+    background:#ffffff;
+    padding:24px;
+    border-radius:20px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.08);
+    border:1px solid #eef2f7;
+}
+
+.ai-assistant-card h2{
+    margin-top:0;
+    margin-bottom:8px;
+    font-size:24px;
+}
+
+.ai-helper-text{
+    color:#6b7280;
+    font-size:14px;
+    line-height:1.5;
+    margin-bottom:22px;
+}
+
+.ai-section{
+    background:#f9fafb;
+    border:1px solid #e5e7eb;
+    border-radius:14px;
+    padding:16px;
+    margin-bottom:16px;
+}
+
+.ai-section h3{
+    margin:0 0 10px;
+    color:#111827;
+    font-size:17px;
+}
+
+.ai-suggestion{
+    background:#eff6ff;
+    color:#1e40af;
+    padding:12px;
+    border-radius:10px;
+    font-weight:bold;
+    line-height:1.5;
+    margin:0;
+}
+
+.ai-description{
+    color:#374151;
+    line-height:1.7;
+    margin:0;
+    font-size:14px;
+}
+
+.price-guidance-box{
+    background:#ecfdf5;
+    border:1px solid #bbf7d0;
+    border-radius:12px;
+    padding:14px;
+}
+
+.price-guidance-box p{
+    margin:0 0 8px;
+    color:#166534;
+    font-size:14px;
+}
+
+.price-guidance-box strong{
+    display:block;
+    color:#15803d;
+    font-size:22px;
+    margin-bottom:8px;
+}
+
+.price-guidance-box small{
+    color:#166534;
+    font-size:13px;
+}
+
+.ai-small-note{
+    margin:10px 0 0;
+    color:#6b7280;
+    font-size:13px;
+}
+
+.ai-tips{
+    margin:0;
+    padding-left:20px;
+}
+
+.ai-tips li{
+    color:#374151;
+    line-height:1.6;
+    margin-bottom:8px;
+    font-size:14px;
+}
+
+.ai-disclaimer{
+    margin-top:18px;
+    padding-top:16px;
+    border-top:1px solid #e5e7eb;
+    color:#6b7280;
+    font-size:13px;
+    line-height:1.6;
+}
+
+/* --------------------------------------------------
+SECTION 10 : SELLER AI LISTING ASSISTANT
+END
+-------------------------------------------------- */
+
+
+/* --------------------------------------------------
+SECTION 11 : TABLET RESPONSIVE
+START
+max-width: 1000px
+-------------------------------------------------- */
+
+@media (max-width:1000px){
+
+    .container{
+        width:94%;
+        max-width:1000px;
+    }
+
+    .form-layout{
+        grid-template-columns:1fr;
+    }
+
+    .ai-listing-assistant{
+        position:static;
+    }
+
+}
+
+/* --------------------------------------------------
+SECTION 11 : TABLET RESPONSIVE
+END
+-------------------------------------------------- */
+
+
+/* --------------------------------------------------
+SECTION 12 : MOBILE RESPONSIVE
+START
+max-width:650px
+-------------------------------------------------- */
+
+@media (max-width:650px){
+
+    .container{
+        width:94%;
+        margin:22px auto;
+    }
+
+    .form-main,
+    .ai-assistant-card{
+        padding:20px;
+        border-radius:18px;
+    }
+
+    h1{
+        font-size:28px;
+    }
+
+    h2{
+        font-size:22px;
+    }
+
+    .image-section{
+        padding:18px;
+    }
+
+    .image-grid{
+        grid-template-columns:1fr;
+    }
+
+    .image-card img{
+        height:180px;
+    }
+
+    .btn{
+        width:100%;
+        box-sizing:border-box;
+    }
+
+    .price-guidance-box strong{
+        font-size:19px;
+    }
+
+}
+
+/* --------------------------------------------------
+SECTION 12 : MOBILE RESPONSIVE
+END
+-------------------------------------------------- */
+
+
+/* --------------------------------------------------
+SECTION 13 : SMALL MOBILE RESPONSIVE
+START
+max-width:420px
+-------------------------------------------------- */
+
+@media (max-width:420px){
+
+    h1{
+        font-size:24px;
+    }
+
+    h2{
+        font-size:20px;
+    }
+
+    .image-card img{
+        height:160px;
+    }
+
+}
+
+/* --------------------------------------------------
+SECTION 13 : SMALL MOBILE RESPONSIVE
+END
+-------------------------------------------------- */
