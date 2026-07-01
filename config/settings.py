@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.4.0
+# Version: v1.5.7
 # File: config/settings.py
-# Production Ready Settings
+# Description: Production Deployment & Security Settings
 # ==========================================
 
 import os
@@ -11,12 +11,15 @@ from pathlib import Path
 import dj_database_url
 from dotenv import load_dotenv
 
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv(BASE_DIR / '.env')
 
 
+# ==========================================
 # SECURITY
+# ==========================================
 
 SECRET_KEY = os.environ.get(
     'DJANGO_SECRET_KEY',
@@ -33,8 +36,15 @@ ALLOWED_HOSTS = os.environ.get(
     '127.0.0.1,localhost,0.0.0.0,mycarmarket.com.au,www.mycarmarket.com.au'
 ).split(',')
 
+CSRF_TRUSTED_ORIGINS = os.environ.get(
+    'CSRF_TRUSTED_ORIGINS',
+    'http://127.0.0.1:8000,http://localhost:8000,https://mycarmarket.com.au,https://www.mycarmarket.com.au'
+).split(',')
 
+
+# ==========================================
 # APPLICATIONS
+# ==========================================
 
 INSTALLED_APPS = [
     'core',
@@ -53,11 +63,12 @@ INSTALLED_APPS = [
 ]
 
 
+# ==========================================
 # MIDDLEWARE
+# ==========================================
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-
     'whitenoise.middleware.WhiteNoiseMiddleware',
 
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -69,13 +80,17 @@ MIDDLEWARE = [
 ]
 
 
+# ==========================================
 # URLS / WSGI
+# ==========================================
 
 ROOT_URLCONF = 'config.urls'
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
+# ==========================================
 # TEMPLATES
+# ==========================================
 
 TEMPLATES = [
     {
@@ -98,14 +113,16 @@ TEMPLATES = [
 ]
 
 
+# ==========================================
 # DATABASE
+# ==========================================
 
-DATABASE_URL = os.environ.get('DATABASE_URL')
+DATABASE_URL = os.environ.get('DATABASE_URL', '').strip()
 
 if DATABASE_URL:
     DATABASES = {
-        'default': dj_database_url.config(
-            default=DATABASE_URL,
+        'default': dj_database_url.parse(
+            DATABASE_URL,
             conn_max_age=600,
             ssl_require=not DEBUG
         )
@@ -119,7 +136,9 @@ else:
     }
 
 
+# ==========================================
 # PASSWORD VALIDATION
+# ==========================================
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -137,7 +156,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# ==========================================
 # LANGUAGE / TIME
+# ==========================================
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Australia/Melbourne'
@@ -147,7 +168,9 @@ USE_TZ = True
 SITE_ID = 1
 
 
+# ==========================================
 # STATIC / MEDIA FILES
+# ==========================================
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
@@ -162,14 +185,18 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 
+# ==========================================
 # AUTH REDIRECTS
+# ==========================================
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'car_list'
 LOGOUT_REDIRECT_URL = 'car_list'
 
 
+# ==========================================
 # EMAIL SETTINGS
+# ==========================================
 
 EMAIL_BACKEND = os.environ.get(
     'EMAIL_BACKEND',
@@ -193,17 +220,9 @@ CONTACT_EMAIL = os.environ.get(
 )
 
 
-# STRIPE PAYMENT SETTINGS
-
-STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', '')
-STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY', '')
-
-STRIPE_PRICE_STARTER = os.environ.get('STRIPE_PRICE_STARTER', '')
-STRIPE_PRICE_PROFESSIONAL = os.environ.get('STRIPE_PRICE_PROFESSIONAL', '')
-STRIPE_PRICE_PREMIUM = os.environ.get('STRIPE_PRICE_PREMIUM', '')
-STRIPE_PRICE_ENTERPRISE = os.environ.get('STRIPE_PRICE_ENTERPRISE', '')
-
-STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_WEBHOOK_SECRET', '')
+# ==========================================
+# SITE URL
+# ==========================================
 
 SITE_URL = os.environ.get(
     'SITE_URL',
@@ -211,7 +230,30 @@ SITE_URL = os.environ.get(
 )
 
 
+# ==========================================
+# GOOGLE SERVICES
+# ==========================================
+
+GOOGLE_ANALYTICS_ID = os.environ.get('GOOGLE_ANALYTICS_ID', '')
+GOOGLE_ADSENSE_ID = os.environ.get('GOOGLE_ADSENSE_ID', '')
+GOOGLE_SITE_VERIFICATION = os.environ.get('GOOGLE_SITE_VERIFICATION', '')
+
+
+# ==========================================
+# GOOGLE RECAPTCHA
+# ==========================================
+
+RECAPTCHA_SITE_KEY = os.environ.get('RECAPTCHA_SITE_KEY', '')
+RECAPTCHA_SECRET_KEY = os.environ.get('RECAPTCHA_SECRET_KEY', '')
+
+
+# ==========================================
 # PRODUCTION SECURITY SETTINGS
+# ==========================================
+
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
+REFERRER_POLICY = 'strict-origin-when-cross-origin'
 
 if not DEBUG:
 
@@ -220,20 +262,21 @@ if not DEBUG:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
 
+    SESSION_COOKIE_HTTPONLY = True
+    CSRF_COOKIE_HTTPONLY = False
+
+    SECURE_PROXY_SSL_HEADER = (
+        'HTTP_X_FORWARDED_PROTO',
+        'https'
+    )
+
     SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
 
-    SECURE_CONTENT_TYPE_NOSNIFF = True
 
-    X_FRAME_OPTIONS = 'DENY'
-
-    CSRF_TRUSTED_ORIGINS = os.environ.get(
-        'CSRF_TRUSTED_ORIGINS',
-        'https://mycarmarket.com.au,https://www.mycarmarket.com.au'
-    ).split(',')
-
-
+# ==========================================
 # DEFAULT AUTO FIELD
+# ==========================================
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
