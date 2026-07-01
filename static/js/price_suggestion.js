@@ -1,8 +1,8 @@
 /* ==========================================
 MyCarMarket
-Version: v1.4.7
+Version: v1.5.6
 File: static/js/price_suggestion.js
-Description: Smart Price Suggestion AJAX for Seller Form
+Description: Professional AI Smart Price Estimation AJAX
 ========================================== */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function formatNumber(value) {
-        return Number(value).toLocaleString("en-AU");
+        return Number(value || 0).toLocaleString("en-AU");
     }
 
     function hideBox() {
@@ -75,10 +75,16 @@ document.addEventListener("DOMContentLoaded", function () {
         smartPriceMin.innerText = formatNumber(data.min);
         smartPriceMax.innerText = formatNumber(data.max);
         smartPriceRecommended.innerText = formatNumber(data.recommended);
-        smartPriceCount.innerText = data.count;
+        smartPriceCount.innerText = data.count || 0;
 
         smartPriceStars.innerText = "★".repeat(data.stars || 1);
-        smartPriceConfidence.innerText = (data.confidence || "Low") + " Confidence";
+        smartPriceConfidence.innerText =
+            (data.confidence || "Low") + " Confidence";
+
+        if (data.fallback_label) {
+            smartPriceConfidence.innerText +=
+                " • Based on " + data.fallback_label;
+        }
     }
 
     function showError(message) {
@@ -134,7 +140,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (data.success) {
                     showResult(data);
                 } else {
-                    showError(data.message || "No price suggestion available yet.");
+                    showError(
+                        data.message ||
+                        "No approved vehicle price data available yet."
+                    );
                 }
             })
             .catch(function (error) {
