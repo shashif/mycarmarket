@@ -423,3 +423,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # SECTION 17: DEFAULT AUTO FIELD
 # END
 # ==========================================
+
+# ==========================================
+# SECTION 18: FILE UPLOAD LIMITS
+# START
+# ==========================================
+
+# Maximum request size (25 MB)
+DATA_UPLOAD_MAX_MEMORY_SIZE = 25 * 1024 * 1024
+
+# Files larger than 5 MB are streamed to disk
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024
+
+# Maximum number of uploaded form fields
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 1000
+
+# ==========================================
+# SECTION 18: FILE UPLOAD LIMITS
+# END
+# ==========================================
