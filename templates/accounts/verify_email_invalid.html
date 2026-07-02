@@ -1,22 +1,37 @@
 <!-- ==========================================
 MyCarMarket
-Version: v1.6.5
+Version: v1.6.7
 File: templates/accounts/verify_email_invalid.html
-Description: Email Verification Invalid Page
+Description: Shared Auth UI Invalid Email Verification Page
 ========================================== -->
 
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}
 Invalid Verification Link - MyCarMarket Australia
 {% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}?v=167">
+{% endblock %}
+
 {% block content %}
-<section style="min-height:700px;background:#eef2f7;display:flex;align-items:center;justify-content:center;padding:60px 16px;">
-    <div style="width:100%;max-width:540px;background:white;border-radius:28px;padding:42px;text-align:center;box-shadow:0 25px 70px rgba(15,23,42,0.25);">
-        <h1>Invalid Link</h1>
-        <p>This verification link is invalid or already used.</p>
-        <a href="{% url 'register' %}">Create Account Again</a>
+<section class="auth-page auth-center">
+    <div class="auth-card auth-text-center">
+
+        <div class="auth-icon">⚠️</div>
+
+        <h1 class="auth-title">Invalid Link</h1>
+
+        <p class="auth-subtitle">
+            This verification link is invalid or already used.
+        </p>
+
+        <a href="{% url 'register' %}" class="auth-btn auth-btn-small">
+            Create Account Again
+        </a>
+
     </div>
 </section>
 {% endblock %}
