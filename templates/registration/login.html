@@ -1,8 +1,8 @@
 <!-- ==========================================
 MyCarMarket
-Version: v1.5.5
+Version: v1.6.3
 File: templates/registration/login.html
-Homepage Theme Login Page + Back Home Link
+Description: Email Based Login Page
 ========================================== -->
 
 {% extends "base.html" %}
@@ -297,7 +297,7 @@ Login - MyCarMarket Australia
             </h1>
 
             <p class="login-subtitle">
-                Login to continue to MyCarMarket Australia
+                Login with your email to continue
             </p>
 
             <form method="POST" autocomplete="on">
@@ -306,27 +306,27 @@ Login - MyCarMarket Australia
                 {% if form.errors %}
                     <ul class="login-errorlist">
                         <li>
-                            Invalid username or password. Please try again.
+                            Invalid email or password. Please try again.
                         </li>
                     </ul>
                 {% endif %}
 
                 <label for="id_username">
-                    Username
+                    Email address
                 </label>
 
                 <div class="login-input-wrap">
                     <input
-                        type="text"
+                        type="email"
                         name="username"
                         id="id_username"
-                        autocomplete="username"
-                        placeholder="Enter your username"
+                        autocomplete="email"
+                        placeholder="Enter your email"
                         required
                     >
 
                     <span class="login-input-icon">
-                        👤
+                        ✉️
                     </span>
                 </div>
 

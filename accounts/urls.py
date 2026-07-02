@@ -1,12 +1,14 @@
 # ==========================================
 # MyCarMarket
-# Version: v0.4.8
+# Version: v1.6.3
 # File: accounts/urls.py
-# Login + Logout Added
+# Description: Register + Email Login + Logout
 # ==========================================
 
 from django.urls import path
 from django.contrib.auth.views import LoginView, LogoutView
+
+from accounts.forms import EmailAuthenticationForm
 from . import views
 
 
@@ -16,7 +18,8 @@ urlpatterns = [
     path(
         'login/',
         LoginView.as_view(
-            template_name='registration/login.html'
+            template_name='registration/login.html',
+            authentication_form=EmailAuthenticationForm
         ),
         name='login'
     ),

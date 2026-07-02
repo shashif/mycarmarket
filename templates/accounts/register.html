@@ -1,138 +1,226 @@
 <!-- ==========================================
 MyCarMarket
-Version: v0.4.0
+Version: v1.6.3
 File: templates/accounts/register.html
+Description: Email Based Registration Page
 ========================================== -->
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - MyCarMarket</title>
+{% extends "base.html" %}
+{% load static %}
 
-    <style>
-        body{
-            font-family: Arial, sans-serif;
-            background:#f4f6f8;
-            margin:0;
-            padding:0;
+{% block title %}
+Register - MyCarMarket Australia
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .register-page{
+        min-height:calc(100vh - 90px);
+        background:#eef2f7;
+    }
+
+    .register-hero{
+        min-height:760px;
+        background:
+            linear-gradient(
+                rgba(15,23,42,0.45),
+                rgba(15,23,42,0.45)
+            ),
+            url("{% static 'images/hero-car.png' %}");
+        background-size:cover;
+        background-position:center;
+        display:flex;
+        align-items:center;
+        justify-content:flex-end;
+        padding:70px 7%;
+    }
+
+    .register-card{
+        width:100%;
+        max-width:540px;
+        background:white;
+        border-radius:28px;
+        padding:42px;
+        box-shadow:0 25px 70px rgba(15,23,42,0.35);
+    }
+
+    .register-back-home{
+        margin-bottom:20px;
+    }
+
+    .register-back-home a{
+        color:#2563eb;
+        text-decoration:none;
+        font-size:15px;
+        font-weight:800;
+    }
+
+    .register-card h1{
+        margin:0;
+        text-align:center;
+        font-size:38px;
+        color:#111827;
+        font-weight:900;
+    }
+
+    .register-subtitle{
+        text-align:center;
+        color:#6b7280;
+        margin:12px 0 30px;
+        font-size:16px;
+    }
+
+    .register-card label{
+        display:block;
+        margin-bottom:8px;
+        font-weight:800;
+        color:#111827;
+        font-size:15px;
+    }
+
+    .register-card input{
+        width:100%;
+        height:56px;
+        padding:0 16px;
+        border:1px solid #cbd5e1;
+        border-radius:12px;
+        font-size:16px;
+        outline:none;
+        box-sizing:border-box;
+    }
+
+    .register-card input:focus{
+        border-color:#2563eb;
+        box-shadow:0 0 0 4px rgba(37,99,235,0.12);
+    }
+
+    .register-card p{
+        margin-bottom:18px;
+    }
+
+    .register-card ul{
+        margin:8px 0 18px;
+        padding-left:22px;
+        color:#4b5563;
+        font-size:14px;
+        line-height:1.45;
+    }
+
+    .register-card .helptext{
+        display:block;
+        color:#6b7280;
+        font-size:14px;
+        margin-top:8px;
+        line-height:1.4;
+    }
+
+    .register-btn{
+        width:100%;
+        height:60px;
+        border:none;
+        border-radius:12px;
+        background:#2563eb;
+        color:white;
+        font-size:18px;
+        font-weight:900;
+        cursor:pointer;
+        box-shadow:0 14px 32px rgba(37,99,235,0.30);
+    }
+
+    .register-btn:hover{
+        background:#1d4ed8;
+    }
+
+    .register-login-link{
+        text-align:center;
+        margin-top:24px;
+        color:#374151;
+        font-size:16px;
+    }
+
+    .register-login-link a{
+        color:#2563eb;
+        text-decoration:none;
+        font-weight:900;
+    }
+
+    .register-login-link a:hover{
+        text-decoration:underline;
+    }
+
+    .register-errorlist,
+    .errorlist{
+        list-style:none;
+        padding:12px 14px !important;
+        margin:0 0 16px !important;
+        background:#fee2e2;
+        color:#991b1b !important;
+        border-radius:12px;
+        font-size:14px;
+    }
+
+    @media(max-width:768px){
+        .register-hero{
+            justify-content:center;
+            padding:40px 16px;
+            min-height:680px;
         }
 
-        .container{
-            max-width:500px;
-            margin:60px auto;
-            background:#fff;
-            padding:30px;
-            border-radius:12px;
-            box-shadow:0 5px 20px rgba(0,0,0,0.1);
+        .register-card{
+            padding:30px 22px;
+            border-radius:22px;
         }
 
-        h1{
-            text-align:center;
-            margin-bottom:25px;
-            color:#111827;
+        .register-card h1{
+            font-size:30px;
         }
+    }
+</style>
+{% endblock %}
 
-        form p{
-            margin-bottom:15px;
-        }
+{% block content %}
 
-        label{
-            display:block;
-            margin-bottom:5px;
-            font-weight:bold;
-        }
+<section class="register-page">
 
-        input{
-            width:100%;
-            padding:12px;
-            border:1px solid #d1d5db;
-            border-radius:8px;
-            box-sizing:border-box;
-        }
+    <div class="register-hero">
 
-        .btn{
-            width:100%;
-            padding:14px;
-            background:#2563eb;
-            color:white;
-            border:none;
-            border-radius:8px;
-            font-size:16px;
-            font-weight:bold;
-            cursor:pointer;
-        }
+        <div class="register-card">
 
-        .btn:hover{
-            background:#1d4ed8;
-        }
+            <div class="register-back-home">
+                <a href="{% url 'home' %}">
+                    ← Back to Home
+                </a>
+            </div>
 
-        .login-link{
-            text-align:center;
-            margin-top:20px;
-        }
+            <h1>
+                Create Account
+            </h1>
 
-        .login-link a{
-            text-decoration:none;
-            color:#2563eb;
-            font-weight:bold;
-        }
+            <p class="register-subtitle">
+                Register with your email to start using MyCarMarket Australia
+            </p>
 
-        .messages{
-            margin-bottom:20px;
-        }
+            <form method="POST" autocomplete="on">
+                {% csrf_token %}
 
-        .message{
-            background:#dcfce7;
-            color:#166534;
-            padding:10px;
-            border-radius:6px;
-            margin-bottom:10px;
-        }
+                {{ form.as_p }}
 
-        ul.errorlist{
-            color:red;
-            list-style:none;
-            padding-left:0;
-        }
-    </style>
-</head>
-<body>
-    //nav bar
-{% include 'includes/navbar.html' %}
-<div class="container">
+                <button type="submit" class="register-btn">
+                    Register
+                </button>
+            </form>
 
-    <h1>Create Account</h1>
+            <div class="register-login-link">
+                Already have an account?
+                <a href="{% url 'login' %}">
+                    Login here
+                </a>
+            </div>
 
-    {% if messages %}
-        <div class="messages">
-            {% for message in messages %}
-                <div class="message">
-                    {{ message }}
-                </div>
-            {% endfor %}
         </div>
-    {% endif %}
 
-    <form method="POST">
-        {% csrf_token %}
-
-        {{ form.as_p }}
-
-        <button type="submit" class="btn">
-            Register
-        </button>
-    </form>
-
-    <div class="login-link">
-        Already have an account?
-        <a href="{% url 'login' %}">
-            Login Here
-        </a>
     </div>
 
-</div>
+</section>
 
-</body>
-</html>
+{% endblock %}
