@@ -1,0 +1,22 @@
+<!-- ==========================================
+MyCarMarket
+Version: v1.6.5
+File: templates/accounts/verify_email_sent.html
+Description: Email Verification Sent Page
+========================================== -->
+
+{% extends "base.html" %}
+
+{% block title %}
+Verify Email - MyCarMarket Australia
+{% endblock %}
+
+{% block content %}
+<section style="min-height:700px;background:#eef2f7;display:flex;align-items:center;justify-content:center;padding:60px 16px;">
+    <div style="width:100%;max-width:540px;background:white;border-radius:28px;padding:42px;text-align:center;box-shadow:0 25px 70px rgba(15,23,42,0.25);">
+        <h1>Check Your Email</h1>
+        <p>We sent you a verification link. Please verify your email before logging in.</p>
+        <a href="{% url 'login' %}">Back to Login</a>
+    </div>
+</section>
+{% endblock %}
