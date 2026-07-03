@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.4.5
+# Version: v1.7.1
 # File: vehicles/views/car_manage_views.py
-# Seller AI Listing Assistant + Image Management + Featured Limits + Dashboard Analytics
+# Description: Seller AI Listing Assistant + Image Management + Private Seller Listing Limit Fix
 # ==========================================
 
 from datetime import timedelta
@@ -18,7 +18,8 @@ from vehicles.forms import CarForm
 
 
 # ==========================================
-# DEALER / PACKAGE HELPERS
+# SECTION 01: DEALER / PACKAGE HELPERS
+# START
 # ==========================================
 
 def user_is_dealer(user):
@@ -30,13 +31,17 @@ def user_is_dealer(user):
 
 
 def get_listing_limit(user):
+
+    if user.is_staff:
+        return None
+
     if not hasattr(user, 'dealer_profile'):
-        return 1
+        return 5
 
     profile = user.dealer_profile
 
     if not profile.package_active:
-        return 0
+        return 5
 
     if profile.package == 'enterprise':
         return None
@@ -45,11 +50,12 @@ def get_listing_limit(user):
 
 
 def get_featured_limit(user):
+
     if user.is_staff:
         return None
 
     if not hasattr(user, 'dealer_profile'):
-        return 1
+        return 0
 
     profile = user.dealer_profile
 
@@ -63,6 +69,7 @@ def get_featured_limit(user):
 
 
 def get_featured_days(user):
+
     if not hasattr(user, 'dealer_profile'):
         return 7
 
@@ -81,6 +88,7 @@ def get_featured_days(user):
 
 
 def clean_expired_featured_ads():
+
     Car.objects.filter(
         is_featured=True,
         featured_until__isnull=False,
@@ -92,6 +100,7 @@ def clean_expired_featured_ads():
 
 
 def user_can_create_listing(user):
+
     if user.is_staff:
         return True
 
@@ -100,12 +109,15 @@ def user_can_create_listing(user):
     if listing_limit is None:
         return True
 
-    current_count = Car.objects.filter(seller=user).count()
+    current_count = Car.objects.filter(
+        seller=user
+    ).count()
 
     return current_count < listing_limit
 
 
 def user_can_feature_car(user, car=None):
+
     if user.is_staff:
         return True
 
@@ -124,11 +136,15 @@ def user_can_feature_car(user, car=None):
 
     return featured_cars.count() < featured_limit
 
+# ==========================================
+# SECTION 01: DEALER / PACKAGE HELPERS
+# END
+# ==========================================
+
 
 # ==========================================
-# SELLER AI LISTING ASSISTANT
-# No external AI API
-# Uses MyCarMarket listing data only
+# SECTION 02: SELLER AI LISTING ASSISTANT
+# START
 # ==========================================
 
 def build_seller_ai_assistant(form=None, car=None):
@@ -217,11 +233,13 @@ def build_seller_ai_assistant(form=None, car=None):
         comparable_count = comparable_cars.count()
 
         if comparable_count >= 3:
+
             average_price = comparable_cars.aggregate(
                 average_price=Avg('price')
             )['average_price']
 
             if average_price:
+
                 average_price_value = float(average_price)
 
                 low_price = average_price_value * 0.92
@@ -248,7 +266,9 @@ def build_seller_ai_assistant(form=None, car=None):
             }
 
     else:
+
         suggested_title = 'Example: 2022 Toyota Hilux SR5 Auto 4x4'
+
         suggested_description = (
             'Enter the make, model, year, kilometres and vehicle details to receive smarter listing suggestions.'
         )
@@ -285,43 +305,65 @@ def build_seller_ai_assistant(form=None, car=None):
         'tips': tips,
     }
 
+# ==========================================
+# SECTION 02: SELLER AI LISTING ASSISTANT
+# END
+# ==========================================
+
 
 # ==========================================
-# CREATE CAR
+# SECTION 03: CREATE CAR
+# START
 # ==========================================
 
 @login_required
 def create_car(request):
+
     clean_expired_featured_ads()
 
     if not user_can_create_listing(request.user):
         messages.error(
             request,
-            'You have reached your package listing limit. Please upgrade your dealer package to add more cars.'
+            'You have reached your listing limit. Private sellers can list up to 5 cars. Please upgrade to a dealer package to add more cars.'
         )
         return redirect('my_listings')
 
     if request.method == 'POST':
-        form = CarForm(request.POST, request.FILES)
 
-        ai_listing_assistant = build_seller_ai_assistant(form=form)
+        form = CarForm(
+            request.POST,
+            request.FILES
+        )
+
+        ai_listing_assistant = build_seller_ai_assistant(
+            form=form
+        )
 
         if form.is_valid():
+
             car = form.save(commit=False)
 
             car.seller = request.user
             car.seller_email = request.user.email
 
             if car.is_featured:
+
                 if user_can_feature_car(request.user):
+
                     featured_days = get_featured_days(request.user)
-                    car.featured_until = timezone.now() + timedelta(days=featured_days)
+
+                    car.featured_until = timezone.now() + timedelta(
+                        days=featured_days
+                    )
+
                 else:
+
                     car.is_featured = False
                     car.featured_until = None
+
                     messages.error(
                         request,
-                        'Featured ad limit reached for your package. Your car was saved as a normal listing.'
+                        'Featured ad limit reached. Your car was saved as a normal listing.'
                     )
 
             if request.user.is_staff or user_is_dealer(request.user):
@@ -334,19 +376,30 @@ def create_car(request):
             images = request.FILES.getlist('images')
 
             for index, image in enumerate(images):
+
                 car.images.create(
                     image=image,
                     is_primary=(index == 0),
                     sort_order=index
                 )
 
-            messages.success(request, 'Car listing saved successfully.')
+            messages.success(
+                request,
+                'Car listing saved successfully.'
+            )
 
-            return redirect('car_detail', slug=car.slug)
+            return redirect(
+                'car_detail',
+                slug=car.slug
+            )
 
     else:
+
         form = CarForm()
-        ai_listing_assistant = build_seller_ai_assistant(form=form)
+
+        ai_listing_assistant = build_seller_ai_assistant(
+            form=form
+        )
 
     return render(
         request,
@@ -357,18 +410,27 @@ def create_car(request):
         }
     )
 
+# ==========================================
+# SECTION 03: CREATE CAR
+# END
+# ==========================================
+
 
 # ==========================================
-# MY LISTINGS
+# SECTION 04: MY LISTINGS
+# START
 # ==========================================
 
 @login_required
 def my_listings(request):
+
     clean_expired_featured_ads()
 
     cars = Car.objects.filter(
         seller=request.user
-    ).order_by('-created_at')
+    ).order_by(
+        '-created_at'
+    )
 
     total_listings = cars.count()
     total_views = sum(car.views_count for car in cars)
@@ -386,23 +448,37 @@ def my_listings(request):
         listings_remaining = 'Unlimited'
         listing_limit_display = 'Unlimited'
     else:
-        listings_remaining = max(0, listing_limit - total_listings)
+        listings_remaining = max(
+            0,
+            listing_limit - total_listings
+        )
         listing_limit_display = listing_limit
 
     if featured_limit is None:
         featured_remaining = 'Unlimited'
         featured_limit_display = 'Unlimited'
     else:
-        featured_remaining = max(0, featured_limit - featured_listings)
+        featured_remaining = max(
+            0,
+            featured_limit - featured_listings
+        )
         featured_limit_display = featured_limit
 
-    average_views = round(total_views / total_listings) if total_listings > 0 else 0
+    average_views = round(
+        total_views / total_listings
+    ) if total_listings > 0 else 0
 
-    top_performing_cars = cars.order_by('-views_count')[:5]
+    top_performing_cars = cars.order_by(
+        '-views_count'
+    )[:5]
 
     recent_enquiries = Enquiry.objects.filter(
         car__seller=request.user
-    ).select_related('car').order_by('-created_at')[:8]
+    ).select_related(
+        'car'
+    ).order_by(
+        '-created_at'
+    )[:8]
 
     dealer_score = (
         total_listings * 5 +
@@ -434,13 +510,20 @@ def my_listings(request):
         }
     )
 
+# ==========================================
+# SECTION 04: MY LISTINGS
+# END
+# ==========================================
+
 
 # ==========================================
-# EDIT CAR
+# SECTION 05: EDIT CAR
+# START
 # ==========================================
 
 @login_required
 def edit_car(request, pk):
+
     clean_expired_featured_ads()
 
     car = get_object_or_404(
@@ -450,6 +533,7 @@ def edit_car(request, pk):
     )
 
     if request.method == 'POST':
+
         form = CarForm(
             request.POST,
             request.FILES,
@@ -462,24 +546,41 @@ def edit_car(request, pk):
         )
 
         if form.is_valid():
+
             car = form.save(commit=False)
 
             car.seller = request.user
             car.seller_email = request.user.email
 
             if car.is_featured:
-                if user_can_feature_car(request.user, car):
-                    if not car.featured_until or car.featured_until < timezone.now():
+
+                if user_can_feature_car(
+                    request.user,
+                    car
+                ):
+
+                    if (
+                        not car.featured_until
+                        or car.featured_until < timezone.now()
+                    ):
                         featured_days = get_featured_days(request.user)
-                        car.featured_until = timezone.now() + timedelta(days=featured_days)
+
+                        car.featured_until = timezone.now() + timedelta(
+                            days=featured_days
+                        )
+
                 else:
+
                     car.is_featured = False
                     car.featured_until = None
+
                     messages.error(
                         request,
-                        'Featured ad limit reached for your package. This car was saved as a normal listing.'
+                        'Featured ad limit reached. This car was saved as a normal listing.'
                     )
+
             else:
+
                 car.featured_until = None
 
             if request.user.is_staff or user_is_dealer(request.user):
@@ -492,36 +593,63 @@ def edit_car(request, pk):
             delete_image_ids = request.POST.getlist('delete_images')
 
             if delete_image_ids:
-                car.images.filter(id__in=delete_image_ids).delete()
+                car.images.filter(
+                    id__in=delete_image_ids
+                ).delete()
 
             primary_image_id = request.POST.get('primary_image')
 
-            if primary_image_id and car.images.filter(id=primary_image_id).exists():
-                car.images.update(is_primary=False)
-                car.images.filter(id=primary_image_id).update(is_primary=True)
+            if (
+                primary_image_id
+                and car.images.filter(id=primary_image_id).exists()
+            ):
+                car.images.update(
+                    is_primary=False
+                )
+
+                car.images.filter(
+                    id=primary_image_id
+                ).update(
+                    is_primary=True
+                )
 
             images = request.FILES.getlist('images')
             current_image_count = car.images.count()
 
             for index, image in enumerate(images):
+
                 car.images.create(
                     image=image,
-                    is_primary=(current_image_count == 0 and index == 0),
+                    is_primary=(
+                        current_image_count == 0
+                        and index == 0
+                    ),
                     sort_order=current_image_count + index
                 )
 
             if not car.images.filter(is_primary=True).exists():
+
                 first_image = car.images.first()
+
                 if first_image:
                     first_image.is_primary = True
                     first_image.save()
 
-            messages.success(request, 'Car listing updated successfully.')
+            messages.success(
+                request,
+                'Car listing updated successfully.'
+            )
 
-            return redirect('car_detail', slug=car.slug)
+            return redirect(
+                'car_detail',
+                slug=car.slug
+            )
 
     else:
-        form = CarForm(instance=car)
+
+        form = CarForm(
+            instance=car
+        )
 
         ai_listing_assistant = build_seller_ai_assistant(
             form=form,
@@ -538,13 +666,20 @@ def edit_car(request, pk):
         }
     )
 
+# ==========================================
+# SECTION 05: EDIT CAR
+# END
+# ==========================================
+
 
 # ==========================================
-# DELETE CAR
+# SECTION 06: DELETE CAR
+# START
 # ==========================================
 
 @login_required
 def delete_car(request, pk):
+
     car = get_object_or_404(
         Car,
         pk=pk,
@@ -552,8 +687,14 @@ def delete_car(request, pk):
     )
 
     if request.method == 'POST':
+
         car.delete()
-        messages.success(request, 'Car listing deleted successfully.')
+
+        messages.success(
+            request,
+            'Car listing deleted successfully.'
+        )
+
         return redirect('my_listings')
 
     return render(
@@ -563,3 +704,13 @@ def delete_car(request, pk):
             'car': car
         }
     )
+
+# ==========================================
+# SECTION 06: DELETE CAR
+# END
+# ==========================================
+
+
+# ==========================================
+# END FILE
+# ==========================================
