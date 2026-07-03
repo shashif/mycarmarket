@@ -308,7 +308,9 @@ def create_car(request):
 
         if form.is_valid():
             car = form.save(commit=False)
+
             car.seller = request.user
+            car.seller_email = request.user.email
 
             if car.is_featured:
                 if user_can_feature_car(request.user):
@@ -461,6 +463,9 @@ def edit_car(request, pk):
 
         if form.is_valid():
             car = form.save(commit=False)
+
+            car.seller = request.user
+            car.seller_email = request.user.email
 
             if car.is_featured:
                 if user_can_feature_car(request.user, car):

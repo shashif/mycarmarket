@@ -397,7 +397,7 @@ def car_detail(request, slug):
     # END
     # ==========================================
 
-    # ==========================================
+       # ==========================================
     # SECTION 10: ENQUIRY FORM + EMAIL
     # START
     # ==========================================
@@ -415,13 +415,23 @@ def car_detail(request, slug):
 
             enquiry_reference = f"ENQ-{enquiry.id:06d}"
 
+            # ==========================================
+            # SECTION 10.1: SELLER EMAIL DETECTION
+            # START
+            # ==========================================
+
             seller_email = ''
 
-            if car.seller and car.seller.email:
-                seller_email = car.seller.email
+            if car.seller_email:
+                seller_email = car.seller_email.strip()
 
-            elif car.seller_email:
-                seller_email = car.seller_email
+            elif car.seller and car.seller.email:
+                seller_email = car.seller.email.strip()
+
+            # ==========================================
+            # SECTION 10.1: SELLER EMAIL DETECTION
+            # END
+            # ==========================================
 
             seller_subject = (
                 f"{enquiry_reference} - New enquiry for {car.title}"
@@ -528,10 +538,10 @@ def car_detail(request, slug):
                         fail_silently=False
                     )
 
-            except Exception:
+            except Exception as e:
                 messages.warning(
                     request,
-                    'Your enquiry was saved, but email notification could not be sent.'
+                    f'Your enquiry was saved, but email notification could not be sent. Error: {e}'
                 )
 
                 return redirect('car_detail', slug=car.slug)

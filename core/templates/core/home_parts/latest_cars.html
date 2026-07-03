@@ -2,10 +2,9 @@
 
 <!-- =========================================
 MyCarMarket
-Version: v1.3.3
-Date: 19 Jun 2026
+Version: v1.7.0
 File: core/templates/core/home_parts/latest_cars.html
-Description: Latest Vehicles Heading + Cards + AJAX Save Button
+Description: Latest Vehicles + AJAX Save Button + Primary Image Thumbnail Fix
 ========================================= -->
 
 <div class="home-section-header">
@@ -41,13 +40,11 @@ Description: Latest Vehicles Heading + Cards + AJAX Save Button
                     <div class="car-image-link">
                 {% endif %}
 
-                    {% with car.images.first as car_image %}
-                        {% if car_image %}
-                            <img src="{{ car_image.image.url }}" alt="{{ car.title }}">
-                        {% else %}
-                            <div class="no-image-box">No Image Available</div>
-                        {% endif %}
-                    {% endwith %}
+                    {% if car.primary_image %}
+                        <img src="{{ car.primary_image }}" alt="{{ car.title }}">
+                    {% else %}
+                        <div class="no-image-box">No Image Available</div>
+                    {% endif %}
 
                 {% if car.slug %}
                     </a>

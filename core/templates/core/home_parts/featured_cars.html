@@ -2,15 +2,14 @@
 
 <!-- =========================================
 MyCarMarket
-Version: v1.4.2
+Version: v1.7.0
 File: core/templates/core/home_parts/featured_cars.html
-Featured Vehicles + View All Featured Cars
+Description: Featured Vehicles + Primary Image Thumbnail Fix
 ========================================= -->
 
 <div class="home-section-header">
 
     <div>
-
         <h2 class="section-title">
             ⭐ Featured Vehicles
         </h2>
@@ -18,7 +17,6 @@ Featured Vehicles + View All Featured Cars
         <p class="section-subtitle">
             Premium listings from trusted sellers across Australia.
         </p>
-
     </div>
 
     <a href="{% url 'car_list' %}?featured=1"
@@ -35,19 +33,20 @@ Featured Vehicles + View All Featured Cars
         <a href="{% url 'car_detail' car.slug %}"
            class="premium-car-card">
 
+            <!-- ==========================================
+            SECTION 01 : FEATURED CAR IMAGE
+            START
+            ========================================== -->
+
             <div class="premium-car-image-wrap">
 
-                {% with car.images.first as car_image %}
-
-                    {% if car_image %}
-                        <img src="{{ car_image.image.url }}" alt="{{ car.title }}">
-                    {% else %}
-                        <div class="no-image-box">
-                            No Image Available
-                        </div>
-                    {% endif %}
-
-                {% endwith %}
+                {% if car.primary_image %}
+                    <img src="{{ car.primary_image }}" alt="{{ car.title }}">
+                {% else %}
+                    <div class="no-image-box">
+                        No Image Available
+                    </div>
+                {% endif %}
 
                 {% if car.is_featured %}
                     <span class="featured-badge">
@@ -62,6 +61,11 @@ Featured Vehicles + View All Featured Cars
                 {% endif %}
 
             </div>
+
+            <!-- ==========================================
+            SECTION 01 : FEATURED CAR IMAGE
+            END
+            ========================================== -->
 
             <div class="premium-car-info">
 

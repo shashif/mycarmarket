@@ -1,8 +1,8 @@
 <!-- =========================================
 MyCarMarket
-Version: v1.5.4
+Version: v1.7.0
 File: vehicles/templates/vehicles/car_list.html
-Description: Car List Page + AI Search Display + Synced Filters
+Description: Car List Page + AI Search Display + Primary Image Thumbnail Fix
 ========================================= -->
 
 <!DOCTYPE html>
@@ -13,19 +13,40 @@ Description: Car List Page + AI Search Display + Synced Filters
     <title>Cars for Sale - MyCarMarket Australia</title>
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/car_list.css' %}?v=154">
+    <link rel="stylesheet" href="{% static 'css/car_list.css' %}?v=170">
 </head>
 
 <body>
 
 {% include 'includes/navbar.html' %}
 
+<!-- ==========================================
+SECTION 01 : PAGE WRAPPER
+START
+========================================== -->
+
 <div class="page-wrapper">
+
+    <!-- ==========================================
+    SECTION 02 : PAGE HEADER
+    START
+    ========================================== -->
 
     <div class="page-header">
         <h1>Find Your Next Car</h1>
         <p>Search naturally, for example: “family SUV under 30k”.</p>
     </div>
+
+    <!-- ==========================================
+    SECTION 02 : PAGE HEADER
+    END
+    ========================================== -->
+
+
+    <!-- ==========================================
+    SECTION 03 : FILTER BOX
+    START
+    ========================================== -->
 
     <div class="filter-box">
         <form method="GET">
@@ -133,6 +154,17 @@ Description: Car List Page + AI Search Display + Synced Filters
         </form>
     </div>
 
+    <!-- ==========================================
+    SECTION 03 : FILTER BOX
+    END
+    ========================================== -->
+
+
+    <!-- ==========================================
+    SECTION 04 : AI SEARCH NOTES
+    START
+    ========================================== -->
+
     {% if ai_search_notes %}
         <div class="ai-search-box">
             <strong>🤖 AI Search understood:</strong>
@@ -145,6 +177,17 @@ Description: Car List Page + AI Search Display + Synced Filters
         </div>
     {% endif %}
 
+    <!-- ==========================================
+    SECTION 04 : AI SEARCH NOTES
+    END
+    ========================================== -->
+
+
+    <!-- ==========================================
+    SECTION 05 : CAR RESULTS
+    START
+    ========================================== -->
+
     {% if cars %}
 
         <div class="premium-car-grid">
@@ -153,14 +196,23 @@ Description: Car List Page + AI Search Display + Synced Filters
 
                 <div class="premium-car-card">
 
+                    <!-- ==========================================
+                    SECTION 06 : PREMIUM CAR IMAGE
+                    START
+                    ========================================== -->
+
                     <div class="premium-car-image-wrap">
 
                         <a href="{% url 'car_detail' car.slug %}" class="car-image-link">
-                            {% if car.images.first %}
-                                <img src="{{ car.images.first.image.url }}" alt="{{ car.title }}">
+
+                            {% if car.primary_image %}
+                                <img src="{{ car.primary_image }}" alt="{{ car.title }}">
                             {% else %}
-                                <div class="no-image-box">No Image Available</div>
+                                <div class="no-image-box">
+                                    No Image Available
+                                </div>
                             {% endif %}
+
                         </a>
 
                         {% if car.is_featured %}
@@ -176,6 +228,7 @@ Description: Car List Page + AI Search Display + Synced Filters
                                   action="{% url 'toggle_favourite' car.slug %}"
                                   class="favourite-form">
                                 {% csrf_token %}
+
                                 <input type="hidden"
                                        name="next"
                                        value="{{ request.get_full_path }}">
@@ -199,6 +252,17 @@ Description: Car List Page + AI Search Display + Synced Filters
                         {% endif %}
 
                     </div>
+
+                    <!-- ==========================================
+                    SECTION 06 : PREMIUM CAR IMAGE
+                    END
+                    ========================================== -->
+
+
+                    <!-- ==========================================
+                    SECTION 07 : PREMIUM CAR INFO
+                    START
+                    ========================================== -->
 
                     <div class="premium-car-info">
 
@@ -245,6 +309,11 @@ Description: Car List Page + AI Search Display + Synced Filters
 
                     </div>
 
+                    <!-- ==========================================
+                    SECTION 07 : PREMIUM CAR INFO
+                    END
+                    ========================================== -->
+
                 </div>
 
             {% endfor %}
@@ -259,6 +328,17 @@ Description: Car List Page + AI Search Display + Synced Filters
         </div>
 
     {% endif %}
+
+    <!-- ==========================================
+    SECTION 05 : CAR RESULTS
+    END
+    ========================================== -->
+
+
+    <!-- ==========================================
+    SECTION 08 : PAGINATION
+    START
+    ========================================== -->
 
     {% if cars.has_other_pages %}
         <div class="pagination">
@@ -278,7 +358,17 @@ Description: Car List Page + AI Search Display + Synced Filters
         </div>
     {% endif %}
 
+    <!-- ==========================================
+    SECTION 08 : PAGINATION
+    END
+    ========================================== -->
+
 </div>
+
+<!-- ==========================================
+SECTION 01 : PAGE WRAPPER
+END
+========================================== -->
 
 </body>
 </html>

@@ -1,13 +1,19 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.5.4
+# Version: v1.7.0
 # File: vehicles/forms/car_form.py
-# Description: Car Form + Smart Price Suggestion Ready Fields
+# Description: Car Form + Seller Email Auto-Fill Ready
 # ==========================================
 
 from django import forms
+
 from vehicles.models import Car
 
+
+# ==========================================
+# CAR FORM
+# START
+# ==========================================
 
 class CarForm(forms.ModelForm):
 
@@ -28,7 +34,6 @@ class CarForm(forms.ModelForm):
             'description',
             'price',
             'seller_name',
-            'seller_email',
             'seller_phone',
             'is_active',
         ]
@@ -104,18 +109,22 @@ class CarForm(forms.ModelForm):
             }),
 
             'seller_name': forms.TextInput(attrs={
-                'class': 'form-control'
-            }),
-
-            'seller_email': forms.EmailInput(attrs={
-                'class': 'form-control'
+                'class': 'form-control',
+                'placeholder': 'Seller name'
             }),
 
             'seller_phone': forms.TextInput(attrs={
-                'class': 'form-control'
+                'class': 'form-control',
+                'placeholder': 'Seller phone number'
             }),
 
             'is_active': forms.CheckboxInput(attrs={
                 'class': 'form-check-input'
             }),
         }
+
+
+# ==========================================
+# CAR FORM
+# END
+# ==========================================
