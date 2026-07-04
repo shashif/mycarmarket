@@ -1,8 +1,8 @@
 <!-- =========================================
 MyCarMarket
-Version: v0.8.3
+Version: v1.8.7
 File: vehicles/templates/vehicles/saved_cars.html
-Saved Favourite Cars Page
+Description: Saved Cars Page + Remove Saved Car Button
 ========================================= -->
 
 <!DOCTYPE html>
@@ -12,7 +12,7 @@ Saved Favourite Cars Page
 
     <title>My Saved Cars - MyCarMarket Australia</title>
 
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=187">
 </head>
 
 <body>
@@ -23,7 +23,7 @@ Saved Favourite Cars Page
 
     <div class="saved-header">
         <h1>❤️ My Saved Cars</h1>
-        <p>Cars you saved for later.</p>
+        <p>Cars you saved for later. You can view details or remove cars from your saved list.</p>
     </div>
 
     {% if favourites %}
@@ -33,23 +33,25 @@ Saved Favourite Cars Page
             {% for favourite in favourites %}
                 {% with car=favourite.car %}
 
-                    <a href="{% url 'car_detail' car.slug %}" class="saved-car-card">
+                    <div class="saved-car-card">
 
-                        <div class="saved-image-wrap">
-                            {% if car.images.first %}
-                                <img src="{{ car.images.first.image.url }}" alt="{{ car.title }}">
-                            {% else %}
-                                <div class="no-image-box">No Image</div>
-                            {% endif %}
+                        <a href="{% url 'car_detail' car.slug %}" class="saved-image-link">
+                            <div class="saved-image-wrap">
+                                {% if car.images.first %}
+                                    <img src="{{ car.images.first.image.url }}" alt="{{ car.title }}">
+                                {% else %}
+                                    <div class="no-image-box">No Image</div>
+                                {% endif %}
 
-                            {% if car.is_featured %}
-                                <span class="featured-badge">⭐ Featured</span>
-                            {% endif %}
+                                {% if car.is_featured %}
+                                    <span class="featured-badge">⭐ Featured</span>
+                                {% endif %}
 
-                            {% if car.is_verified_listing %}
-                                <span class="verified-badge">✓ Verified</span>
-                            {% endif %}
-                        </div>
+                                {% if car.is_verified_listing %}
+                                    <span class="verified-badge">✓ Verified</span>
+                                {% endif %}
+                            </div>
+                        </a>
 
                         <div class="saved-car-info">
                             <h3>{{ car.title }}</h3>
@@ -59,9 +61,24 @@ Saved Favourite Cars Page
                             <p>📍 {{ car.display_location|default:"Location not specified" }}</p>
 
                             <strong>${{ car.price }}</strong>
+
+                            <div class="saved-card-actions">
+                                <a href="{% url 'car_detail' car.slug %}" class="view-details-btn">
+                                    View Details
+                                </a>
+
+                                <form method="POST"
+                                      action="{% url 'toggle_favourite' car.slug %}"
+                                      class="remove-saved-form">
+                                    {% csrf_token %}
+                                    <button type="submit" class="remove-saved-btn">
+                                        ❤️ Remove
+                                    </button>
+                                </form>
+                            </div>
                         </div>
 
-                    </a>
+                    </div>
 
                 {% endwith %}
             {% endfor %}
@@ -102,6 +119,7 @@ Saved Favourite Cars Page
 
 .saved-header p {
     color: #d1d5db;
+    margin-bottom: 0;
 }
 
 .saved-car-grid {
@@ -111,10 +129,8 @@ Saved Favourite Cars Page
 }
 
 .saved-car-card {
-    display: block;
     background: white;
     color: inherit;
-    text-decoration: none;
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 10px 28px rgba(0,0,0,0.10);
@@ -124,6 +140,12 @@ Saved Favourite Cars Page
 .saved-car-card:hover {
     transform: translateY(-6px);
     box-shadow: 0 16px 36px rgba(0,0,0,0.14);
+}
+
+.saved-image-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
 }
 
 .saved-image-wrap {
@@ -179,11 +201,13 @@ Saved Favourite Cars Page
 .saved-car-info h3 {
     margin: 0 0 8px;
     color: #111827;
+    line-height: 1.3;
 }
 
 .saved-car-info p {
     color: #4b5563;
     font-size: 14px;
+    margin: 8px 0;
 }
 
 .saved-car-info strong {
@@ -191,6 +215,50 @@ Saved Favourite Cars Page
     font-size: 24px;
     color: #111827;
     margin-top: 12px;
+}
+
+.saved-card-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.view-details-btn,
+.remove-saved-btn {
+    width: 100%;
+    display: block;
+    padding: 12px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 800;
+    text-align: center;
+    text-decoration: none;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.view-details-btn {
+    background: #2563eb;
+    color: white;
+}
+
+.view-details-btn:hover {
+    background: #1d4ed8;
+}
+
+.remove-saved-form {
+    margin: 0;
+}
+
+.remove-saved-btn {
+    border: none;
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.remove-saved-btn:hover {
+    background: #fecaca;
 }
 
 .empty-box {
@@ -213,6 +281,10 @@ Saved Favourite Cars Page
 
 @media (max-width: 900px) {
     .saved-car-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .saved-card-actions {
         grid-template-columns: 1fr;
     }
 }
