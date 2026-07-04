@@ -568,3 +568,57 @@ START SECTION 14: GLOBAL ANIMATION
 /* ==========================================
 END SECTION 14: GLOBAL ANIMATION
 ========================================== */
+
+/* ==========================================
+MyCarMarket
+Version: v1.7.8
+File: static/css/style.css
+Description: Breadcrumb Navigation Styling
+========================================== */
+
+.mcm-breadcrumb {
+    max-width: 1200px;
+    margin: 18px auto 0;
+    padding: 0 18px;
+    font-size: 14px;
+}
+
+.mcm-breadcrumb-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+}
+
+.mcm-breadcrumb-item {
+    color: #64748b;
+}
+
+.mcm-breadcrumb-item::after {
+    content: "›";
+    margin-left: 8px;
+    color: #94a3b8;
+}
+
+.mcm-breadcrumb-item:last-child::after {
+    content: "";
+    margin-left: 0;
+}
+
+.mcm-breadcrumb-item a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.mcm-breadcrumb-item a:hover {
+    text-decoration: underline;
+}
+
+.mcm-breadcrumb-item.active {
+    color: #0f172a;
+    font-weight: 700;
+}

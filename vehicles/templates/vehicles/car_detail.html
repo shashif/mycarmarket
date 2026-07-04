@@ -1,8 +1,8 @@
 <!-- =========================================
 MyCarMarket
-Version: v1.7.6
+Version: v1.7.8
 File: vehicles/templates/vehicles/car_detail.html
-Description: Car Detail Page + Vehicle Structured Data JSON-LD
+Description: Car Detail Page + Vehicle Schema + Breadcrumb Schema
 ========================================= -->
 
 {% load static %}
@@ -33,53 +33,25 @@ Description: Car Detail Page + Vehicle Structured Data JSON-LD
         content="{{ car.year }} {{ car.make }} {{ car.model }}, {{ car.make }} {{ car.model }} for sale, used cars Australia, cars for sale Australia, {% if car.suburb %}cars for sale {{ car.suburb }},{% endif %}{% if car.state %} cars for sale {{ car.state }}{% endif %}"
     >
 
-    <link
-        rel="canonical"
-        href="{{ share_url }}"
-    >
+    <link rel="canonical" href="{{ share_url }}">
 
-    <!-- Open Graph -->
-
-    <meta
-        property="og:title"
-        content="{{ car.year }} {{ car.make }} {{ car.model }} For Sale | MyCarMarket Australia"
-    >
-
-    <meta
-        property="og:description"
-        content="{{ car.year }} {{ car.make }} {{ car.model }} for sale{% if car.display_location %} in {{ car.display_location }}{% endif %}. Price ${{ car.price }}, {{ car.kilometres }} km."
-    >
+    <meta property="og:title" content="{{ car.year }} {{ car.make }} {{ car.model }} For Sale | MyCarMarket Australia">
+    <meta property="og:description" content="{{ car.year }} {{ car.make }} {{ car.model }} for sale{% if car.display_location %} in {{ car.display_location }}{% endif %}. Price ${{ car.price }}, {{ car.kilometres }} km.">
 
     {% if car.primary_image %}
-        <meta
-            property="og:image"
-            content="{{ request.scheme }}://{{ request.get_host }}{{ car.primary_image }}"
-        >
+        <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ car.primary_image }}">
     {% endif %}
 
     <meta property="og:url" content="{{ share_url }}">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="MyCarMarket Australia">
 
-    <!-- Twitter Card -->
-
     <meta name="twitter:card" content="summary_large_image">
-
-    <meta
-        name="twitter:title"
-        content="{{ car.year }} {{ car.make }} {{ car.model }} For Sale | MyCarMarket Australia"
-    >
-
-    <meta
-        name="twitter:description"
-        content="{{ car.year }} {{ car.make }} {{ car.model }} for sale{% if car.display_location %} in {{ car.display_location }}{% endif %}. Price ${{ car.price }}, {{ car.kilometres }} km."
-    >
+    <meta name="twitter:title" content="{{ car.year }} {{ car.make }} {{ car.model }} For Sale | MyCarMarket Australia">
+    <meta name="twitter:description" content="{{ car.year }} {{ car.make }} {{ car.model }} for sale{% if car.display_location %} in {{ car.display_location }}{% endif %}. Price ${{ car.price }}, {{ car.kilometres }} km.">
 
     {% if car.primary_image %}
-        <meta
-            name="twitter:image"
-            content="{{ request.scheme }}://{{ request.get_host }}{{ car.primary_image }}"
-        >
+        <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{{ car.primary_image }}">
     {% endif %}
 
     <!-- ==========================================
@@ -133,12 +105,46 @@ Description: Car Detail Page + Vehicle Structured Data JSON-LD
     }
     </script>
 
-    <!-- Global CSS -->
+    <!-- ==========================================
+    Breadcrumb Structured Data JSON-LD
+    Version: v1.7.8
+    ========================================== -->
 
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/car_detail.css' %}?v=176">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "{{ request.scheme }}://{{ request.get_host }}/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Cars",
+                "item": "{{ request.scheme }}://{{ request.get_host }}{% url 'car_list' %}"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "{{ car.make }}",
+                "item": "{{ request.scheme }}://{{ request.get_host }}{% url 'car_list' %}?make={{ car.make|urlencode }}"
+            },
+            {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "{{ car.year }} {{ car.make }} {{ car.model }}",
+                "item": "{{ share_url }}"
+            }
+        ]
+    }
+    </script>
 
-    <!-- Google AdSense -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=178">
+    <link rel="stylesheet" href="{% static 'css/car_detail.css' %}?v=178">
 
     {% if settings and settings.car_detail_sidebar_google_ad_active and settings.google_adsense_publisher_id %}
         <script
@@ -153,6 +159,28 @@ Description: Car Detail Page + Vehicle Structured Data JSON-LD
 <body>
 
 {% include 'includes/navbar.html' %}
+
+<nav class="mcm-breadcrumb" aria-label="Breadcrumb">
+    <ol class="mcm-breadcrumb-list">
+        <li class="mcm-breadcrumb-item">
+            <a href="/">Home</a>
+        </li>
+
+        <li class="mcm-breadcrumb-item">
+            <a href="{% url 'car_list' %}">Cars</a>
+        </li>
+
+        <li class="mcm-breadcrumb-item">
+            <a href="{% url 'car_list' %}?make={{ car.make|urlencode }}">
+                {{ car.make }}
+            </a>
+        </li>
+
+        <li class="mcm-breadcrumb-item active" aria-current="page">
+            {{ car.year }} {{ car.make }} {{ car.model }}
+        </li>
+    </ol>
+</nav>
 
 <div class="container">
 
