@@ -1,8 +1,10 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.7.1
+# Version: v1.8.1
 # File: vehicles/views/car_manage_views.py
-# Description: Seller AI Listing Assistant + Image Management + Private Seller Listing Limit Fix
+# Description: Seller AI Listing Assistant + Image Management
+#              + Private Seller Listing Limit Fix
+#              + Pending Approval Email Notification
 # ==========================================
 
 from datetime import timedelta
@@ -15,6 +17,10 @@ from django.db.models import Avg
 
 from vehicles.models import Car, Enquiry
 from vehicles.forms import CarForm
+
+from vehicles.utils.email_notifications import (
+    send_listing_pending_email,
+)
 
 
 # ==========================================
@@ -372,6 +378,19 @@ def create_car(request):
                 car.is_approved = False
 
             car.save()
+
+            # ==========================================
+            # Send Pending Approval Email
+            # START
+            # ==========================================
+
+            if not (request.user.is_staff or user_is_dealer(request.user)):
+                send_listing_pending_email(car)
+
+            # ==========================================
+            # Send Pending Approval Email
+            # END
+            # ==========================================
 
             images = request.FILES.getlist('images')
 

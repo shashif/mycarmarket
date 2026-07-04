@@ -1,11 +1,12 @@
-{% load static %}
-
 <!-- =========================================
 MyCarMarket
-Version: v1.7.9
+Version: v1.8.6
 File: core/templates/core/home_parts/latest_cars.html
-Description: Latest Vehicles + Clean Card UI Without Duplicate Dealer Badges
+Description: Latest Vehicles Compact Professional
+             Card Layout + Formatted Price + Meta Row
 ========================================= -->
+
+{% load static humanize %}
 
 <div class="home-section-header">
 
@@ -112,40 +113,23 @@ Description: Latest Vehicles + Clean Card UI Without Duplicate Dealer Badges
                     <h3>{{ car.title }}</h3>
                 {% endif %}
 
-                <p class="car-meta">
-                    🚘 {{ car.year }} • {{ car.make }} {{ car.model }}
-                </p>
-
-                <div class="dealer-info">
-                    <p class="dealer-name">
-                        🏢 {{ car.seller_business_name }}
-                    </p>
-                </div>
-
-                <div class="icon-info-grid">
-                    <span>🛣 {{ car.kilometres }} km</span>
-                    <span>⚙️ {{ car.transmission|default:"N/A" }}</span>
-                    <span>⛽ {{ car.fuel_type|default:"N/A" }}</span>
-                    <span>👁 {{ car.views_count }} views</span>
-                </div>
-
-                <p class="car-location">
-                    📍 {{ car.display_location|default:"Location not specified" }}
-                </p>
-
                 <div class="price-row">
-                    <strong>${{ car.price }}</strong>
+                    <strong>${{ car.price|floatformat:0|intcomma }}</strong>
                 </div>
 
-                {% if car.slug %}
-                    <a href="{% url 'car_detail' car.slug %}" class="view-details-btn">
-                        View Details
-                    </a>
-                {% else %}
-                    <span class="view-details-btn">
-                        Details Unavailable
+                <div class="car-meta-row">
+
+                    <span>
+                        📍 {{ car.display_location|default:"Location not specified" }}
                     </span>
-                {% endif %}
+
+                    <span class="meta-divider">•</span>
+
+                    <span>
+                        🛣 {{ car.kilometres|intcomma }} km
+                    </span>
+
+                </div>
 
             </div>
 

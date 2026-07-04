@@ -1,11 +1,12 @@
-{% load static %}
-
 <!-- =========================================
 MyCarMarket
-Version: v1.7.0
+Version: v1.8.6
 File: core/templates/core/home_parts/featured_cars.html
-Description: Featured Vehicles + Primary Image Thumbnail Fix
+Description: Featured Vehicles Compact Professional
+             Card Layout + Formatted Price + Meta Row
 ========================================= -->
+
+{% load static humanize %}
 
 <div class="home-section-header">
 
@@ -30,58 +31,69 @@ Description: Featured Vehicles + Primary Image Thumbnail Fix
 
     {% for car in featured_cars %}
 
-        <a href="{% url 'car_detail' car.slug %}"
-           class="premium-car-card">
-
-            <!-- ==========================================
-            SECTION 01 : FEATURED CAR IMAGE
-            START
-            ========================================== -->
+        <div class="premium-car-card featured-home-card">
 
             <div class="premium-car-image-wrap">
 
-                {% if car.primary_image %}
-                    <img src="{{ car.primary_image }}" alt="{{ car.title }}">
+                {% if car.slug %}
+                    <a href="{% url 'car_detail' car.slug %}" class="car-image-link">
                 {% else %}
-                    <div class="no-image-box">
-                        No Image Available
+                    <div class="car-image-link">
+                {% endif %}
+
+                    {% if car.primary_image %}
+                        <img src="{{ car.primary_image }}" alt="{{ car.title }}">
+                    {% else %}
+                        <div class="no-image-box">No Image Available</div>
+                    {% endif %}
+
+                {% if car.slug %}
+                    </a>
+                {% else %}
                     </div>
                 {% endif %}
 
                 {% if car.is_featured %}
-                    <span class="featured-badge">
-                        ⭐ Featured
-                    </span>
+                    <span class="featured-badge">⭐ Featured</span>
                 {% endif %}
 
                 {% if car.is_verified_listing %}
-                    <span class="verified-badge">
-                        ✓ Verified
-                    </span>
+                    <span class="verified-badge">✓ Verified</span>
                 {% endif %}
 
             </div>
 
-            <!-- ==========================================
-            SECTION 01 : FEATURED CAR IMAGE
-            END
-            ========================================== -->
-
             <div class="premium-car-info">
 
-                <h3>{{ car.title }}</h3>
-
-                <p class="car-meta">
-                    🚘 {{ car.year }} • {{ car.make }} {{ car.model }}
-                </p>
+                {% if car.slug %}
+                    <a href="{% url 'car_detail' car.slug %}" class="car-title-link">
+                        <h3>{{ car.title }}</h3>
+                    </a>
+                {% else %}
+                    <h3>{{ car.title }}</h3>
+                {% endif %}
 
                 <div class="price-row">
-                    <strong>${{ car.price }}</strong>
+                    <strong>${{ car.price|floatformat:0|intcomma }}</strong>
+                </div>
+
+                <div class="car-meta-row">
+
+                    <span>
+                        📍 {{ car.display_location|default:"Location not specified" }}
+                    </span>
+
+                    <span class="meta-divider">•</span>
+
+                    <span>
+                        🛣 {{ car.kilometres|intcomma }} km
+                    </span>
+
                 </div>
 
             </div>
 
-        </a>
+        </div>
 
     {% empty %}
 

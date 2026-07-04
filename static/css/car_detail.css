@@ -1287,3 +1287,74 @@ START SECTION 16: AI PRICE INSIGHT
 /* =========================================
 END SECTION 16: AI PRICE INSIGHT
 ========================================= */
+
+/* =========================================
+START SECTION 17: BREADCRUMB
+========================================= */
+
+.mcm-breadcrumb{
+    width:90%;
+    max-width:1200px;
+    margin:22px auto 26px;
+}
+
+.mcm-breadcrumb-list{
+    list-style:none;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:8px;
+    margin:0;
+    padding:0;
+    font-size:14px;
+}
+
+.mcm-breadcrumb-item{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:#6b7280;
+    font-weight:600;
+}
+
+.mcm-breadcrumb-item::after{
+    content:"/";
+    color:#9ca3af;
+}
+
+.mcm-breadcrumb-item:last-child::after{
+    content:"";
+}
+
+.mcm-breadcrumb-item a{
+    color:#2563eb;
+    text-decoration:none;
+    font-weight:700;
+}
+
+.mcm-breadcrumb-item a:hover{
+    text-decoration:underline;
+}
+
+.mcm-breadcrumb-item.active{
+    color:#111827;
+    font-weight:700;
+}
+
+@media (max-width:700px){
+
+    .mcm-breadcrumb{
+        width:94%;
+        margin:16px auto 18px;
+    }
+
+    .mcm-breadcrumb-list{
+        font-size:13px;
+        gap:6px;
+    }
+
+}
+
+/* =========================================
+END SECTION 17: BREADCRUMB
+========================================= */
