@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.7.6
+# Version: v1.9.6
 # File: vehicles/admin/pending_listing_admin.py
-# Description: Admin Moderation Dashboard + Listing Moderation Center
+# Description: Admin Moderation Dashboard + Listing Approval Email Notification
 # ==========================================
 
 from django.contrib import admin, messages
@@ -12,10 +12,12 @@ from django.utils import timezone
 from django.utils.html import format_html
 
 from vehicles.models import Car
+from vehicles.utils.email_notifications import send_listing_approved_email
 
 
 # ==========================================
-# SECTION 01: PROXY MODELS START
+# SECTION 01 START
+# Proxy Models
 # ==========================================
 
 class ModerationDashboard(Car):
@@ -60,12 +62,13 @@ class ReportedListing(Car):
         verbose_name_plural = "⚠️ Reported Listings"
 
 # ==========================================
-# SECTION 01: PROXY MODELS END
+# SECTION 01 END
 # ==========================================
 
 
 # ==========================================
-# SECTION 02: DASHBOARD ADMIN START
+# SECTION 02 START
+# Moderation Dashboard Admin
 # ==========================================
 
 @admin.register(ModerationDashboard)
@@ -107,12 +110,13 @@ class ModerationDashboardAdmin(admin.ModelAdmin):
         return False
 
 # ==========================================
-# SECTION 02: DASHBOARD ADMIN END
+# SECTION 02 END
 # ==========================================
 
 
 # ==========================================
-# SECTION 03: BASE MODERATION ADMIN START
+# SECTION 03 START
+# Base Moderation Admin
 # ==========================================
 
 class BaseModerationAdmin(admin.ModelAdmin):
@@ -168,12 +172,13 @@ class BaseModerationAdmin(admin.ModelAdmin):
     )
 
 # ==========================================
-# SECTION 03: BASE MODERATION ADMIN END
+# SECTION 03 END
 # ==========================================
 
 
 # ==========================================
-# SECTION 04: STATUS BADGE START
+# SECTION 04 START
+# Status Badge
 # ==========================================
 
     def status_badge(self, obj):
@@ -192,12 +197,13 @@ class BaseModerationAdmin(admin.ModelAdmin):
     status_badge.short_description = "Status"
 
 # ==========================================
-# SECTION 04: STATUS BADGE END
+# SECTION 04 END
 # ==========================================
 
 
 # ==========================================
-# SECTION 05: QUICK ACTION BUTTONS START
+# SECTION 05 START
+# Quick Action Buttons
 # ==========================================
 
     def quick_actions(self, obj):
@@ -234,12 +240,13 @@ class BaseModerationAdmin(admin.ModelAdmin):
     quick_actions.short_description = "Quick Actions"
 
 # ==========================================
-# SECTION 05: QUICK ACTION BUTTONS END
+# SECTION 05 END
 # ==========================================
 
 
 # ==========================================
-# SECTION 06: CUSTOM ADMIN URLS START
+# SECTION 06 START
+# Custom Admin URLs
 # ==========================================
 
     def get_urls(self):
@@ -270,17 +277,19 @@ class BaseModerationAdmin(admin.ModelAdmin):
         return custom_urls + urls
 
 # ==========================================
-# SECTION 06: CUSTOM ADMIN URLS END
+# SECTION 06 END
 # ==========================================
 
 
 # ==========================================
-# SECTION 07: QUICK ACTION METHODS START
+# SECTION 07 START
+# Quick Action Methods
 # ==========================================
 
     def quick_approve(self, request, car_id):
 
         car = Car.objects.get(id=car_id)
+        old_status = car.moderation_status
 
         car.moderation_status = "approved"
         car.is_approved = True
@@ -288,6 +297,9 @@ class BaseModerationAdmin(admin.ModelAdmin):
         car.approved_by = request.user
         car.approved_at = timezone.now()
         car.save()
+
+        if old_status != "approved":
+            send_listing_approved_email(car)
 
         messages.success(request, f"{car.title} approved successfully.")
 
@@ -326,24 +338,34 @@ class BaseModerationAdmin(admin.ModelAdmin):
         )
 
 # ==========================================
-# SECTION 07: QUICK ACTION METHODS END
+# SECTION 07 END
 # ==========================================
 
 
 # ==========================================
-# SECTION 08: BULK ADMIN ACTIONS START
+# SECTION 08 START
+# Bulk Admin Actions
 # ==========================================
 
     @admin.action(description="Approve selected listings")
     def approve_selected_listings(self, request, queryset):
 
-        updated = queryset.update(
-            moderation_status="approved",
-            is_approved=True,
-            is_active=True,
-            approved_by=request.user,
-            approved_at=timezone.now(),
-        )
+        updated = 0
+
+        for car in queryset:
+            old_status = car.moderation_status
+
+            car.moderation_status = "approved"
+            car.is_approved = True
+            car.is_active = True
+            car.approved_by = request.user
+            car.approved_at = timezone.now()
+            car.save()
+
+            if old_status != "approved":
+                send_listing_approved_email(car)
+
+            updated += 1
 
         self.message_user(
             request,
@@ -403,12 +425,13 @@ class BaseModerationAdmin(admin.ModelAdmin):
         )
 
 # ==========================================
-# SECTION 08: BULK ADMIN ACTIONS END
+# SECTION 08 END
 # ==========================================
 
 
 # ==========================================
-# SECTION 09: REGISTER PENDING LISTINGS START
+# SECTION 09 START
+# Pending Listings Admin
 # ==========================================
 
 @admin.register(PendingListing)
@@ -421,12 +444,13 @@ class PendingListingAdmin(BaseModerationAdmin):
         )
 
 # ==========================================
-# SECTION 09: REGISTER PENDING LISTINGS END
+# SECTION 09 END
 # ==========================================
 
 
 # ==========================================
-# SECTION 10: REGISTER APPROVED LISTINGS START
+# SECTION 10 START
+# Approved Listings Admin
 # ==========================================
 
 @admin.register(ApprovedListing)
@@ -439,12 +463,13 @@ class ApprovedListingAdmin(BaseModerationAdmin):
         )
 
 # ==========================================
-# SECTION 10: REGISTER APPROVED LISTINGS END
+# SECTION 10 END
 # ==========================================
 
 
 # ==========================================
-# SECTION 11: REGISTER REJECTED LISTINGS START
+# SECTION 11 START
+# Rejected Listings Admin
 # ==========================================
 
 @admin.register(RejectedListing)
@@ -457,12 +482,13 @@ class RejectedListingAdmin(BaseModerationAdmin):
         )
 
 # ==========================================
-# SECTION 11: REGISTER REJECTED LISTINGS END
+# SECTION 11 END
 # ==========================================
 
 
 # ==========================================
-# SECTION 12: REGISTER SUSPENDED LISTINGS START
+# SECTION 12 START
+# Suspended Listings Admin
 # ==========================================
 
 @admin.register(SuspendedListing)
@@ -475,12 +501,13 @@ class SuspendedListingAdmin(BaseModerationAdmin):
         )
 
 # ==========================================
-# SECTION 12: REGISTER SUSPENDED LISTINGS END
+# SECTION 12 END
 # ==========================================
 
 
 # ==========================================
-# SECTION 13: REGISTER REPORTED LISTINGS START
+# SECTION 13 START
+# Reported Listings Admin
 # ==========================================
 
 @admin.register(ReportedListing)
@@ -493,5 +520,10 @@ class ReportedListingAdmin(BaseModerationAdmin):
         )
 
 # ==========================================
-# SECTION 13: REGISTER REPORTED LISTINGS END
+# SECTION 13 END
+# ==========================================
+
+
+# ==========================================
+# END FILE
 # ==========================================

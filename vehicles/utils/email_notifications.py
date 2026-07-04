@@ -1,12 +1,12 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.8.1
+# Version: v1.9.6
 # File: vehicles/utils/email_notifications.py
 # Description:
 # Email notification helpers for car listings.
 #
 # Sends email when:
-# 1. User submits a new listing (Pending Approval)
+# 1. User submits a new listing
 # 2. Admin approves the listing
 # ==========================================
 
@@ -14,25 +14,26 @@ from django.conf import settings
 from django.core.mail import send_mail
 
 
-# ==========================================
-# LISTING PENDING EMAIL
-# ==========================================
+def get_listing_owner(car):
+    if hasattr(car, "posted_by") and car.posted_by:
+        return car.posted_by
+
+    if hasattr(car, "seller") and car.seller:
+        return car.seller
+
+    return None
+
 
 def send_listing_pending_email(car):
-    """
-    Send email after user submits a new car listing.
-    """
+    owner = get_listing_owner(car)
 
-    if not car.posted_by:
-        return
-
-    if not car.posted_by.email:
-        return
+    if not owner or not owner.email:
+        return False
 
     subject = "We've received your car listing - MyCarMarket Australia"
 
     message = f"""
-Hi {car.posted_by.get_full_name() or car.posted_by.username},
+Hi {owner.get_full_name() or owner.username},
 
 Thank you for listing your vehicle on MyCarMarket Australia.
 
@@ -60,30 +61,23 @@ https://mycarmarket.com.au
         subject=subject,
         message=message,
         from_email=settings.DEFAULT_FROM_EMAIL,
-        recipient_list=[car.posted_by.email],
+        recipient_list=[owner.email],
         fail_silently=True,
     )
 
+    return True
 
-# ==========================================
-# LISTING APPROVED EMAIL
-# ==========================================
 
 def send_listing_approved_email(car):
-    """
-    Send email after admin approves a car listing.
-    """
+    owner = get_listing_owner(car)
 
-    if not car.posted_by:
-        return
-
-    if not car.posted_by.email:
-        return
+    if not owner or not owner.email:
+        return False
 
     subject = "Your car listing has been approved! - MyCarMarket Australia"
 
     message = f"""
-Hi {car.posted_by.get_full_name() or car.posted_by.username},
+Hi {owner.get_full_name() or owner.username},
 
 Congratulations!
 
@@ -109,6 +103,8 @@ https://mycarmarket.com.au
         subject=subject,
         message=message,
         from_email=settings.DEFAULT_FROM_EMAIL,
-        recipient_list=[car.posted_by.email],
+        recipient_list=[owner.email],
         fail_silently=True,
     )
+
+    return True
