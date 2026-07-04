@@ -1,8 +1,8 @@
 <!-- =========================================
 MyCarMarket
-Version: v0.9.9.6
+Version: v1.7.6
 File: vehicles/templates/vehicles/car_detail.html
-Mobile Responsive Review + Marketplace Polish
+Description: Car Detail Page + Vehicle Structured Data JSON-LD
 ========================================= -->
 
 {% load static %}
@@ -38,9 +38,7 @@ Mobile Responsive Review + Marketplace Polish
         href="{{ share_url }}"
     >
 
-    <!-- ==========================================
-    Open Graph
-    ========================================== -->
+    <!-- Open Graph -->
 
     <meta
         property="og:title"
@@ -59,29 +57,13 @@ Mobile Responsive Review + Marketplace Polish
         >
     {% endif %}
 
-    <meta
-        property="og:url"
-        content="{{ share_url }}"
-    >
+    <meta property="og:url" content="{{ share_url }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="MyCarMarket Australia">
 
-    <meta
-        property="og:type"
-        content="website"
-    >
+    <!-- Twitter Card -->
 
-    <meta
-        property="og:site_name"
-        content="MyCarMarket Australia"
-    >
-
-    <!-- ==========================================
-    Twitter Card
-    ========================================== -->
-
-    <meta
-        name="twitter:card"
-        content="summary_large_image"
-    >
+    <meta name="twitter:card" content="summary_large_image">
 
     <meta
         name="twitter:title"
@@ -101,23 +83,62 @@ Mobile Responsive Review + Marketplace Polish
     {% endif %}
 
     <!-- ==========================================
-    Global CSS
+    Vehicle Structured Data JSON-LD
     ========================================== -->
 
-    <link
-        rel="stylesheet"
-        href="{% static 'css/style.css' %}"
-    >
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Vehicle",
+        "@id": "{{ share_url }}#vehicle",
+        "name": "{{ car.year }} {{ car.make }} {{ car.model }}",
+        "url": "{{ share_url }}",
+        "brand": {
+            "@type": "Brand",
+            "name": "{{ car.make }}"
+        },
+        "model": "{{ car.model }}",
+        "vehicleModelDate": "{{ car.year }}",
+        {% if car.body_type %}
+        "bodyType": "{{ car.body_type }}",
+        {% endif %}
+        {% if car.transmission %}
+        "vehicleTransmission": "{{ car.transmission }}",
+        {% endif %}
+        {% if car.fuel_type %}
+        "fuelType": "{{ car.fuel_type }}",
+        {% endif %}
+        {% if car.kilometres %}
+        "mileageFromOdometer": {
+            "@type": "QuantitativeValue",
+            "value": "{{ car.kilometres }}",
+            "unitCode": "KMT"
+        },
+        {% endif %}
+        {% if car.primary_image %}
+        "image": "{{ request.scheme }}://{{ request.get_host }}{{ car.primary_image }}",
+        {% endif %}
+        "offers": {
+            "@type": "Offer",
+            "url": "{{ share_url }}",
+            "priceCurrency": "AUD",
+            "price": "{{ car.price }}",
+            "availability": "https://schema.org/InStock",
+            "itemCondition": "https://schema.org/UsedCondition",
+            "seller": {
+                "@type": "Organization",
+                "name": "MyCarMarket Australia"
+            }
+        }
+    }
+    </script>
 
-    <link
-        rel="stylesheet"
-        href="{% static 'css/car_detail.css' %}?v=143"
-    >
+    <!-- Global CSS -->
 
-    <!-- ==========================================
-    Google AdSense
-    Car Detail Sidebar
-    ========================================== -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/car_detail.css' %}?v=176">
+
+    <!-- Google AdSense -->
 
     {% if settings and settings.car_detail_sidebar_google_ad_active and settings.google_adsense_publisher_id %}
         <script
@@ -142,14 +163,10 @@ Mobile Responsive Review + Marketplace Polish
         <div>
 
             {% include 'vehicles/includes/detail_gallery.html' %}
-
             {% include 'vehicles/includes/detail_info.html' %}
             {% include 'vehicles/includes/detail_ai_price_insight.html' %}
             {% include 'vehicles/includes/detail_finance_calculator.html' %}
             {% include 'vehicles/includes/detail_share.html' %}
-
-
-           
 
         </div>
 
@@ -157,10 +174,8 @@ Mobile Responsive Review + Marketplace Polish
 
     </div>
 
-
- {% include 'vehicles/recently_viewed_cars.html' %}
+    {% include 'vehicles/recently_viewed_cars.html' %}
     {% include 'vehicles/similar_cars.html' %}
-   
 
 </div>
 
@@ -176,7 +191,6 @@ Mobile Responsive Review + Marketplace Polish
     function copyCarLink() {
         navigator.clipboard.writeText(window.location.href)
             .then(function () {
-
                 const message = document.getElementById('copyMessage');
 
                 if (message) {
@@ -186,7 +200,6 @@ Mobile Responsive Review + Marketplace Polish
                         message.style.display = 'none';
                     }, 2500);
                 }
-
             })
             .catch(function () {
                 alert("Unable to copy link. Please copy it from your browser.");
