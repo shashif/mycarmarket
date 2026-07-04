@@ -1,140 +1,159 @@
 <!-- =========================================
 MyCarMarket
-Version: v0.8.4
+Version: v1.8.6
 File: vehicles/templates/vehicles/includes/detail_info.html
-Auto SEO Content + Inline Save Button
+Description: Premium Car Detail Header + Vehicle Specs Layout
 ========================================= -->
 
-<div class="card" style="margin-top:25px;">
-    <h1>{{ car.year }} {{ car.make }} {{ car.model }}</h1>
+<div class="card car-premium-info-card">
 
-    <div class="price-save-row">
+    <div class="car-premium-header">
 
-        <div class="price">
-            💰 ${{ car.price }}
-        </div>
+        <div class="car-premium-title-area">
 
-        {% if user.is_authenticated %}
-            <form method="POST"
-                  action="{% url 'toggle_favourite' car.slug %}"
-                  class="favourite-inline-form">
-                {% csrf_token %}
-
-                {% if is_favourite %}
-                    <button type="submit" class="save-car-btn saved">
-                        ❤️ Saved
-                    </button>
-                {% else %}
-                    <button type="submit" class="save-car-btn">
-                        🤍 Save
-                    </button>
+            <div class="car-premium-badges">
+                {% if car.is_featured %}
+                    <span class="car-premium-badge featured">⭐ Featured</span>
                 {% endif %}
-            </form>
-        {% else %}
-            <a href="{% url 'login' %}" class="save-car-btn login-save-btn">
-                🤍 Save
+
+                {% if car.is_verified_listing %}
+                    <span class="car-premium-badge verified">🛡 Verified</span>
+                {% endif %}
+
+                <span class="car-premium-badge views">
+                    👁 {{ car.views_count }} views
+                </span>
+            </div>
+
+            <h1>
+                {{ car.year }} {{ car.make }} {{ car.model }}
+            </h1>
+
+            <div class="car-premium-location">
+                {% if car.display_location %}
+                    📍 {{ car.display_location }}
+                {% else %}
+                    📍 Location not specified
+                {% endif %}
+            </div>
+
+            <div class="car-premium-listed">
+                Listed {{ car.created_at|date:"d M Y" }}
+            </div>
+
+        </div>
+
+        <div class="car-premium-price-area">
+
+            <div class="car-premium-price">
+                ${{ car.price }}
+            </div>
+
+            {% if user.is_authenticated %}
+                <form method="POST"
+                      action="{% url 'toggle_favourite' car.slug %}"
+                      class="favourite-inline-form">
+                    {% csrf_token %}
+
+                    {% if is_favourite %}
+                        <button type="submit" class="car-premium-save-btn saved">
+                            ❤️ Saved
+                        </button>
+                    {% else %}
+                        <button type="submit" class="car-premium-save-btn">
+                            🤍 Save car
+                        </button>
+                    {% endif %}
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="car-premium-save-btn">
+                    🤍 Save car
+                </a>
+            {% endif %}
+
+            <a href="{% url 'saved_cars' %}" class="car-premium-saved-link">
+                View saved cars
             </a>
-        {% endif %}
+
+        </div>
 
     </div>
 
-    <div class="main-location">
-        {% if car.display_location %}
-            📍 {{ car.display_location }}
-        {% else %}
-            📍 Location not specified
-        {% endif %}
-    </div>
+    <div class="car-premium-spec-grid">
 
-    <div class="top-badges">
-        <span class="badge views-badge">
-            👁 {{ car.views_count }} Views
-        </span>
-
-        <span class="badge date-badge">
-            📅 Listed {{ car.created_at|date:"d M Y" }}
-        </span>
-
-        <a href="{% url 'saved_cars' %}" class="saved-cars-small-link">
-            ❤️ Saved Cars
-        </a>
-    </div>
-
-    <div class="details-grid">
-
-        <div class="detail-box">
-            <div class="detail-icon">🚗</div>
-            <div class="detail-text">
+        <div class="car-premium-spec">
+            <span>🚗</span>
+            <div>
                 <strong>Make</strong>
-                <span>{{ car.make }}</span>
+                <p>{{ car.make }}</p>
             </div>
         </div>
 
-        <div class="detail-box">
-            <div class="detail-icon">🏷️</div>
-            <div class="detail-text">
+        <div class="car-premium-spec">
+            <span>🏷️</span>
+            <div>
                 <strong>Model</strong>
-                <span>{{ car.model }}</span>
+                <p>{{ car.model }}</p>
             </div>
         </div>
 
-        <div class="detail-box">
-            <div class="detail-icon">📅</div>
-            <div class="detail-text">
+        <div class="car-premium-spec">
+            <span>📅</span>
+            <div>
                 <strong>Year</strong>
-                <span>{{ car.year }}</span>
+                <p>{{ car.year }}</p>
             </div>
         </div>
 
-        <div class="detail-box">
-            <div class="detail-icon">🛣️</div>
-            <div class="detail-text">
+        <div class="car-premium-spec">
+            <span>🛣️</span>
+            <div>
                 <strong>Kilometres</strong>
-                <span>{{ car.kilometres }} km</span>
+                <p>{{ car.kilometres }} km</p>
             </div>
         </div>
 
-        <div class="detail-box">
-            <div class="detail-icon">⚙️</div>
-            <div class="detail-text">
+        <div class="car-premium-spec">
+            <span>⚙️</span>
+            <div>
                 <strong>Transmission</strong>
-                <span>{{ car.transmission|default:"Not specified" }}</span>
+                <p>{{ car.transmission|default:"Not specified" }}</p>
             </div>
         </div>
 
-        <div class="detail-box">
-            <div class="detail-icon">⛽</div>
-            <div class="detail-text">
+        <div class="car-premium-spec">
+            <span>⛽</span>
+            <div>
                 <strong>Fuel Type</strong>
-                <span>{{ car.fuel_type|default:"Not specified" }}</span>
+                <p>{{ car.fuel_type|default:"Not specified" }}</p>
             </div>
         </div>
 
-        <div class="detail-box">
-            <div class="detail-icon">🚘</div>
-            <div class="detail-text">
+        <div class="car-premium-spec">
+            <span>🚘</span>
+            <div>
                 <strong>Body Type</strong>
-                <span>{{ car.body_type|default:"Not specified" }}</span>
+                <p>{{ car.body_type|default:"Not specified" }}</p>
             </div>
         </div>
 
-        <div class="detail-box">
-            <div class="detail-icon">📍</div>
-            <div class="detail-text">
+        <div class="car-premium-spec">
+            <span>📍</span>
+            <div>
                 <strong>Location</strong>
-                <span>
+                <p>
                     {% if car.display_location %}
                         {{ car.display_location }}
                     {% else %}
                         Not specified
                     {% endif %}
-                </span>
+                </p>
             </div>
         </div>
 
     </div>
 
-    <div class="description">
+    <div class="description car-premium-description">
         <h2>Description</h2>
 
         {% if car.description %}
@@ -175,58 +194,6 @@ Auto SEO Content + Inline Save Button
             {% endif %}
             can view photos, vehicle details, seller information and send a secure enquiry through MyCarMarket Australia.
         </p>
-
-        {% if car.make|lower == "toyota" %}
-            <p>
-                Toyota vehicles are popular in Australia for reliability, practical ownership costs and strong everyday usability.
-            </p>
-        {% elif car.make|lower == "mazda" %}
-            <p>
-                Mazda vehicles are well known for stylish design, comfortable interiors and enjoyable everyday driving.
-            </p>
-        {% elif car.make|lower == "ford" %}
-            <p>
-                Ford vehicles are popular among Australian buyers for performance, practicality and strong ute and SUV options.
-            </p>
-        {% elif car.make|lower == "hyundai" %}
-            <p>
-                Hyundai vehicles are popular for value, modern features and practical everyday driving.
-            </p>
-        {% elif car.make|lower == "kia" %}
-            <p>
-                Kia vehicles are known for value, modern styling and strong appeal among Australian families.
-            </p>
-        {% elif car.make|lower == "tesla" %}
-            <p>
-                Tesla vehicles are popular electric cars known for modern technology, strong performance and zero tailpipe emissions.
-            </p>
-        {% endif %}
-
-        {% if car.model|lower == "corolla" %}
-            <p>
-                The Toyota Corolla is one of Australia's most recognised small cars, commonly chosen for fuel efficiency, reliability and easy daily driving.
-            </p>
-        {% elif car.model|lower == "camry" %}
-            <p>
-                The Toyota Camry is a popular sedan choice for comfort, space and long-term reliability.
-            </p>
-        {% elif car.model|lower == "ranger" %}
-            <p>
-                The Ford Ranger is one of Australia's most popular utes, suitable for work, towing, touring and family use.
-            </p>
-        {% elif car.model|lower == "hilux" %}
-            <p>
-                The Toyota HiLux is a strong-selling ute in Australia, valued for durability, work use and off-road capability.
-            </p>
-        {% elif car.model|lower == "cx-5" %}
-            <p>
-                The Mazda CX-5 is a popular family SUV, offering comfort, practicality and modern styling.
-            </p>
-        {% elif car.model|lower == "model 3" %}
-            <p>
-                The Tesla Model 3 is a popular electric sedan, offering strong performance, modern technology and efficient electric driving.
-            </p>
-        {% endif %}
     </div>
 
 </div>
