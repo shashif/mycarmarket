@@ -1,0 +1,220 @@
+{% extends "admin/change_list.html" %}
+
+{% block content %}
+
+<style>
+    .mcm-dashboard {
+        margin-bottom: 30px;
+    }
+
+    .mcm-dashboard h1 {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .mcm-stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 18px;
+        margin-bottom: 30px;
+    }
+
+    .mcm-stat-card {
+        background: #ffffff;
+        border-radius: 14px;
+        padding: 22px;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+        border: 1px solid #e5e7eb;
+    }
+
+    .mcm-stat-card h3 {
+        margin: 0;
+        font-size: 15px;
+        color: #6b7280;
+    }
+
+    .mcm-stat-card strong {
+        display: block;
+        margin-top: 10px;
+        font-size: 34px;
+        color: #111827;
+    }
+
+    .mcm-section {
+        background: #ffffff;
+        border-radius: 14px;
+        padding: 24px;
+        margin-bottom: 24px;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+        border: 1px solid #e5e7eb;
+    }
+
+    .mcm-section h2 {
+        margin-top: 0;
+        font-size: 22px;
+        color: #111827;
+    }
+
+    .mcm-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .mcm-table th,
+    .mcm-table td {
+        padding: 12px;
+        border-bottom: 1px solid #e5e7eb;
+        text-align: left;
+    }
+
+    .mcm-btn {
+        display: inline-block;
+        padding: 7px 10px;
+        border-radius: 7px;
+        color: #ffffff !important;
+        text-decoration: none;
+        font-size: 13px;
+        margin-right: 5px;
+    }
+
+    .mcm-btn-approve {
+        background: #16a34a;
+    }
+
+    .mcm-btn-edit {
+        background: #2563eb;
+    }
+
+    .mcm-empty {
+        color: #6b7280;
+        padding: 12px 0;
+    }
+</style>
+
+<div class="mcm-dashboard">
+
+    <h1>★ MyCarMarket Admin Dashboard</h1>
+
+    <div class="mcm-stats-grid">
+
+        <div class="mcm-stat-card">
+            <h3>Pending Listings</h3>
+            <strong>{{ pending_count }}</strong>
+        </div>
+
+        <div class="mcm-stat-card">
+            <h3>Approved Listings</h3>
+            <strong>{{ approved_count }}</strong>
+        </div>
+
+        <div class="mcm-stat-card">
+            <h3>Rejected Listings</h3>
+            <strong>{{ rejected_count }}</strong>
+        </div>
+
+        <div class="mcm-stat-card">
+            <h3>Suspended Listings</h3>
+            <strong>{{ suspended_count }}</strong>
+        </div>
+
+        <div class="mcm-stat-card">
+            <h3>Reported Listings</h3>
+            <strong>{{ reported_count }}</strong>
+        </div>
+
+        <div class="mcm-stat-card">
+            <h3>Active Listings</h3>
+            <strong>{{ active_count }}</strong>
+        </div>
+
+        <div class="mcm-stat-card">
+            <h3>Featured Listings</h3>
+            <strong>{{ featured_count }}</strong>
+        </div>
+
+        <div class="mcm-stat-card">
+            <h3>Verified Listings</h3>
+            <strong>{{ verified_count }}</strong>
+        </div>
+
+    </div>
+
+    <div class="mcm-section">
+        <h2>Newest Pending Listings</h2>
+
+        {% if pending_listings %}
+            <table class="mcm-table">
+                <thead>
+                    <tr>
+                        <th>Car</th>
+                        <th>Seller</th>
+                        <th>Location</th>
+                        <th>Price</th>
+                        <th>Submitted</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for car in pending_listings %}
+                        <tr>
+                            <td>{{ car.title }}</td>
+                            <td>{{ car.seller_business_name }}</td>
+                            <td>{{ car.display_location }}</td>
+                            <td>${{ car.price }}</td>
+                            <td>{{ car.created_at }}</td>
+                            <td>
+                                <a class="mcm-btn mcm-btn-edit" href="{% url 'admin:vehicles_car_change' car.id %}">
+                                    Open
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="mcm-empty">No pending listings right now.</div>
+        {% endif %}
+    </div>
+
+    <div class="mcm-section">
+        <h2>Newest Reported Listings</h2>
+
+        {% if reported_listings %}
+            <table class="mcm-table">
+                <thead>
+                    <tr>
+                        <th>Car</th>
+                        <th>Seller</th>
+                        <th>Reports</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for car in reported_listings %}
+                        <tr>
+                            <td>{{ car.title }}</td>
+                            <td>{{ car.seller_business_name }}</td>
+                            <td>{{ car.report_count }}</td>
+                            <td>{{ car.moderation_badge }}</td>
+                            <td>
+                                <a class="mcm-btn mcm-btn-edit" href="{% url 'admin:vehicles_car_change' car.id %}">
+                                    Review
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="mcm-empty">No reported listings right now.</div>
+        {% endif %}
+    </div>
+
+</div>
+
+{{ block.super }}
+
+{% endblock %}

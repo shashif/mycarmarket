@@ -14,3 +14,5 @@ from .payment_admin import *
 from .dealer_review_admin import *
 from .package_admin import *
 from .stripe_settings_admin import StripeSettingsAdmin
+
+from .pending_listing_admin import PendingListingAdmin
