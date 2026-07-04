@@ -1,19 +1,17 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.6.5
+# Version: v1.6.9
 # File: accounts/views.py
-# Description: Email Registration With Verification
+# Description: Email Registration With Verification + Already Verified Handling
 # ==========================================
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.urls import reverse
-from django.utils.encoding import force_str
+from django.utils.encoding import force_str, force_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from django.utils.encoding import force_bytes
 
 from accounts.forms import EmailUserCreationForm
 from accounts.tokens import email_verification_token
@@ -27,8 +25,6 @@ def register(request):
             user = form.save(commit=False)
             user.is_active = False
             user.save()
-
-            current_site = get_current_site(request)
 
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             token = email_verification_token.make_token(user)
@@ -44,6 +40,7 @@ def register(request):
             )
 
             subject = 'Verify your MyCarMarket account'
+
             message = f"""
 Hi,
 
@@ -87,11 +84,17 @@ def verify_email(request, uidb64, token):
     except Exception:
         user = None
 
-    if user is not None and email_verification_token.check_token(user, token):
-        user.is_active = True
-        user.save()
+    if user is not None:
 
-        messages.success(request, 'Your email has been verified. You can now log in.')
-        return render(request, 'accounts/verify_email_success.html')
+        if user.is_active:
+            messages.info(request, 'Your email is already verified. You can log in now.')
+            return render(request, 'accounts/verify_email_success.html')
+
+        if email_verification_token.check_token(user, token):
+            user.is_active = True
+            user.save()
+
+            messages.success(request, 'Your email has been verified. You can now log in.')
+            return render(request, 'accounts/verify_email_success.html')
 
     return render(request, 'accounts/verify_email_invalid.html')
