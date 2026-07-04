@@ -1,0 +1,51 @@
+<!-- =========================================
+MyCarMarket
+Version: v1.7.5
+File: core/templates/core/home_parts/schema.html
+Description: Homepage Structured Data JSON-LD
+========================================= -->
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "Organization",
+            "@id": "https://www.mycarmarket.com.au/#organization",
+            "name": "MyCarMarket Australia",
+            "url": "https://www.mycarmarket.com.au/",
+            "logo": "https://www.mycarmarket.com.au/static/favicon/apple-touch-icon.png",
+            "sameAs": [
+                "https://www.facebook.com/mycarmarket.com.au"
+            ]
+        },
+        {
+            "@type": "WebSite",
+            "@id": "https://www.mycarmarket.com.au/#website",
+            "url": "https://www.mycarmarket.com.au/",
+            "name": "MyCarMarket Australia",
+            "publisher": {
+                "@id": "https://www.mycarmarket.com.au/#organization"
+            },
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://www.mycarmarket.com.au/cars/?q={search_term_string}",
+                "query-input": "required name=search_term_string"
+            }
+        },
+        {
+            "@type": "WebPage",
+            "@id": "https://www.mycarmarket.com.au/#webpage",
+            "url": "https://www.mycarmarket.com.au/",
+            "name": "MyCarMarket Australia - Buy, Sell & Rent Cars",
+            "description": "Buy, sell and rent cars across Australia with MyCarMarket Australia.",
+            "isPartOf": {
+                "@id": "https://www.mycarmarket.com.au/#website"
+            },
+            "about": {
+                "@id": "https://www.mycarmarket.com.au/#organization"
+            }
+        }
+    ]
+}
+</script>
