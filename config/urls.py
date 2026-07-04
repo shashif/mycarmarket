@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.6.0
+# Version: v1.7.4
 # File: config/urls.py
-# Sitemap + Robots + Static Media + Custom Error Pages + Favicon Fix
+# Sitemap + Robots + Static Media + Custom Error Pages + Favicon + Bing Verification
 # ==========================================
 
 from django.contrib import admin
@@ -11,6 +11,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from django.views.generic import RedirectView
+from django.views.static import serve
 
 from vehicles.sitemaps import CarSitemap
 from core.views_robots import robots_txt
@@ -22,6 +23,15 @@ sitemaps = {
 
 
 urlpatterns = [
+    path(
+        'BingSiteAuth.xml',
+        serve,
+        {
+            'document_root': settings.BASE_DIR,
+            'path': 'BingSiteAuth.xml',
+        },
+    ),
+
     path(
         'favicon.ico',
         RedirectView.as_view(
