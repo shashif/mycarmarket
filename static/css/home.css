@@ -303,7 +303,7 @@ START SECTION 7: PREMIUM CAR CARDS
 
 .premium-car-grid{
     display:grid;
-    grid-template-columns:repeat(3, 1fr);
+    grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));
     gap:24px;
     margin-bottom:45px;
 }
