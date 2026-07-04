@@ -316,7 +316,6 @@ START SECTION 6: ADS
 END SECTION 6: ADS
 ========================================= */
 
-
 /* =========================================
 START SECTION 7: PREMIUM CAR CARDS
 ========================================= */
@@ -326,6 +325,7 @@ START SECTION 7: PREMIUM CAR CARDS
     grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));
     gap:26px;
     margin-bottom:52px;
+    align-items:stretch;
 }
 
 .premium-car-card{
@@ -370,6 +370,7 @@ START SECTION 7: PREMIUM CAR CARDS
     height:220px;
     overflow:hidden;
     background:#e5e7eb;
+    flex-shrink:0;
 }
 
 .premium-car-image-wrap img{
@@ -426,6 +427,7 @@ START SECTION 7: PREMIUM CAR CARDS
     display:flex;
     flex-direction:column;
     flex:1;
+    min-height:350px;
 }
 
 .premium-car-info h3{
@@ -434,6 +436,7 @@ START SECTION 7: PREMIUM CAR CARDS
     line-height:1.3;
     color:#111827;
     letter-spacing:-0.02em;
+    min-height:52px;
     display:-webkit-box;
     -webkit-line-clamp:2;
     -webkit-box-orient:vertical;
@@ -445,10 +448,12 @@ START SECTION 7: PREMIUM CAR CARDS
     margin:6px 0 12px;
     font-size:14px;
     line-height:1.45;
+    min-height:21px;
 }
 
 .dealer-info{
     margin:10px 0 12px;
+    min-height:20px;
 }
 
 .dealer-name{
@@ -457,6 +462,7 @@ START SECTION 7: PREMIUM CAR CARDS
     font-size:14px;
     font-weight:bold;
     line-height:1.4;
+    min-height:20px;
 }
 
 .dealer-verified,
@@ -501,6 +507,7 @@ START SECTION 7: PREMIUM CAR CARDS
     margin:12px 0;
     font-size:14px;
     line-height:1.45;
+    min-height:21px;
 }
 
 .price-row{
@@ -558,7 +565,6 @@ START SECTION 7: PREMIUM CAR CARDS
 /* =========================================
 END SECTION 7: PREMIUM CAR CARDS
 ========================================= */
-
 
 /* =========================================
 START SECTION 8: CALL TO ACTION
