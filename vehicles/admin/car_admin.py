@@ -1,8 +1,10 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.5.3
+# Version: v1.9.8
 # File: vehicles/admin/car_admin.py
-# Description: Vehicle Moderation Center + Improved Car Admin Approval
+# Description:
+# Vehicle Moderation Center + Improved Car Admin Approval
+# Sends approval email when admin approves listing
 # ==========================================
 
 from django.contrib import admin
@@ -11,11 +13,22 @@ from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
 from vehicles.models import Car
+from vehicles.utils.email_notifications import send_listing_approved_email
 from .car_image_admin import CarImageInline
 
 
+# ==========================================
+# SECTION 01 START
+# Car Admin Registration
+# ==========================================
+
 @admin.register(Car)
 class CarAdmin(admin.ModelAdmin):
+
+    # ==========================================
+    # SECTION 02 START
+    # Admin List Display Settings
+    # ==========================================
 
     list_display = (
         'id',
@@ -88,6 +101,16 @@ class CarAdmin(admin.ModelAdmin):
 
     list_per_page = 25
 
+    # ==========================================
+    # SECTION 02 END
+    # ==========================================
+
+
+    # ==========================================
+    # SECTION 03 START
+    # Admin Form Fieldsets
+    # ==========================================
+
     fieldsets = (
         (
             'Vehicle Details',
@@ -157,6 +180,16 @@ class CarAdmin(admin.ModelAdmin):
         ),
     )
 
+    # ==========================================
+    # SECTION 03 END
+    # ==========================================
+
+
+    # ==========================================
+    # SECTION 04 START
+    # Admin Bulk Actions + Inline Images
+    # ==========================================
+
     actions = (
         'approve_selected_listings',
         'reject_selected_listings',
@@ -174,7 +207,25 @@ class CarAdmin(admin.ModelAdmin):
 
     inlines = [CarImageInline]
 
+    # ==========================================
+    # SECTION 04 END
+    # ==========================================
+
+
+    # ==========================================
+    # SECTION 05 START
+    # Save Model + Approval Email Notification
+    # ==========================================
+
     def save_model(self, request, obj, form, change):
+
+        old_status = None
+
+        if change and obj.pk:
+            old_car = Car.objects.filter(pk=obj.pk).first()
+
+            if old_car:
+                old_status = old_car.moderation_status
 
         if obj.moderation_status == 'approved':
             obj.is_approved = True
@@ -199,6 +250,19 @@ class CarAdmin(admin.ModelAdmin):
 
         super().save_model(request, obj, form, change)
 
+        if obj.moderation_status == 'approved' and old_status != 'approved':
+            send_listing_approved_email(obj)
+
+    # ==========================================
+    # SECTION 05 END
+    # ==========================================
+
+
+    # ==========================================
+    # SECTION 06 START
+    # Admin Thumbnail
+    # ==========================================
+
     def admin_thumbnail(self, obj):
         primary_image = obj.images.filter(
             is_primary=True
@@ -218,6 +282,16 @@ class CarAdmin(admin.ModelAdmin):
         return "No Image"
 
     admin_thumbnail.short_description = "Image"
+
+    # ==========================================
+    # SECTION 06 END
+    # ==========================================
+
+
+    # ==========================================
+    # SECTION 07 START
+    # Moderation Status Badge
+    # ==========================================
 
     def moderation_status_badge(self, obj):
 
@@ -258,6 +332,16 @@ class CarAdmin(admin.ModelAdmin):
 
     moderation_status_badge.short_description = "Moderation"
 
+    # ==========================================
+    # SECTION 07 END
+    # ==========================================
+
+
+    # ==========================================
+    # SECTION 08 START
+    # Report Badge
+    # ==========================================
+
     def report_badge(self, obj):
 
         if obj.is_reported or obj.report_count > 0:
@@ -279,6 +363,16 @@ class CarAdmin(admin.ModelAdmin):
 
     report_badge.short_description = "Reports"
 
+    # ==========================================
+    # SECTION 08 END
+    # ==========================================
+
+
+    # ==========================================
+    # SECTION 09 START
+    # Posted By Display
+    # ==========================================
+
     def posted_by(self, obj):
         if obj.seller:
             return obj.seller.username
@@ -290,21 +384,51 @@ class CarAdmin(admin.ModelAdmin):
 
     posted_by.short_description = "Posted By"
 
+    # ==========================================
+    # SECTION 09 END
+    # ==========================================
+
+
+    # ==========================================
+    # SECTION 10 START
+    # Approve Selected Listings + Send Email
+    # ==========================================
+
     def approve_selected_listings(self, request, queryset):
-        updated = queryset.update(
-            moderation_status='approved',
-            is_approved=True,
-            is_active=True,
-            approved_by=request.user,
-            approved_at=timezone.now(),
-        )
+
+        updated = 0
+
+        for car in queryset:
+            old_status = car.moderation_status
+
+            car.moderation_status = 'approved'
+            car.is_approved = True
+            car.is_active = True
+            car.approved_by = request.user
+            car.approved_at = timezone.now()
+            car.save()
+
+            if old_status != 'approved':
+                send_listing_approved_email(car)
+
+            updated += 1
 
         self.message_user(
             request,
-            f'{updated} listing(s) approved successfully.'
+            f'{updated} listing(s) approved successfully. Approval email(s) sent.'
         )
 
     approve_selected_listings.short_description = "✅ Approve selected listings"
+
+    # ==========================================
+    # SECTION 10 END
+    # ==========================================
+
+
+    # ==========================================
+    # SECTION 11 START
+    # Reject Selected Listings
+    # ==========================================
 
     def reject_selected_listings(self, request, queryset):
         updated = queryset.update(
@@ -320,6 +444,16 @@ class CarAdmin(admin.ModelAdmin):
 
     reject_selected_listings.short_description = "❌ Reject selected listings"
 
+    # ==========================================
+    # SECTION 11 END
+    # ==========================================
+
+
+    # ==========================================
+    # SECTION 12 START
+    # Suspend Selected Listings
+    # ==========================================
+
     def suspend_selected_listings(self, request, queryset):
         updated = queryset.update(
             moderation_status='suspended',
@@ -333,6 +467,16 @@ class CarAdmin(admin.ModelAdmin):
         )
 
     suspend_selected_listings.short_description = "🚫 Suspend selected listings"
+
+    # ==========================================
+    # SECTION 12 END
+    # ==========================================
+
+
+    # ==========================================
+    # SECTION 13 START
+    # Restore Listings To Pending
+    # ==========================================
 
     def restore_to_pending(self, request, queryset):
         updated = queryset.update(
@@ -350,6 +494,16 @@ class CarAdmin(admin.ModelAdmin):
 
     restore_to_pending.short_description = "⏳ Move selected listings to pending"
 
+    # ==========================================
+    # SECTION 13 END
+    # ==========================================
+
+
+    # ==========================================
+    # SECTION 14 START
+    # Activate Listings
+    # ==========================================
+
     def activate_selected_listings(self, request, queryset):
         updated = queryset.update(
             is_active=True,
@@ -361,6 +515,16 @@ class CarAdmin(admin.ModelAdmin):
         )
 
     activate_selected_listings.short_description = "Activate selected listings"
+
+    # ==========================================
+    # SECTION 14 END
+    # ==========================================
+
+
+    # ==========================================
+    # SECTION 15 START
+    # Deactivate Listings
+    # ==========================================
 
     def deactivate_selected_listings(self, request, queryset):
         updated = queryset.update(
@@ -374,6 +538,16 @@ class CarAdmin(admin.ModelAdmin):
 
     deactivate_selected_listings.short_description = "Deactivate selected listings"
 
+    # ==========================================
+    # SECTION 15 END
+    # ==========================================
+
+
+    # ==========================================
+    # SECTION 16 START
+    # Mark Listings As Featured
+    # ==========================================
+
     def mark_as_featured(self, request, queryset):
         updated = queryset.update(
             is_featured=True,
@@ -385,6 +559,16 @@ class CarAdmin(admin.ModelAdmin):
         )
 
     mark_as_featured.short_description = "⭐ Mark selected listings as featured"
+
+    # ==========================================
+    # SECTION 16 END
+    # ==========================================
+
+
+    # ==========================================
+    # SECTION 17 START
+    # Remove Featured Status
+    # ==========================================
 
     def remove_featured(self, request, queryset):
         updated = queryset.update(
@@ -398,6 +582,16 @@ class CarAdmin(admin.ModelAdmin):
 
     remove_featured.short_description = "Remove selected listings from featured"
 
+    # ==========================================
+    # SECTION 17 END
+    # ==========================================
+
+
+    # ==========================================
+    # SECTION 18 START
+    # Mark Listings As Verified
+    # ==========================================
+
     def mark_as_verified_listing(self, request, queryset):
         updated = queryset.update(
             is_verified_listing=True,
@@ -409,6 +603,16 @@ class CarAdmin(admin.ModelAdmin):
         )
 
     mark_as_verified_listing.short_description = "✔ Mark selected listings as verified"
+
+    # ==========================================
+    # SECTION 18 END
+    # ==========================================
+
+
+    # ==========================================
+    # SECTION 19 START
+    # Remove Verified Status
+    # ==========================================
 
     def remove_verified_listing(self, request, queryset):
         updated = queryset.update(
@@ -422,6 +626,16 @@ class CarAdmin(admin.ModelAdmin):
 
     remove_verified_listing.short_description = "Remove selected listings from verified"
 
+    # ==========================================
+    # SECTION 19 END
+    # ==========================================
+
+
+    # ==========================================
+    # SECTION 20 START
+    # Mark Listings As Reported
+    # ==========================================
+
     def mark_as_reported(self, request, queryset):
         updated = queryset.update(
             is_reported=True,
@@ -433,6 +647,16 @@ class CarAdmin(admin.ModelAdmin):
         )
 
     mark_as_reported.short_description = "🚨 Mark selected listings as reported"
+
+    # ==========================================
+    # SECTION 20 END
+    # ==========================================
+
+
+    # ==========================================
+    # SECTION 21 START
+    # Clear Reported Status
+    # ==========================================
 
     def clear_reported_status(self, request, queryset):
         updated = queryset.update(
@@ -446,3 +670,17 @@ class CarAdmin(admin.ModelAdmin):
         )
 
     clear_reported_status.short_description = "Clear reported status"
+
+    # ==========================================
+    # SECTION 21 END
+    # ==========================================
+
+
+# ==========================================
+# SECTION 22 START
+# End File
+# ==========================================
+
+# ==========================================
+# SECTION 22 END
+# ==========================================
