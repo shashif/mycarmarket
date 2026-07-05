@@ -1,40 +1,42 @@
-
+<!-- =========================================
+MyCarMarket
+Version: v1.10.1
+File: core/templates/core/home_parts/meta.html
+Description:
+Homepage SEO Meta Tags
+Brand SEO + Keyword Expansion
+========================================= -->
 
 <!-- =========================================
-SEO META TAGS START
-Google Search Engine Optimization
+SECTION 01 START
+Basic SEO Meta Tags
 ========================================= -->
 
 <meta charset="UTF-8">
 
 <meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
-
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
 >
 
 <meta
-name="description"
-content="Buy, Sell & Rent Cars Across Australia. Browse used cars, dealer vehicles and private seller listings on MyCarMarket Australia."
-
+    name="description"
+    content="MyCarMarket Australia, also known as My Car Market Australia, helps Australians buy, sell and rent cars. Find cheap cars, budget cars, affordable used cars, dealer vehicles and private seller listings across Australia."
 >
 
 <meta
-name="keywords"
-content="cars for sale Australia, used cars Australia, buy car Australia, sell car Australia, dealer cars, private seller cars, Melbourne cars, Sydney cars, Brisbane cars, MyCarMarket"
-
+    name="keywords"
+    content="MyCarMarket Australia, My Car Market Australia, mycarmarket australia, my car market australia, cars for sale Australia, used cars Australia, buy car Australia, sell car Australia, rent cars Australia, cheap cars Australia, budget cars Australia, affordable cars Australia, cheap used cars Australia, budget used cars Australia, affordable used cars Australia, second hand cars Australia, pre owned cars Australia, dealer cars Australia, private seller cars Australia, family cars Australia, SUV for sale Australia, ute for sale Australia, sedan for sale Australia, hatchback for sale Australia, 4WD for sale Australia, electric cars Australia, EV cars Australia, hybrid cars Australia, low kilometre cars Australia, first car Australia, first car buyers Australia, finance cars Australia, used SUVs Australia, used utes Australia, cars Melbourne, cars Sydney, cars Brisbane, cars Perth, cars Adelaide, cars Canberra, cars Hobart, cars Darwin"
 >
 
 <meta
-name="author"
-content="MyCarMarket Australia"
-
+    name="author"
+    content="MyCarMarket Australia"
 >
 
 <meta
-name="robots"
-content="index, follow"
-
+    name="robots"
+    content="index, follow"
 >
 
 <link
@@ -43,84 +45,119 @@ content="index, follow"
 >
 
 <!-- =========================================
-SEO META TAGS END
+SECTION 01 END
 ========================================= -->
+
 
 <!-- =========================================
-OPEN GRAPH START
-Facebook, LinkedIn, Messenger
+SECTION 02 START
+Open Graph (Facebook, LinkedIn)
 ========================================= -->
 
-<meta property="og:type" content="website">
-
 <meta
-property="og:title"
-content="MyCarMarket Australia - Buy, Sell & Rent Cars"
-
+    property="og:type"
+    content="website"
 >
 
 <meta
-property="og:description"
-content="Australia's marketplace to buy, sell and rent cars from private sellers and dealers."
-
+    property="og:title"
+    content="MyCarMarket Australia | My Car Market Australia - Buy, Sell & Rent Cars"
 >
 
 <meta
-property="og:url"
-content="https://www.mycarmarket.com.au/"
+    property="og:description"
+    content="Buy, sell and rent cars across Australia. Discover cheap cars, budget cars, affordable used cars, dealer vehicles and private seller listings on MyCarMarket Australia."
+>
 
+<meta
+    property="og:url"
+    content="https://www.mycarmarket.com.au/"
 >
 
 {% if settings and settings.hero_image %}
 <meta
-property="og:image"
-content="{{ settings.hero_image.url }}"
-
+    property="og:image"
+    content="{{ settings.hero_image.url }}"
 >
-
 {% endif %}
 
 <meta
-property="og:site_name"
-content="MyCarMarket Australia"
-
+    property="og:site_name"
+    content="MyCarMarket Australia"
 >
 
 <!-- =========================================
-OPEN GRAPH END
+SECTION 02 END
 ========================================= -->
+
 
 <!-- =========================================
-TWITTER / X SHARE START
+SECTION 03 START
+Twitter / X Meta Tags
 ========================================= -->
 
 <meta
-name="twitter:card"
-content="summary_large_image"
-
+    name="twitter:card"
+    content="summary_large_image"
 >
 
 <meta
-name="twitter:title"
-content="MyCarMarket Australia - Buy, Sell & Rent Cars"
-
+    name="twitter:title"
+    content="MyCarMarket Australia | My Car Market Australia - Buy, Sell & Rent Cars"
 >
 
 <meta
-name="twitter:description"
-content="Australia's marketplace to buy, sell and rent cars."
-
+    name="twitter:description"
+    content="Find cheap cars, budget cars, affordable used cars, dealer vehicles and private seller listings across Australia on MyCarMarket Australia."
 >
 
 {% if settings and settings.hero_image %}
 <meta
-name="twitter:image"
-content="{{ settings.hero_image.url }}"
-
+    name="twitter:image"
+    content="{{ settings.hero_image.url }}"
 >
-
 {% endif %}
 
 <!-- =========================================
-TWITTER / X SHARE END
+SECTION 03 END
+========================================= -->
+
+
+<!-- =========================================
+SECTION 04 START
+Extra SEO
+========================================= -->
+
+<meta
+    name="application-name"
+    content="MyCarMarket Australia"
+>
+
+<meta
+    name="apple-mobile-web-app-title"
+    content="MyCarMarket Australia"
+>
+
+<meta
+    name="theme-color"
+    content="#0f172a"
+>
+
+<meta
+    name="format-detection"
+    content="telephone=no"
+>
+
+<!-- =========================================
+SECTION 04 END
+========================================= -->
+
+
+<!-- =========================================
+SECTION 05 START
+End File
+========================================= -->
+
+<!-- =========================================
+SECTION 05 END
 ========================================= -->
