@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.5.0
+# Version: v1.9.8
 # File: vehicles/admin/__init__.py
-# Description: Admin Imports + Dealer Package Admin
+# Description: Admin Imports + Moderation Proxy Admin Registration
 # ==========================================
 
 from .car_image_admin import *
@@ -15,4 +15,9 @@ from .dealer_review_admin import *
 from .package_admin import *
 from .stripe_settings_admin import StripeSettingsAdmin
 
-from .pending_listing_admin import PendingListingAdmin
+# ==========================================
+# MODERATION ADMIN PROXY MODELS
+# Pending / Approved / Rejected / Suspended / Reported Listings
+# ==========================================
+
+from .pending_listing_admin import *

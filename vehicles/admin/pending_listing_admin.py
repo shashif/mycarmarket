@@ -1,8 +1,15 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.9.6
+# Version: v1.10.0
 # File: vehicles/admin/pending_listing_admin.py
-# Description: Admin Moderation Dashboard + Listing Approval Email Notification
+# Description:
+# Admin Moderation Dashboard + Complete Listing Email Notifications
+#
+# Sends email when:
+# 1. Admin approves listing
+# 2. Admin rejects listing
+# 3. Admin suspends listing
+# Works for quick actions and bulk actions
 # ==========================================
 
 from django.contrib import admin, messages
@@ -12,7 +19,11 @@ from django.utils import timezone
 from django.utils.html import format_html
 
 from vehicles.models import Car
-from vehicles.utils.email_notifications import send_listing_approved_email
+from vehicles.utils.email_notifications import (
+    send_listing_approved_email,
+    send_listing_rejected_email,
+    send_listing_suspended_email,
+)
 
 
 # ==========================================
@@ -171,15 +182,10 @@ class BaseModerationAdmin(admin.ModelAdmin):
         "verify_selected_listings",
     )
 
-# ==========================================
-# SECTION 03 END
-# ==========================================
-
-
-# ==========================================
-# SECTION 04 START
-# Status Badge
-# ==========================================
+    # ==========================================
+    # SECTION 04 START
+    # Status Badge
+    # ==========================================
 
     def status_badge(self, obj):
 
@@ -196,15 +202,15 @@ class BaseModerationAdmin(admin.ModelAdmin):
 
     status_badge.short_description = "Status"
 
-# ==========================================
-# SECTION 04 END
-# ==========================================
+    # ==========================================
+    # SECTION 04 END
+    # ==========================================
 
 
-# ==========================================
-# SECTION 05 START
-# Quick Action Buttons
-# ==========================================
+    # ==========================================
+    # SECTION 05 START
+    # Quick Action Buttons
+    # ==========================================
 
     def quick_actions(self, obj):
 
@@ -239,15 +245,15 @@ class BaseModerationAdmin(admin.ModelAdmin):
 
     quick_actions.short_description = "Quick Actions"
 
-# ==========================================
-# SECTION 05 END
-# ==========================================
+    # ==========================================
+    # SECTION 05 END
+    # ==========================================
 
 
-# ==========================================
-# SECTION 06 START
-# Custom Admin URLs
-# ==========================================
+    # ==========================================
+    # SECTION 06 START
+    # Custom Admin URLs
+    # ==========================================
 
     def get_urls(self):
 
@@ -276,15 +282,15 @@ class BaseModerationAdmin(admin.ModelAdmin):
 
         return custom_urls + urls
 
-# ==========================================
-# SECTION 06 END
-# ==========================================
+    # ==========================================
+    # SECTION 06 END
+    # ==========================================
 
 
-# ==========================================
-# SECTION 07 START
-# Quick Action Methods
-# ==========================================
+    # ==========================================
+    # SECTION 07 START
+    # Quick Action Methods
+    # ==========================================
 
     def quick_approve(self, request, car_id):
 
@@ -301,7 +307,10 @@ class BaseModerationAdmin(admin.ModelAdmin):
         if old_status != "approved":
             send_listing_approved_email(car)
 
-        messages.success(request, f"{car.title} approved successfully.")
+        messages.success(
+            request,
+            f"{car.title} approved successfully. Approval email sent."
+        )
 
         return redirect(
             request.META.get("HTTP_REFERER", "../")
@@ -310,13 +319,20 @@ class BaseModerationAdmin(admin.ModelAdmin):
     def quick_reject(self, request, car_id):
 
         car = Car.objects.get(id=car_id)
+        old_status = car.moderation_status
 
         car.moderation_status = "rejected"
         car.is_approved = False
         car.is_active = False
         car.save()
 
-        messages.warning(request, f"{car.title} rejected successfully.")
+        if old_status != "rejected":
+            send_listing_rejected_email(car)
+
+        messages.warning(
+            request,
+            f"{car.title} rejected successfully. Rejection email sent."
+        )
 
         return redirect(
             request.META.get("HTTP_REFERER", "../")
@@ -325,27 +341,34 @@ class BaseModerationAdmin(admin.ModelAdmin):
     def quick_suspend(self, request, car_id):
 
         car = Car.objects.get(id=car_id)
+        old_status = car.moderation_status
 
         car.moderation_status = "suspended"
         car.is_approved = False
         car.is_active = False
         car.save()
 
-        messages.warning(request, f"{car.title} suspended successfully.")
+        if old_status != "suspended":
+            send_listing_suspended_email(car)
+
+        messages.warning(
+            request,
+            f"{car.title} suspended successfully. Suspension email sent."
+        )
 
         return redirect(
             request.META.get("HTTP_REFERER", "../")
         )
 
-# ==========================================
-# SECTION 07 END
-# ==========================================
+    # ==========================================
+    # SECTION 07 END
+    # ==========================================
 
 
-# ==========================================
-# SECTION 08 START
-# Bulk Admin Actions
-# ==========================================
+    # ==========================================
+    # SECTION 08 START
+    # Bulk Admin Actions
+    # ==========================================
 
     @admin.action(description="Approve selected listings")
     def approve_selected_listings(self, request, queryset):
@@ -369,35 +392,53 @@ class BaseModerationAdmin(admin.ModelAdmin):
 
         self.message_user(
             request,
-            f"{updated} listing(s) approved successfully."
+            f"{updated} listing(s) approved successfully. Approval email(s) sent."
         )
 
     @admin.action(description="Reject selected listings")
     def reject_selected_listings(self, request, queryset):
 
-        updated = queryset.update(
-            moderation_status="rejected",
-            is_approved=False,
-            is_active=False,
-        )
+        updated = 0
+
+        for car in queryset:
+            old_status = car.moderation_status
+
+            car.moderation_status = "rejected"
+            car.is_approved = False
+            car.is_active = False
+            car.save()
+
+            if old_status != "rejected":
+                send_listing_rejected_email(car)
+
+            updated += 1
 
         self.message_user(
             request,
-            f"{updated} listing(s) rejected successfully."
+            f"{updated} listing(s) rejected successfully. Rejection email(s) sent."
         )
 
     @admin.action(description="Suspend selected listings")
     def suspend_selected_listings(self, request, queryset):
 
-        updated = queryset.update(
-            moderation_status="suspended",
-            is_approved=False,
-            is_active=False,
-        )
+        updated = 0
+
+        for car in queryset:
+            old_status = car.moderation_status
+
+            car.moderation_status = "suspended"
+            car.is_approved = False
+            car.is_active = False
+            car.save()
+
+            if old_status != "suspended":
+                send_listing_suspended_email(car)
+
+            updated += 1
 
         self.message_user(
             request,
-            f"{updated} listing(s) suspended successfully."
+            f"{updated} listing(s) suspended successfully. Suspension email(s) sent."
         )
 
     @admin.action(description="Make selected listings featured")
@@ -424,9 +465,9 @@ class BaseModerationAdmin(admin.ModelAdmin):
             f"{updated} listing(s) verified successfully."
         )
 
-# ==========================================
-# SECTION 08 END
-# ==========================================
+    # ==========================================
+    # SECTION 08 END
+    # ==========================================
 
 
 # ==========================================
@@ -525,5 +566,10 @@ class ReportedListingAdmin(BaseModerationAdmin):
 
 
 # ==========================================
-# END FILE
+# SECTION 14 START
+# End File
+# ==========================================
+
+# ==========================================
+# SECTION 14 END
 # ==========================================
