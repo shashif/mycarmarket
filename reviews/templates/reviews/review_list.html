@@ -1,0 +1,131 @@
+<!-- =========================================
+MyCarMarket
+Version: v1.10.8
+File: reviews/templates/reviews/review_list.html
+Description: Professional Car Reviews List Page + Homepage Advertisement Single Wrapper Fix
+========================================= -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Car Reviews Australia | MyCarMarket Australia
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'reviews/css/reviews.css' %}?v=1109">
+{% endblock %}
+
+{% block content %}
+
+{% include 'includes/navbar.html' %}
+
+<div class="reviews-page">
+
+    <section class="reviews-hero">
+
+        <div>
+
+            <h1>Car Reviews Australia</h1>
+
+            <p>
+                Read practical Australian car reviews, buying advice,
+                pros and cons, reliability notes and ownership tips
+                before choosing your next car.
+            </p>
+
+        </div>
+
+    </section>
+
+  <div class="review-banner-ad-section">
+    <div class="review-banner-ad-wrap">
+        {% include 'core/home_parts/banner_ad.html' with compact_ad=True %}
+    </div>
+</div>
+
+    <section class="reviews-grid">
+
+        {% for review in reviews %}
+
+            <article class="review-card">
+
+                <a
+                    href="{{ review.get_absolute_url }}"
+                    class="review-card-link"
+                >
+
+                    {% if review.hero_image %}
+
+                        <img
+                            src="{{ review.hero_image.url }}"
+                            alt="{{ review.title }}"
+                            class="review-card-image"
+                        >
+
+                    {% else %}
+
+                        <div class="review-card-placeholder">
+                            🚗
+                        </div>
+
+                    {% endif %}
+
+                    <div class="review-card-body">
+
+                        <div class="review-card-meta">
+
+                            {{ review.make }}
+                            {{ review.model }}
+
+                            {% if review.year %}
+                                · {{ review.year }}
+                            {% endif %}
+
+                        </div>
+
+                        <h2>{{ review.title }}</h2>
+
+                        <p>
+                            {{ review.summary|truncatewords:28 }}
+                        </p>
+
+                        <div class="review-card-footer">
+
+                            <span>
+                                ⭐ {{ review.rating }}/10
+                            </span>
+
+                            <span>
+                                Read Review →
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </a>
+
+            </article>
+
+        {% empty %}
+
+            <div class="empty-reviews">
+
+                <h2>No reviews published yet</h2>
+
+                <p>
+                    Add your first car review from Django Admin.
+                </p>
+
+            </div>
+
+        {% endfor %}
+
+    </section>
+
+</div>
+
+{% include 'includes/footer.html' %}
+
+{% endblock %}

@@ -1,8 +1,8 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.7.4
+# Version: v1.10.3
 # File: config/urls.py
-# Sitemap + Robots + Static Media + Custom Error Pages + Favicon + Bing Verification
+# Description: Sitemap + Robots + Static Media + Custom Error Pages + Favicon + Bing Verification + Reviews URLs
 # ==========================================
 
 from django.contrib import admin
@@ -14,11 +14,13 @@ from django.views.generic import RedirectView
 from django.views.static import serve
 
 from vehicles.sitemaps import CarSitemap
+from reviews.sitemaps import ReviewSitemap
 from core.views_robots import robots_txt
 
 
 sitemaps = {
     'cars': CarSitemap,
+    'reviews': ReviewSitemap,
 }
 
 
@@ -44,6 +46,7 @@ urlpatterns = [
 
     path('', include('core.urls')),
     path('cars/', include('vehicles.urls')),
+    path('reviews/', include('reviews.urls')),
 
     path('accounts/', include('accounts.urls')),
     path('accounts/', include('django.contrib.auth.urls')),

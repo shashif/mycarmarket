@@ -1,0 +1,36 @@
+ source "/Users/ashif/Desktop/Mac Drive/car/code/mycarmarket/venv/bin/activate"
+# ==========================================
+# MyCarMarket
+# Version: v1.10.3
+# File: reviews/sitemaps.py
+# Description: Sitemap for Published Car Reviews
+# ==========================================
+
+from django.contrib.sitemaps import Sitemap
+
+from .models import CarReview
+
+
+# ==========================================
+# SECTION 01: REVIEW SITEMAP
+# START
+# ==========================================
+
+class ReviewSitemap(Sitemap):
+    changefreq = 'weekly'
+    priority = 0.7
+
+    def items(self):
+        return CarReview.objects.filter(
+            is_published=True
+        ).order_by('-updated_at')
+
+    def lastmod(self, obj):
+        return obj.updated_at
+
+
+# ==========================================
+# SECTION 01: REVIEW SITEMAP
+# END
+# ==========================================
+

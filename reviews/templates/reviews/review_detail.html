@@ -1,0 +1,131 @@
+<!-- =========================================
+MyCarMarket
+Version: v1.10.6
+File: reviews/templates/reviews/review_detail.html
+Description: Professional Car Review Detail Page + Homepage Banner Ad Wrapper Fix
+========================================= -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+{{ review.meta_title }}
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'reviews/css/reviews.css' %}?v=1106">
+{% endblock %}
+
+{% block content %}
+
+{% include 'includes/navbar.html' %}
+
+<main class="review-detail-page">
+
+    <div class="review-breadcrumb">
+        <a href="/">Home</a> /
+        <a href="{% url 'review_list' %}">Reviews</a> /
+        <span>{{ review.title }}</span>
+    </div>
+
+    <article class="review-article">
+
+        <header class="review-detail-header">
+
+            <div class="review-detail-text">
+
+                <div class="review-label">
+                    {{ review.make }} {{ review.model }} Review
+                </div>
+
+                <h1>{{ review.title }}</h1>
+
+                <p class="review-summary">
+                    {{ review.summary }}
+                </p>
+
+                <div class="review-rating-box">
+                    <strong>{{ review.rating }}/10</strong>
+                    <span>MyCarMarket Review Rating</span>
+                </div>
+
+            </div>
+
+            {% if review.hero_image %}
+                <img
+                    src="{{ review.hero_image.url }}"
+                    alt="{{ review.title }}"
+                    class="review-detail-image"
+                >
+            {% endif %}
+
+        </header>
+
+        <section class="pros-cons-grid">
+
+            <div class="pros-box">
+                <h2>Pros</h2>
+
+                <ul>
+                    {% for item in review.pros_list %}
+                        <li>✅ {{ item }}</li>
+                    {% empty %}
+                        <li>No pros added yet.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="cons-box">
+                <h2>Cons</h2>
+
+                <ul>
+                    {% for item in review.cons_list %}
+                        <li>⚠️ {{ item }}</li>
+                    {% empty %}
+                        <li>No cons added yet.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+        </section>
+
+       <div class="review-banner-ad-section">
+    {% include 'core/home_parts/banner_ad.html' with compact_ad=True %}
+</div>
+
+        <section class="review-content">
+            {{ review.content|linebreaks }}
+        </section>
+
+        {% if review.faq %}
+            <section class="review-faq">
+                <h2>Frequently Asked Questions</h2>
+                {{ review.faq|linebreaks }}
+            </section>
+        {% endif %}
+
+        {% if related_reviews %}
+            <section class="related-reviews">
+                <h2>Related Reviews</h2>
+
+                <div class="related-review-grid">
+                    {% for item in related_reviews %}
+                        <a
+                            href="{{ item.get_absolute_url }}"
+                            class="related-review-card"
+                        >
+                            <strong>{{ item.title }}</strong>
+                            <span>⭐ {{ item.rating }}/10</span>
+                        </a>
+                    {% endfor %}
+                </div>
+            </section>
+        {% endif %}
+
+    </article>
+
+</main>
+
+{% include 'includes/footer.html' %}
+
+{% endblock %}

@@ -1,8 +1,8 @@
 <!-- ==========================================
 MyCarMarket
-Version: v1.4.4
+Version: v1.11.0
 File: templates/includes/navbar.html
-Professional Navbar + Logo Image
+Description: Professional Navbar + Reviews Menu
 ========================================== -->
 
 {% load static %}
@@ -27,6 +27,14 @@ Professional Navbar + Logo Image
 
         <a href="{% url 'car_list' %}">
             Buy Cars
+        </a>
+
+        <!-- ==========================================
+        Reviews
+        ========================================== -->
+
+        <a href="{% url 'review_list' %}">
+            📝 Reviews
         </a>
 
         <a href="{% url 'create_car' %}">

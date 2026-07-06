@@ -1,86 +1,62 @@
 <!-- =========================================
 MyCarMarket
-Version: v1.0.3
+Version: v1.10.9
 File: core/templates/core/home_parts/banner_ad.html
-Homepage Advertisement System
-Custom Banner + Google AdSense IDs
+Description: Advertisement System + Compact Mode Support
 ========================================= -->
 
-<div class="ad-banner">
+<div class="ad-banner {% if compact_ad %}ad-banner-compact{% endif %}">
 
+    {% if settings and settings.homepage_ad_type == 'google' %}
 
-<!-- =========================================
-GOOGLE ADSENSE MODE
-========================================== -->
+        {% if settings.google_adsense_publisher_id and settings.google_adsense_slot_id %}
 
-{% if settings and settings.homepage_ad_type == 'google' %}
+            <ins
+                class="adsbygoogle"
+                style="display:block"
+                data-ad-client="{{ settings.google_adsense_publisher_id }}"
+                data-ad-slot="{{ settings.google_adsense_slot_id }}"
+                data-ad-format="auto"
+                data-full-width-responsive="true"
+            ></ins>
 
-    {% if settings.google_adsense_publisher_id and settings.google_adsense_slot_id %}
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
 
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="{{ settings.google_adsense_publisher_id }}"
-             data-ad-slot="{{ settings.google_adsense_slot_id }}"
-             data-ad-format="auto"
-             data-full-width-responsive="true">
-        </ins>
+        {% else %}
 
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
+            <div class="ad-placeholder">
+                <div>
+                    <strong>Google AdSense Not Configured</strong><br>
+                    <span>Enter Publisher ID and Slot ID in Admin.</span>
+                </div>
+            </div>
+
+        {% endif %}
+
+    {% elif settings and settings.alternate_google_banner_ad %}
+
+        <a
+            href="{{ settings.alternate_google_banner_link|default:'#' }}"
+            target="_blank"
+        >
+            <img
+                src="{{ settings.alternate_google_banner_ad.url }}"
+                alt="Advertisement"
+                class="custom-banner-ad"
+            >
+        </a>
 
     {% else %}
 
         <div class="ad-placeholder">
-
             <div>
-                <strong>Google AdSense Not Configured</strong><br>
-                <span>
-                    Enter Publisher ID and Slot ID in Admin.
-                </span>
+                <strong>Advertisement Area</strong><br>
+                <span>Configure a Custom Banner or Google AdSense from Admin.</span>
             </div>
-
         </div>
 
     {% endif %}
-
-<!-- =========================================
-CUSTOM IMAGE AD MODE
-========================================== -->
-
-{% elif settings and settings.alternate_google_banner_ad %}
-
-    <a
-        href="{{ settings.alternate_google_banner_link|default:'#' }}"
-        target="_blank"
-    >
-
-        <img
-            src="{{ settings.alternate_google_banner_ad.url }}"
-            alt="Advertisement"
-            class="custom-banner-ad"
-        >
-
-    </a>
-
-<!-- =========================================
-FALLBACK MODE
-========================================== -->
-
-{% else %}
-
-    <div class="ad-placeholder">
-
-        <div>
-            <strong>Advertisement Area</strong><br>
-            <span>
-                Configure a Custom Banner or Google AdSense from Admin.
-            </span>
-        </div>
-
-    </div>
-
-{% endif %}
-
 
 </div>
