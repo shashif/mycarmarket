@@ -1,9 +1,10 @@
 <!-- =========================================
 MyCarMarket
-Version: v1.11.6
+Version: v1.11.7
 File: reviews/templates/reviews/review_detail.html
 Description: Professional Car Review Detail Page
-             Added Social Media Share Buttons
+             Added Open Graph / Twitter Image Meta Tags
+             Fixed Social Media Preview Image
 ========================================= -->
 
 {% extends 'base.html' %}
@@ -13,8 +14,42 @@ Description: Professional Car Review Detail Page
 {{ review.meta_title }}
 {% endblock %}
 
+<!-- =========================================
+SECTION START
+Open Graph & Twitter Meta Tags
+========================================= -->
+
+{% block extra_meta %}
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="{{ review.meta_title }}">
+<meta property="og:description" content="{{ review.meta_description|default:review.summary }}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:site_name" content="MyCarMarket Australia">
+
+{% if review.hero_image %}
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ review.hero_image.url }}">
+<meta property="og:image:secure_url" content="https://{{ request.get_host }}{{ review.hero_image.url }}">
+<meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{{ review.hero_image.url }}">
+{% else %}
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/default-review.png' %}">
+<meta property="og:image:secure_url" content="https://{{ request.get_host }}{% static 'images/default-review.png' %}">
+<meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/default-review.png' %}">
+{% endif %}
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ review.meta_title }}">
+<meta name="twitter:description" content="{{ review.meta_description|default:review.summary }}">
+
+{% endblock %}
+
+<!-- =========================================
+SECTION END
+Open Graph & Twitter Meta Tags
+========================================= -->
+
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'reviews/css/reviews.css' %}?v=1116">
+<link rel="stylesheet" href="{% static 'reviews/css/reviews.css' %}?v=1117">
 {% endblock %}
 
 {% block content %}
@@ -23,11 +58,27 @@ Description: Professional Car Review Detail Page
 
 <main class="review-detail-page">
 
+    <!-- =========================================
+    SECTION START
+    Breadcrumb
+    ========================================== -->
+
     <div class="review-breadcrumb">
         <a href="/">Home</a> /
         <a href="{% url 'review_list' %}">Reviews</a> /
         <span>{{ review.title }}</span>
     </div>
+
+    <!-- =========================================
+    SECTION END
+    Breadcrumb
+    ========================================== -->
+
+
+    <!-- =========================================
+    SECTION START
+    Review Article
+    ========================================== -->
 
     <article class="review-article">
 
@@ -106,6 +157,11 @@ Description: Professional Car Review Detail Page
 
             </div>
 
+            <!-- =========================================
+            SECTION START
+            Review Hero Image
+            ========================================== -->
+
             {% if review.hero_image %}
                 <img
                     src="{{ review.hero_image.url }}"
@@ -120,7 +176,18 @@ Description: Professional Car Review Detail Page
                 >
             {% endif %}
 
+            <!-- =========================================
+            SECTION END
+            Review Hero Image
+            ========================================== -->
+
         </header>
+
+
+        <!-- =========================================
+        SECTION START
+        Pros and Cons
+        ========================================== -->
 
         <section class="pros-cons-grid">
 
@@ -150,13 +217,46 @@ Description: Professional Car Review Detail Page
 
         </section>
 
+        <!-- =========================================
+        SECTION END
+        Pros and Cons
+        ========================================== -->
+
+
+        <!-- =========================================
+        SECTION START
+        Banner Advertisement
+        ========================================== -->
+
         <div class="review-banner-ad-section">
             {% include 'core/home_parts/banner_ad.html' with compact_ad=True %}
         </div>
 
+        <!-- =========================================
+        SECTION END
+        Banner Advertisement
+        ========================================== -->
+
+
+        <!-- =========================================
+        SECTION START
+        Review Content
+        ========================================== -->
+
         <section class="review-content">
             {{ review.content|linebreaks }}
         </section>
+
+        <!-- =========================================
+        SECTION END
+        Review Content
+        ========================================== -->
+
+
+        <!-- =========================================
+        SECTION START
+        FAQ
+        ========================================== -->
 
         {% if review.faq %}
             <section class="review-faq">
@@ -164,6 +264,17 @@ Description: Professional Car Review Detail Page
                 {{ review.faq|linebreaks }}
             </section>
         {% endif %}
+
+        <!-- =========================================
+        SECTION END
+        FAQ
+        ========================================== -->
+
+
+        <!-- =========================================
+        SECTION START
+        Related Reviews
+        ========================================== -->
 
         {% if related_reviews %}
             <section class="related-reviews">
@@ -183,7 +294,17 @@ Description: Professional Car Review Detail Page
             </section>
         {% endif %}
 
+        <!-- =========================================
+        SECTION END
+        Related Reviews
+        ========================================== -->
+
     </article>
+
+    <!-- =========================================
+    SECTION END
+    Review Article
+    ========================================== -->
 
 </main>
 

@@ -1,8 +1,9 @@
 <!-- =========================================
 MyCarMarket
-Version: v1.4.1
+Version: v1.11.7
 File: templates/base.html
-Master Base Template + Production Polish
+Description: Master Base Template
+             Added Extra Meta Block for Social Sharing
 ========================================= -->
 
 {% load static %}
@@ -11,10 +12,6 @@ Master Base Template + Production Polish
 <html lang="en">
 
 <head>
-
-    <!-- ==========================================
-    SECTION 01 : META + SEO
-    ========================================== -->
 
     <meta charset="UTF-8">
 
@@ -34,9 +31,23 @@ Master Base Template + Production Polish
         {% endblock %}
     </title>
 
+    <!-- ==========================================
+    SECTION 01 START
+    Page Specific SEO / Social Meta
+    ========================================== -->
+
+    {% block extra_meta %}
+    {% endblock %}
 
     <!-- ==========================================
-    SECTION 02 : GLOBAL CSS
+    SECTION 01 END
+    Page Specific SEO / Social Meta
+    ========================================== -->
+
+
+    <!-- ==========================================
+    SECTION 02 START
+    Global CSS
     ========================================== -->
 
     <link
@@ -44,52 +55,70 @@ Master Base Template + Production Polish
         href="{% static 'css/style.css' %}?v=178"
     >
 
+    <!-- ==========================================
+    SECTION 02 END
+    Global CSS
+    ========================================== -->
+
 
     <!-- ==========================================
-    SECTION 03 : EXTRA CSS
+    SECTION 03 START
+    Extra CSS
     ========================================== -->
 
     {% block extra_css %}
     {% endblock %}
 
-
-   <!-- ==========================================
-SECTION 04 : FAVICON
-========================================== -->
-
-<link
-    rel="apple-touch-icon"
-    sizes="180x180"
-    href="{% static 'favicon/apple-touch-icon.png' %}"
->
-
-<link
-    rel="shortcut icon"
-    href="{% static 'favicon/favicon.ico' %}"
->
-
-<link
-    rel="icon"
-    type="image/png"
-    sizes="32x32"
-    href="{% static 'favicon/favicon-32x32.png' %}"
->
-
-<link
-    rel="icon"
-    type="image/png"
-    sizes="16x16"
-    href="{% static 'favicon/favicon-16x16.png' %}"
->
-
-<link
-    rel="manifest"
-    href="{% static 'favicon/site.webmanifest' %}"
->
+    <!-- ==========================================
+    SECTION 03 END
+    Extra CSS
+    ========================================== -->
 
 
     <!-- ==========================================
-    SECTION 05 : PRECONNECT
+    SECTION 04 START
+    Favicon
+    ========================================== -->
+
+    <link
+        rel="apple-touch-icon"
+        sizes="180x180"
+        href="{% static 'favicon/apple-touch-icon.png' %}"
+    >
+
+    <link
+        rel="shortcut icon"
+        href="{% static 'favicon/favicon.ico' %}"
+    >
+
+    <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="{% static 'favicon/favicon-32x32.png' %}"
+    >
+
+    <link
+        rel="icon"
+        type="image/png"
+        sizes="16x16"
+        href="{% static 'favicon/favicon-16x16.png' %}"
+    >
+
+    <link
+        rel="manifest"
+        href="{% static 'favicon/site.webmanifest' %}"
+    >
+
+    <!-- ==========================================
+    SECTION 04 END
+    Favicon
+    ========================================== -->
+
+
+    <!-- ==========================================
+    SECTION 05 START
+    Preconnect
     ========================================== -->
 
     <link
@@ -97,9 +126,15 @@ SECTION 04 : FAVICON
         href="https://www.googletagmanager.com"
     >
 
+    <!-- ==========================================
+    SECTION 05 END
+    Preconnect
+    ========================================== -->
+
 
     <!-- ==========================================
-    SECTION 06 : GOOGLE ANALYTICS
+    SECTION 06 START
+    Google Analytics
     ========================================== -->
 
     <script
@@ -119,20 +154,32 @@ SECTION 04 : FAVICON
         gtag('config', 'G-FGGQZ4WXDT');
     </script>
 
+    <!-- ==========================================
+    SECTION 06 END
+    Google Analytics
+    ========================================== -->
+
 </head>
 
 <body>
 
     <!-- ==========================================
-    SECTION 07 : PAGE CONTENT
+    SECTION 07 START
+    Page Content
     ========================================== -->
 
     {% block content %}
     {% endblock %}
 
+    <!-- ==========================================
+    SECTION 07 END
+    Page Content
+    ========================================== -->
+
 
     <!-- ==========================================
-    SECTION 08 : GLOBAL UX TOOLS
+    SECTION 08 START
+    Global UX Tools
     ========================================== -->
 
     <div id="global-loader">
@@ -149,9 +196,15 @@ SECTION 04 : FAVICON
         ⬆
     </button>
 
+    <!-- ==========================================
+    SECTION 08 END
+    Global UX Tools
+    ========================================== -->
+
 
     <!-- ==========================================
-    SECTION 09 : GLOBAL JAVASCRIPT
+    SECTION 09 START
+    Global JavaScript
     ========================================== -->
 
     <script src="{% static 'js/loading.js' %}"></script>
@@ -159,13 +212,24 @@ SECTION 04 : FAVICON
     <script src="{% static 'js/scroll_top.js' %}"></script>
     <script src="{% static 'js/favourite.js' %}"></script>
 
+    <!-- ==========================================
+    SECTION 09 END
+    Global JavaScript
+    ========================================== -->
+
 
     <!-- ==========================================
-    SECTION 10 : EXTRA JAVASCRIPT
+    SECTION 10 START
+    Extra JavaScript
     ========================================== -->
 
     {% block extra_js %}
     {% endblock %}
+
+    <!-- ==========================================
+    SECTION 10 END
+    Extra JavaScript
+    ========================================== -->
 
 </body>
 
