@@ -1,8 +1,9 @@
 <!-- =========================================
 MyCarMarket
-Version: v1.10.6
+Version: v1.10.9
 File: reviews/templates/reviews/review_detail.html
-Description: Professional Car Review Detail Page + Homepage Banner Ad Wrapper Fix
+Description: Professional Car Review Detail Page
+             Default Static Review Image Fallback
 ========================================= -->
 
 {% extends 'base.html' %}
@@ -13,7 +14,7 @@ Description: Professional Car Review Detail Page + Homepage Banner Ad Wrapper Fi
 {% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'reviews/css/reviews.css' %}?v=1106">
+<link rel="stylesheet" href="{% static 'reviews/css/reviews.css' %}?v=1109">
 {% endblock %}
 
 {% block content %}
@@ -22,11 +23,27 @@ Description: Professional Car Review Detail Page + Homepage Banner Ad Wrapper Fi
 
 <main class="review-detail-page">
 
+    <!-- =========================================
+    SECTION 1 START
+    Breadcrumb
+    ========================================== -->
+
     <div class="review-breadcrumb">
         <a href="/">Home</a> /
         <a href="{% url 'review_list' %}">Reviews</a> /
         <span>{{ review.title }}</span>
     </div>
+
+    <!-- =========================================
+    SECTION 1 END
+    Breadcrumb
+    ========================================== -->
+
+
+    <!-- =========================================
+    SECTION 2 START
+    Review Article
+    ========================================== -->
 
     <article class="review-article">
 
@@ -52,14 +69,30 @@ Description: Professional Car Review Detail Page + Homepage Banner Ad Wrapper Fi
             </div>
 
             {% if review.hero_image %}
+
                 <img
                     src="{{ review.hero_image.url }}"
                     alt="{{ review.title }}"
                     class="review-detail-image"
                 >
+
+            {% else %}
+
+                <img
+                    src="{% static 'images/default-review.jpg' %}"
+                    alt="Default Car Review"
+                    class="review-detail-image"
+                >
+
             {% endif %}
 
         </header>
+
+
+        <!-- =========================================
+        SECTION 3 START
+        Pros and Cons
+        ========================================== -->
 
         <section class="pros-cons-grid">
 
@@ -89,13 +122,46 @@ Description: Professional Car Review Detail Page + Homepage Banner Ad Wrapper Fi
 
         </section>
 
-       <div class="review-banner-ad-section">
-    {% include 'core/home_parts/banner_ad.html' with compact_ad=True %}
-</div>
+        <!-- =========================================
+        SECTION 3 END
+        Pros and Cons
+        ========================================== -->
+
+
+        <!-- =========================================
+        SECTION 4 START
+        Banner Advertisement
+        ========================================== -->
+
+        <div class="review-banner-ad-section">
+            {% include 'core/home_parts/banner_ad.html' with compact_ad=True %}
+        </div>
+
+        <!-- =========================================
+        SECTION 4 END
+        Banner Advertisement
+        ========================================== -->
+
+
+        <!-- =========================================
+        SECTION 5 START
+        Review Content
+        ========================================== -->
 
         <section class="review-content">
             {{ review.content|linebreaks }}
         </section>
+
+        <!-- =========================================
+        SECTION 5 END
+        Review Content
+        ========================================== -->
+
+
+        <!-- =========================================
+        SECTION 6 START
+        FAQ
+        ========================================== -->
 
         {% if review.faq %}
             <section class="review-faq">
@@ -103,6 +169,17 @@ Description: Professional Car Review Detail Page + Homepage Banner Ad Wrapper Fi
                 {{ review.faq|linebreaks }}
             </section>
         {% endif %}
+
+        <!-- =========================================
+        SECTION 6 END
+        FAQ
+        ========================================== -->
+
+
+        <!-- =========================================
+        SECTION 7 START
+        Related Reviews
+        ========================================== -->
 
         {% if related_reviews %}
             <section class="related-reviews">
@@ -122,7 +199,17 @@ Description: Professional Car Review Detail Page + Homepage Banner Ad Wrapper Fi
             </section>
         {% endif %}
 
+        <!-- =========================================
+        SECTION 7 END
+        Related Reviews
+        ========================================== -->
+
     </article>
+
+    <!-- =========================================
+    SECTION 2 END
+    Review Article
+    ========================================== -->
 
 </main>
 

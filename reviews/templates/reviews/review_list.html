@@ -1,8 +1,9 @@
 <!-- =========================================
 MyCarMarket
-Version: v1.10.8
+Version: v1.10.9
 File: reviews/templates/reviews/review_list.html
-Description: Professional Car Reviews List Page + Homepage Advertisement Single Wrapper Fix
+Description: Professional Car Reviews List Page
+             Default Static Review Image Fallback
 ========================================= -->
 
 {% extends 'base.html' %}
@@ -22,6 +23,11 @@ Car Reviews Australia | MyCarMarket Australia
 
 <div class="reviews-page">
 
+    <!-- =========================================
+    SECTION 1 START
+    Reviews Hero
+    ========================================== -->
+
     <section class="reviews-hero">
 
         <div>
@@ -38,11 +44,33 @@ Car Reviews Australia | MyCarMarket Australia
 
     </section>
 
-  <div class="review-banner-ad-section">
-    <div class="review-banner-ad-wrap">
-        {% include 'core/home_parts/banner_ad.html' with compact_ad=True %}
+    <!-- =========================================
+    SECTION 1 END
+    Reviews Hero
+    ========================================== -->
+
+
+    <!-- =========================================
+    SECTION 2 START
+    Banner Advertisement
+    ========================================== -->
+
+    <div class="review-banner-ad-section">
+        <div class="review-banner-ad-wrap">
+            {% include 'core/home_parts/banner_ad.html' with compact_ad=True %}
+        </div>
     </div>
-</div>
+
+    <!-- =========================================
+    SECTION 2 END
+    Banner Advertisement
+    ========================================== -->
+
+
+    <!-- =========================================
+    SECTION 3 START
+    Reviews Grid
+    ========================================== -->
 
     <section class="reviews-grid">
 
@@ -65,9 +93,11 @@ Car Reviews Australia | MyCarMarket Australia
 
                     {% else %}
 
-                        <div class="review-card-placeholder">
-                            🚗
-                        </div>
+                        <img
+                            src="{% static 'images/default-review.jpg' %}"
+                            alt="Default Car Review"
+                            class="review-card-image"
+                        >
 
                     {% endif %}
 
@@ -123,6 +153,11 @@ Car Reviews Australia | MyCarMarket Australia
         {% endfor %}
 
     </section>
+
+    <!-- =========================================
+    SECTION 3 END
+    Reviews Grid
+    ========================================== -->
 
 </div>
 
