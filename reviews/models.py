@@ -1,20 +1,47 @@
-from django.db import models
-
-# Create your models here.
 # ==========================================
 # MyCarMarket
-# Version: v1.10.3
+# Version: v1.12.2
 # File: reviews/models.py
-# Description: Professional Car Review Model for SEO Content Hub
+# Description:
+# Professional Car Review Model for SEO Content Hub
+# Added default review image + SEO-friendly image filename
 # ==========================================
 
+import os
+
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 
 
 # ==========================================
-# SECTION 01: CAR REVIEW MODEL
+# SECTION 01: REVIEW IMAGE UPLOAD PATH
+# START
+# ==========================================
+
+def review_image_upload_path(instance, filename):
+
+    extension = os.path.splitext(filename)[1].lower()
+
+    if instance.year:
+        base_name = f"{instance.year}-{instance.make}-{instance.model}-review"
+    else:
+        base_name = f"{instance.make}-{instance.model}-review"
+
+    seo_name = slugify(base_name) or "car-review"
+
+    return f"reviews/{seo_name}/{seo_name}{extension}"
+
+
+# ==========================================
+# SECTION 01: REVIEW IMAGE UPLOAD PATH
+# END
+# ==========================================
+
+
+# ==========================================
+# SECTION 02: CAR REVIEW MODEL
 # START
 # ==========================================
 
@@ -58,7 +85,7 @@ class CarReview(models.Model):
     )
 
     hero_image = models.ImageField(
-        upload_to='reviews/',
+        upload_to=review_image_upload_path,
         blank=True,
         null=True
     )
@@ -110,6 +137,13 @@ class CarReview(models.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def display_image_url(self):
+        if self.hero_image:
+            return self.hero_image.url
+
+        return settings.STATIC_URL + "images/default-review.png"
+
     def save(self, *args, **kwargs):
         if not self.slug:
             if self.year:
@@ -149,6 +183,6 @@ class CarReview(models.Model):
 
 
 # ==========================================
-# SECTION 01: CAR REVIEW MODEL
+# SECTION 02: CAR REVIEW MODEL
 # END
 # ==========================================
