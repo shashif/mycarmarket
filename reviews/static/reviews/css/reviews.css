@@ -385,3 +385,224 @@ Description: Reviews Mobile Polish
         gap: 8px;
     }
 }
+
+/* =========================================
+SECTION START
+Professional Review Pagination
+========================================= */
+
+.review-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 45px auto 20px;
+    flex-wrap: wrap;
+}
+
+.review-pagination a,
+.review-pagination span {
+    min-width: 42px;
+    height: 42px;
+    padding: 0 14px;
+    border-radius: 12px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    color: #374151;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+    transition: all 0.2s ease;
+}
+
+.review-pagination a:hover {
+    background: #111827;
+    border-color: #111827;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+.review-pagination .active {
+    background: linear-gradient(135deg, #111827, #374151);
+    border-color: #111827;
+    color: #ffffff;
+    box-shadow: 0 10px 24px rgba(17, 24, 39, 0.22);
+}
+
+@media (max-width: 600px) {
+    .review-pagination {
+        gap: 6px;
+        margin-top: 30px;
+    }
+
+    .review-pagination a,
+    .review-pagination span {
+        min-width: 38px;
+        height: 38px;
+        padding: 0 11px;
+        font-size: 13px;
+        border-radius: 10px;
+    }
+}
+
+/* =========================================
+SECTION END
+Professional Review Pagination
+========================================= */
+
+
+.review-search-filter {
+    max-width: 1180px;
+    margin: 24px auto 30px;
+    padding: 0 18px;
+}
+
+.review-search-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.review-search-form input {
+    flex: 1;
+    height: 46px;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 0 16px;
+    font-size: 15px;
+    outline: none;
+}
+
+.review-search-form input:focus {
+    border-color: #111827;
+}
+
+.review-search-form button,
+.review-clear-filter {
+    height: 46px;
+    border-radius: 14px;
+    border: none;
+    padding: 0 18px;
+    background: #111827;
+    color: #ffffff;
+    font-weight: 800;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.review-clear-filter {
+    background: #ef4444;
+}
+
+.review-make-filter {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+}
+
+.review-make-filter a {
+    white-space: nowrap;
+    padding: 9px 15px;
+    border-radius: 999px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    color: #374151;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 14px;
+}
+
+.review-make-filter a.active,
+.review-make-filter a:hover {
+    background: #111827;
+    color: #ffffff;
+    border-color: #111827;
+}
+
+@media (max-width: 650px) {
+    .review-search-form {
+        flex-direction: column;
+    }
+
+    .review-search-form button,
+    .review-clear-filter {
+        width: 100%;
+    }
+}
+
+/* =========================================
+MyCarMarket
+Version: v1.11.6
+File: reviews/css/reviews.css
+Description: Review Social Media Share Buttons
+========================================= */
+
+.review-share-box {
+    margin-top: 22px;
+}
+
+.review-share-title {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 10px;
+}
+
+.review-share-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.review-share-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.review-share-btn:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+}
+
+.review-share-btn.facebook {
+    background: #1877f2;
+}
+
+.review-share-btn.whatsapp {
+    background: #25d366;
+}
+
+.review-share-btn.twitter {
+    background: #111827;
+}
+
+.review-share-btn.linkedin {
+    background: #0a66c2;
+}
+
+@media (max-width: 600px) {
+    .review-share-buttons {
+        gap: 8px;
+    }
+
+    .review-share-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+}

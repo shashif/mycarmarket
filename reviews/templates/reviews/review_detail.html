@@ -1,9 +1,9 @@
 <!-- =========================================
 MyCarMarket
-Version: v1.10.9
+Version: v1.11.6
 File: reviews/templates/reviews/review_detail.html
 Description: Professional Car Review Detail Page
-             Default Static Review Image Fallback
+             Added Social Media Share Buttons
 ========================================= -->
 
 {% extends 'base.html' %}
@@ -14,7 +14,7 @@ Description: Professional Car Review Detail Page
 {% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'reviews/css/reviews.css' %}?v=1109">
+<link rel="stylesheet" href="{% static 'reviews/css/reviews.css' %}?v=1116">
 {% endblock %}
 
 {% block content %}
@@ -23,27 +23,11 @@ Description: Professional Car Review Detail Page
 
 <main class="review-detail-page">
 
-    <!-- =========================================
-    SECTION 1 START
-    Breadcrumb
-    ========================================== -->
-
     <div class="review-breadcrumb">
         <a href="/">Home</a> /
         <a href="{% url 'review_list' %}">Reviews</a> /
         <span>{{ review.title }}</span>
     </div>
-
-    <!-- =========================================
-    SECTION 1 END
-    Breadcrumb
-    ========================================== -->
-
-
-    <!-- =========================================
-    SECTION 2 START
-    Review Article
-    ========================================== -->
 
     <article class="review-article">
 
@@ -66,33 +50,77 @@ Description: Professional Car Review Detail Page
                     <span>MyCarMarket Review Rating</span>
                 </div>
 
+                <!-- =========================================
+                SECTION START
+                Social Media Share Buttons
+                ========================================== -->
+
+                <div class="review-share-box">
+                    <span class="review-share-title">Share this review</span>
+
+                    <div class="review-share-buttons">
+
+                        <a
+                            href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="review-share-btn facebook"
+                        >
+                            Facebook
+                        </a>
+
+                        <a
+                            href="https://api.whatsapp.com/send?text={{ review.title }}%20{{ request.build_absolute_uri }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="review-share-btn whatsapp"
+                        >
+                            WhatsApp
+                        </a>
+
+                        <a
+                            href="https://twitter.com/intent/tweet?text={{ review.title }}&url={{ request.build_absolute_uri }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="review-share-btn twitter"
+                        >
+                            X
+                        </a>
+
+                        <a
+                            href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="review-share-btn linkedin"
+                        >
+                            LinkedIn
+                        </a>
+
+                    </div>
+                </div>
+
+                <!-- =========================================
+                SECTION END
+                Social Media Share Buttons
+                ========================================== -->
+
             </div>
 
             {% if review.hero_image %}
-
                 <img
                     src="{{ review.hero_image.url }}"
                     alt="{{ review.title }}"
                     class="review-detail-image"
                 >
-
             {% else %}
-
                 <img
-                    src="{% static 'images/default-review.jpg' %}"
+                    src="{% static 'images/default-review.png' %}"
                     alt="Default Car Review"
                     class="review-detail-image"
                 >
-
             {% endif %}
 
         </header>
-
-
-        <!-- =========================================
-        SECTION 3 START
-        Pros and Cons
-        ========================================== -->
 
         <section class="pros-cons-grid">
 
@@ -122,46 +150,13 @@ Description: Professional Car Review Detail Page
 
         </section>
 
-        <!-- =========================================
-        SECTION 3 END
-        Pros and Cons
-        ========================================== -->
-
-
-        <!-- =========================================
-        SECTION 4 START
-        Banner Advertisement
-        ========================================== -->
-
         <div class="review-banner-ad-section">
             {% include 'core/home_parts/banner_ad.html' with compact_ad=True %}
         </div>
 
-        <!-- =========================================
-        SECTION 4 END
-        Banner Advertisement
-        ========================================== -->
-
-
-        <!-- =========================================
-        SECTION 5 START
-        Review Content
-        ========================================== -->
-
         <section class="review-content">
             {{ review.content|linebreaks }}
         </section>
-
-        <!-- =========================================
-        SECTION 5 END
-        Review Content
-        ========================================== -->
-
-
-        <!-- =========================================
-        SECTION 6 START
-        FAQ
-        ========================================== -->
 
         {% if review.faq %}
             <section class="review-faq">
@@ -169,17 +164,6 @@ Description: Professional Car Review Detail Page
                 {{ review.faq|linebreaks }}
             </section>
         {% endif %}
-
-        <!-- =========================================
-        SECTION 6 END
-        FAQ
-        ========================================== -->
-
-
-        <!-- =========================================
-        SECTION 7 START
-        Related Reviews
-        ========================================== -->
 
         {% if related_reviews %}
             <section class="related-reviews">
@@ -199,17 +183,7 @@ Description: Professional Car Review Detail Page
             </section>
         {% endif %}
 
-        <!-- =========================================
-        SECTION 7 END
-        Related Reviews
-        ========================================== -->
-
     </article>
-
-    <!-- =========================================
-    SECTION 2 END
-    Review Article
-    ========================================== -->
 
 </main>
 

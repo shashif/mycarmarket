@@ -1,9 +1,10 @@
 <!-- =========================================
 MyCarMarket
-Version: v1.10.9
+Version: v1.11.4
 File: reviews/templates/reviews/review_list.html
 Description: Professional Car Reviews List Page
              Default Static Review Image Fallback
+             Numbered Pagination Added
 ========================================= -->
 
 {% extends 'base.html' %}
@@ -14,7 +15,7 @@ Car Reviews Australia | MyCarMarket Australia
 {% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'reviews/css/reviews.css' %}?v=1109">
+<link rel="stylesheet" href="{% static 'reviews/css/reviews.css' %}?v=1114">
 {% endblock %}
 
 {% block content %}
@@ -23,95 +24,108 @@ Car Reviews Australia | MyCarMarket Australia
 
 <div class="reviews-page">
 
-    <!-- =========================================
-    SECTION 1 START
-    Reviews Hero
-    ========================================== -->
-
+    <!-- SECTION 1 START: Reviews Hero -->
     <section class="reviews-hero">
-
         <div>
-
             <h1>Car Reviews Australia</h1>
-
             <p>
                 Read practical Australian car reviews, buying advice,
                 pros and cons, reliability notes and ownership tips
                 before choosing your next car.
             </p>
-
         </div>
-
     </section>
-
-    <!-- =========================================
-    SECTION 1 END
-    Reviews Hero
-    ========================================== -->
+    <!-- SECTION 1 END -->
 
 
-    <!-- =========================================
-    SECTION 2 START
-    Banner Advertisement
-    ========================================== -->
-
+    <!-- SECTION 2 START: Banner Advertisement -->
     <div class="review-banner-ad-section">
         <div class="review-banner-ad-wrap">
             {% include 'core/home_parts/banner_ad.html' with compact_ad=True %}
         </div>
     </div>
+    <!-- SECTION 2 END -->
 
-    <!-- =========================================
-    SECTION 2 END
-    Banner Advertisement
-    ========================================== -->
+<!-- SECTION 3 START: Review Search and Make Filter -->
+<section class="review-search-filter">
 
+    <form method="get" action="{% url 'review_list' %}" class="review-search-form">
 
-    <!-- =========================================
-    SECTION 3 START
-    Reviews Grid
-    ========================================== -->
+        <input
+            type="text"
+            name="q"
+            value="{{ q }}"
+            placeholder="Search reviews by make, model or keyword..."
+        >
 
+        {% if selected_make %}
+            <input type="hidden" name="make" value="{{ selected_make }}">
+        {% endif %}
+
+        <button type="submit">
+            Search
+        </button>
+
+        {% if q or selected_make %}
+            <a href="{% url 'review_list' %}" class="review-clear-filter">
+                Clear
+            </a>
+        {% endif %}
+
+    </form>
+
+    <div class="review-make-filter">
+
+        <a
+            href="{% url 'review_list' %}"
+            class="{% if not selected_make %}active{% endif %}"
+        >
+            All
+        </a>
+
+        {% for make in make_list %}
+            <a
+                href="?make={{ make|urlencode }}"
+                class="{% if selected_make == make %}active{% endif %}"
+            >
+                {{ make }}
+            </a>
+        {% endfor %}
+
+    </div>
+
+</section>
+<!-- SECTION 3 END -->
+
+    <!-- SECTION 3 START: Reviews Grid -->
     <section class="reviews-grid">
 
         {% for review in reviews %}
 
             <article class="review-card">
-
-                <a
-                    href="{{ review.get_absolute_url }}"
-                    class="review-card-link"
-                >
+                <a href="{{ review.get_absolute_url }}" class="review-card-link">
 
                     {% if review.hero_image %}
-
                         <img
                             src="{{ review.hero_image.url }}"
                             alt="{{ review.title }}"
                             class="review-card-image"
                         >
-
                     {% else %}
-
                         <img
-                            src="{% static 'images/default-review.jpg' %}"
+                            src="{% static 'images/default-review.png' %}"
                             alt="Default Car Review"
                             class="review-card-image"
                         >
-
                     {% endif %}
 
                     <div class="review-card-body">
 
                         <div class="review-card-meta">
-
-                            {{ review.make }}
-                            {{ review.model }}
-
+                            {{ review.make }} {{ review.model }}
                             {% if review.year %}
                                 · {{ review.year }}
                             {% endif %}
-
                         </div>
 
                         <h2>{{ review.title }}</h2>
@@ -121,43 +135,57 @@ Car Reviews Australia | MyCarMarket Australia
                         </p>
 
                         <div class="review-card-footer">
-
-                            <span>
-                                ⭐ {{ review.rating }}/10
-                            </span>
-
-                            <span>
-                                Read Review →
-                            </span>
-
+                            <span>⭐ {{ review.rating }}/10</span>
+                            <span>Read Review →</span>
                         </div>
 
                     </div>
 
                 </a>
-
             </article>
 
         {% empty %}
 
             <div class="empty-reviews">
-
                 <h2>No reviews published yet</h2>
-
-                <p>
-                    Add your first car review from Django Admin.
-                </p>
-
+                <p>Add your first car review from Django Admin.</p>
             </div>
 
         {% endfor %}
 
     </section>
+    <!-- SECTION 3 END -->
 
-    <!-- =========================================
-    SECTION 3 END
-    Reviews Grid
-    ========================================== -->
+
+    <!-- SECTION 4 START: Reviews Pagination -->
+    {% if reviews.has_other_pages %}
+
+        <div class="review-pagination">
+
+            {% if reviews.has_previous %}
+                <a href="?page=1">First</a>
+                <a href="?page={{ reviews.previous_page_number }}">← Previous</a>
+            {% endif %}
+
+            {% for page_num in reviews.paginator.page_range %}
+
+                {% if page_num == reviews.number %}
+                    <span class="active">{{ page_num }}</span>
+                {% elif page_num >= reviews.number|add:"-2" and page_num <= reviews.number|add:"2" %}
+                    <a href="?page={{ page_num }}">{{ page_num }}</a>
+                {% endif %}
+
+            {% endfor %}
+
+            {% if reviews.has_next %}
+                <a href="?page={{ reviews.next_page_number }}">Next →</a>
+                <a href="?page={{ reviews.paginator.num_pages }}">Last</a>
+            {% endif %}
+
+        </div>
+
+    {% endif %}
+    <!-- SECTION 4 END -->
 
 </div>
 
