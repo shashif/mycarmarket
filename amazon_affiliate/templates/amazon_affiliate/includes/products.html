@@ -1,0 +1,73 @@
+{% load static %}
+{% load amazon_affiliate_tags %}
+
+<link rel="stylesheet" href="{% static 'amazon_affiliate/css/products.css' %}?v=1140">
+
+{% get_amazon_products body_type 8 as amazon_products %}
+
+{% if amazon_products %}
+
+<section class="amazon-products-section">
+
+    <div class="amazon-products-header-row">
+
+        <div class="amazon-products-header">
+            <h2>Recommended Car Accessories</h2>
+            <p>Helpful accessories for Australian car owners.</p>
+        </div>
+
+        <a href="{% url 'amazon_product_list' %}" class="amazon-view-all-btn">
+            View All
+        </a>
+
+    </div>
+
+    <div class="amazon-products-grid">
+
+        {% for product in amazon_products %}
+
+            <div class="amazon-product-card">
+
+                {% if product.image %}
+                    <div class="amazon-product-image-wrap">
+                        <img
+                            src="{{ product.image.url }}"
+                            alt="{{ product.title }}"
+                            class="amazon-product-image"
+                            loading="lazy"
+                        >
+                    </div>
+                {% endif %}
+
+                <div class="amazon-product-content">
+
+                    <h3>{{ product.title }}</h3>
+
+                    {% if product.short_description %}
+                        <p>{{ product.short_description }}</p>
+                    {% endif %}
+
+                    <a
+                        href="{{ product.amazon_affiliate_url }}"
+                        target="_blank"
+                        rel="nofollow sponsored noopener"
+                        class="amazon-product-button"
+                    >
+                        {{ product.button_text }}
+                    </a>
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+    <p class="amazon-affiliate-disclosure">
+        Disclosure: We may earn a commission from qualifying Amazon purchases.
+    </p>
+
+</section>
+
+{% endif %}

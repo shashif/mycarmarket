@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'vehicles',
     'reviews',
     'accounts',
+    "amazon_affiliate",
 
     'django.contrib.admin',
     'django.contrib.auth',

@@ -1,0 +1,327 @@
+<!-- =========================================
+MyCarMarket
+Version: v1.14.3
+File: amazon_affiliate/templates/amazon_affiliate/product_list.html
+Description: Professional Accessories Store Page
+             Added Product Counter and Professional Pagination
+========================================= -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+
+<!-- =========================================
+SECTION 1 START
+Page Title
+========================================= -->
+
+{% block title %}
+{% if selected_category %}
+{{ selected_category.name }} | MyCarMarket Australia
+{% else %}
+All Car Accessories | MyCarMarket Australia
+{% endif %}
+{% endblock %}
+
+<!-- =========================================
+SECTION 1 END
+Page Title
+========================================= -->
+<!-- ----------------------------------------- -->
+
+
+<!-- =========================================
+SECTION 2 START
+Extra CSS
+========================================= -->
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'amazon_affiliate/css/products.css' %}?v=1143">
+{% endblock %}
+
+<!-- =========================================
+SECTION 2 END
+Extra CSS
+========================================= -->
+<!-- ----------------------------------------- -->
+
+
+<!-- =========================================
+SECTION 3 START
+Page Content
+========================================= -->
+
+{% block content %}
+
+{% include 'includes/navbar.html' %}
+
+<main class="amazon-store-page">
+
+
+    <!-- =========================================
+    SECTION 4 START
+    Breadcrumb
+    ========================================= -->
+
+    <div class="amazon-breadcrumb">
+        <a href="/">Home</a>
+        <span>›</span>
+        <span>Accessories</span>
+    </div>
+
+    <!-- =========================================
+    SECTION 4 END
+    Breadcrumb
+    ========================================= -->
+    <!-- ----------------------------------------- -->
+
+
+    <!-- =========================================
+    SECTION 5 START
+    Hero
+    ========================================= -->
+
+    <section class="amazon-store-hero">
+
+        <h1>
+            {% if selected_category %}
+                {{ selected_category.name }}
+            {% else %}
+                All Car Accessories
+            {% endif %}
+        </h1>
+
+        <p>
+            Quality accessories for your car. Recommended for Australian drivers.
+        </p>
+
+    </section>
+
+    <!-- =========================================
+    SECTION 5 END
+    Hero
+    ========================================= -->
+    <!-- ----------------------------------------- -->
+
+
+    <!-- =========================================
+    SECTION 6 START
+    Store Layout
+    ========================================= -->
+
+    <section class="amazon-store-layout">
+
+
+        <!-- =========================================
+        SECTION 7 START
+        Category Sidebar
+        ========================================= -->
+
+        <aside class="amazon-category-sidebar">
+
+            <h3>Categories</h3>
+
+            <a href="{% url 'amazon_product_list' %}"
+               class="{% if not selected_category %}active{% endif %}">
+                All Accessories
+            </a>
+
+            {% for category in categories %}
+                <a href="{% url 'amazon_product_category' category.slug %}"
+                   class="{% if selected_category and selected_category.id == category.id %}active{% endif %}">
+                    {{ category.name }}
+                </a>
+            {% endfor %}
+
+        </aside>
+
+        <!-- =========================================
+        SECTION 7 END
+        Category Sidebar
+        ========================================= -->
+        <!-- ----------------------------------------- -->
+
+
+        <!-- =========================================
+        SECTION 8 START
+        Products Content
+        ========================================= -->
+
+        <div class="amazon-store-content">
+
+
+            <!-- =========================================
+            SECTION 9 START
+            Product Counter
+            ========================================= -->
+
+            <div class="amazon-store-toolbar">
+
+                {% if page_obj.paginator.count > 0 %}
+                    <p>
+                        Showing {{ page_obj.start_index }}–{{ page_obj.end_index }}
+                        of {{ page_obj.paginator.count }} accessories
+                    </p>
+                {% else %}
+                    <p>No accessories found</p>
+                {% endif %}
+
+            </div>
+
+            <!-- =========================================
+            SECTION 9 END
+            Product Counter
+            ========================================= -->
+            <!-- ----------------------------------------- -->
+
+
+            <!-- =========================================
+            SECTION 10 START
+            Product Grid
+            ========================================= -->
+
+            <div class="amazon-products-grid">
+
+                {% for product in page_obj %}
+
+                    <article class="amazon-product-card">
+
+                        <div class="amazon-product-image-wrap">
+
+                            {% if product.image %}
+                                <img
+                                    src="{{ product.image.url }}"
+                                    alt="{{ product.title }}"
+                                    class="amazon-product-image"
+                                    loading="lazy"
+                                >
+                            {% endif %}
+
+                        </div>
+
+                        <div class="amazon-product-content">
+
+                            <h3>{{ product.title }}</h3>
+
+                            {% if product.short_description %}
+                                <p>{{ product.short_description }}</p>
+                            {% endif %}
+
+                            <a href="{{ product.amazon_affiliate_url }}"
+                               target="_blank"
+                               rel="nofollow sponsored noopener"
+                               class="amazon-product-button">
+                                {{ product.button_text }}
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                {% empty %}
+
+                    <p>No accessories found.</p>
+
+                {% endfor %}
+
+            </div>
+
+            <!-- =========================================
+            SECTION 10 END
+            Product Grid
+            ========================================= -->
+            <!-- ----------------------------------------- -->
+
+
+            <!-- =========================================
+            SECTION 11 START
+            Professional Pagination
+            ========================================= -->
+
+            {% if page_obj.has_other_pages %}
+
+                <div class="amazon-pagination">
+
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}">
+                            ← Previous
+                        </a>
+                    {% endif %}
+
+                    {% for num in page_obj.paginator.page_range %}
+
+                        {% if page_obj.number == num %}
+
+                            <span class="active">
+                                {{ num }}
+                            </span>
+
+                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+
+                            <a href="?page={{ num }}">
+                                {{ num }}
+                            </a>
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">
+                            Next →
+                        </a>
+                    {% endif %}
+
+                </div>
+
+            {% endif %}
+
+            <!-- =========================================
+            SECTION 11 END
+            Professional Pagination
+            ========================================= -->
+            <!-- ----------------------------------------- -->
+
+
+        </div>
+
+        <!-- =========================================
+        SECTION 8 END
+        Products Content
+        ========================================= -->
+        <!-- ----------------------------------------- -->
+
+    </section>
+
+    <!-- =========================================
+    SECTION 6 END
+    Store Layout
+    ========================================= -->
+    <!-- ----------------------------------------- -->
+
+
+    <!-- =========================================
+    SECTION 12 START
+    Affiliate Disclosure
+    ========================================= -->
+
+    <p class="amazon-affiliate-disclosure">
+        Disclosure: We may earn a commission from qualifying Amazon purchases.
+    </p>
+
+    <!-- =========================================
+    SECTION 12 END
+    Affiliate Disclosure
+    ========================================= -->
+    <!-- ----------------------------------------- -->
+
+
+</main>
+
+{% endblock %}
+
+<!-- =========================================
+SECTION 3 END
+Page Content
+========================================= -->
+<!-- ----------------------------------------- -->

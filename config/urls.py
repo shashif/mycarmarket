@@ -1,8 +1,10 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.10.3
+# Version: v1.14.0
 # File: config/urls.py
-# Description: Sitemap + Robots + Static Media + Custom Error Pages + Favicon + Bing Verification + Reviews URLs
+# Description:
+# Sitemap + Robots + Static Media + Custom Error Pages
+# Added Amazon Accessories Store URLs
 # ==========================================
 
 from django.contrib import admin
@@ -45,6 +47,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', include('core.urls')),
+    path('', include('amazon_affiliate.urls')),
     path('cars/', include('vehicles.urls')),
     path('reviews/', include('reviews.urls')),
 

@@ -1,11 +1,12 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.6.0
+# Version: v1.13.2
 # File: core/views.py
-# Description: Homepage + Custom Error Pages + Moderation Approved Filters
+# Description:
+# Homepage + Custom Error Pages.
+# Featured and Latest Vehicles now show max 5 cars each
+# for consistent homepage layout.
 # ==========================================
-
-import random
 
 from django.shortcuts import render
 
@@ -23,51 +24,24 @@ from vehicles.models import (
 
 def home(request):
 
-    featured_queryset = Car.objects.filter(
-        is_approved=True,
-        is_active=True,
-        moderation_status='approved',
-        is_featured=True
-    ).order_by(
-        '-is_verified_listing',
-        '-created_at'
-    )
-
-    featured_car_ids = list(
-        featured_queryset.values_list(
-            'id',
-            flat=True
-        )
-    )
-
-    if 'home_featured_car_ids' not in request.session:
-
-        random.shuffle(featured_car_ids)
-
-        request.session['home_featured_car_ids'] = featured_car_ids[:12]
-
-    session_featured_ids = request.session.get(
-        'home_featured_car_ids',
-        []
-    )
-
-    featured_cars = Car.objects.filter(
-        id__in=session_featured_ids,
-        is_approved=True,
-        is_active=True,
-        moderation_status='approved',
-        is_featured=True
-    )
-
-    latest_cars = Car.objects.filter(
+    approved_cars = Car.objects.filter(
         is_approved=True,
         is_active=True,
         moderation_status='approved'
+    )
+
+    featured_cars = approved_cars.filter(
+        is_featured=True
     ).order_by(
+        '-is_verified_listing',
+        '-created_at'
+    )[:5]
+
+    latest_cars = approved_cars.order_by(
         '-is_featured',
         '-is_verified_listing',
         '-created_at'
-    )[:6]
+    )[:5]
 
     favourite_car_ids = []
 

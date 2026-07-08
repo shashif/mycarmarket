@@ -1,0 +1,470 @@
+/* ==========================================
+MyCarMarket
+Version: v1.14.4
+File: amazon_affiliate/static/amazon_affiliate/css/products.css
+Description: Full Accessories Store Page Design
+             Fixed Amazon Button Cropping Issue
+========================================== */
+
+
+/* ==========================================
+SECTION 1 START
+Store Page Wrapper
+========================================== */
+
+.amazon-store-page {
+    max-width: 1500px;
+    margin: 16px auto 40px;
+    padding: 24px;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+}
+
+/* ==========================================
+SECTION 1 END
+Store Page Wrapper
+========================================== */
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 2 START
+Breadcrumb
+========================================== */
+
+.amazon-breadcrumb {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 18px;
+    font-size: 14px;
+    color: #9ca3af;
+}
+
+.amazon-breadcrumb a {
+    color: #9ca3af;
+    text-decoration: none;
+}
+
+/* ==========================================
+SECTION 2 END
+Breadcrumb
+========================================== */
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 3 START
+Hero
+========================================== */
+
+.amazon-store-hero h1 {
+    margin: 0 0 8px;
+    font-size: 34px;
+    font-weight: 900;
+    color: #111827;
+}
+
+.amazon-store-hero p {
+    margin: 0 0 22px;
+    font-size: 15px;
+    color: #374151;
+}
+
+/* ==========================================
+SECTION 3 END
+Hero
+========================================== */
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 4 START
+Store Layout
+========================================== */
+
+.amazon-store-layout {
+    display: grid;
+    grid-template-columns: 290px 1fr;
+    gap: 18px;
+}
+
+/* ==========================================
+SECTION 4 END
+Store Layout
+========================================== */
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 5 START
+Category Sidebar
+========================================== */
+
+.amazon-category-sidebar {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 18px;
+    height: fit-content;
+}
+
+.amazon-category-sidebar h3 {
+    margin: 0 0 12px;
+    font-size: 17px;
+    font-weight: 900;
+    color: #111827;
+}
+
+.amazon-category-sidebar a {
+    display: block;
+    padding: 9px 12px;
+    border-radius: 8px;
+    color: #111827;
+    text-decoration: none;
+    font-size: 15px;
+    margin-bottom: 3px;
+}
+
+.amazon-category-sidebar a.active,
+.amazon-category-sidebar a:hover {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+/* ==========================================
+SECTION 5 END
+Category Sidebar
+========================================== */
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 6 START
+Store Content
+========================================== */
+
+.amazon-store-content {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 12px;
+}
+
+/* ==========================================
+SECTION 6 END
+Store Content
+========================================== */
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 7 START
+Product Counter Toolbar
+========================================== */
+
+.amazon-store-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 6px 8px;
+}
+
+.amazon-store-toolbar p {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: #111827;
+}
+
+/* ==========================================
+SECTION 7 END
+Product Counter Toolbar
+========================================== */
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 8 START
+Products Grid
+========================================== */
+
+.amazon-products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+/* ==========================================
+SECTION 8 END
+Products Grid
+========================================== */
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 9 START
+Product Card
+========================================== */
+
+.amazon-product-card {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 100%;
+}
+
+.amazon-product-image-wrap {
+    height: 155px;
+    padding: 12px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.amazon-product-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.amazon-product-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 12px;
+}
+
+.amazon-product-content h3 {
+    min-height: 44px;
+    margin: 0 0 12px;
+    font-size: 16px;
+    line-height: 1.3;
+    font-weight: 900;
+    color: #111827;
+}
+
+.amazon-product-content p {
+    display: none;
+}
+
+.amazon-product-button {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: auto;
+    padding: 10px 12px;
+    background: #ff9900;
+    color: #111827;
+    border-radius: 7px;
+    text-align: center;
+    font-weight: 900;
+    text-decoration: none;
+}
+
+.amazon-product-button:hover {
+    background: #e68a00;
+    color: #111827;
+}
+
+/* ==========================================
+SECTION 9 END
+Product Card
+========================================== */
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 10 START
+Pagination
+========================================== */
+
+.amazon-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 28px 0 8px;
+}
+
+.amazon-pagination a,
+.amazon-pagination span {
+    padding: 9px 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #111827;
+    font-size: 14px;
+    font-weight: 800;
+    text-align: center;
+    text-decoration: none;
+}
+
+.amazon-pagination a:hover,
+.amazon-pagination span,
+.amazon-pagination span.active {
+    background: #dc2626;
+    color: #ffffff;
+    border-color: #dc2626;
+}
+
+/* ==========================================
+SECTION 10 END
+Pagination
+========================================== */
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 11 START
+Affiliate Disclosure
+========================================== */
+
+.amazon-affiliate-disclosure {
+    margin: 16px 0 0;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+/* ==========================================
+SECTION 11 END
+Affiliate Disclosure
+========================================== */
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 12 START
+Responsive Design
+========================================== */
+
+@media (max-width: 1100px) {
+    .amazon-products-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .amazon-store-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .amazon-products-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .amazon-store-page {
+        margin: 10px;
+        padding: 14px;
+    }
+
+    .amazon-products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .amazon-product-image-wrap {
+        height: 130px;
+    }
+
+    .amazon-product-content {
+        padding: 10px;
+    }
+
+    .amazon-product-content h3 {
+        font-size: 14px;
+        min-height: 40px;
+    }
+
+    .amazon-product-button {
+        padding: 9px 10px;
+        font-size: 13px;
+    }
+}
+
+/* ==========================================
+SECTION 12 END
+Responsive Design
+========================================== */
+/* --------------------------------------------- */
+
+/* ==========================================
+SECTION 13 START
+Homepage Accessories Compact Design
+========================================== */
+
+.amazon-products-section {
+    max-width: 1200px;
+    margin: 28px auto;
+    padding: 24px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+}
+
+.amazon-products-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 18px;
+}
+
+.amazon-products-header h2 {
+    margin: 0 0 6px;
+    font-size: 26px;
+    font-weight: 900;
+    color: #111827;
+}
+
+.amazon-products-header p {
+    margin: 0;
+    font-size: 15px;
+    color: #6b7280;
+}
+
+.amazon-view-all-btn {
+    font-weight: 900;
+    color: #dc2626;
+    text-decoration: none;
+}
+
+.amazon-view-all-btn:hover {
+    text-decoration: underline;
+}
+
+.amazon-products-section .amazon-products-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+.amazon-products-section .amazon-product-image-wrap {
+    height: 135px;
+}
+
+.amazon-products-section .amazon-product-content h3 {
+    min-height: 40px;
+    font-size: 14px;
+}
+
+.amazon-products-section .amazon-product-button {
+    padding: 9px 10px;
+    font-size: 13px;
+}
+
+.amazon-products-section .amazon-affiliate-disclosure {
+    margin-top: 14px;
+}
+
+/* ==========================================
+SECTION 13 END
+Homepage Accessories Compact Design
+========================================== */
+/* --------------------------------------------- */

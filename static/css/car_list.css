@@ -1,8 +1,10 @@
 /* ==========================================
 MyCarMarket
-Version: v1.2.6
+Version: v1.13.1
 File: static/css/car_list.css
-Car List Page + Mobile Responsive Polish
+Description:
+Car List Page + 5 Cars Per Row.
+Listing cards now match homepage Featured/Latest card style.
 ========================================== */
 
 
@@ -28,7 +30,6 @@ body {
 SECTION 01 : GLOBAL PAGE BASE
 END
 -------------------------------------------------- */
-
 
 
 /* --------------------------------------------------
@@ -58,7 +59,6 @@ START
 SECTION 02 : PAGE HEADER
 END
 -------------------------------------------------- */
-
 
 
 /* --------------------------------------------------
@@ -132,260 +132,162 @@ END
 -------------------------------------------------- */
 
 
-
 /* --------------------------------------------------
-SECTION 04 : CAR GRID
+SECTION 04 : CAR GRID + CARD DESIGN
 START
+Version: v1.13.1
+Description: Listing page card design same as homepage
 -------------------------------------------------- */
 
-.car-grid,
 .premium-car-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    margin-bottom: 52px;
+    align-items: stretch;
 }
 
-.car-card,
 .premium-car-card {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    background: white;
-    color: inherit;
-    text-decoration: none;
+    background: #fff;
     border-radius: 22px;
     overflow: hidden;
-    box-shadow: 0 10px 28px rgba(0,0,0,0.10);
-    transition: 0.25s;
-    position: relative;
+    box-shadow: 0 12px 32px rgba(15,23,42,.10);
+    transition: .25s;
+    height: 100%;
 }
 
-.car-card:hover,
 .premium-car-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 16px 35px rgba(0,0,0,0.14);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 46px rgba(15,23,42,.15);
 }
 
-/* --------------------------------------------------
-SECTION 04 : CAR GRID
-END
--------------------------------------------------- */
-
-
-
-/* --------------------------------------------------
-SECTION 05 : IMAGE AREA
-START
--------------------------------------------------- */
-
-.image-box,
 .premium-car-image-wrap {
-    width: 100%;
-    height: 220px;
-    background: #e5e7eb;
     position: relative;
+    height: 180px;
     overflow: hidden;
+    background: #e5e7eb;
 }
 
 .car-image-link {
     display: block;
     width: 100%;
     height: 100%;
-    text-decoration: none;
-    color: inherit;
 }
 
-.image-box img,
 .premium-car-image-wrap img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.no-image,
 .no-image-box {
-    height: 220px;
-    background: #e5e7eb;
+    height: 180px;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: #e5e7eb;
     color: #6b7280;
-    font-weight: bold;
+    font-weight: 700;
 }
-
-/* --------------------------------------------------
-SECTION 05 : IMAGE AREA
-END
--------------------------------------------------- */
-
-
-
-/* --------------------------------------------------
-SECTION 06 : CAR BADGES
-START
--------------------------------------------------- */
 
 .featured-badge {
     position: absolute;
-    top: 14px;
-    left: 14px;
+    top: 10px;
+    left: 10px;
     background: #f59e0b;
     color: white;
-    padding: 7px 12px;
+    padding: 5px 10px;
     border-radius: 999px;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 11px;
+    font-weight: 700;
     z-index: 5;
 }
 
 .verified-badge {
     position: absolute;
-    top: 58px;
-    left: 14px;
-    right: auto;
-    width: auto;
-    max-width: fit-content;
-    display: inline-block;
+    top: 10px;
+    right: 10px;
     background: #16a34a;
     color: white;
-    padding: 7px 12px;
+    padding: 5px 10px;
     border-radius: 999px;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 11px;
+    font-weight: 700;
     z-index: 5;
 }
 
-/* --------------------------------------------------
-SECTION 06 : CAR BADGES
-END
--------------------------------------------------- */
-
-
-
-/* --------------------------------------------------
-SECTION 07 : FAVOURITE BUTTON
-START
--------------------------------------------------- */
-
 .favourite-form {
     position: absolute;
-    top: 14px;
-    right: 14px;
+    bottom: 12px;
+    right: 12px;
     z-index: 20;
+    margin: 0;
 }
 
 .favourite-btn,
 .favourite-login-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
+    width: 36px;
+    height: 36px;
     border: none;
-    background: white;
-    font-size: 22px;
-    cursor: pointer;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+    border-radius: 50%;
+    background: #fff;
+    color: #dc2626;
     display: flex;
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    line-height: 1;
-    transition: 0.2s;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 8px 22px rgba(15,23,42,.22);
 }
 
-.favourite-btn:hover,
-.favourite-login-btn:hover {
-    transform: scale(1.08);
-    background: #f9fafb;
-}
-
-/* --------------------------------------------------
-SECTION 07 : FAVOURITE BUTTON
-END
--------------------------------------------------- */
-
-
-
-/* --------------------------------------------------
-SECTION 08 : CAR CONTENT
-START
--------------------------------------------------- */
-
-.car-content,
 .premium-car-info {
     display: flex;
     flex-direction: column;
     flex: 1;
-    padding: 20px;
-}
-
-.premium-car-info h3,
-.car-title {
-    margin: 0 0 8px;
-    font-size: 21px;
-    font-weight: bold;
-    color: #111827;
-    line-height: 1.3;
-    overflow-wrap: break-word;
+    padding: 14px;
 }
 
 .car-title-link {
-    color: #111827;
     text-decoration: none;
+    color: inherit;
 }
 
-.car-title-link:hover h3 {
-    color: #2563eb;
-}
-
-.car-title a {
+.premium-car-info h3 {
+    margin: 0 0 8px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.3;
     color: #111827;
-    text-decoration: none;
+    min-height: 42px;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
-.car-title a:hover {
-    color: #2563eb;
-}
-
-.car-meta {
-    color: #374151;
-    margin: 6px 0 12px;
-    font-size: 14px;
-    overflow-wrap: break-word;
-}
-
-/* --------------------------------------------------
-SECTION 08 : CAR CONTENT
-END
--------------------------------------------------- */
-
-
-
-/* --------------------------------------------------
-SECTION 09 : DEALER INFO
-START
--------------------------------------------------- */
-
-.dealer-info {
-    margin: 10px 0 14px;
+.car-meta,
+.dealer-info,
+.car-location {
+    font-size: 12px;
+    color: #4b5563;
+    margin: 0 0 8px;
 }
 
 .dealer-name {
-    margin: 0 0 8px;
-    font-size: 14px;
+    font-size: 12px;
+    margin: 0 0 6px;
     font-weight: 700;
-    color: #111827;
-    overflow-wrap: break-word;
 }
 
 .dealer-verified,
 .dealer-featured {
-    display: inline-block;
-    padding: 5px 10px;
+    font-size: 10px;
+    padding: 4px 7px;
     border-radius: 999px;
-    font-size: 12px;
-    font-weight: bold;
-    margin-right: 6px;
-    margin-bottom: 5px;
 }
 
 .dealer-verified {
@@ -400,105 +302,72 @@ START
     border: 1px solid #fde68a;
 }
 
-.premium-car-card:has(.dealer-featured),
-.car-card:has(.dealer-featured) {
-    border: 2px solid #f59e0b;
-}
-
-/* --------------------------------------------------
-SECTION 09 : DEALER INFO
-END
--------------------------------------------------- */
-
-
-
-/* --------------------------------------------------
-SECTION 10 : CAR DETAILS GRID
-START
--------------------------------------------------- */
-
-.icon-info-grid,
-.info-grid {
+.icon-info-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 9px;
-    margin: 12px 0 18px;
+    gap: 6px;
+    margin: 8px 0;
 }
 
-.icon-info-grid span,
-.info-item {
+.icon-info-grid span {
     background: #f9fafb;
-    padding: 10px;
-    border-radius: 12px;
-    font-size: 14px;
+    padding: 7px;
+    border-radius: 9px;
+    font-size: 11px;
     color: #374151;
-    overflow-wrap: break-word;
-}
-
-.car-location,
-.location {
-    color: #6b7280;
-    font-size: 14px;
-    margin-bottom: 18px;
-    overflow-wrap: break-word;
-}
-
-.price,
-.price-row strong {
-    font-size: 24px;
-    font-weight: bold;
-    color: #2563eb;
-    overflow-wrap: break-word;
 }
 
 .price-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 12px;
-    gap: 10px;
+    margin-top: auto;
+}
+
+.price-row strong {
+    font-size: 15px;
+    font-weight: 700;
+    color: #16a34a;
+}
+
+.view-details-btn {
+    display: none;
 }
 
 /* --------------------------------------------------
-SECTION 10 : CAR DETAILS GRID
+SECTION 04 : CAR GRID + CARD DESIGN
 END
 -------------------------------------------------- */
 
 
-
 /* --------------------------------------------------
-SECTION 11 : VIEW DETAILS BUTTON
+SECTION 05 : AI SEARCH BOX
 START
 -------------------------------------------------- */
 
-.view-details-btn {
-    display: block;
-    margin-top: auto;
-    width: 100%;
-    box-sizing: border-box;
-    text-align: center;
-    background: #111827;
-    color: white;
-    padding: 13px 16px;
-    border-radius: 13px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: 0.2s;
+.ai-search-box {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1e3a8a;
+    padding: 18px 22px;
+    border-radius: 16px;
+    margin-bottom: 26px;
 }
 
-.view-details-btn:hover {
-    background: #2563eb;
+.ai-search-box ul {
+    margin: 10px 0 0;
+    padding-left: 20px;
+}
+
+.ai-search-box li {
+    margin-bottom: 5px;
 }
 
 /* --------------------------------------------------
-SECTION 11 : VIEW DETAILS BUTTON
+SECTION 05 : AI SEARCH BOX
 END
 -------------------------------------------------- */
 
 
-
 /* --------------------------------------------------
-SECTION 12 : EMPTY BOX + PAGINATION
+SECTION 06 : EMPTY BOX + PAGINATION
 START
 -------------------------------------------------- */
 
@@ -534,43 +403,45 @@ START
 }
 
 /* --------------------------------------------------
-SECTION 12 : EMPTY BOX + PAGINATION
+SECTION 06 : EMPTY BOX + PAGINATION
 END
 -------------------------------------------------- */
 
 
-
 /* --------------------------------------------------
-SECTION 13 : TABLET RESPONSIVE
+SECTION 07 : TABLET RESPONSIVE
 START
-max-width: 1000px
 -------------------------------------------------- */
 
+@media (max-width: 1100px) {
+
+    .premium-car-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+}
+
 @media (max-width: 1000px) {
+
     .filter-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .car-grid,
-    .premium-car-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
 }
 
 /* --------------------------------------------------
-SECTION 13 : TABLET RESPONSIVE
+SECTION 07 : TABLET RESPONSIVE
 END
 -------------------------------------------------- */
 
 
-
 /* --------------------------------------------------
-SECTION 14 : MOBILE RESPONSIVE
+SECTION 08 : MOBILE RESPONSIVE
 START
-max-width: 650px
 -------------------------------------------------- */
 
 @media (max-width: 650px) {
+
     .page-wrapper {
         width: 94%;
         margin: 20px auto;
@@ -598,13 +469,8 @@ max-width: 650px
         margin-bottom: 22px;
     }
 
-    .filter-grid,
-    .car-grid,
-    .premium-car-grid {
-        grid-template-columns: 1fr;
-    }
-
     .filter-grid {
+        grid-template-columns: 1fr;
         gap: 12px;
     }
 
@@ -626,85 +492,18 @@ max-width: 650px
         padding: 12px;
     }
 
-    .car-card,
-    .premium-car-card {
-        border-radius: 18px;
+    .premium-car-grid {
+        grid-template-columns: 1fr;
     }
 
     .premium-car-image-wrap,
-    .image-box,
-    .no-image,
     .no-image-box {
         height: 190px;
     }
 
-    .premium-car-info,
-    .car-content {
-        padding: 16px;
-    }
-
-    .premium-car-info h3,
-    .car-title {
-        font-size: 19px;
-    }
-
-    .featured-badge,
-    .verified-badge {
-        font-size: 11px;
-        padding: 6px 9px;
-    }
-
-    .verified-badge {
-        top: 52px;
-    }
-
-    .favourite-form {
-        top: 12px;
-        right: 12px;
-    }
-
-    .favourite-btn,
-    .favourite-login-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
-    }
-
-    .dealer-name {
-        font-size: 13px;
-    }
-
-    .dealer-verified,
-    .dealer-featured {
-        font-size: 11px;
-        padding: 5px 8px;
-    }
-
-    .icon-info-grid,
-    .info-grid {
-        grid-template-columns: 1fr;
-        gap: 8px;
-    }
-
-    .icon-info-grid span,
-    .info-item {
-        font-size: 13px;
-        padding: 9px;
-    }
-
-    .price-row {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .price,
-    .price-row strong {
-        font-size: 22px;
-    }
-
-    .view-details-btn {
-        padding: 12px;
-        border-radius: 12px;
+    .ai-search-box {
+        padding: 15px;
+        font-size: 14px;
     }
 
     .pagination {
@@ -721,45 +520,29 @@ max-width: 650px
         padding: 28px 18px;
         border-radius: 18px;
     }
+
 }
 
 /* --------------------------------------------------
-SECTION 14 : MOBILE RESPONSIVE
+SECTION 08 : MOBILE RESPONSIVE
 END
 -------------------------------------------------- */
 
 
-
 /* --------------------------------------------------
-SECTION 15 : SMALL MOBILE RESPONSIVE
+SECTION 09 : SMALL MOBILE RESPONSIVE
 START
-max-width: 420px
 -------------------------------------------------- */
 
 @media (max-width: 420px) {
+
     .page-header h1 {
         font-size: 23px;
     }
 
-    .premium-car-image-wrap,
-    .image-box,
-    .no-image,
-    .no-image-box {
-        height: 170px;
-    }
-
-    .premium-car-info h3,
-    .car-title {
-        font-size: 18px;
-    }
-
-    .price,
-    .price-row strong {
-        font-size: 20px;
-    }
 }
 
 /* --------------------------------------------------
-SECTION 15 : SMALL MOBILE RESPONSIVE
+SECTION 09 : SMALL MOBILE RESPONSIVE
 END
 -------------------------------------------------- */

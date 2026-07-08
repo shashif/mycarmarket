@@ -1,9 +1,8 @@
 <!-- =========================================
 MyCarMarket
-Version: v1.8.6
+Version: v1.13.2
 File: core/templates/core/home_parts/featured_cars.html
-Description: Featured Vehicles Compact Professional
-             Card Layout + Formatted Price + Meta Row
+Description: Featured Vehicles Same Design As Latest Vehicles
 ========================================= -->
 
 {% load static humanize %}
@@ -59,6 +58,46 @@ Description: Featured Vehicles Compact Professional
 
                 {% if car.is_verified_listing %}
                     <span class="verified-badge">✓ Verified</span>
+                {% endif %}
+
+                {% if car.slug %}
+
+                    {% if user.is_authenticated %}
+
+                        <form method="POST"
+                              action="{% url 'toggle_favourite' car.slug %}"
+                              class="favourite-form ajax-favourite-form">
+
+                            {% csrf_token %}
+
+                            <input type="hidden"
+                                   name="next"
+                                   value="{{ request.path }}">
+
+                            <button type="submit"
+                                    class="favourite-btn {% if car.id in favourite_car_ids %}saved{% endif %}"
+                                    title="Save this car">
+
+                                {% if car.id in favourite_car_ids %}
+                                    ❤️
+                                {% else %}
+                                    🤍
+                                {% endif %}
+
+                            </button>
+
+                        </form>
+
+                    {% else %}
+
+                        <a href="{% url 'login' %}?next={{ request.path }}"
+                           class="favourite-login-btn"
+                           title="Login to save this car">
+                            🤍
+                        </a>
+
+                    {% endif %}
+
                 {% endif %}
 
             </div>
