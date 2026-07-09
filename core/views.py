@@ -1,11 +1,11 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.13.2
+# Version: v1.14.5
 # File: core/views.py
 # Description:
 # Homepage + Custom Error Pages.
-# Featured and Latest Vehicles now show max 5 cars each
-# for consistent homepage layout.
+# Added Latest Car Reviews section for homepage.
+# Featured and Latest Vehicles show max 5 cars each.
 # ==========================================
 
 from django.shortcuts import render
@@ -16,6 +16,8 @@ from vehicles.models import (
     Car,
     FavouriteCar
 )
+
+from reviews.models import CarReview
 
 
 # ==========================================
@@ -43,6 +45,13 @@ def home(request):
         '-created_at'
     )[:5]
 
+    latest_reviews = CarReview.objects.filter(
+        is_published=True
+    ).order_by(
+        '-is_featured',
+        '-published_at'
+    )[:5]
+
     favourite_car_ids = []
 
     if request.user.is_authenticated:
@@ -64,6 +73,7 @@ def home(request):
         {
             'featured_cars': featured_cars,
             'latest_cars': latest_cars,
+            'latest_reviews': latest_reviews,
             'favourite_car_ids': favourite_car_ids,
             'settings': settings,
         }

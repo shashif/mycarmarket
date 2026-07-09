@@ -1,15 +1,23 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.13.0
+# Version: v1.14.2
 # File: amazon_affiliate/templatetags/amazon_affiliate_tags.py
 # Description: Amazon Affiliate Template Tags
+# Random Recommended Products
 # ==========================================
 
 from django import template
+
 from amazon_affiliate.models import AmazonProduct
+
 
 register = template.Library()
 
+
+# ==========================================
+# SECTION 1 START
+# GET AMAZON PRODUCTS TEMPLATE TAG
+# ==========================================
 
 @register.simple_tag
 def get_amazon_products(body_type=None, limit=4):
@@ -32,8 +40,10 @@ def get_amazon_products(body_type=None, limit=4):
             body_type="all"
         )
 
-    return products.order_by(
-        "-is_featured",
-        "display_order",
-        "title"
-    )[:limit]
+    return products.order_by("?")[:limit]
+
+
+# ==========================================
+# SECTION 1 END
+# GET AMAZON PRODUCTS TEMPLATE TAG
+# ==========================================

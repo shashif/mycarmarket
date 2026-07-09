@@ -1,15 +1,21 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.14.0
+# Version: v1.14.1
 # File: amazon_affiliate/models.py
 # Description:
 # Amazon Accessories Store
-# Categories + Products + Store ID Auto Tag
+# Categories + Products
+# Product URL + Auto Final Affiliate URL Property
 # ==========================================
 
 from django.db import models
 from django.utils.text import slugify
 
+
+# ==========================================
+# SECTION 1 START
+# AMAZON AFFILIATE SETTINGS MODEL
+# ==========================================
 
 class AmazonAffiliateSettings(models.Model):
 
@@ -29,6 +35,17 @@ class AmazonAffiliateSettings(models.Model):
     def __str__(self):
         return self.store_id
 
+
+# ==========================================
+# SECTION 1 END
+# AMAZON AFFILIATE SETTINGS MODEL
+# ==========================================
+
+
+# ==========================================
+# SECTION 2 START
+# AMAZON CATEGORY MODEL
+# ==========================================
 
 class AmazonCategory(models.Model):
 
@@ -67,6 +84,17 @@ class AmazonCategory(models.Model):
         super().save(*args, **kwargs)
 
 
+# ==========================================
+# SECTION 2 END
+# AMAZON CATEGORY MODEL
+# ==========================================
+
+
+# ==========================================
+# SECTION 3 START
+# AMAZON PRODUCT MODEL
+# ==========================================
+
 class AmazonProduct(models.Model):
 
     BODY_TYPE_CHOICES = [
@@ -91,7 +119,7 @@ class AmazonProduct(models.Model):
 
     amazon_affiliate_url = models.URLField(
         blank=True,
-        help_text="Auto generated using your Store ID, but editable."
+        help_text="Optional. Leave empty. System will auto-generate final affiliate URL."
     )
 
     asin = models.CharField(max_length=30, blank=True)
@@ -161,9 +189,18 @@ class AmazonProduct(models.Model):
     def __str__(self):
         return self.title or "Amazon Product"
 
-    def save(self, *args, **kwargs):
+    # ==========================================
+    # SECTION 3.1 START
+    # FINAL AMAZON AFFILIATE URL PROPERTY
+    # ==========================================
 
-        if self.amazon_product_url and not self.amazon_affiliate_url:
+    @property
+    def final_amazon_url(self):
+
+        if self.amazon_affiliate_url:
+            return self.amazon_affiliate_url
+
+        if self.amazon_product_url:
 
             affiliate_settings = AmazonAffiliateSettings.objects.filter(
                 is_active=True
@@ -172,10 +209,37 @@ class AmazonProduct(models.Model):
             if affiliate_settings and affiliate_settings.store_id:
                 separator = "&" if "?" in self.amazon_product_url else "?"
 
-                self.amazon_affiliate_url = (
+                return (
                     f"{self.amazon_product_url}"
                     f"{separator}"
                     f"tag={affiliate_settings.store_id}"
                 )
 
+            return self.amazon_product_url
+
+        return "#"
+
+    # ==========================================
+    # SECTION 3.1 END
+    # FINAL AMAZON AFFILIATE URL PROPERTY
+    # ==========================================
+
+    # ==========================================
+    # SECTION 3.2 START
+    # SAVE METHOD
+    # ==========================================
+
+    def save(self, *args, **kwargs):
+
         super().save(*args, **kwargs)
+
+    # ==========================================
+    # SECTION 3.2 END
+    # SAVE METHOD
+    # ==========================================
+
+
+# ==========================================
+# SECTION 3 END
+# AMAZON PRODUCT MODEL
+# ==========================================

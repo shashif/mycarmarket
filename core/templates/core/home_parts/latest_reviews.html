@@ -1,0 +1,82 @@
+
+
+<!-- =========================================
+MyCarMarket
+Version: v1.14.5
+File: core/templates/core/home_parts/latest_reviews.html
+Description: Homepage Latest Car Reviews Section
+========================================= -->
+
+<section class="home-reviews-section">
+
+    <div class="home-section-header">
+        <div>
+            <h2 class="section-title">Latest Car Reviews</h2>
+            <p class="section-subtitle">
+                Expert reviews, road tests and buying guides for Australian drivers.
+            </p>
+        </div>
+
+        <a href="{% url 'review_list' %}" class="section-view-all">
+            Browse All Reviews →
+        </a>
+    </div>
+
+    {% if latest_reviews %}
+        <div class="premium-review-grid">
+
+            {% for review in latest_reviews %}
+                <article class="premium-review-card {% if review.is_featured %}featured-review-home-card{% endif %}">
+
+                    <a href="{{ review.get_absolute_url }}" class="premium-review-image-wrap">
+                        <img
+                            src="{{ review.display_image_url }}"
+                            alt="{{ review.title }}"
+                            loading="lazy"
+                        >
+
+                        {% if review.is_featured %}
+                            <span class="review-featured-badge">Featured Review</span>
+                        {% endif %}
+
+                        <span class="review-rating-badge">
+                            ⭐ {{ review.rating }}/10
+                        </span>
+                    </a>
+
+                    <div class="premium-review-info">
+
+                        <a href="{{ review.get_absolute_url }}" class="review-title-link">
+                            <h3>{{ review.title }}</h3>
+                        </a>
+
+                        <p class="review-summary">
+                            {{ review.summary|truncatechars:115 }}
+                        </p>
+
+                        <div class="review-meta-row">
+                            {% if review.body_type %}
+                                <span>🚙 {{ review.body_type }}</span>
+                            {% endif %}
+
+                            {% if review.year %}
+                                <span>📅 {{ review.year }}</span>
+                            {% endif %}
+                        </div>
+
+                   
+
+                    </div>
+
+                </article>
+            {% endfor %}
+
+        </div>
+    {% else %}
+        <div class="empty-home-section">
+            <h3>No reviews yet</h3>
+            <p>Car reviews will appear here soon.</p>
+        </div>
+    {% endif %}
+
+</section>

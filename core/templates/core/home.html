@@ -16,7 +16,7 @@ Homepage Master Template + ItemList Structured Data
     {% include 'core/home_parts/meta.html' %}
     {% include 'core/home_parts/schema.html' %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/home.css' %}?v=1133">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}?v=1145">
 
     <!-- =========================================
     Homepage Featured Cars ItemList Schema START
@@ -194,7 +194,15 @@ Homepage Content START
     <!-- =========================================
     Latest Cars END
     ========================================== -->
+    <!-- =========================================
+Latest Car Reviews START
+========================================= -->
 
+{% include 'core/home_parts/latest_reviews.html' %}
+
+<!-- =========================================
+Latest Car Reviews END
+========================================= -->
 
     <!-- =========================================
     Call To Action START
