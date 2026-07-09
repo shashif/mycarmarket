@@ -1,28 +1,25 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.14.1
+# Version: v1.15.0
 # File: amazon_affiliate/models.py
 # Description:
 # Amazon Accessories Store
-# Categories + Products
-# Product URL + Auto Final Affiliate URL Property
+# One Global Store ID + Auto ASIN + Auto Affiliate URL
 # ==========================================
+
+import re
+from urllib.parse import urlparse
 
 from django.db import models
 from django.utils.text import slugify
 
 
-# ==========================================
-# SECTION 1 START
-# AMAZON AFFILIATE SETTINGS MODEL
-# ==========================================
-
 class AmazonAffiliateSettings(models.Model):
 
     store_id = models.CharField(
         max_length=100,
-        default="mycarmarketau-22",
-        help_text="Your Amazon Associates Store ID / Tracking ID."
+        default="mycarmarket-22",
+        help_text="Your Amazon Associates Store ID / Tracking ID. Example: mycarmarket-22"
     )
 
     is_active = models.BooleanField(default=True)
@@ -36,26 +33,12 @@ class AmazonAffiliateSettings(models.Model):
         return self.store_id
 
 
-# ==========================================
-# SECTION 1 END
-# AMAZON AFFILIATE SETTINGS MODEL
-# ==========================================
-
-
-# ==========================================
-# SECTION 2 START
-# AMAZON CATEGORY MODEL
-# ==========================================
-
 class AmazonCategory(models.Model):
 
     name = models.CharField(max_length=120)
     slug = models.SlugField(max_length=140, unique=True, blank=True)
 
-    short_description = models.CharField(
-        max_length=220,
-        blank=True
-    )
+    short_description = models.CharField(max_length=220, blank=True)
 
     image = models.ImageField(
         upload_to="amazon_affiliate/categories/",
@@ -65,7 +48,6 @@ class AmazonCategory(models.Model):
 
     is_active = models.BooleanField(default=True)
     display_order = models.PositiveIntegerField(default=0)
-
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -83,17 +65,6 @@ class AmazonCategory(models.Model):
 
         super().save(*args, **kwargs)
 
-
-# ==========================================
-# SECTION 2 END
-# AMAZON CATEGORY MODEL
-# ==========================================
-
-
-# ==========================================
-# SECTION 3 START
-# AMAZON PRODUCT MODEL
-# ==========================================
 
 class AmazonProduct(models.Model):
 
@@ -114,27 +85,25 @@ class AmazonProduct(models.Model):
 
     amazon_product_url = models.URLField(
         blank=True,
-        help_text="Paste normal Amazon product URL here."
+        help_text="Paste normal Amazon product URL here. Store ID will be added automatically."
     )
 
     amazon_affiliate_url = models.URLField(
         blank=True,
-        help_text="Optional. Leave empty. System will auto-generate final affiliate URL."
+        editable=False,
+        help_text="Auto-generated affiliate URL."
     )
 
-    asin = models.CharField(max_length=30, blank=True)
+    asin = models.CharField(
+        max_length=30,
+        blank=True,
+        editable=False
+    )
 
     title = models.CharField(
         max_length=180,
         blank=True,
         default="Amazon Car Accessory"
-    )
-
-    brand = models.CharField(max_length=100, blank=True)
-
-    short_description = models.CharField(
-        max_length=240,
-        blank=True
     )
 
     product_category = models.ForeignKey(
@@ -189,10 +158,42 @@ class AmazonProduct(models.Model):
     def __str__(self):
         return self.title or "Amazon Product"
 
-    # ==========================================
-    # SECTION 3.1 START
-    # FINAL AMAZON AFFILIATE URL PROPERTY
-    # ==========================================
+    def extract_asin(self):
+
+        if not self.amazon_product_url:
+            return ""
+
+        patterns = [
+            r"/dp/([A-Z0-9]{10})",
+            r"/gp/product/([A-Z0-9]{10})",
+            r"asin=([A-Z0-9]{10})",
+            r"pd_rd_i=([A-Z0-9]{10})",
+        ]
+
+        for pattern in patterns:
+            match = re.search(pattern, self.amazon_product_url)
+            if match:
+                return match.group(1)
+
+        return ""
+
+    def build_affiliate_url(self):
+
+        asin = self.extract_asin()
+
+        if not asin:
+            return self.amazon_product_url or ""
+
+        affiliate_settings = AmazonAffiliateSettings.objects.filter(
+            is_active=True
+        ).first()
+
+        store_id = "mycarmarket-22"
+
+        if affiliate_settings and affiliate_settings.store_id:
+            store_id = affiliate_settings.store_id
+
+        return f"https://www.amazon.com.au/dp/{asin}?tag={store_id}"
 
     @property
     def final_amazon_url(self):
@@ -200,46 +201,11 @@ class AmazonProduct(models.Model):
         if self.amazon_affiliate_url:
             return self.amazon_affiliate_url
 
-        if self.amazon_product_url:
-
-            affiliate_settings = AmazonAffiliateSettings.objects.filter(
-                is_active=True
-            ).first()
-
-            if affiliate_settings and affiliate_settings.store_id:
-                separator = "&" if "?" in self.amazon_product_url else "?"
-
-                return (
-                    f"{self.amazon_product_url}"
-                    f"{separator}"
-                    f"tag={affiliate_settings.store_id}"
-                )
-
-            return self.amazon_product_url
-
-        return "#"
-
-    # ==========================================
-    # SECTION 3.1 END
-    # FINAL AMAZON AFFILIATE URL PROPERTY
-    # ==========================================
-
-    # ==========================================
-    # SECTION 3.2 START
-    # SAVE METHOD
-    # ==========================================
+        return self.build_affiliate_url() or "#"
 
     def save(self, *args, **kwargs):
 
+        self.asin = self.extract_asin()
+        self.amazon_affiliate_url = self.build_affiliate_url()
+
         super().save(*args, **kwargs)
-
-    # ==========================================
-    # SECTION 3.2 END
-    # SAVE METHOD
-    # ==========================================
-
-
-# ==========================================
-# SECTION 3 END
-# AMAZON PRODUCT MODEL
-# ==========================================

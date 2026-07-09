@@ -207,12 +207,12 @@ Page Content
                                 <p>{{ product.short_description }}</p>
                             {% endif %}
 
-                            <a href="{{ product.amazon_affiliate_url }}"
-                               target="_blank"
-                               rel="nofollow sponsored noopener"
-                               class="amazon-product-button">
-                                {{ product.button_text }}
-                            </a>
+                           <a href="{% url 'amazon_product_redirect' product.id %}"
+   target="_blank"
+   rel="nofollow sponsored noopener"
+   class="amazon-product-button">
+    {{ product.button_text }}
+</a>
 
                         </div>
 
