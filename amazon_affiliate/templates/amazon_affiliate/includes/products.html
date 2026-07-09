@@ -3,7 +3,7 @@
 
 <link rel="stylesheet" href="{% static 'amazon_affiliate/css/products.css' %}?v=1140">
 
-{% get_amazon_products body_type 8 as amazon_products %}
+{% get_amazon_products body_type 4 as amazon_products %}
 
 {% if amazon_products %}
 
@@ -16,9 +16,9 @@
             <p>Helpful accessories for Australian car owners.</p>
         </div>
 
-        <a href="{% url 'amazon_product_list' %}" class="amazon-view-all-btn">
-            View All
-        </a>
+      <a href="{% url 'amazon_product_list' %}" class="section-view-all">
+    Browse All Accessories
+</a>
 
     </div>
 
@@ -48,7 +48,7 @@
                     {% endif %}
 
                     <a
-                        href="{{ product.amazon_affiliate_url }}"
+                        href="{{ product.final_amazon_url }}"
                         target="_blank"
                         rel="nofollow sponsored noopener"
                         class="amazon-product-button"
