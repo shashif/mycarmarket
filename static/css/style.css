@@ -1,8 +1,8 @@
 /* ==========================================
 MyCarMarket
-Version: v1.4.0
+Version: v1.14.8
 File: static/css/style.css
-Global Style + Section System
+Description: Global Style + Clean Mobile Grid Navbar
 ========================================== */
 
 
@@ -45,6 +45,7 @@ START SECTION 1: GLOBAL LOADER
 /* ==========================================
 END SECTION 1: GLOBAL LOADER
 ========================================== */
+/* --------------------------------------------- */
 
 
 /* ==========================================
@@ -67,6 +68,7 @@ START SECTION 2: TOAST NOTIFICATION
 /* ==========================================
 END SECTION 2: TOAST NOTIFICATION
 ========================================== */
+/* --------------------------------------------- */
 
 
 /* ==========================================
@@ -99,6 +101,7 @@ START SECTION 3: SCROLL TO TOP BUTTON
 /* ==========================================
 END SECTION 3: SCROLL TO TOP BUTTON
 ========================================== */
+/* --------------------------------------------- */
 
 
 /* ==========================================
@@ -111,11 +114,13 @@ body{
     margin:0;
     padding:0;
     color:#111827;
+    overflow-x:hidden;
 }
 
 /* ==========================================
 END SECTION 4: GLOBAL BODY
 ========================================== */
+/* --------------------------------------------- */
 
 
 /* ==========================================
@@ -125,7 +130,7 @@ START SECTION 5: NAVBAR
 .navbar{
     background:#111827;
     color:white;
-    height:60px;
+    min-height:60px;
     padding:0 50px;
     display:flex;
     justify-content:space-between;
@@ -195,6 +200,7 @@ START SECTION 5: NAVBAR
 /* ==========================================
 END SECTION 5: NAVBAR
 ========================================== */
+/* --------------------------------------------- */
 
 
 /* ==========================================
@@ -210,6 +216,7 @@ START SECTION 6: CONTAINER
 /* ==========================================
 END SECTION 6: CONTAINER
 ========================================== */
+/* --------------------------------------------- */
 
 
 /* ==========================================
@@ -255,6 +262,7 @@ START SECTION 7: BUTTONS
 /* ==========================================
 END SECTION 7: BUTTONS
 ========================================== */
+/* --------------------------------------------- */
 
 
 /* ==========================================
@@ -290,6 +298,7 @@ START SECTION 8: BADGES
 /* ==========================================
 END SECTION 8: BADGES
 ========================================== */
+/* --------------------------------------------- */
 
 
 /* ==========================================
@@ -333,6 +342,7 @@ START SECTION 9: ADS
 /* ==========================================
 END SECTION 9: ADS
 ========================================== */
+/* --------------------------------------------- */
 
 
 /* ==========================================
@@ -361,6 +371,7 @@ START SECTION 10: FOOTER
 /* ==========================================
 END SECTION 10: FOOTER
 ========================================== */
+/* --------------------------------------------- */
 
 
 /* ==========================================
@@ -378,6 +389,7 @@ START SECTION 11: TABLET RESPONSIVE
     .nav-links{
         justify-content:center;
         gap:8px;
+        flex-wrap:wrap;
     }
 
 }
@@ -385,6 +397,7 @@ START SECTION 11: TABLET RESPONSIVE
 /* ==========================================
 END SECTION 11: TABLET RESPONSIVE
 ========================================== */
+/* --------------------------------------------- */
 
 
 /* ==========================================
@@ -486,6 +499,8 @@ START SECTION 12: MOBILE RESPONSIVE
 /* ==========================================
 END SECTION 12: MOBILE RESPONSIVE
 ========================================== */
+/* --------------------------------------------- */
+
 
 /* ==========================================
 START SECTION 13: SMALL MOBILE RESPONSIVE
@@ -522,45 +537,35 @@ START SECTION 13: SMALL MOBILE RESPONSIVE
 /* ==========================================
 END SECTION 13: SMALL MOBILE RESPONSIVE
 ========================================== */
+/* --------------------------------------------- */
+
 
 /* ==========================================
 START SECTION 14: GLOBAL ANIMATION
 ========================================== */
 
 .global-card-hover{
-
     transition:0.25s;
-
 }
 
 .global-card-hover:hover{
-
     transform:translateY(-4px);
-
 }
 
 .global-fade-in{
-
     animation:fadeIn 0.4s ease;
-
 }
 
 @keyframes fadeIn{
 
     from{
-
         opacity:0;
-
         transform:translateY(10px);
-
     }
 
     to{
-
         opacity:1;
-
         transform:translateY(0);
-
     }
 
 }
@@ -568,57 +573,61 @@ START SECTION 14: GLOBAL ANIMATION
 /* ==========================================
 END SECTION 14: GLOBAL ANIMATION
 ========================================== */
+/* --------------------------------------------- */
+
 
 /* ==========================================
-MyCarMarket
-Version: v1.7.8
-File: static/css/style.css
-Description: Breadcrumb Navigation Styling
+START SECTION 15: BREADCRUMB NAVIGATION
 ========================================== */
 
-.mcm-breadcrumb {
-    max-width: 1200px;
-    margin: 18px auto 0;
-    padding: 0 18px;
-    font-size: 14px;
+.mcm-breadcrumb{
+    max-width:1200px;
+    margin:18px auto 0;
+    padding:0 18px;
+    font-size:14px;
 }
 
-.mcm-breadcrumb-list {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 8px;
-    margin: 0;
-    padding: 0;
+.mcm-breadcrumb-list{
+    list-style:none;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:8px;
+    margin:0;
+    padding:0;
 }
 
-.mcm-breadcrumb-item {
-    color: #64748b;
+.mcm-breadcrumb-item{
+    color:#64748b;
 }
 
-.mcm-breadcrumb-item::after {
-    content: "›";
-    margin-left: 8px;
-    color: #94a3b8;
+.mcm-breadcrumb-item::after{
+    content:"›";
+    margin-left:8px;
+    color:#94a3b8;
 }
 
-.mcm-breadcrumb-item:last-child::after {
-    content: "";
-    margin-left: 0;
+.mcm-breadcrumb-item:last-child::after{
+    content:"";
+    margin-left:0;
 }
 
-.mcm-breadcrumb-item a {
-    color: #2563eb;
-    text-decoration: none;
-    font-weight: 600;
+.mcm-breadcrumb-item a{
+    color:#2563eb;
+    text-decoration:none;
+    font-weight:600;
 }
 
-.mcm-breadcrumb-item a:hover {
-    text-decoration: underline;
+.mcm-breadcrumb-item a:hover{
+    text-decoration:underline;
 }
 
-.mcm-breadcrumb-item.active {
-    color: #0f172a;
-    font-weight: 700;
+.mcm-breadcrumb-item.active{
+    color:#0f172a;
+    font-weight:700;
 }
+
+/* ==========================================
+END SECTION 15: BREADCRUMB NAVIGATION
+========================================== */
+/* --------------------------------------------- */
