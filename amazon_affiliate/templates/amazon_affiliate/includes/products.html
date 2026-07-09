@@ -1,7 +1,16 @@
+<!-- =========================================
+MyCarMarket
+Version: v1.15.3
+File: amazon_affiliate/templates/amazon_affiliate/product.html
+Description:
+Reusable Amazon Products Section
+Click Tracking Enabled
+========================================= -->
+
 {% load static %}
 {% load amazon_affiliate_tags %}
 
-<link rel="stylesheet" href="{% static 'amazon_affiliate/css/products.css' %}?v=1140">
+<link rel="stylesheet" href="{% static 'amazon_affiliate/css/products.css' %}?v=1153">
 
 {% get_amazon_products body_type 4 as amazon_products %}
 
@@ -16,9 +25,9 @@
             <p>Helpful accessories for Australian car owners.</p>
         </div>
 
-      <a href="{% url 'amazon_product_list' %}" class="section-view-all">
-    Browse All Accessories
-</a>
+        <a href="{% url 'amazon_product_list' %}" class="section-view-all">
+            Browse All Accessories
+        </a>
 
     </div>
 
@@ -43,12 +52,8 @@
 
                     <h3>{{ product.title }}</h3>
 
-                    {% if product.short_description %}
-                        <p>{{ product.short_description }}</p>
-                    {% endif %}
-
                     <a
-                        href="{{ product.final_amazon_url }}"
+                        href="{% url 'amazon_product_redirect' product.id %}"
                         target="_blank"
                         rel="nofollow sponsored noopener"
                         class="amazon-product-button"
