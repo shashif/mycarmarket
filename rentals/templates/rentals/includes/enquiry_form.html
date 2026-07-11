@@ -1,0 +1,109 @@
+<section class="rental-sidebar-card rental-contact-card">
+
+    <h2>
+        Send an Enquiry
+    </h2>
+
+    <p class="rental-contact-description">
+        Contact the owner about availability, pickup location and rental conditions.
+    </p>
+
+    <div class="rental-owner-name">
+        Listed by {{ rental.owner_name }}
+    </div>
+
+    <form
+        method="post"
+        action="{% url 'submit_rental_enquiry' rental.pk %}"
+        class="rental-enquiry-form"
+    >
+
+        {% csrf_token %}
+
+        <div class="rental-form-group">
+
+            <label>Your Name</label>
+
+            <input
+                type="text"
+                name="name"
+                class="rental-form-input"
+                placeholder="Enter your full name"
+                required
+            >
+
+        </div>
+
+        <div class="rental-form-group">
+
+            <label>Your Email</label>
+
+            <input
+                type="email"
+                name="email"
+                class="rental-form-input"
+                placeholder="Enter your email address"
+                required
+            >
+
+        </div>
+
+        <div class="rental-form-group">
+
+            <label>Your Phone</label>
+
+            <input
+                type="text"
+                name="phone"
+                class="rental-form-input"
+                placeholder="04xxxxxxxx"
+                required
+            >
+
+        </div>
+
+        <div class="rental-form-group">
+
+            <label>Message</label>
+
+            <textarea
+                name="message"
+                rows="5"
+                class="rental-form-textarea"
+                required
+            >Hello {{ rental.owner_name }},
+
+I am interested in renting your {{ rental.year }} {{ rental.make }} {{ rental.model }}.
+
+Please let me know if it is available.
+
+Thank you.</textarea>
+
+        </div>
+
+        <!-- Honeypot spam field -->
+
+        <input
+            type="text"
+            name="website"
+            value=""
+            style="display:none"
+            autocomplete="off"
+            tabindex="-1"
+        >
+
+        <button
+            type="submit"
+            class="rental-contact-button rental-email-button"
+        >
+            Send Rental Enquiry
+        </button>
+
+        <p class="rental-contact-privacy">
+            Your enquiry will be sent securely to the owner.
+            The owner's email address is never shown publicly.
+        </p>
+
+    </form>
+
+</section>

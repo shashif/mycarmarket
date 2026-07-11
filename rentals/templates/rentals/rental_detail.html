@@ -1,0 +1,174 @@
+<!-- ==========================================
+MyCarMarket Australia
+Version: v2.1.0
+File: rentals/templates/rentals/rental_detail.html
+Description:
+Professional Rental Detail Page
+Added Free Bootstrap Icons
+========================================== -->
+
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+
+{% block title %}
+{{ rental.title }} | MyCarMarket Australia
+{% endblock %}
+
+
+{% block extra_css %}
+
+<!-- ==========================================
+Free Bootstrap Icons
+========================================== -->
+
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+>
+
+<!-- ==========================================
+Rental Detail CSS
+========================================== -->
+
+<link
+    rel="stylesheet"
+    href="{% static 'rentals/css/rental_detail.css' %}?v=2100"
+>
+
+{% endblock %}
+
+
+{% block content %}
+
+{% include "includes/navbar.html" %}
+
+
+<!-- ==========================================
+Banner Advertisement START
+========================================== -->
+
+{% include "core/home_parts/banner_ad.html" %}
+
+<!-- ==========================================
+Banner Advertisement END
+========================================== -->
+
+
+<!-- ==========================================
+SECTION 1 START
+Rental Detail Page
+========================================== -->
+
+<main class="rental-detail-page">
+
+
+    <!-- ==========================================
+    SECTION 2 START
+    Breadcrumb
+    ========================================== -->
+
+    <nav class="rental-breadcrumb">
+
+        <a href="{% url 'home' %}">
+            Home
+        </a>
+
+        <span>/</span>
+
+        <a href="{% url 'rental_list' %}">
+            Rentals
+        </a>
+
+        <span>/</span>
+
+        <span>
+            {{ rental.year }}
+            {{ rental.make }}
+            {{ rental.model }}
+        </span>
+
+    </nav>
+
+    <!-- ==========================================
+    SECTION 2 END
+    Breadcrumb
+    ========================================== -->
+
+
+    <!-- ==========================================
+    SECTION 3 START
+    Header
+    ========================================== -->
+
+    {% include "rentals/includes/header.html" %}
+
+    <!-- ==========================================
+    SECTION 3 END
+    Header
+    ========================================== -->
+
+
+    <!-- ==========================================
+    SECTION 4 START
+    Main Layout
+    ========================================== -->
+
+    <section class="rental-detail-layout">
+
+        <div class="rental-detail-main">
+
+            {% include "rentals/includes/gallery.html" %}
+
+            {% include "rentals/includes/overview.html" %}
+
+            {% include "rentals/includes/description.html" %}
+
+            {% include "rentals/includes/rental_conditions.html" %}
+
+        </div>
+
+
+        <aside class="rental-detail-sidebar">
+
+            {% include "rentals/includes/sidebar_pricing.html" %}
+
+            {% include "rentals/includes/sidebar_availability.html" %}
+
+            {% include "rentals/includes/sidebar_location.html" %}
+
+            {% include "rentals/includes/enquiry_form.html" %}
+
+        </aside>
+
+    </section>
+
+    <!-- ==========================================
+    SECTION 4 END
+    Main Layout
+    ========================================== -->
+
+
+    <!-- ==========================================
+    Related Rentals
+    ========================================== -->
+
+    {% include "rentals/includes/related_rentals.html" %}
+
+
+</main>
+
+<!-- ==========================================
+SECTION 1 END
+Rental Detail Page
+========================================== -->
+
+
+<!-- ==========================================
+Rental Gallery JavaScript
+========================================== -->
+
+<script src="{% static 'rentals/js/gallery.js' %}?v=2100"></script>
+
+{% endblock %}

@@ -1,0 +1,970 @@
+/* ==========================================
+MyCarMarket Australia
+Version: v2.1.0
+File: rentals/static/rentals/css/rental_detail.css
+Description:
+Professional Rental Detail Page
+Secure Rental Enquiry Form
+Desktop, Tablet and Mobile Responsive Design
+========================================== */
+
+
+/* ==========================================
+SECTION 1 START
+Rental Detail Page
+========================================== */
+
+.rental-detail-page {
+    width: 100%;
+    max-width: 1500px;
+    margin: 18px auto 60px;
+    padding: 0 24px;
+    box-sizing: border-box;
+}
+
+/* ==========================================
+SECTION 1 END
+Rental Detail Page
+========================================== */
+
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 2 START
+Breadcrumb
+========================================== */
+
+.rental-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 18px;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.rental-breadcrumb a {
+    color: #6b7280;
+    text-decoration: none;
+}
+
+.rental-breadcrumb a:hover {
+    color: #dc2626;
+}
+
+/* ==========================================
+SECTION 2 END
+Breadcrumb
+========================================== */
+
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 3 START
+Rental Header
+========================================== */
+
+.rental-detail-header {
+    margin-bottom: 22px;
+    padding: 22px 26px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+}
+
+.rental-detail-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 28px;
+}
+
+.rental-detail-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 11px;
+}
+
+.rental-detail-badges span {
+    padding: 6px 11px;
+    border-radius: 999px;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.featured-badge {
+    background: #dc2626;
+}
+
+.available-badge {
+    background: #15803d;
+}
+
+.unavailable-badge {
+    background: #6b7280;
+}
+
+.pending-badge {
+    background: #d97706;
+}
+
+.rental-detail-heading h1 {
+    margin: 0 0 8px;
+    color: #111827;
+    font-size: 34px;
+    line-height: 1.2;
+}
+
+.rental-detail-location {
+    margin: 0;
+    color: #6b7280;
+    font-size: 16px;
+}
+
+.rental-detail-price {
+    flex-shrink: 0;
+    text-align: right;
+}
+
+.rental-detail-price strong {
+    display: block;
+    color: #dc2626;
+    font-size: 34px;
+    line-height: 1;
+}
+
+.rental-detail-price span {
+    display: block;
+    margin-top: 6px;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.rental-detail-price small {
+    display: block;
+    margin-top: 8px;
+    color: #374151;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* ==========================================
+SECTION 3 END
+Rental Header
+========================================== */
+
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 4 START
+Main Layout
+========================================== */
+
+.rental-detail-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) 390px;
+    gap: 24px;
+    align-items: start;
+}
+
+.rental-detail-main {
+    min-width: 0;
+}
+
+.rental-detail-sidebar {
+    position: sticky;
+    top: 90px;
+}
+
+/* ==========================================
+SECTION 4 END
+Main Layout
+========================================== */
+
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 5 START
+Shared Cards
+========================================== */
+
+.rental-gallery-card,
+.rental-content-card,
+.rental-sidebar-card {
+    margin-bottom: 22px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+}
+
+.rental-content-card {
+    padding: 26px;
+}
+
+.rental-sidebar-card {
+    padding: 23px;
+}
+
+.rental-content-card h2,
+.rental-sidebar-card h2 {
+    margin: 0 0 20px;
+    color: #111827;
+    font-size: 22px;
+    line-height: 1.3;
+}
+
+/* ==========================================
+SECTION 5 END
+Shared Cards
+========================================== */
+
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 6 START
+Image Gallery
+========================================== */
+
+.rental-gallery-card {
+    overflow: hidden;
+    padding: 16px;
+}
+
+.rental-main-image {
+    width: 100%;
+    height: 560px;
+    overflow: hidden;
+    background: #f3f4f6;
+    border-radius: 12px;
+}
+
+.rental-main-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.rental-no-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: #9ca3af;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.rental-thumbnail-list {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.rental-thumbnail-button {
+    height: 88px;
+    overflow: hidden;
+    padding: 0;
+    background: #f3f4f6;
+    border: 2px solid transparent;
+    border-radius: 9px;
+    cursor: pointer;
+}
+
+.rental-thumbnail-button:hover,
+.rental-thumbnail-button.active {
+    border-color: #dc2626;
+}
+
+.rental-thumbnail-button img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ==========================================
+SECTION 6 END
+Image Gallery
+========================================== */
+
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 7 START
+Vehicle Overview
+========================================== */
+
+.rental-specification-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.rental-specification-item {
+    padding: 15px;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+}
+
+.rental-specification-item span {
+    display: block;
+    margin-bottom: 6px;
+    color: #6b7280;
+    font-size: 12px;
+}
+
+.rental-specification-item strong {
+    display: block;
+    color: #111827;
+    font-size: 15px;
+}
+
+/* ==========================================
+SECTION 7 END
+Vehicle Overview
+========================================== */
+
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 8 START
+Description
+========================================== */
+
+.rental-description {
+    color: #374151;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.rental-description p {
+    margin: 0 0 16px;
+}
+
+.rental-description p:last-child {
+    margin-bottom: 0;
+}
+
+/* ==========================================
+SECTION 8 END
+Description
+========================================== */
+
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 9 START
+Pricing and Information Rows
+========================================== */
+
+.rental-price-row,
+.rental-info-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 13px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.rental-price-row:last-child,
+.rental-info-row:last-child {
+    border-bottom: none;
+}
+
+.rental-price-row span,
+.rental-info-row span {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.rental-price-row strong,
+.rental-info-row strong {
+    color: #111827;
+    font-size: 14px;
+    text-align: right;
+}
+
+.status-available {
+    color: #15803d !important;
+}
+
+.status-unavailable {
+    color: #dc2626 !important;
+}
+
+/* ==========================================
+SECTION 9 END
+Pricing and Information Rows
+========================================== */
+
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 10 START
+Pickup Location
+========================================== */
+
+.rental-suburb-location {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 15px;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+}
+
+.rental-location-icon {
+    flex-shrink: 0;
+    font-size: 24px;
+}
+
+.rental-suburb-location strong {
+    display: block;
+    margin-bottom: 3px;
+    color: #111827;
+    font-size: 17px;
+}
+
+.rental-suburb-location div span {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.rental-location-notice {
+    margin: 14px 0 0;
+    color: #6b7280;
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+/* ==========================================
+SECTION 10 END
+Pickup Location
+========================================== */
+
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 11 START
+Rental Enquiry Form
+========================================== */
+
+.rental-contact-card {
+    background: #111827;
+    border-color: #111827;
+}
+
+.rental-contact-card h2 {
+    color: #ffffff;
+}
+
+.rental-contact-description {
+    margin: 0 0 15px;
+    color: #d1d5db;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.rental-owner-name {
+    margin-bottom: 18px;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.rental-enquiry-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.rental-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.rental-form-group label {
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.rental-form-input,
+.rental-form-textarea {
+    display: block;
+    width: 100%;
+    padding: 12px 14px;
+    box-sizing: border-box;
+    background: #ffffff;
+    border: 1px solid #4b5563;
+    border-radius: 10px;
+    color: #111827;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.5;
+    outline: none;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.rental-form-input::placeholder,
+.rental-form-textarea::placeholder {
+    color: #9ca3af;
+}
+
+.rental-form-input:focus,
+.rental-form-textarea:focus {
+    border-color: #dc2626;
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.18);
+}
+
+.rental-form-textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.rental-contact-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 50px;
+    padding: 0 16px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 800;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.rental-email-button {
+    background: #dc2626;
+    color: #ffffff;
+}
+
+.rental-email-button:hover {
+    background: #b91c1c;
+}
+
+.rental-email-button:active {
+    transform: translateY(1px);
+}
+
+.rental-contact-privacy {
+    margin: 0;
+    color: #d1d5db;
+    font-size: 12px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.rental-honeypot {
+    position: absolute !important;
+    left: -9999px !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* ==========================================
+SECTION 11 END
+Rental Enquiry Form
+========================================== */
+
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 12 START
+Related Rentals
+========================================== */
+
+.related-rentals-section {
+    margin-top: 38px;
+}
+
+.related-rentals-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 18px;
+}
+
+.related-rentals-heading h2 {
+    margin: 0;
+    color: #111827;
+    font-size: 26px;
+}
+
+.related-rentals-heading a {
+    color: #dc2626;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.related-rentals-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.related-rental-card {
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+}
+
+.related-rental-image-link {
+    display: block;
+    height: 190px;
+    background: #f3f4f6;
+}
+
+.related-rental-image-link img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.related-rental-no-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #9ca3af;
+}
+
+.related-rental-content {
+    padding: 15px;
+}
+
+.related-rental-title {
+    display: block;
+    margin-bottom: 9px;
+    color: #111827;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.4;
+    text-decoration: none;
+}
+
+.related-rental-price {
+    color: #dc2626;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.related-rental-price span {
+    color: #6b7280;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.related-rental-content p {
+    margin: 8px 0 0;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+/* ==========================================
+SECTION 12 END
+Related Rentals
+========================================== */
+
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 13 START
+Large Tablet Responsive
+========================================== */
+
+@media (max-width: 1150px) {
+
+    .rental-detail-layout {
+        grid-template-columns: minmax(0, 1fr) 330px;
+    }
+
+    .rental-specification-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .related-rentals-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .rental-main-image {
+        height: 470px;
+    }
+
+}
+
+/* ==========================================
+SECTION 13 END
+Large Tablet Responsive
+========================================== */
+
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 14 START
+Tablet Responsive
+========================================== */
+
+@media (max-width: 900px) {
+
+    .rental-detail-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .rental-detail-sidebar {
+        position: static;
+    }
+
+    .rental-detail-heading {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .rental-detail-price {
+        text-align: left;
+    }
+
+    .rental-thumbnail-list {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .related-rentals-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+/* ==========================================
+SECTION 14 END
+Tablet Responsive
+========================================== */
+
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 15 START
+Mobile Responsive
+========================================== */
+
+@media (max-width: 720px) {
+
+    .rental-detail-page {
+        margin-top: 14px;
+        padding: 0 12px;
+    }
+
+    .rental-breadcrumb {
+        margin-bottom: 14px;
+        font-size: 12px;
+    }
+
+    .rental-detail-header {
+        margin-bottom: 16px;
+        padding: 18px 16px;
+        border-radius: 13px;
+    }
+
+    .rental-detail-heading h1 {
+        font-size: 27px;
+    }
+
+    .rental-detail-location {
+        font-size: 14px;
+    }
+
+    .rental-detail-price strong {
+        font-size: 29px;
+    }
+
+    .rental-main-image {
+        height: 360px;
+    }
+
+    .rental-specification-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .rental-thumbnail-list {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .rental-content-card,
+    .rental-sidebar-card {
+        padding: 20px;
+    }
+
+    .rental-content-card h2,
+    .rental-sidebar-card h2 {
+        margin-bottom: 16px;
+        font-size: 20px;
+    }
+
+    .rental-description {
+        font-size: 15px;
+        line-height: 1.75;
+    }
+
+    .related-rentals-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .rental-enquiry-form {
+        gap: 14px;
+    }
+
+    .rental-form-input,
+    .rental-form-textarea {
+        font-size: 16px;
+    }
+
+}
+
+/* ==========================================
+SECTION 15 END
+Mobile Responsive
+========================================== */
+
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 16 START
+Small Mobile Responsive
+========================================== */
+
+@media (max-width: 520px) {
+
+    .rental-detail-page {
+        padding: 0 10px;
+    }
+
+    .rental-detail-header {
+        padding: 16px 14px;
+    }
+
+    .rental-detail-heading h1 {
+        font-size: 24px;
+    }
+
+    .rental-detail-badges span {
+        padding: 5px 9px;
+        font-size: 10px;
+    }
+
+    .rental-main-image {
+        height: 270px;
+    }
+
+    .rental-gallery-card {
+        padding: 9px;
+        border-radius: 13px;
+    }
+
+    .rental-content-card,
+    .rental-sidebar-card {
+        margin-bottom: 16px;
+        padding: 17px;
+        border-radius: 13px;
+    }
+
+    .rental-specification-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .rental-specification-item {
+        padding: 13px;
+    }
+
+    .rental-thumbnail-list {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 7px;
+    }
+
+    .rental-thumbnail-button {
+        height: 70px;
+    }
+
+    .rental-price-row,
+    .rental-info-row {
+        align-items: flex-start;
+        gap: 12px;
+        padding: 12px 0;
+    }
+
+    .rental-price-row span,
+    .rental-info-row span,
+    .rental-price-row strong,
+    .rental-info-row strong {
+        font-size: 13px;
+    }
+
+    .related-rentals-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .related-rental-image-link {
+        height: 210px;
+    }
+
+    .rental-form-group label {
+        font-size: 12px;
+    }
+
+    .rental-form-input,
+    .rental-form-textarea {
+        padding: 11px 12px;
+    }
+
+    .rental-form-textarea {
+        min-height: 130px;
+    }
+
+}
+
+/* ==========================================
+SECTION 16 END
+Small Mobile Responsive
+========================================== */

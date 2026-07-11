@@ -1,0 +1,219 @@
+<!-- ==========================================
+MyCarMarket Australia
+Version: v2.2.0
+File: rentals/templates/rentals/includes/overview.html
+Description:
+Rental Vehicle Overview
+Matched with MyCarMarket car detail design
+========================================== -->
+
+<section class="rental-content-card">
+
+    <h2>
+        Vehicle Overview
+    </h2>
+
+    <div class="rental-specification-grid">
+
+        <!-- ==========================================
+        Make
+        ========================================== -->
+
+        <div class="rental-specification-item">
+
+            <div class="rental-specification-icon">
+                🚗
+            </div>
+
+            <div class="rental-specification-content">
+
+                <span>
+                    Make
+                </span>
+
+                <strong>
+                    {{ rental.make }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================
+        Model
+        ========================================== -->
+
+        <div class="rental-specification-item">
+
+            <div class="rental-specification-icon">
+                🏷️
+            </div>
+
+            <div class="rental-specification-content">
+
+                <span>
+                    Model
+                </span>
+
+                <strong>
+                    {{ rental.model }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================
+        Year
+        ========================================== -->
+
+        <div class="rental-specification-item">
+
+            <div class="rental-specification-icon">
+                📅
+            </div>
+
+            <div class="rental-specification-content">
+
+                <span>
+                    Year
+                </span>
+
+                <strong>
+                    {{ rental.year }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================
+        Body Type
+        ========================================== -->
+
+        <div class="rental-specification-item">
+
+            <div class="rental-specification-icon">
+                🚙
+            </div>
+
+            <div class="rental-specification-content">
+
+                <span>
+                    Body Type
+                </span>
+
+                <strong>
+                    {{ rental.get_body_type_display }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================
+        Transmission
+        ========================================== -->
+
+        <div class="rental-specification-item">
+
+            <div class="rental-specification-icon">
+                ⚙️
+            </div>
+
+            <div class="rental-specification-content">
+
+                <span>
+                    Transmission
+                </span>
+
+                <strong>
+                    {{ rental.get_transmission_display }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================
+        Fuel Type
+        ========================================== -->
+
+        <div class="rental-specification-item">
+
+            <div class="rental-specification-icon">
+                ⛽
+            </div>
+
+            <div class="rental-specification-content">
+
+                <span>
+                    Fuel Type
+                </span>
+
+                <strong>
+                    {{ rental.get_fuel_type_display }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================
+        Seats
+        ========================================== -->
+
+        <div class="rental-specification-item">
+
+            <div class="rental-specification-icon">
+                👥
+            </div>
+
+            <div class="rental-specification-content">
+
+                <span>
+                    Seats
+                </span>
+
+                <strong>
+                    {{ rental.seats }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================
+        Colour
+        ========================================== -->
+
+        <div class="rental-specification-item">
+
+            <div class="rental-specification-icon">
+                🎨
+            </div>
+
+            <div class="rental-specification-content">
+
+                <span>
+                    Colour
+                </span>
+
+                <strong>
+                    {{ rental.colour|default:"Not specified" }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
