@@ -1,0 +1,92 @@
+<section class="rental-sidebar-card">
+
+    <h2>
+        Availability
+    </h2>
+
+    <div class="rental-info-row">
+
+        <span>
+            Status
+        </span>
+
+        <strong class="{% if rental.is_available %}status-available{% else %}status-unavailable{% endif %}">
+
+            {% if rental.is_available %}
+                Available Now
+            {% else %}
+                Currently Unavailable
+            {% endif %}
+
+        </strong>
+
+    </div>
+
+    {% if rental.available_from %}
+
+        <div class="rental-info-row">
+
+            <span>
+                Available From
+            </span>
+
+            <strong>
+                {{ rental.available_from|date:"d M Y" }}
+            </strong>
+
+        </div>
+
+    {% endif %}
+
+    {% if rental.available_until %}
+
+        <div class="rental-info-row">
+
+            <span>
+                Available Until
+            </span>
+
+            <strong>
+                {{ rental.available_until|date:"d M Y" }}
+            </strong>
+
+        </div>
+
+    {% endif %}
+
+    <div class="rental-info-row">
+
+        <span>
+            Minimum Rental
+        </span>
+
+        <strong>
+            {{ rental.minimum_rental_days }}
+            Day{{ rental.minimum_rental_days|pluralize }}
+        </strong>
+
+    </div>
+
+    <div class="rental-info-row">
+
+        <span>
+            Daily Limit
+        </span>
+
+        <strong>
+
+            {% if rental.unlimited_kilometres %}
+
+                Unlimited KM
+
+            {% else %}
+
+                {{ rental.daily_kilometre_limit }} km/day
+
+            {% endif %}
+
+        </strong>
+
+    </div>
+
+</section>

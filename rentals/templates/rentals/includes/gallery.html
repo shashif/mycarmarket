@@ -1,0 +1,67 @@
+    <!-- ==========================================
+            SECTION 6 START
+            Image Gallery
+            ========================================== -->
+
+            <section class="rental-gallery-card">
+
+                <div class="rental-main-image">
+
+                    {% if rental.primary_image %}
+
+                        <img
+                            id="rental-main-gallery-image"
+                            src="{{ rental.primary_image.image.url }}"
+                            alt="{{ rental.primary_image.alt_text|default:rental.title }}"
+                        >
+
+                    {% else %}
+
+                        <div class="rental-no-image">
+
+                            <span>
+                                No Rental Image Available
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                {% if images|length > 1 %}
+
+                    <div class="rental-thumbnail-list">
+
+                        {% for image in images %}
+
+                            <button
+                                type="button"
+                                class="rental-thumbnail-button {% if image.is_primary %}active{% endif %}"
+                                onclick="changeRentalImage(
+                                    '{{ image.image.url }}',
+                                    '{{ image.alt_text|default:rental.title|escapejs }}',
+                                    this
+                                )"
+                            >
+
+                                <img
+                                    src="{{ image.image.url }}"
+                                    alt="{{ image.alt_text|default:rental.title }}"
+                                >
+
+                            </button>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% endif %}
+
+            </section>
+
+            <!-- ==========================================
+            SECTION 6 END
+            Image Gallery
+            ========================================== -->

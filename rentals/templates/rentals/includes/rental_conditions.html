@@ -1,0 +1,21 @@
+<!-- ==========================================
+Rental Conditions
+========================================== -->
+
+{% if rental.rental_conditions %}
+
+<section class="rental-content-card">
+
+    <h2>
+        Rental Conditions
+    </h2>
+
+    <div class="rental-description">
+
+        {{ rental.rental_conditions|linebreaks }}
+
+    </div>
+
+</section>
+
+{% endif %}

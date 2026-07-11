@@ -1,0 +1,85 @@
+ {% load humanize %}
+ 
+ <section class="rental-sidebar-card rental-pricing-card">
+
+                <h2>
+                    Rental Pricing
+                </h2>
+
+                <div class="rental-price-row">
+
+                    <span>
+                        Daily Price
+                    </span>
+
+                    <strong>
+                        ${{ rental.daily_price|floatformat:2|intcomma }}
+                    </strong>
+
+                </div>
+
+                {% if rental.weekly_price %}
+
+                    <div class="rental-price-row">
+
+                        <span>
+                            Weekly Price
+                        </span>
+
+                        <strong>
+                            ${{ rental.weekly_price|floatformat:2|intcomma }}
+                        </strong>
+
+                    </div>
+
+                {% endif %}
+
+                <div class="rental-price-row">
+
+                    <span>
+                        Security Deposit
+                    </span>
+
+                    <strong>
+                        ${{ rental.security_deposit|floatformat:2|intcomma }}
+                    </strong>
+
+                </div>
+
+                <div class="rental-price-row">
+
+                    <span>
+                        Minimum Rental
+                    </span>
+
+                    <strong>
+                        {{ rental.minimum_rental_days }}
+                        day{{ rental.minimum_rental_days|pluralize }}
+                    </strong>
+
+                </div>
+
+                <div class="rental-price-row">
+
+                    <span>
+                        Kilometres
+                    </span>
+
+                    <strong>
+
+                        {% if rental.unlimited_kilometres %}
+
+                            Unlimited
+
+                        {% else %}
+
+                            {{ rental.daily_kilometre_limit|intcomma }}
+                            km/day
+
+                        {% endif %}
+
+                    </strong>
+
+                </div>
+
+            </section>

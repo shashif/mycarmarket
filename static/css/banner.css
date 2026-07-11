@@ -1,0 +1,233 @@
+/* ==========================================
+MyCarMarket Australia
+Version: v2.0.1
+File: static/css/banner.css
+Description:
+Global Banner Advertisement
+Removed Excessive Height, White Space and Shadow
+========================================== */
+
+
+/* ==========================================
+SECTION 1 START
+Banner Wrapper
+========================================== */
+
+.ad-banner {
+    width: 100%;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin: 18px auto 22px;
+    padding: 0 !important;
+    overflow: visible;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+/* ==========================================
+SECTION 1 END
+Banner Wrapper
+========================================== */
+
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 2 START
+Banner Link
+========================================== */
+
+.ad-banner > a {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    line-height: 0;
+    text-decoration: none;
+    background: transparent;
+    border: none;
+    border-radius: 16px;
+    box-shadow: none;
+}
+
+/* ==========================================
+SECTION 2 END
+Banner Link
+========================================== */
+
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 3 START
+Custom Banner Image
+========================================== */
+
+.custom-banner-ad {
+    display: block;
+    width: 100%;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: 260px;
+    margin: 0;
+    padding: 0;
+    object-fit: cover;
+    object-position: center;
+    background: transparent;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    box-shadow: none !important;
+}
+
+/* ==========================================
+SECTION 3 END
+Custom Banner Image
+========================================== */
+
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 4 START
+Compact Banner
+========================================== */
+
+.ad-banner-compact {
+    margin: 14px auto 18px;
+}
+
+.ad-banner-compact .custom-banner-ad {
+    max-height: 190px;
+}
+
+/* ==========================================
+SECTION 4 END
+Compact Banner
+========================================== */
+
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 5 START
+Google Advertisement
+========================================== */
+
+.ad-banner .adsbygoogle {
+    display: block;
+    width: 100%;
+    min-height: 90px;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+/* ==========================================
+SECTION 5 END
+Google Advertisement
+========================================== */
+
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 6 START
+Advertisement Placeholder
+========================================== */
+
+.ad-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 120px;
+    padding: 20px;
+    box-sizing: border-box;
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 14px;
+    color: #64748b;
+    text-align: center;
+    box-shadow: none;
+}
+
+.ad-placeholder strong {
+    color: #334155;
+}
+
+.ad-placeholder span {
+    font-size: 13px;
+}
+
+/* ==========================================
+SECTION 6 END
+Advertisement Placeholder
+========================================== */
+
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 7 START
+Advertisement Label
+========================================== */
+
+.ad-label {
+    margin: 0 0 7px;
+    color: #6b7280;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+/* ==========================================
+SECTION 7 END
+Advertisement Label
+========================================== */
+
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 8 START
+Mobile Responsive
+========================================== */
+
+@media (max-width: 768px) {
+
+    .ad-banner {
+        margin: 12px auto 16px;
+    }
+
+    .ad-banner > a {
+        border-radius: 12px;
+    }
+
+    .custom-banner-ad {
+        max-height: 150px;
+        border-radius: 12px;
+    }
+
+    .ad-banner-compact .custom-banner-ad {
+        max-height: 120px;
+    }
+
+    .ad-placeholder {
+        min-height: 90px;
+        padding: 15px;
+        border-radius: 12px;
+    }
+
+}
+
+/* ==========================================
+SECTION 8 END
+Mobile Responsive
+========================================== */

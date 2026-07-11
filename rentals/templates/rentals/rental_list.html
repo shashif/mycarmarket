@@ -1,0 +1,823 @@
+<!-- ==========================================
+MyCarMarket Australia
+Version: v2.0.0
+File: rentals/templates/rentals/rental_list.html
+Description:
+Rental listings page with search, filters,
+approved rental cards and pagination.
+========================================== -->
+
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+Car Rentals Australia | MyCarMarket
+{% endblock %}
+
+{% block content %}
+
+{% include "includes/navbar.html" %}
+
+
+<!-- ==========================================
+SECTION 1 START
+Rental Page
+========================================== -->
+
+<main class="rental-list-page">
+
+
+    <!-- ==========================================
+    SECTION 2 START
+    Rental Header
+    ========================================== -->
+
+    <section class="rental-list-header">
+
+        <div class="rental-list-header-content">
+
+            <div>
+
+                <h1>
+                    Car Rentals Australia
+                </h1>
+
+                <p>
+                    Find affordable cars available for rent near you.
+                </p>
+
+            </div>
+
+            <a
+                href="{% url 'create_rental' %}"
+                class="list-rental-button"
+            >
+                List Your Car for Rent
+            </a>
+
+        </div>
+
+    </section>
+
+    <!-- ==========================================
+    SECTION 2 END
+    Rental Header
+    ========================================== -->
+
+    <!-- --------------------------------------------- -->
+
+
+    <!-- ==========================================
+    SECTION 3 START
+    Rental Search
+    ========================================== -->
+
+    <section class="rental-search-section">
+
+        <form
+            method="GET"
+            action="{% url 'rental_list' %}"
+            class="rental-search-form"
+        >
+
+            <div class="rental-search-field">
+
+                <label for="rental-search">
+                    Search
+                </label>
+
+                <input
+                    type="text"
+                    id="rental-search"
+                    name="search"
+                    value="{{ search }}"
+                    placeholder="Make, model or suburb"
+                >
+
+            </div>
+
+            <div class="rental-search-field">
+
+                <label for="rental-state">
+                    State
+                </label>
+
+                <select
+                    id="rental-state"
+                    name="state"
+                >
+
+                    <option value="">
+                        All States
+                    </option>
+
+                    {% for value, label in states %}
+
+                        <option
+                            value="{{ value }}"
+                            {% if selected_state == value %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ label }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <div class="rental-search-field">
+
+                <label for="rental-body-type">
+                    Body Type
+                </label>
+
+                <select
+                    id="rental-body-type"
+                    name="body_type"
+                >
+
+                    <option value="">
+                        All Body Types
+                    </option>
+
+                    {% for value, label in body_types %}
+
+                        <option
+                            value="{{ value }}"
+                            {% if selected_body_type == value %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ label }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <div class="rental-search-actions">
+
+                <button
+                    type="submit"
+                    class="rental-search-button"
+                >
+                    Search Rentals
+                </button>
+
+                <a
+                    href="{% url 'rental_list' %}"
+                    class="rental-reset-button"
+                >
+                    Reset
+                </a>
+
+            </div>
+
+        </form>
+
+    </section>
+
+    <!-- ==========================================
+    SECTION 3 END
+    Rental Search
+    ========================================== -->
+
+    <!-- --------------------------------------------- -->
+
+
+    <!-- ==========================================
+    SECTION 4 START
+    Rental Listings
+    ========================================== -->
+
+    <section class="rental-results-section">
+
+        <div class="rental-results-heading">
+
+            <h2>
+                Available Rental Cars
+            </h2>
+
+            <span>
+                {{ page_obj.paginator.count }}
+                rental{{ page_obj.paginator.count|pluralize }}
+            </span>
+
+        </div>
+
+
+        {% if rentals %}
+
+            <div class="rental-card-grid">
+
+                {% for rental in rentals %}
+
+                    <article class="rental-card">
+
+                        <a
+                            href="{{ rental.get_absolute_url }}"
+                            class="rental-card-image-link"
+                        >
+
+                            {% if rental.primary_image %}
+
+                                <img
+                                    src="{{ rental.primary_image.image.url }}"
+                                    alt="{{ rental.primary_image.alt_text|default:rental.title }}"
+                                    class="rental-card-image"
+                                >
+
+                            {% else %}
+
+                                <div class="rental-card-no-image">
+
+                                    <span>
+                                        No Image
+                                    </span>
+
+                                </div>
+
+                            {% endif %}
+
+
+                            {% if rental.is_featured %}
+
+                                <span class="rental-featured-badge">
+                                    Featured
+                                </span>
+
+                            {% endif %}
+
+
+                            {% if rental.is_available %}
+
+                                <span class="rental-available-badge">
+                                    Available
+                                </span>
+
+                            {% endif %}
+
+                        </a>
+
+
+                        <div class="rental-card-content">
+
+                            <a
+                                href="{{ rental.get_absolute_url }}"
+                                class="rental-card-title"
+                            >
+                                {{ rental.year }}
+                                {{ rental.make }}
+                                {{ rental.model }}
+                            </a>
+
+
+                            <div class="rental-card-price">
+
+                                <strong>
+                                    ${{ rental.daily_price|floatformat:0|intcomma }}
+                                </strong>
+
+                                <span>
+                                    per day
+                                </span>
+
+                            </div>
+
+
+                            <div class="rental-card-location">
+
+                                {{ rental.suburb }},
+                                {{ rental.state }}
+
+                            </div>
+
+
+                            <div class="rental-card-details">
+
+                                <span>
+                                    {{ rental.get_transmission_display }}
+                                </span>
+
+                                <span>
+                                    {{ rental.get_fuel_type_display }}
+                                </span>
+
+                                <span>
+                                    {{ rental.seats }} Seats
+                                </span>
+
+                            </div>
+
+
+                            <div class="rental-card-footer">
+
+                                <span>
+                                    Minimum {{ rental.minimum_rental_days }}
+                                    day{{ rental.minimum_rental_days|pluralize }}
+                                </span>
+
+                                <a
+                                    href="{{ rental.get_absolute_url }}"
+                                >
+                                    View Rental
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="rental-empty-state">
+
+                <h3>
+                    No rental cars found
+                </h3>
+
+                <p>
+                    Try changing your search filters or list your car for rent.
+                </p>
+
+                <a href="{% url 'create_rental' %}">
+                    List Your Car for Rent
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+    <!-- ==========================================
+    SECTION 4 END
+    Rental Listings
+    ========================================== -->
+
+    <!-- --------------------------------------------- -->
+
+
+    <!-- ==========================================
+    SECTION 5 START
+    Pagination
+    ========================================== -->
+
+    {% if page_obj.has_other_pages %}
+
+        <nav class="rental-pagination">
+
+            {% if page_obj.has_previous %}
+
+                <a
+                    href="?page={{ page_obj.previous_page_number }}&search={{ search|urlencode }}&state={{ selected_state|urlencode }}&body_type={{ selected_body_type|urlencode }}"
+                >
+                    Previous
+                </a>
+
+            {% endif %}
+
+
+            {% for page_number in page_obj.paginator.page_range %}
+
+                {% if page_number == page_obj.number %}
+
+                    <span class="active">
+                        {{ page_number }}
+                    </span>
+
+                {% elif page_number >= page_obj.number|add:"-2" and page_number <= page_obj.number|add:"2" %}
+
+                    <a
+                        href="?page={{ page_number }}&search={{ search|urlencode }}&state={{ selected_state|urlencode }}&body_type={{ selected_body_type|urlencode }}"
+                    >
+                        {{ page_number }}
+                    </a>
+
+                {% endif %}
+
+            {% endfor %}
+
+
+            {% if page_obj.has_next %}
+
+                <a
+                    href="?page={{ page_obj.next_page_number }}&search={{ search|urlencode }}&state={{ selected_state|urlencode }}&body_type={{ selected_body_type|urlencode }}"
+                >
+                    Next
+                </a>
+
+            {% endif %}
+
+        </nav>
+
+    {% endif %}
+
+    <!-- ==========================================
+    SECTION 5 END
+    Pagination
+    ========================================== -->
+
+
+</main>
+
+<!-- ==========================================
+SECTION 1 END
+Rental Page
+========================================== -->
+
+
+<style>
+
+.rental-list-page {
+    max-width: 1500px;
+    margin: 24px auto 60px;
+    padding: 0 24px;
+}
+
+.rental-list-header {
+    margin-bottom: 22px;
+    padding: 30px;
+    background: #111827;
+    border-radius: 18px;
+    color: #ffffff;
+}
+
+.rental-list-header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.rental-list-header h1 {
+    margin: 0 0 8px;
+    font-size: 34px;
+}
+
+.rental-list-header p {
+    margin: 0;
+    color: #d1d5db;
+}
+
+.list-rental-button {
+    flex-shrink: 0;
+    padding: 13px 20px;
+    background: #dc2626;
+    border-radius: 10px;
+    color: #ffffff;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.rental-search-section {
+    margin-bottom: 26px;
+    padding: 22px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+}
+
+.rental-search-form {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr auto;
+    gap: 16px;
+    align-items: end;
+}
+
+.rental-search-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.rental-search-field label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #374151;
+}
+
+.rental-search-field input,
+.rental-search-field select {
+    width: 100%;
+    min-height: 46px;
+    box-sizing: border-box;
+    padding: 11px 13px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #111827;
+    font-size: 14px;
+}
+
+.rental-search-actions {
+    display: flex;
+    gap: 9px;
+}
+
+.rental-search-button,
+.rental-reset-button {
+    min-height: 46px;
+    padding: 0 17px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.rental-search-button {
+    border: none;
+    background: #dc2626;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.rental-reset-button {
+    display: flex;
+    align-items: center;
+    border: 1px solid #d1d5db;
+    color: #374151;
+    text-decoration: none;
+}
+
+.rental-results-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.rental-results-heading h2 {
+    margin: 0;
+    font-size: 25px;
+    color: #111827;
+}
+
+.rental-results-heading span {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.rental-card-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.rental-card {
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 15px;
+    transition: transform 0.2s ease;
+}
+
+.rental-card:hover {
+    transform: translateY(-3px);
+}
+
+.rental-card-image-link {
+    position: relative;
+    display: block;
+    height: 210px;
+    background: #f3f4f6;
+}
+
+.rental-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.rental-card-no-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: #9ca3af;
+}
+
+.rental-featured-badge,
+.rental-available-badge {
+    position: absolute;
+    top: 12px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.rental-featured-badge {
+    left: 12px;
+    background: #dc2626;
+}
+
+.rental-available-badge {
+    right: 12px;
+    background: #15803d;
+}
+
+.rental-card-content {
+    padding: 17px;
+}
+
+.rental-card-title {
+    display: block;
+    margin-bottom: 10px;
+    color: #111827;
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1.35;
+    text-decoration: none;
+}
+
+.rental-card-price {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    margin-bottom: 8px;
+}
+
+.rental-card-price strong {
+    color: #dc2626;
+    font-size: 23px;
+}
+
+.rental-card-price span {
+    color: #6b7280;
+    font-size: 12px;
+}
+
+.rental-card-location {
+    margin-bottom: 13px;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.rental-card-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 15px;
+}
+
+.rental-card-details span {
+    padding: 5px 8px;
+    background: #f3f4f6;
+    border-radius: 6px;
+    color: #4b5563;
+    font-size: 11px;
+}
+
+.rental-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 14px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.rental-card-footer span {
+    color: #6b7280;
+    font-size: 12px;
+}
+
+.rental-card-footer a {
+    color: #dc2626;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.rental-empty-state {
+    padding: 65px 20px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    text-align: center;
+}
+
+.rental-empty-state h3 {
+    margin: 0 0 9px;
+    color: #111827;
+    font-size: 23px;
+}
+
+.rental-empty-state p {
+    margin: 0 0 20px;
+    color: #6b7280;
+}
+
+.rental-empty-state a {
+    display: inline-block;
+    padding: 12px 18px;
+    background: #dc2626;
+    border-radius: 9px;
+    color: #ffffff;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.rental-pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 32px;
+}
+
+.rental-pagination a,
+.rental-pagination span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 11px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    color: #374151;
+    text-decoration: none;
+}
+
+.rental-pagination .active {
+    border-color: #dc2626;
+    background: #dc2626;
+    color: #ffffff;
+}
+
+@media (max-width: 1150px) {
+
+    .rental-card-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .rental-search-form {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+@media (max-width: 800px) {
+
+    .rental-list-header-content {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .rental-card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+@media (max-width: 560px) {
+
+    .rental-list-page {
+        padding: 0 12px;
+    }
+
+    .rental-list-header {
+        padding: 22px 18px;
+    }
+
+    .rental-list-header h1 {
+        font-size: 27px;
+    }
+
+    .rental-search-form,
+    .rental-card-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .rental-search-actions {
+        flex-direction: column;
+    }
+
+    .rental-search-button,
+    .rental-reset-button {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .rental-card-image-link {
+        height: 225px;
+    }
+
+}
+
+</style>
+
+{% endblock %}

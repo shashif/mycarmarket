@@ -1,0 +1,549 @@
+<!-- ==========================================
+MyCarMarket Australia
+Version: v2.0.0
+File: rentals/templates/rentals/create_rental.html
+Description:
+Create Rental Listing Form
+========================================== -->
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+List Your Car for Rent | MyCarMarket Australia
+{% endblock %}
+
+{% block content %}
+
+{% include "includes/navbar.html" %}
+
+<main class="rental-create-page">
+
+    <section class="rental-create-container">
+
+        <div class="rental-create-header">
+
+            <h1>
+                List Your Car for Rent
+            </h1>
+
+            <p>
+                Create a free rental listing. Your listing will be reviewed by admin before publishing.
+            </p>
+
+        </div>
+
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+            class="rental-create-form"
+        >
+
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+
+                <div class="form-error-box">
+
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+            <section class="form-section">
+
+                <h2>
+                    Vehicle Details
+                </h2>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="{{ form.make.id_for_label }}">
+                            {{ form.make.label }}
+                        </label>
+                        {{ form.make }}
+                        {{ form.make.errors }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.model.id_for_label }}">
+                            {{ form.model.label }}
+                        </label>
+                        {{ form.model }}
+                        {{ form.model.errors }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.year.id_for_label }}">
+                            {{ form.year.label }}
+                        </label>
+                        {{ form.year }}
+                        {{ form.year.errors }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.body_type.id_for_label }}">
+                            {{ form.body_type.label }}
+                        </label>
+                        {{ form.body_type }}
+                        {{ form.body_type.errors }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.transmission.id_for_label }}">
+                            {{ form.transmission.label }}
+                        </label>
+                        {{ form.transmission }}
+                        {{ form.transmission.errors }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.fuel_type.id_for_label }}">
+                            {{ form.fuel_type.label }}
+                        </label>
+                        {{ form.fuel_type }}
+                        {{ form.fuel_type.errors }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.seats.id_for_label }}">
+                            {{ form.seats.label }}
+                        </label>
+                        {{ form.seats }}
+                        {{ form.seats.errors }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.colour.id_for_label }}">
+                            {{ form.colour.label }}
+                        </label>
+                        {{ form.colour }}
+                        {{ form.colour.errors }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.registration_number.id_for_label }}">
+                            {{ form.registration_number.label }}
+                        </label>
+                        {{ form.registration_number }}
+                        {{ form.registration_number.errors }}
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section class="form-section">
+
+                <h2>
+                    Rental Pricing
+                </h2>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="{{ form.daily_price.id_for_label }}">
+                            {{ form.daily_price.label }}
+                        </label>
+                        {{ form.daily_price }}
+                        {{ form.daily_price.errors }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.weekly_price.id_for_label }}">
+                            {{ form.weekly_price.label }}
+                        </label>
+                        {{ form.weekly_price }}
+                        {{ form.weekly_price.errors }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.security_deposit.id_for_label }}">
+                            {{ form.security_deposit.label }}
+                        </label>
+                        {{ form.security_deposit }}
+                        {{ form.security_deposit.errors }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.minimum_rental_days.id_for_label }}">
+                            {{ form.minimum_rental_days.label }}
+                        </label>
+                        {{ form.minimum_rental_days }}
+                        {{ form.minimum_rental_days.errors }}
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label for="{{ form.unlimited_kilometres.id_for_label }}">
+                            {{ form.unlimited_kilometres }}
+                            {{ form.unlimited_kilometres.label }}
+                        </label>
+                        {{ form.unlimited_kilometres.errors }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.daily_kilometre_limit.id_for_label }}">
+                            {{ form.daily_kilometre_limit.label }}
+                        </label>
+                        {{ form.daily_kilometre_limit }}
+                        {{ form.daily_kilometre_limit.errors }}
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section class="form-section">
+
+                <h2>
+                    Rental Information
+                </h2>
+
+                <div class="form-group full-width">
+                    <label for="{{ form.description.id_for_label }}">
+                        {{ form.description.label }}
+                    </label>
+                    {{ form.description }}
+                    {{ form.description.errors }}
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="{{ form.rental_conditions.id_for_label }}">
+                        {{ form.rental_conditions.label }}
+                    </label>
+                    {{ form.rental_conditions }}
+                    {{ form.rental_conditions.errors }}
+                </div>
+
+            </section>
+
+            <section class="form-section">
+
+                <h2>
+                    Pickup Location
+                </h2>
+
+                <div class="form-grid">
+
+                    <div class="form-group full-width">
+                        <label for="{{ form.pickup_address.id_for_label }}">
+                            {{ form.pickup_address.label }}
+                        </label>
+                        {{ form.pickup_address }}
+                        {{ form.pickup_address.errors }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.suburb.id_for_label }}">
+                            {{ form.suburb.label }}
+                        </label>
+                        {{ form.suburb }}
+                        {{ form.suburb.errors }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.state.id_for_label }}">
+                            {{ form.state.label }}
+                        </label>
+                        {{ form.state }}
+                        {{ form.state.errors }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.postcode.id_for_label }}">
+                            {{ form.postcode.label }}
+                        </label>
+                        {{ form.postcode }}
+                        {{ form.postcode.errors }}
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section class="form-section">
+
+                <h2>
+                    Owner Contact Details
+                </h2>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="{{ form.owner_name.id_for_label }}">
+                            {{ form.owner_name.label }}
+                        </label>
+                        {{ form.owner_name }}
+                        {{ form.owner_name.errors }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.owner_email.id_for_label }}">
+                            {{ form.owner_email.label }}
+                        </label>
+                        {{ form.owner_email }}
+                        {{ form.owner_email.errors }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.owner_phone.id_for_label }}">
+                            {{ form.owner_phone.label }}
+                        </label>
+                        {{ form.owner_phone }}
+                        {{ form.owner_phone.errors }}
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section class="form-section">
+
+                <h2>
+                    Availability
+                </h2>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="{{ form.available_from.id_for_label }}">
+                            {{ form.available_from.label }}
+                        </label>
+                        {{ form.available_from }}
+                        {{ form.available_from.errors }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.available_until.id_for_label }}">
+                            {{ form.available_until.label }}
+                        </label>
+                        {{ form.available_until }}
+                        {{ form.available_until.errors }}
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label for="{{ form.is_available.id_for_label }}">
+                            {{ form.is_available }}
+                            {{ form.is_available.label }}
+                        </label>
+                        {{ form.is_available.errors }}
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section class="form-section">
+
+                <h2>
+                    Rental Car Image
+                </h2>
+
+                <div class="form-group full-width">
+                    <label for="{{ form.rental_images.id_for_label }}">
+                        {{ form.rental_images.label }}
+                    </label>
+                    {{ form.rental_images }}
+                    {{ form.rental_images.errors }}
+                </div>
+
+            </section>
+
+            <div class="form-actions">
+
+                <button
+                    type="submit"
+                    class="submit-rental-button"
+                >
+                    Submit Rental Listing
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+</main>
+
+<style>
+
+.rental-create-page {
+    max-width: 1200px;
+    margin: 30px auto 60px;
+    padding: 0 20px;
+}
+
+.rental-create-container {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    padding: 32px;
+}
+
+.rental-create-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.rental-create-header h1 {
+    margin: 0 0 10px;
+    font-size: 34px;
+    color: #111827;
+}
+
+.rental-create-header p {
+    margin: 0;
+    color: #6b7280;
+    line-height: 1.6;
+}
+
+.form-section {
+    margin-bottom: 28px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.form-section:last-of-type {
+    border-bottom: none;
+}
+
+.form-section h2 {
+    margin: 0 0 20px;
+    font-size: 21px;
+    color: #111827;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.form-control,
+.rental-create-form input,
+.rental-create-form select,
+.rental-create-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #111827;
+    font-size: 15px;
+}
+
+.rental-create-form textarea {
+    resize: vertical;
+}
+
+.checkbox-group {
+    justify-content: flex-end;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 46px;
+}
+
+.checkbox-group input {
+    width: auto;
+}
+
+.errorlist {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: #dc2626;
+    font-size: 13px;
+}
+
+.form-error-box {
+    margin-bottom: 24px;
+    padding: 14px 16px;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 10px;
+    color: #b91c1c;
+}
+
+.form-error-box p {
+    margin: 0;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.submit-rental-button {
+    border: none;
+    border-radius: 10px;
+    padding: 14px 30px;
+    background: #dc2626;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.submit-rental-button:hover {
+    background: #b91c1c;
+}
+
+@media (max-width: 900px) {
+
+    .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 640px) {
+
+    .rental-create-page {
+        padding: 0 12px;
+    }
+
+    .rental-create-container {
+        padding: 20px 16px;
+    }
+
+    .rental-create-header h1 {
+        font-size: 27px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+
+{% endblock %}

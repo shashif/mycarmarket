@@ -1,9 +1,11 @@
 <!-- =========================================
 MyCarMarket
-Version: v1.11.7
+Version: v2.0.0
 File: templates/base.html
-Description: Master Base Template
-             Added Extra Meta Block for Social Sharing
+Description:
+Master Base Template
+Added Global Banner Advertisement CSS
+Added Extra Meta Block for Social Sharing
 ========================================= -->
 
 {% load static %}
@@ -31,6 +33,7 @@ Description: Master Base Template
         {% endblock %}
     </title>
 
+
     <!-- ==========================================
     SECTION 01 START
     Page Specific SEO / Social Meta
@@ -44,6 +47,8 @@ Description: Master Base Template
     Page Specific SEO / Social Meta
     ========================================== -->
 
+    <!-- --------------------------------------------- -->
+
 
     <!-- ==========================================
     SECTION 02 START
@@ -55,10 +60,17 @@ Description: Master Base Template
         href="{% static 'css/style.css' %}?v=178"
     >
 
+    <link
+        rel="stylesheet"
+        href="{% static 'css/banner.css' %}?v=2000"
+    >
+
     <!-- ==========================================
     SECTION 02 END
     Global CSS
     ========================================== -->
+
+    <!-- --------------------------------------------- -->
 
 
     <!-- ==========================================
@@ -73,6 +85,8 @@ Description: Master Base Template
     SECTION 03 END
     Extra CSS
     ========================================== -->
+
+    <!-- --------------------------------------------- -->
 
 
     <!-- ==========================================
@@ -115,6 +129,8 @@ Description: Master Base Template
     Favicon
     ========================================== -->
 
+    <!-- --------------------------------------------- -->
+
 
     <!-- ==========================================
     SECTION 05 START
@@ -131,6 +147,8 @@ Description: Master Base Template
     Preconnect
     ========================================== -->
 
+    <!-- --------------------------------------------- -->
+
 
     <!-- ==========================================
     SECTION 06 START
@@ -143,15 +161,27 @@ Description: Master Base Template
     ></script>
 
     <script>
+
         window.dataLayer = window.dataLayer || [];
 
-        function gtag(){
-            dataLayer.push(arguments);
+        function gtag() {
+
+            dataLayer.push(
+                arguments
+            );
+
         }
 
-        gtag('js', new Date());
+        gtag(
+            "js",
+            new Date()
+        );
 
-        gtag('config', 'G-FGGQZ4WXDT');
+        gtag(
+            "config",
+            "G-FGGQZ4WXDT"
+        );
+
     </script>
 
     <!-- ==========================================
@@ -162,6 +192,7 @@ Description: Master Base Template
 </head>
 
 <body>
+
 
     <!-- ==========================================
     SECTION 07 START
@@ -176,6 +207,8 @@ Description: Master Base Template
     Page Content
     ========================================== -->
 
+    <!-- --------------------------------------------- -->
+
 
     <!-- ==========================================
     SECTION 08 START
@@ -183,7 +216,9 @@ Description: Master Base Template
     ========================================== -->
 
     <div id="global-loader">
+
         <div class="loader-circle"></div>
+
     </div>
 
     <div id="toast"></div>
@@ -201,6 +236,8 @@ Description: Master Base Template
     Global UX Tools
     ========================================== -->
 
+    <!-- --------------------------------------------- -->
+
 
     <!-- ==========================================
     SECTION 09 START
@@ -208,14 +245,19 @@ Description: Master Base Template
     ========================================== -->
 
     <script src="{% static 'js/loading.js' %}"></script>
+
     <script src="{% static 'js/toast.js' %}"></script>
+
     <script src="{% static 'js/scroll_top.js' %}"></script>
+
     <script src="{% static 'js/favourite.js' %}"></script>
 
     <!-- ==========================================
     SECTION 09 END
     Global JavaScript
     ========================================== -->
+
+    <!-- --------------------------------------------- -->
 
 
     <!-- ==========================================
@@ -230,6 +272,7 @@ Description: Master Base Template
     SECTION 10 END
     Extra JavaScript
     ========================================== -->
+
 
 </body>
 

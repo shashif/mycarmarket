@@ -1,10 +1,11 @@
 # ==========================================
 # MyCarMarket
-# Version: v1.14.0
+# Version: v2.0.0
 # File: config/urls.py
 # Description:
 # Sitemap + Robots + Static Media + Custom Error Pages
 # Added Amazon Accessories Store URLs
+# Added Rental System URLs
 # ==========================================
 
 from django.contrib import admin
@@ -21,50 +22,83 @@ from core.views_robots import robots_txt
 
 
 sitemaps = {
-    'cars': CarSitemap,
-    'reviews': ReviewSitemap,
+    "cars": CarSitemap,
+    "reviews": ReviewSitemap,
 }
 
 
 urlpatterns = [
+
     path(
-        'BingSiteAuth.xml',
+        "BingSiteAuth.xml",
         serve,
         {
-            'document_root': settings.BASE_DIR,
-            'path': 'BingSiteAuth.xml',
+            "document_root": settings.BASE_DIR,
+            "path": "BingSiteAuth.xml",
         },
     ),
 
     path(
-        'favicon.ico',
+        "favicon.ico",
         RedirectView.as_view(
-            url='/static/favicon/favicon.ico',
-            permanent=True
+            url="/static/favicon/favicon.ico",
+            permanent=True,
         ),
     ),
 
-    path('admin/', admin.site.urls),
-
-    path('', include('core.urls')),
-    path('', include('amazon_affiliate.urls')),
-    path('cars/', include('vehicles.urls')),
-    path('reviews/', include('reviews.urls')),
-
-    path('accounts/', include('accounts.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),
-
     path(
-        'sitemap.xml',
-        sitemap,
-        {'sitemaps': sitemaps},
-        name='django.contrib.sitemaps.views.sitemap'
+        "admin/",
+        admin.site.urls,
     ),
 
     path(
-        'robots.txt',
+        "",
+        include("core.urls"),
+    ),
+
+    path(
+        "",
+        include("amazon_affiliate.urls"),
+    ),
+
+    path(
+        "cars/",
+        include("vehicles.urls"),
+    ),
+
+    path(
+        "rentals/",
+        include("rentals.urls"),
+    ),
+
+    path(
+        "reviews/",
+        include("reviews.urls"),
+    ),
+
+    path(
+        "accounts/",
+        include("accounts.urls"),
+    ),
+
+    path(
+        "accounts/",
+        include("django.contrib.auth.urls"),
+    ),
+
+    path(
+        "sitemap.xml",
+        sitemap,
+        {
+            "sitemaps": sitemaps,
+        },
+        name="django.contrib.sitemaps.views.sitemap",
+    ),
+
+    path(
+        "robots.txt",
         robots_txt,
-        name='robots_txt'
+        name="robots_txt",
     ),
 ]
 
@@ -73,9 +107,11 @@ urlpatterns = [
 # CUSTOM ERROR PAGES
 # ==========================================
 
-handler403 = 'core.views.custom_403'
-handler404 = 'core.views.custom_404'
-handler500 = 'core.views.custom_500'
+handler403 = "core.views.custom_403"
+
+handler404 = "core.views.custom_404"
+
+handler500 = "core.views.custom_500"
 
 
 # ==========================================
@@ -83,12 +119,13 @@ handler500 = 'core.views.custom_500'
 # ==========================================
 
 if settings.DEBUG:
+
     urlpatterns += static(
         settings.MEDIA_URL,
-        document_root=settings.MEDIA_ROOT
+        document_root=settings.MEDIA_ROOT,
     )
 
     urlpatterns += static(
         settings.STATIC_URL,
-        document_root=settings.BASE_DIR / 'static'
+        document_root=settings.BASE_DIR / "static",
     )

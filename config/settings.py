@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'reviews',
     'accounts',
     "amazon_affiliate",
+    'rentals',
 
     'django.contrib.admin',
     'django.contrib.auth',

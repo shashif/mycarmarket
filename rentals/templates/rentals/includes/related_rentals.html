@@ -1,0 +1,82 @@
+{% load humanize %}
+  {% if related_rentals %}
+
+        <section class="related-rentals-section">
+
+            <div class="related-rentals-heading">
+
+                <h2>
+                    Similar Rental Cars
+                </h2>
+
+                <a href="{% url 'rental_list' %}">
+                    View All Rentals
+                </a>
+
+            </div>
+
+            <div class="related-rentals-grid">
+
+                {% for related in related_rentals %}
+
+                    <article class="related-rental-card">
+
+                        <a
+                            href="{{ related.get_absolute_url }}"
+                            class="related-rental-image-link"
+                        >
+
+                            {% if related.primary_image %}
+
+                                <img
+                                    src="{{ related.primary_image.image.url }}"
+                                    alt="{{ related.title }}"
+                                >
+
+                            {% else %}
+
+                                <div class="related-rental-no-image">
+                                    No Image
+                                </div>
+
+                            {% endif %}
+
+                        </a>
+
+                        <div class="related-rental-content">
+
+                            <a
+                                href="{{ related.get_absolute_url }}"
+                                class="related-rental-title"
+                            >
+                                {{ related.year }}
+                                {{ related.make }}
+                                {{ related.model }}
+                            </a>
+
+                            <div class="related-rental-price">
+
+                                ${{ related.daily_price|floatformat:0|intcomma }}
+
+                                <span>
+                                    / day
+                                </span>
+
+                            </div>
+
+                            <p>
+                                {{ related.suburb }},
+                                {{ related.state }}
+                            </p>
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+    {% endif %}

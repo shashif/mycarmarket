@@ -1,0 +1,89 @@
+{% load humanize %}
+
+<!-- ==========================================
+MyCarMarket Australia
+Version: v2.0.1
+File: rentals/templates/rentals/includes/header.html
+Description:
+Rental detail header with status badges,
+vehicle title, suburb and rental pricing.
+========================================== -->
+
+<section class="rental-detail-header">
+
+    <div class="rental-detail-heading">
+
+        <div>
+
+            <div class="rental-detail-badges">
+
+                {% if rental.is_featured %}
+
+                    <span class="featured-badge">
+                        Featured
+                    </span>
+
+                {% endif %}
+
+                {% if rental.is_available %}
+
+                    <span class="available-badge">
+                        Available
+                    </span>
+
+                {% else %}
+
+                    <span class="unavailable-badge">
+                        Unavailable
+                    </span>
+
+                {% endif %}
+
+                {% if rental.moderation_status == "pending" %}
+
+                    <span class="pending-badge">
+                        Pending Approval
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+            <h1>
+                {{ rental.year }}
+                {{ rental.make }}
+                {{ rental.model }}
+                for Rent
+            </h1>
+
+            <p class="rental-detail-location">
+                {{ rental.suburb }},
+                {{ rental.state }}
+            </p>
+
+        </div>
+
+        <div class="rental-detail-price">
+
+            <strong>
+                ${{ rental.daily_price|floatformat:0|intcomma }}
+            </strong>
+
+            <span>
+                per day
+            </span>
+
+            {% if rental.weekly_price %}
+
+                <small>
+                    ${{ rental.weekly_price|floatformat:0|intcomma }}
+                    per week
+                </small>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</section>
