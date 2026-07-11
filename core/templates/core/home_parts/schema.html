@@ -1,29 +1,38 @@
 <!-- =========================================
 MyCarMarket
-Version: v1.7.5
+Version: v1.7.6
 File: core/templates/core/home_parts/schema.html
-Description: Homepage Structured Data JSON-LD
+Description:
+Homepage Structured Data JSON-LD
+Improved Brand SEO + Alternate Brand Name
 ========================================= -->
 
 <script type="application/ld+json">
 {
     "@context": "https://schema.org",
     "@graph": [
+
         {
             "@type": "Organization",
             "@id": "https://www.mycarmarket.com.au/#organization",
             "name": "MyCarMarket Australia",
+            "alternateName": [
+                "My Car Market Australia",
+                "MyCarMarket"
+            ],
             "url": "https://www.mycarmarket.com.au/",
             "logo": "https://www.mycarmarket.com.au/static/favicon/apple-touch-icon.png",
             "sameAs": [
                 "https://www.facebook.com/mycarmarket.com.au"
             ]
         },
+
         {
             "@type": "WebSite",
             "@id": "https://www.mycarmarket.com.au/#website",
             "url": "https://www.mycarmarket.com.au/",
             "name": "MyCarMarket Australia",
+            "alternateName": "My Car Market Australia",
             "publisher": {
                 "@id": "https://www.mycarmarket.com.au/#organization"
             },
@@ -33,19 +42,22 @@ Description: Homepage Structured Data JSON-LD
                 "query-input": "required name=search_term_string"
             }
         },
+
         {
             "@type": "WebPage",
             "@id": "https://www.mycarmarket.com.au/#webpage",
             "url": "https://www.mycarmarket.com.au/",
-            "name": "MyCarMarket Australia - Buy, Sell & Rent Cars",
-            "description": "Buy, sell and rent cars across Australia with MyCarMarket Australia.",
+            "name": "MyCarMarket Australia | My Car Market Australia - Buy, Sell & Rent Cars",
+            "description": "MyCarMarket Australia, also known as My Car Market Australia, helps Australians buy, sell and rent cars. Find affordable used cars, dealer vehicles, private listings and rental cars across Australia.",
             "isPartOf": {
                 "@id": "https://www.mycarmarket.com.au/#website"
             },
             "about": {
                 "@id": "https://www.mycarmarket.com.au/#organization"
-            }
+            },
+            "inLanguage": "en-AU"
         }
+
     ]
 }
 </script>
