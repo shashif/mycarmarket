@@ -1,45 +1,108 @@
 <!-- =========================================
 MyCarMarket
-Version: v1.7.7
-Date: 04 Jul 2026
-Location: Melbourne, Australia (AEST)
+Version: v2.2.2
+Date: 13 Jul 2026
+Location: Melbourne, Australia
 File: core/templates/core/home.html
-Homepage Master Template + ItemList Structured Data
+Description:
+Homepage Master Template
+ItemList Structured Data
+Global Banner CSS Added
 ========================================= -->
 
 <!DOCTYPE html>
-<html>
+<html lang="en-AU">
+
 <head>
+
     {% load static %}
 
-   <title>MyCarMarket Australia | My Car Market Australia - Buy, Sell & Rent Cars</title>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        MyCarMarket Australia | My Car Market Australia - Buy, Sell & Rent Cars
+    </title>
+
+
+    <!-- =========================================
+    Homepage Meta START
+    ========================================== -->
+
     {% include 'core/home_parts/meta.html' %}
+
+    <!-- =========================================
+    Homepage Meta END
+    ========================================== -->
+
+
+    <!-- =========================================
+    Homepage Schema START
+    ========================================== -->
+
     {% include 'core/home_parts/schema.html' %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/home.css' %}?v=1145">
+
+    <!-- =========================================
+    Homepage Schema END
+    ========================================== -->
+
+
+    <!-- =========================================
+    Global CSS START
+    ========================================== -->
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/style.css' %}?v=2202"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/banner.css' %}?v=203"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/home.css' %}?v=2202"
+    >
+
+    <!-- =========================================
+    Global CSS END
+    ========================================== -->
+
 
     <!-- =========================================
     Homepage Featured Cars ItemList Schema START
     ========================================== -->
 
     {% if featured_cars %}
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "ItemList",
-        "name": "Featured Cars on MyCarMarket Australia",
-        "description": "Featured car listings available on MyCarMarket Australia.",
-        "itemListElement": [
-            {% for car in featured_cars %}
-            {
-                "@type": "ListItem",
-                "position": {{ forloop.counter }},
-                "url": "{{ request.scheme }}://{{ request.get_host }}{{ car.get_absolute_url }}"
-            }{% if not forloop.last %},{% endif %}
-            {% endfor %}
-        ]
-    }
-    </script>
+
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "name": "Featured Cars on MyCarMarket Australia",
+            "description": "Featured car listings available on MyCarMarket Australia.",
+            "itemListElement": [
+
+                {% for car in featured_cars %}
+
+                    {
+                        "@type": "ListItem",
+                        "position": {{ forloop.counter }},
+                        "url": "{{ request.scheme }}://{{ request.get_host }}{{ car.get_absolute_url }}"
+                    }{% if not forloop.last %},{% endif %}
+
+                {% endfor %}
+
+            ]
+        }
+        </script>
+
     {% endif %}
 
     <!-- =========================================
@@ -52,23 +115,29 @@ Homepage Master Template + ItemList Structured Data
     ========================================== -->
 
     {% if latest_cars %}
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "ItemList",
-        "name": "Latest Cars on MyCarMarket Australia",
-        "description": "Latest car listings available on MyCarMarket Australia.",
-        "itemListElement": [
-            {% for car in latest_cars %}
-            {
-                "@type": "ListItem",
-                "position": {{ forloop.counter }},
-                "url": "{{ request.scheme }}://{{ request.get_host }}{{ car.get_absolute_url }}"
-            }{% if not forloop.last %},{% endif %}
-            {% endfor %}
-        ]
-    }
-    </script>
+
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "name": "Latest Cars on MyCarMarket Australia",
+            "description": "Latest car listings available on MyCarMarket Australia.",
+            "itemListElement": [
+
+                {% for car in latest_cars %}
+
+                    {
+                        "@type": "ListItem",
+                        "position": {{ forloop.counter }},
+                        "url": "{{ request.scheme }}://{{ request.get_host }}{{ car.get_absolute_url }}"
+                    }{% if not forloop.last %},{% endif %}
+
+                {% endfor %}
+
+            ]
+        }
+        </script>
+
     {% endif %}
 
     <!-- =========================================
@@ -80,13 +149,26 @@ Homepage Master Template + ItemList Structured Data
     Google Analytics START
     ========================================== -->
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FGGQZ4WXDT"></script>
+    <script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-FGGQZ4WXDT"
+    ></script>
 
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-FGGQZ4WXDT');
+
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag(
+            'config',
+            'G-FGGQZ4WXDT'
+        );
+
     </script>
 
     <!-- =========================================
@@ -96,22 +178,28 @@ Homepage Master Template + ItemList Structured Data
 
     <!-- =========================================
     Google AdSense START
-    Loaded only when Google AdSense is selected in Admin
+    Loaded Only When Google AdSense Is Selected
     ========================================== -->
 
     {% if settings and settings.homepage_ad_type == 'google' and settings.google_adsense_publisher_id %}
-        <script async
+
+        <script
+            async
             src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ settings.google_adsense_publisher_id }}"
-            crossorigin="anonymous">
-        </script>
+            crossorigin="anonymous"
+        ></script>
+
     {% endif %}
 
     <!-- =========================================
     Google AdSense END
     ========================================== -->
+
 </head>
 
+
 <body>
+
 
 <!-- =========================================
 Navbar START
@@ -141,6 +229,7 @@ Homepage Content START
 
 <div class="container hero-search-container">
 
+
     <!-- =========================================
     Search Section START
     ========================================== -->
@@ -154,6 +243,7 @@ Homepage Content START
 
     <!-- =========================================
     Banner Advertisement START
+    Normal Mode Used to Match Other Pages
     ========================================== -->
 
     {% include 'core/home_parts/banner_ad.html' %}
@@ -184,7 +274,18 @@ Homepage Content START
     Featured Cars END
     ========================================== -->
 
-{% include "amazon_affiliate/includes/products.html" %}
+
+    <!-- =========================================
+    Amazon Accessories START
+    ========================================== -->
+
+    {% include 'amazon_affiliate/includes/products.html' %}
+
+    <!-- =========================================
+    Amazon Accessories END
+    ========================================== -->
+
+
     <!-- =========================================
     Latest Cars START
     ========================================== -->
@@ -194,15 +295,18 @@ Homepage Content START
     <!-- =========================================
     Latest Cars END
     ========================================== -->
+
+
     <!-- =========================================
-Latest Car Reviews START
-========================================= -->
+    Latest Car Reviews START
+    ========================================== -->
 
-{% include 'core/home_parts/latest_reviews.html' %}
+    {% include 'core/home_parts/latest_reviews.html' %}
 
-<!-- =========================================
-Latest Car Reviews END
-========================================= -->
+    <!-- =========================================
+    Latest Car Reviews END
+    ========================================== -->
+
 
     <!-- =========================================
     Call To Action START
@@ -213,6 +317,7 @@ Latest Car Reviews END
     <!-- =========================================
     Call To Action END
     ========================================== -->
+
 
 </div>
 
@@ -231,20 +336,67 @@ Footer START
 Footer END
 ========================================= -->
 
+
+<!-- =========================================
+Global Loader START
+========================================= -->
+
 <div id="global-loader">
+
     <div class="loader-circle"></div>
+
 </div>
+
+<!-- =========================================
+Global Loader END
+========================================= -->
+
+
+<!-- =========================================
+Toast START
+========================================= -->
 
 <div id="toast"></div>
 
-<button id="scrollTopBtn" type="button">
+<!-- =========================================
+Toast END
+========================================= -->
+
+
+<!-- =========================================
+Scroll To Top START
+========================================= -->
+
+<button
+    id="scrollTopBtn"
+    type="button"
+    aria-label="Scroll to top"
+>
     ⬆
 </button>
 
-<script src="{% static 'js/loading.js' %}"></script>
-<script src="{% static 'js/toast.js' %}"></script>
-<script src="{% static 'js/scroll_top.js' %}"></script>
-<script src="{% static 'js/favourite.js' %}"></script>
+<!-- =========================================
+Scroll To Top END
+========================================= -->
+
+
+<!-- =========================================
+Global JavaScript START
+========================================= -->
+
+<script src="{% static 'js/loading.js' %}?v=2202"></script>
+
+<script src="{% static 'js/toast.js' %}?v=2202"></script>
+
+<script src="{% static 'js/scroll_top.js' %}?v=2202"></script>
+
+<script src="{% static 'js/favourite.js' %}?v=2202"></script>
+
+<!-- =========================================
+Global JavaScript END
+========================================= -->
+
 
 </body>
+
 </html>

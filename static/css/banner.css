@@ -1,10 +1,11 @@
 /* ==========================================
 MyCarMarket Australia
-Version: v2.0.1
+Version: v2.0.3
 File: static/css/banner.css
 Description:
 Global Banner Advertisement
-Removed Excessive Height, White Space and Shadow
+Consistent Banner Size Across All Pages
+Supports Linked and Non-Linked Banner Images
 ========================================== */
 
 
@@ -14,17 +15,19 @@ Banner Wrapper
 ========================================== */
 
 .ad-banner {
+    display: block;
     width: 100%;
-    height: auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
+    max-width: 1500px;
+    height: auto;
+    min-height: 0;
     margin: 18px auto 22px;
-    padding: 0 !important;
-    overflow: visible;
-    background: transparent !important;
-    border: none !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    background: transparent;
+    border: none;
+    border-radius: 16px;
+    box-shadow: none;
 }
 
 /* ==========================================
@@ -44,13 +47,16 @@ Banner Link
     display: block;
     width: 100%;
     height: auto;
+    min-height: 0;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    overflow: hidden;
     line-height: 0;
     text-decoration: none;
     background: transparent;
     border: none;
-    border-radius: 16px;
+    border-radius: inherit;
     box-shadow: none;
 }
 
@@ -64,28 +70,28 @@ Banner Link
 
 /* ==========================================
 SECTION 3 START
-Custom Banner Image
+Non-Linked Banner Image Wrapper
 ========================================== */
 
-.custom-banner-ad {
+.ad-banner-image-wrapper {
     display: block;
     width: 100%;
-    height: auto !important;
-    min-height: 0 !important;
-    max-height: 260px;
+    height: auto;
+    min-height: 0;
     margin: 0;
     padding: 0;
-    object-fit: cover;
-    object-position: center;
+    box-sizing: border-box;
+    overflow: hidden;
+    line-height: 0;
     background: transparent;
-    border: 1px solid #e5e7eb;
-    border-radius: 16px;
-    box-shadow: none !important;
+    border: none;
+    border-radius: inherit;
+    box-shadow: none;
 }
 
 /* ==========================================
 SECTION 3 END
-Custom Banner Image
+Non-Linked Banner Image Wrapper
 ========================================== */
 
 /* --------------------------------------------- */
@@ -93,20 +99,29 @@ Custom Banner Image
 
 /* ==========================================
 SECTION 4 START
-Compact Banner
+Custom Banner Image
 ========================================== */
 
-.ad-banner-compact {
-    margin: 14px auto 18px;
-}
-
-.ad-banner-compact .custom-banner-ad {
-    max-height: 190px;
+.ad-banner .custom-banner-ad {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 1500 / 280;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    object-fit: cover;
+    object-position: center;
+    background: transparent;
+    border: 1px solid #e5e7eb;
+    border-radius: inherit;
+    box-shadow: none;
 }
 
 /* ==========================================
 SECTION 4 END
-Compact Banner
+Custom Banner Image
 ========================================== */
 
 /* --------------------------------------------- */
@@ -114,6 +129,28 @@ Compact Banner
 
 /* ==========================================
 SECTION 5 START
+Compact Banner
+========================================== */
+
+.ad-banner-compact {
+    margin-top: 14px;
+    margin-bottom: 18px;
+}
+
+.ad-banner-compact .custom-banner-ad {
+    aspect-ratio: 1500 / 240;
+}
+
+/* ==========================================
+SECTION 5 END
+Compact Banner
+========================================== */
+
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 6 START
 Google Advertisement
 ========================================== */
 
@@ -123,13 +160,14 @@ Google Advertisement
     min-height: 90px;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
     background: transparent;
     border: none;
     box-shadow: none;
 }
 
 /* ==========================================
-SECTION 5 END
+SECTION 6 END
 Google Advertisement
 ========================================== */
 
@@ -137,7 +175,7 @@ Google Advertisement
 
 
 /* ==========================================
-SECTION 6 START
+SECTION 7 START
 Advertisement Placeholder
 ========================================== */
 
@@ -147,6 +185,7 @@ Advertisement Placeholder
     justify-content: center;
     width: 100%;
     min-height: 120px;
+    margin: 0;
     padding: 20px;
     box-sizing: border-box;
     background: #f8fafc;
@@ -166,7 +205,7 @@ Advertisement Placeholder
 }
 
 /* ==========================================
-SECTION 6 END
+SECTION 7 END
 Advertisement Placeholder
 ========================================== */
 
@@ -174,7 +213,7 @@ Advertisement Placeholder
 
 
 /* ==========================================
-SECTION 7 START
+SECTION 8 START
 Advertisement Label
 ========================================== */
 
@@ -188,7 +227,7 @@ Advertisement Label
 }
 
 /* ==========================================
-SECTION 7 END
+SECTION 8 END
 Advertisement Label
 ========================================== */
 
@@ -196,7 +235,70 @@ Advertisement Label
 
 
 /* ==========================================
-SECTION 8 START
+SECTION 9 START
+Homepage Wrapper Reset
+========================================== */
+
+.homepage-ad,
+.home-ad,
+.home-banner-ad,
+.homepage-banner,
+.homepage-ad-wrapper,
+.home-ad-wrapper,
+.banner-ad-wrapper,
+.custom-ad-wrapper {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: visible;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+/* ==========================================
+SECTION 9 END
+Homepage Wrapper Reset
+========================================== */
+
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 10 START
+Tablet Responsive
+========================================== */
+
+@media (max-width: 1024px) {
+
+    .ad-banner {
+        border-radius: 14px;
+    }
+
+    .ad-banner .custom-banner-ad {
+        aspect-ratio: 16 / 3.5;
+    }
+
+    .ad-banner-compact .custom-banner-ad {
+        aspect-ratio: 16 / 3.2;
+    }
+
+}
+
+/* ==========================================
+SECTION 10 END
+Tablet Responsive
+========================================== */
+
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 11 START
 Mobile Responsive
 ========================================== */
 
@@ -204,19 +306,16 @@ Mobile Responsive
 
     .ad-banner {
         margin: 12px auto 16px;
-    }
-
-    .ad-banner > a {
         border-radius: 12px;
     }
 
-    .custom-banner-ad {
-        max-height: 150px;
-        border-radius: 12px;
+    .ad-banner .custom-banner-ad {
+        aspect-ratio: 16 / 5;
+        object-position: center;
     }
 
     .ad-banner-compact .custom-banner-ad {
-        max-height: 120px;
+        aspect-ratio: 16 / 4.5;
     }
 
     .ad-placeholder {
@@ -228,6 +327,35 @@ Mobile Responsive
 }
 
 /* ==========================================
-SECTION 8 END
+SECTION 11 END
 Mobile Responsive
+========================================== */
+
+/* --------------------------------------------- */
+
+
+/* ==========================================
+SECTION 12 START
+Small Mobile Responsive
+========================================== */
+
+@media (max-width: 480px) {
+
+    .ad-banner {
+        border-radius: 10px;
+    }
+
+    .ad-banner .custom-banner-ad {
+        aspect-ratio: 16 / 6;
+    }
+
+    .ad-banner-compact .custom-banner-ad {
+        aspect-ratio: 16 / 5.5;
+    }
+
+}
+
+/* ==========================================
+SECTION 12 END
+Small Mobile Responsive
 ========================================== */

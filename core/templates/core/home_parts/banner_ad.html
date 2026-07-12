@@ -1,11 +1,18 @@
 <!-- =========================================
 MyCarMarket
-Version: v1.10.9
+Version: v2.2.1
 File: core/templates/core/home_parts/banner_ad.html
-Description: Advertisement System + Compact Mode Support
+Description:
+Global Advertisement System
+Consistent Custom Banner and Google Ad Layout
+Compact Mode Support
 ========================================= -->
 
-<div class="ad-banner {% if compact_ad %}ad-banner-compact{% endif %}">
+<div
+    class="ad-banner{% if compact_ad %} ad-banner-compact{% endif %}"
+    role="region"
+    aria-label="Advertisement"
+>
 
     {% if settings and settings.homepage_ad_type == 'google' %}
 
@@ -13,7 +20,7 @@ Description: Advertisement System + Compact Mode Support
 
             <ins
                 class="adsbygoogle"
-                style="display:block"
+                style="display:block;width:100%;"
                 data-ad-client="{{ settings.google_adsense_publisher_id }}"
                 data-ad-slot="{{ settings.google_adsense_slot_id }}"
                 data-ad-format="auto"
@@ -21,15 +28,24 @@ Description: Advertisement System + Compact Mode Support
             ></ins>
 
             <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
+                window.addEventListener("load", function () {
+                    try {
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    } catch (error) {
+                        console.warn("Google AdSense could not be loaded.", error);
+                    }
+                });
             </script>
 
         {% else %}
 
             <div class="ad-placeholder">
                 <div>
-                    <strong>Google AdSense Not Configured</strong><br>
-                    <span>Enter Publisher ID and Slot ID in Admin.</span>
+                    <strong>Google AdSense Not Configured</strong>
+                    <br>
+                    <span>
+                        Enter the Publisher ID and Slot ID in the admin area.
+                    </span>
                 </div>
             </div>
 
@@ -37,23 +53,46 @@ Description: Advertisement System + Compact Mode Support
 
     {% elif settings and settings.alternate_google_banner_ad %}
 
-        <a
-            href="{{ settings.alternate_google_banner_link|default:'#' }}"
-            target="_blank"
-        >
-            <img
-                src="{{ settings.alternate_google_banner_ad.url }}"
-                alt="Advertisement"
-                class="custom-banner-ad"
+        {% if settings.alternate_google_banner_link %}
+
+            <a
+                href="{{ settings.alternate_google_banner_link }}"
+                target="_blank"
+                rel="noopener noreferrer sponsored"
+                aria-label="Open advertisement"
             >
-        </a>
+                <img
+                    src="{{ settings.alternate_google_banner_ad.url }}"
+                    alt="Advertisement"
+                    class="custom-banner-ad"
+                    loading="lazy"
+                    decoding="async"
+                >
+            </a>
+
+        {% else %}
+
+            <div class="ad-banner-image-wrapper">
+                <img
+                    src="{{ settings.alternate_google_banner_ad.url }}"
+                    alt="Advertisement"
+                    class="custom-banner-ad"
+                    loading="lazy"
+                    decoding="async"
+                >
+            </div>
+
+        {% endif %}
 
     {% else %}
 
         <div class="ad-placeholder">
             <div>
-                <strong>Advertisement Area</strong><br>
-                <span>Configure a Custom Banner or Google AdSense from Admin.</span>
+                <strong>Advertisement Area</strong>
+                <br>
+                <span>
+                    Configure a custom banner or Google AdSense from the admin area.
+                </span>
             </div>
         </div>
 

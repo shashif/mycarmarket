@@ -1,8 +1,8 @@
 /* =========================================
 MyCarMarket
-Version: v1.8.0
+Version: v2.2.0
 File: static/css/home.css
-Homepage UI & SEO Polish
+Homepage UI, SEO and Consistent Banner Advertisement Fix
 ========================================= */
 
 
@@ -288,8 +288,109 @@ END SECTION 5: STATS
 
 /* =========================================
 START SECTION 6: ADS
+Version: v2.2.0
+Description:
+Use the Same Compact Banner Layout on the Homepage
+Removes Fixed Height, Empty Space and Wrapper Padding
 ========================================= */
 
+.ad-banner{
+    display:block !important;
+    width:100% !important;
+    max-width:1500px !important;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    margin:18px auto 22px !important;
+    padding:0 !important;
+    overflow:hidden !important;
+    box-sizing:border-box !important;
+    background:transparent !important;
+    border:0 !important;
+    border-radius:16px !important;
+    box-shadow:none !important;
+}
+
+.ad-banner > a{
+    display:block !important;
+    width:100% !important;
+    height:auto !important;
+    min-height:0 !important;
+    margin:0 !important;
+    padding:0 !important;
+    overflow:hidden !important;
+    line-height:0 !important;
+    text-decoration:none !important;
+    background:transparent !important;
+    border:0 !important;
+    border-radius:inherit !important;
+    box-shadow:none !important;
+}
+
+.ad-banner .custom-banner-ad,
+.custom-banner-ad{
+    display:block !important;
+    width:100% !important;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:260px !important;
+    aspect-ratio:auto !important;
+    margin:0 !important;
+    padding:0 !important;
+    object-fit:cover !important;
+    object-position:center !important;
+    box-sizing:border-box !important;
+    background:transparent !important;
+    border:1px solid #e5e7eb !important;
+    border-radius:16px !important;
+    box-shadow:none !important;
+}
+
+.ad-banner-compact{
+    height:auto !important;
+    min-height:0 !important;
+    margin:14px auto 18px !important;
+    padding:0 !important;
+}
+
+.ad-banner-compact .custom-banner-ad{
+    max-height:190px !important;
+}
+
+/*
+Protect the homepage banner from older wrappers that may still
+contain a fixed height, minimum height, padding or white background.
+*/
+
+.homepage-ad,
+.home-ad,
+.home-banner-ad,
+.homepage-banner,
+.homepage-ad-wrapper,
+.home-ad-wrapper,
+.banner-ad-wrapper,
+.custom-ad-wrapper{
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    margin:18px auto 22px !important;
+    padding:0 !important;
+    overflow:visible !important;
+    background:transparent !important;
+    border:0 !important;
+    box-shadow:none !important;
+}
+
+.homepage-ad .ad-banner,
+.home-ad .ad-banner,
+.home-banner-ad .ad-banner,
+.homepage-banner .ad-banner,
+.homepage-ad-wrapper .ad-banner,
+.home-ad-wrapper .ad-banner,
+.banner-ad-wrapper .ad-banner,
+.custom-ad-wrapper .ad-banner{
+    margin:0 auto !important;
+}
 
 /* =========================================
 END SECTION 6: ADS
@@ -800,10 +901,50 @@ START SECTION 10: MOBILE RESPONSIVE
 
     /* ADS */
 
-    .custom-banner-ad{
-        max-height:140px;
+    .ad-banner{
+        height:auto !important;
+        min-height:0 !important;
+        margin:12px auto 16px !important;
+        padding:0 !important;
+        border-radius:12px !important;
+    }
 
-        border-radius:16px;
+    .ad-banner > a{
+        height:auto !important;
+        min-height:0 !important;
+        padding:0 !important;
+        border-radius:inherit !important;
+    }
+
+    .ad-banner .custom-banner-ad,
+    .custom-banner-ad{
+        width:100% !important;
+        height:auto !important;
+        min-height:0 !important;
+        max-height:150px !important;
+        object-fit:cover !important;
+        border-radius:12px !important;
+    }
+
+    .ad-banner-compact .custom-banner-ad{
+        max-height:120px !important;
+    }
+
+    .homepage-ad,
+    .home-ad,
+    .home-banner-ad,
+    .homepage-banner,
+    .homepage-ad-wrapper,
+    .home-ad-wrapper,
+    .banner-ad-wrapper,
+    .custom-ad-wrapper{
+        height:auto !important;
+        min-height:0 !important;
+        margin:12px auto 16px !important;
+        padding:0 !important;
+        background:transparent !important;
+        border:0 !important;
+        box-shadow:none !important;
     }
 
     /* CTA */
