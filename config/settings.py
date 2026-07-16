@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'accounts',
     "amazon_affiliate",
     'rentals',
+    "services.apps.ServicesConfig",
 
     'django.contrib.admin',
     'django.contrib.auth',

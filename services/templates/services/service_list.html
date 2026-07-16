@@ -1,0 +1,736 @@
+<!-- ==========================================
+MyCarMarket Australia
+Version: v2.2.9
+File: services/templates/services/service_list.html
+Location: services/templates/services/service_list.html
+Description:
+Car Services marketplace listing page
+- Matches the existing Rentals marketplace design
+- Dark header with correctly aligned action button
+- Banner advertisement
+- Search, category, state and location filters
+- Sorting controls
+- Responsive service card grid
+- Empty results state
+- Filter-preserving pagination
+- Entire service card is clickable
+- Removed separate View Service button
+- External service_list.css styling
+Last Updated: 17 Jul 2026
+========================================== -->
+
+{% extends "base.html" %}
+{% load humanize %}
+{% load static %}
+
+
+{% block title %}
+    Car Services | MyCarMarket Australia
+{% endblock %}
+
+
+{% block extra_css %}
+
+    <link
+        rel="stylesheet"
+        href="{% static 'services/css/service_list.css' %}?v=229"
+    >
+
+{% endblock %}
+
+
+{% block content %}
+
+     <!-- ==========================================
+    SECTION 0 START
+    Global Navigation
+    ========================================== -->
+
+    {% include "includes/navbar.html" %}
+
+    <!-- ==========================================
+    SECTION 0 END
+    ========================================== -->
+
+    <main class="service-page">
+
+
+        {% comment %}
+        ==========================================
+        SECTION 1 START
+        Breadcrumb
+        ==========================================
+        {% endcomment %}
+
+        <nav
+            class="breadcrumb"
+            aria-label="Breadcrumb"
+        >
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+            <span aria-hidden="true">
+                /
+            </span>
+
+            <span aria-current="page">
+                Car Services
+            </span>
+
+        </nav>
+
+        {% comment %}
+        ==========================================
+        SECTION 1 END
+        Breadcrumb
+        ==========================================
+        {% endcomment %}
+
+
+        {% comment %}
+        ==========================================
+        SECTION 2 START
+        Banner Advertisement
+        ==========================================
+        {% endcomment %}
+
+        <div class="service-banner">
+
+            {% include "core/home_parts/banner_ad.html" %}
+
+        </div>
+
+        {% comment %}
+        ==========================================
+        SECTION 2 END
+        Banner Advertisement
+        ==========================================
+        {% endcomment %}
+
+
+        {% comment %}
+        ==========================================
+        SECTION 3 START
+        Page Header
+        ==========================================
+        {% endcomment %}
+
+        <header class="service-header">
+
+            <div class="service-header-content">
+
+                <h1>
+                    Car Services
+                </h1>
+
+                <p>
+                    Find trusted automotive service providers
+                    across Australia.
+                </p>
+
+            </div>
+
+            <a
+                href="{% url 'create_service' %}"
+                class="btn btn-primary"
+            >
+                List Your Service
+            </a>
+
+        </header>
+
+        {% comment %}
+        ==========================================
+        SECTION 3 END
+        Page Header
+        ==========================================
+        {% endcomment %}
+
+
+        {% comment %}
+        ==========================================
+        SECTION 4 START
+        Search and Filters
+        ==========================================
+        {% endcomment %}
+
+        <section
+            class="service-filter-section"
+            aria-label="Search car services"
+        >
+
+            <form
+                method="GET"
+                action="{% url 'service_list' %}"
+                class="service-filters"
+            >
+
+                <div class="service-filter-group">
+
+                    <label
+                        for="service-search"
+                        class="service-filter-label"
+                    >
+                        Search
+                    </label>
+
+                    <input
+                        type="search"
+                        id="service-search"
+                        name="search"
+                        value="{{ search_query }}"
+                        placeholder="Search services or businesses..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <div class="service-filter-group">
+
+                    <label
+                        for="service-category"
+                        class="service-filter-label"
+                    >
+                        Category
+                    </label>
+
+                    <select
+                        id="service-category"
+                        name="category"
+                    >
+
+                        <option value="">
+                            All Categories
+                        </option>
+
+                        {% for value, label in category_choices %}
+
+                            <option
+                                value="{{ value }}"
+                                {% if selected_category == value %}
+                                    selected
+                                {% endif %}
+                            >
+                                {{ label }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <div class="service-filter-group">
+
+                    <label
+                        for="service-state"
+                        class="service-filter-label"
+                    >
+                        State
+                    </label>
+
+                    <select
+                        id="service-state"
+                        name="state"
+                    >
+
+                        <option value="">
+                            All States
+                        </option>
+
+                        {% for value, label in state_choices %}
+
+                            <option
+                                value="{{ value }}"
+                                {% if selected_state == value %}
+                                    selected
+                                {% endif %}
+                            >
+                                {{ label }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <div class="service-filter-group">
+
+                    <label
+                        for="service-suburb"
+                        class="service-filter-label"
+                    >
+                        Suburb
+                    </label>
+
+                    <input
+                        type="text"
+                        id="service-suburb"
+                        name="suburb"
+                        value="{{ selected_suburb }}"
+                        placeholder="Enter suburb"
+                        autocomplete="address-level2"
+                    >
+
+                </div>
+
+
+                <div class="service-filter-group">
+
+                    <label
+                        for="service-type"
+                        class="service-filter-label"
+                    >
+                        Service Type
+                    </label>
+
+                    <select
+                        id="service-type"
+                        name="mobile_service"
+                    >
+
+                        <option value="">
+                            Any Service
+                        </option>
+
+                        <option
+                            value="yes"
+                            {% if selected_mobile_service == "yes" %}
+                                selected
+                            {% endif %}
+                        >
+                            Mobile Service
+                        </option>
+
+                        <option
+                            value="no"
+                            {% if selected_mobile_service == "no" %}
+                                selected
+                            {% endif %}
+                        >
+                            Fixed Location
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="service-filter-group">
+
+                    <label
+                        for="service-sort"
+                        class="service-filter-label"
+                    >
+                        Sort By
+                    </label>
+
+                    <select
+                        id="service-sort"
+                        name="sort"
+                    >
+
+                        <option
+                            value="featured"
+                            {% if selected_sort == "featured" %}
+                                selected
+                            {% endif %}
+                        >
+                            Featured First
+                        </option>
+
+                        <option
+                            value="newest"
+                            {% if selected_sort == "newest" %}
+                                selected
+                            {% endif %}
+                        >
+                            Newest First
+                        </option>
+
+                        <option
+                            value="price_low"
+                            {% if selected_sort == "price_low" %}
+                                selected
+                            {% endif %}
+                        >
+                            Price: Low to High
+                        </option>
+
+                        <option
+                            value="price_high"
+                            {% if selected_sort == "price_high" %}
+                                selected
+                            {% endif %}
+                        >
+                            Price: High to Low
+                        </option>
+
+                        <option
+                            value="popular"
+                            {% if selected_sort == "popular" %}
+                                selected
+                            {% endif %}
+                        >
+                            Most Viewed
+                        </option>
+
+                        <option
+                            value="business"
+                            {% if selected_sort == "business" %}
+                                selected
+                            {% endif %}
+                        >
+                            Business Name
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="service-filter-actions">
+
+                    <button
+                        type="submit"
+                        class="service-filter-submit"
+                    >
+                        Search Services
+                    </button>
+
+                    {% if search_query or selected_category or selected_state or selected_suburb or selected_mobile_service or selected_sort != "featured" %}
+
+                        <a
+                            href="{% url 'service_list' %}"
+                            class="service-filter-reset"
+                        >
+                            Reset Filters
+                        </a>
+
+                    {% endif %}
+
+                </div>
+
+            </form>
+
+        </section>
+
+        {% comment %}
+        ==========================================
+        SECTION 4 END
+        Search and Filters
+        ==========================================
+        {% endcomment %}
+
+
+        {% comment %}
+        ==========================================
+        SECTION 5 START
+        Results Summary
+        ==========================================
+        {% endcomment %}
+
+        <div class="service-results-summary">
+
+            <p>
+
+                <strong>
+                    {{ total_services|intcomma }}
+                </strong>
+
+                car service{{ total_services|pluralize }}
+                found
+
+            </p>
+
+        </div>
+
+        {% comment %}
+        ==========================================
+        SECTION 5 END
+        Results Summary
+        ==========================================
+        {% endcomment %}
+
+
+        {% comment %}
+        ==========================================
+        SECTION 6 START
+        Service Listings
+        ==========================================
+        {% endcomment %}
+
+        {% if services %}
+
+            <section
+                class="service-grid"
+                aria-label="Car service listings"
+            >
+
+                {% for service in services %}
+
+                    {% comment %}
+                    ==========================================
+                    SECTION 6.1 START
+                    Fully Clickable Service Card
+                    ==========================================
+                    {% endcomment %}
+
+                    <a
+                        href="{{ service.get_absolute_url }}"
+                        class="service-card-link"
+                        aria-label="View {{ service.title }}"
+                    >
+
+                        <article class="service-card">
+
+                            <div class="service-card-image-link">
+
+                                {% if service.primary_image %}
+
+                                    <img
+                                        src="{{ service.primary_image.image.url }}"
+                                        alt="{{ service.primary_image.alt_text|default:service.title }}"
+                                        class="service-card-image"
+                                        loading="lazy"
+                                    >
+
+                                {% else %}
+
+                                    <div class="service-card-image-placeholder">
+
+                                        <span>
+                                            No service image available
+                                        </span>
+
+                                    </div>
+
+                                {% endif %}
+
+
+                                {% if service.is_featured %}
+
+                                    <span class="service-featured-badge">
+                                        Featured
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="service-card-body">
+
+                                <h2>
+                                    {{ service.title }}
+                                </h2>
+
+
+                                <p class="service-business-name">
+                                    {{ service.business_name }}
+                                </p>
+
+
+                                <div class="service-card-details">
+
+                                    <p>
+                                        <strong>Category:</strong>
+                                        {{ service.get_category_display }}
+                                    </p>
+
+                                    <p>
+                                        <strong>Location:</strong>
+                                        {{ service.location }}
+                                    </p>
+
+                                </div>
+
+
+                                <div class="service-card-price">
+                                    {{ service.display_price }}
+                                </div>
+
+
+                                <div class="service-card-badges">
+
+                                    {% if service.mobile_service %}
+
+                                        <span class="badge badge-mobile">
+                                            Mobile Service
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="badge badge-location">
+                                            Fixed Location
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                    </a>
+
+                    {% comment %}
+                    ==========================================
+                    SECTION 6.1 END
+                    Fully Clickable Service Card
+                    ==========================================
+                    {% endcomment %}
+
+                    {# ------------------------------------------ #}
+
+                {% endfor %}
+
+            </section>
+
+        {% else %}
+
+            <section class="service-empty-state">
+
+                <div
+                    class="service-empty-icon"
+                    aria-hidden="true"
+                >
+                    🔧
+                </div>
+
+                <h2>
+                    No Car Services Found
+                </h2>
+
+                <p>
+                    No service listings matched your current
+                    search. Try changing the filters or view
+                    all available car services.
+                </p>
+
+                <a
+                    href="{% url 'service_list' %}"
+                    class="btn btn-primary"
+                >
+                    View All Services
+                </a>
+
+            </section>
+
+        {% endif %}
+
+        {% comment %}
+        ==========================================
+        SECTION 6 END
+        Service Listings
+        ==========================================
+        {% endcomment %}
+
+
+        {% comment %}
+        ==========================================
+        SECTION 7 START
+        Pagination
+        ==========================================
+        {% endcomment %}
+
+        {% if page_obj.has_other_pages %}
+
+            <nav
+                class="pagination"
+                aria-label="Car services pagination"
+            >
+
+                {% if page_obj.has_previous %}
+
+                    <a
+                        href="?{% if query_string %}{{ query_string }}&amp;{% endif %}page=1"
+                        aria-label="Go to first page"
+                    >
+                        First
+                    </a>
+
+                    <a
+                        href="?{% if query_string %}{{ query_string }}&amp;{% endif %}page={{ page_obj.previous_page_number }}"
+                        aria-label="Go to previous page"
+                    >
+                        Previous
+                    </a>
+
+                {% endif %}
+
+
+                {% for page_number in page_obj.paginator.page_range %}
+
+                    {% if page_number == page_obj.number %}
+
+                        <span
+                            class="pagination-current"
+                            aria-current="page"
+                        >
+                            {{ page_number }}
+                        </span>
+
+                    {% elif page_number >= page_obj.number|add:"-2" and page_number <= page_obj.number|add:"2" %}
+
+                        <a
+                            href="?{% if query_string %}{{ query_string }}&amp;{% endif %}page={{ page_number }}"
+                            aria-label="Go to page {{ page_number }}"
+                        >
+                            {{ page_number }}
+                        </a>
+
+                    {% endif %}
+
+                {% endfor %}
+
+
+                {% if page_obj.has_next %}
+
+                    <a
+                        href="?{% if query_string %}{{ query_string }}&amp;{% endif %}page={{ page_obj.next_page_number }}"
+                        aria-label="Go to next page"
+                    >
+                        Next
+                    </a>
+
+                    <a
+                        href="?{% if query_string %}{{ query_string }}&amp;{% endif %}page={{ page_obj.paginator.num_pages }}"
+                        aria-label="Go to last page"
+                    >
+                        Last
+                    </a>
+
+                {% endif %}
+
+            </nav>
+
+        {% endif %}
+
+        {% comment %}
+        ==========================================
+        SECTION 7 END
+        Pagination
+        ==========================================
+        {% endcomment %}
+
+    </main>
+     <!-- ==========================================
+    SECTION 8 START
+    Global Footer
+    ========================================== -->
+
+    {% include "includes/footer.html" %}
+
+    <!-- ==========================================
+    SECTION 8 END
+    ========================================== -->
+
+{% endblock %}

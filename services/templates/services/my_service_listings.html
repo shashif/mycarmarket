@@ -1,0 +1,1171 @@
+<!-- ==========================================
+MyCarMarket Australia
+Version: v2.2.6
+File: services/templates/services/my_service_listings.html
+Location: services/templates/services/my_service_listings.html
+Description:
+User service listings management page
+- Extends the shared base.html template
+- Uses global MyCarMarket CSS and JavaScript
+- Includes the shared navigation bar
+- Displays listing moderation status
+- Displays active, inactive and featured badges
+- Provides preview, edit and delete controls
+- Shows rejection reasons
+- Includes responsive service cards
+- Includes empty listings state
+- Includes pagination
+- Optimised for tablet and mobile devices
+Last Updated: 17 Jul 2026
+========================================== -->
+
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+
+{% block title %}
+    My Service Listings | MyCarMarket Australia
+{% endblock %}
+
+
+{% block extra_css %}
+
+    <style>
+
+        /* ==========================================
+        SECTION 1 START
+        Page Wrapper
+        ========================================== */
+
+        .my-services-page {
+            width: 100%;
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 30px 24px 70px;
+            box-sizing: border-box;
+        }
+
+        /* ==========================================
+        SECTION 1 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 2 START
+        Breadcrumb
+        ========================================== */
+
+        .my-services-breadcrumb {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            margin: 0 0 22px;
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .my-services-breadcrumb a {
+            color: #2563eb;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .my-services-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* ==========================================
+        SECTION 2 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 3 START
+        Page Header
+        ========================================== */
+
+        .my-services-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            margin: 0 0 26px;
+            padding: 26px 28px;
+            background: #111827;
+            border-radius: 16px;
+            color: #ffffff;
+        }
+
+        .my-services-header-content {
+            min-width: 0;
+        }
+
+        .my-services-header h1 {
+            margin: 0 0 8px;
+            color: #ffffff;
+            font-size: 32px;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .my-services-header p {
+            margin: 0;
+            color: #cbd5e1;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .my-services-add-button {
+            flex: 0 0 auto;
+            min-height: 46px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 11px 18px;
+            border: 0;
+            border-radius: 9px;
+            background: #e52329;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 800;
+            line-height: 1.3;
+            text-align: center;
+            text-decoration: none;
+            white-space: nowrap;
+            transition:
+                background-color 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .my-services-add-button:hover {
+            background: #c91d22;
+        }
+
+        .my-services-add-button:active {
+            transform: translateY(1px);
+        }
+
+        .my-services-add-button:focus-visible {
+            outline: 3px solid rgba(229, 35, 41, 0.28);
+            outline-offset: 3px;
+        }
+
+        /* ==========================================
+        SECTION 3 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 4 START
+        Results Summary
+        ========================================== */
+
+        .my-services-summary {
+            margin: 0 0 22px;
+            padding: 16px 18px;
+            border: 1px solid #dbeafe;
+            border-radius: 11px;
+            background: #eff6ff;
+            color: #1e3a8a;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.5;
+        }
+
+        /* ==========================================
+        SECTION 4 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 5 START
+        Service Listings Grid
+        ========================================== */
+
+        .my-services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .my-service-card {
+            min-width: 0;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 220px minmax(0, 1fr);
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            box-shadow: 0 7px 22px rgba(15, 23, 42, 0.05);
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .my-service-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+        }
+
+        /* ==========================================
+        SECTION 5 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 6 START
+        Service Image
+        ========================================== */
+
+        .my-service-image {
+            min-width: 0;
+            min-height: 220px;
+            overflow: hidden;
+            background: #e5e7eb;
+        }
+
+        .my-service-image img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            min-height: 220px;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .my-service-image-placeholder {
+            width: 100%;
+            height: 100%;
+            min-height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: #f1f5f9;
+            color: #64748b;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.5;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        /* ==========================================
+        SECTION 6 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 7 START
+        Service Content
+        ========================================== */
+
+        .my-service-content {
+            min-width: 0;
+            padding: 22px;
+        }
+
+        .my-service-content h2 {
+            margin: 0 0 7px;
+            color: #111827;
+            font-size: 21px;
+            font-weight: 800;
+            line-height: 1.3;
+            overflow-wrap: anywhere;
+        }
+
+        .my-service-business {
+            margin: 0 0 14px;
+            color: #475569;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.5;
+            overflow-wrap: anywhere;
+        }
+
+        /* ==========================================
+        SECTION 7 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 8 START
+        Status Badges
+        ========================================== */
+
+        .my-service-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 0 0 13px;
+        }
+
+        .my-service-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 28px;
+            padding: 5px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 800;
+            line-height: 1;
+            box-sizing: border-box;
+        }
+
+        .my-service-badge-pending {
+            border: 1px solid #fcd34d;
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .my-service-badge-approved {
+            border: 1px solid #86efac;
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .my-service-badge-rejected {
+            border: 1px solid #fca5a5;
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .my-service-badge-active {
+            border: 1px solid #a7f3d0;
+            background: #ecfdf5;
+            color: #047857;
+        }
+
+        .my-service-badge-inactive {
+            border: 1px solid #d1d5db;
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .my-service-badge-featured {
+            border: 1px solid #bfdbfe;
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        /* ==========================================
+        SECTION 8 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 9 START
+        Service Metadata
+        ========================================== */
+
+        .my-service-meta {
+            display: grid;
+            gap: 8px;
+            margin: 0 0 18px;
+            color: #475569;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .my-service-meta-row {
+            min-width: 0;
+            overflow-wrap: anywhere;
+        }
+
+        .my-service-meta strong {
+            color: #111827;
+        }
+
+        /* ==========================================
+        SECTION 9 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 10 START
+        Rejection Notice
+        ========================================== */
+
+        .my-service-rejection {
+            margin: 0 0 18px;
+            padding: 12px 14px;
+            border: 1px solid #fecaca;
+            border-radius: 9px;
+            background: #fef2f2;
+            color: #991b1b;
+            font-size: 13px;
+            line-height: 1.55;
+            overflow-wrap: anywhere;
+        }
+
+        /* ==========================================
+        SECTION 10 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 11 START
+        Service Actions
+        ========================================== */
+
+        .my-service-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+        }
+
+        .my-service-action {
+            min-height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 9px 13px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 800;
+            line-height: 1.3;
+            text-align: center;
+            text-decoration: none;
+            box-sizing: border-box;
+            transition:
+                background-color 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .my-service-action-preview {
+            border: 1px solid #bfdbfe;
+            background: #eff6ff;
+            color: #1d4ed8;
+        }
+
+        .my-service-action-preview:hover {
+            background: #dbeafe;
+        }
+
+        .my-service-action-edit {
+            border: 1px solid #cbd5e1;
+            background: #ffffff;
+            color: #334155;
+        }
+
+        .my-service-action-edit:hover {
+            background: #f8fafc;
+        }
+
+        .my-service-action-delete {
+            border: 1px solid #fecaca;
+            background: #fef2f2;
+            color: #b91c1c;
+        }
+
+        .my-service-action-delete:hover {
+            background: #fee2e2;
+        }
+
+        .my-service-action:focus-visible {
+            outline: 3px solid rgba(37, 99, 235, 0.2);
+            outline-offset: 2px;
+        }
+
+        /* ==========================================
+        SECTION 11 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 12 START
+        Empty State
+        ========================================== */
+
+        .my-services-empty {
+            padding: 55px 24px;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            background: #ffffff;
+            text-align: center;
+        }
+
+        .my-services-empty-icon {
+            margin: 0 0 16px;
+            font-size: 52px;
+            line-height: 1;
+        }
+
+        .my-services-empty h2 {
+            margin: 0 0 10px;
+            color: #111827;
+            font-size: 24px;
+            font-weight: 800;
+            line-height: 1.3;
+        }
+
+        .my-services-empty p {
+            max-width: 560px;
+            margin: 0 auto 23px;
+            color: #64748b;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* ==========================================
+        SECTION 12 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 13 START
+        Pagination
+        ========================================== */
+
+        .my-services-pagination {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin: 32px 0 0;
+        }
+
+        .my-services-pagination a,
+        .my-services-pagination span {
+            min-width: 42px;
+            min-height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            background: #ffffff;
+            color: #334155;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+
+        .my-services-pagination a:hover {
+            border-color: #2563eb;
+            color: #2563eb;
+        }
+
+        .my-services-pagination .current-page {
+            border-color: #2563eb;
+            background: #2563eb;
+            color: #ffffff;
+        }
+
+        /* ==========================================
+        SECTION 13 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 14 START
+        Large Tablet Responsive
+        ========================================== */
+
+        @media (max-width: 1100px) {
+
+            .my-services-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        /* ==========================================
+        SECTION 14 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 15 START
+        Tablet Responsive
+        ========================================== */
+
+        @media (max-width: 820px) {
+
+            .my-services-page {
+                padding: 22px 16px 55px;
+            }
+
+            .my-services-header {
+                padding: 23px;
+            }
+
+            .my-services-header h1 {
+                font-size: 28px;
+            }
+
+        }
+
+        /* ==========================================
+        SECTION 15 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 16 START
+        Mobile Responsive
+        ========================================== */
+
+        @media (max-width: 720px) {
+
+            .my-services-page {
+                padding: 18px 12px 45px;
+            }
+
+            .my-services-breadcrumb {
+                margin-bottom: 15px;
+                font-size: 12px;
+            }
+
+            .my-services-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 18px;
+                margin-bottom: 20px;
+                padding: 20px 18px;
+                border-radius: 14px;
+            }
+
+            .my-services-header h1 {
+                font-size: 25px;
+            }
+
+            .my-services-header p {
+                font-size: 14px;
+            }
+
+            .my-services-add-button {
+                width: 100%;
+                min-height: 50px;
+                white-space: normal;
+            }
+
+            .my-services-summary {
+                margin-bottom: 18px;
+                padding: 14px 15px;
+            }
+
+            .my-services-grid {
+                gap: 18px;
+            }
+
+            .my-service-card {
+                grid-template-columns: 1fr;
+                border-radius: 13px;
+            }
+
+            .my-service-image,
+            .my-service-image img,
+            .my-service-image-placeholder {
+                width: 100%;
+                height: 240px;
+                min-height: 240px;
+            }
+
+            .my-service-content {
+                padding: 19px 17px;
+            }
+
+            .my-service-content h2 {
+                font-size: 20px;
+            }
+
+            .my-service-actions {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+
+            .my-service-action {
+                width: 100%;
+                min-width: 0;
+                padding-right: 8px;
+                padding-left: 8px;
+            }
+
+            .my-services-empty {
+                padding: 42px 18px;
+            }
+
+        }
+
+        /* ==========================================
+        SECTION 16 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 17 START
+        Small Mobile Responsive
+        ========================================== */
+
+        @media (max-width: 480px) {
+
+            .my-services-page {
+                padding-right: 10px;
+                padding-left: 10px;
+            }
+
+            .my-services-header {
+                padding: 18px 15px;
+            }
+
+            .my-services-header h1 {
+                font-size: 23px;
+            }
+
+            .my-service-image,
+            .my-service-image img,
+            .my-service-image-placeholder {
+                height: 210px;
+                min-height: 210px;
+            }
+
+            .my-service-content {
+                padding: 17px 14px;
+            }
+
+            .my-service-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .my-service-action {
+                min-height: 44px;
+            }
+
+            .my-services-pagination a,
+            .my-services-pagination span {
+                min-width: 39px;
+                min-height: 39px;
+                padding: 7px 10px;
+                font-size: 13px;
+            }
+
+        }
+
+        /* ==========================================
+        SECTION 17 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 18 START
+        Reduced Motion
+        ========================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .my-service-card,
+            .my-services-add-button,
+            .my-service-action {
+                transition: none;
+            }
+
+        }
+
+        /* ==========================================
+        SECTION 18 END
+        ========================================== */
+
+    </style>
+
+{% endblock %}
+
+
+{% block content %}
+
+    {% include "includes/navbar.html" %}
+
+
+    <main class="my-services-page">
+
+
+        {% comment %}
+        ==========================================
+        SECTION 1 START
+        Breadcrumb
+        ==========================================
+        {% endcomment %}
+
+        <nav
+            class="my-services-breadcrumb"
+            aria-label="Breadcrumb"
+        >
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+            <span aria-hidden="true">
+                /
+            </span>
+
+            <a href="{% url 'service_list' %}">
+                Car Services
+            </a>
+
+            <span aria-hidden="true">
+                /
+            </span>
+
+            <span aria-current="page">
+                My Service Listings
+            </span>
+
+        </nav>
+
+        {% comment %}
+        ==========================================
+        SECTION 1 END
+        Breadcrumb
+        ==========================================
+        {% endcomment %}
+
+
+        {% comment %}
+        ==========================================
+        SECTION 2 START
+        Page Header
+        ==========================================
+        {% endcomment %}
+
+        <header class="my-services-header">
+
+            <div class="my-services-header-content">
+
+                <h1>
+                    My Service Listings
+                </h1>
+
+                <p>
+                    Manage, preview, edit or remove your
+                    car service listings.
+                </p>
+
+            </div>
+
+            <a
+                href="{% url 'create_service' %}"
+                class="my-services-add-button"
+            >
+                + List a New Service
+            </a>
+
+        </header>
+
+        {% comment %}
+        ==========================================
+        SECTION 2 END
+        Page Header
+        ==========================================
+        {% endcomment %}
+
+
+        {% comment %}
+        ==========================================
+        SECTION 3 START
+        Results Summary
+        ==========================================
+        {% endcomment %}
+
+        <div class="my-services-summary">
+
+            Total service listings:
+            <strong>
+                {{ total_services|intcomma }}
+            </strong>
+
+        </div>
+
+        {% comment %}
+        ==========================================
+        SECTION 3 END
+        Results Summary
+        ==========================================
+        {% endcomment %}
+
+
+        {% comment %}
+        ==========================================
+        SECTION 4 START
+        Service Listings
+        ==========================================
+        {% endcomment %}
+
+        {% if services %}
+
+            <section
+                class="my-services-grid"
+                aria-label="My service listings"
+            >
+
+                {% for service in services %}
+
+                    <article class="my-service-card">
+
+
+                        <div class="my-service-image">
+
+                            {% if service.primary_image %}
+
+                                <img
+                                    src="{{ service.primary_image.image.url }}"
+                                    alt="{{ service.primary_image.alt_text|default:service.title }}"
+                                    loading="lazy"
+                                >
+
+                            {% else %}
+
+                                <div class="my-service-image-placeholder">
+                                    No service image available
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="my-service-content">
+
+
+                            <div class="my-service-badges">
+
+                                {% if service.moderation_status == "approved" %}
+
+                                    <span class="my-service-badge my-service-badge-approved">
+                                        Approved
+                                    </span>
+
+                                {% elif service.moderation_status == "rejected" %}
+
+                                    <span class="my-service-badge my-service-badge-rejected">
+                                        Rejected
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="my-service-badge my-service-badge-pending">
+                                        Pending Approval
+                                    </span>
+
+                                {% endif %}
+
+
+                                {% if service.is_active %}
+
+                                    <span class="my-service-badge my-service-badge-active">
+                                        Active
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="my-service-badge my-service-badge-inactive">
+                                        Inactive
+                                    </span>
+
+                                {% endif %}
+
+
+                                {% if service.is_featured %}
+
+                                    <span class="my-service-badge my-service-badge-featured">
+                                        Featured
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <h2>
+                                {{ service.title }}
+                            </h2>
+
+                            <p class="my-service-business">
+                                {{ service.business_name }}
+                            </p>
+
+
+                            <div class="my-service-meta">
+
+                                <div class="my-service-meta-row">
+                                    <strong>Category:</strong>
+                                    {{ service.get_category_display }}
+                                </div>
+
+                                <div class="my-service-meta-row">
+                                    <strong>Location:</strong>
+                                    {{ service.location }}
+                                </div>
+
+                                <div class="my-service-meta-row">
+                                    <strong>Price:</strong>
+                                    {{ service.display_price }}
+                                </div>
+
+                                <div class="my-service-meta-row">
+                                    <strong>Views:</strong>
+                                    {{ service.views|intcomma }}
+                                </div>
+
+                                <div class="my-service-meta-row">
+                                    <strong>Submitted:</strong>
+                                    {{ service.created_at|date:"d M Y" }}
+                                </div>
+
+                            </div>
+
+
+                            {% if service.moderation_status == "rejected" and service.rejection_reason %}
+
+                                <div class="my-service-rejection">
+
+                                    <strong>
+                                        Rejection reason:
+                                    </strong>
+
+                                    {{ service.rejection_reason }}
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <div class="my-service-actions">
+
+                                <a
+                                    href="{% url 'service_owner_preview' service.slug %}"
+                                    class="my-service-action my-service-action-preview"
+                                >
+                                    Preview
+                                </a>
+
+                                <a
+                                    href="{% url 'edit_service' service.slug %}"
+                                    class="my-service-action my-service-action-edit"
+                                >
+                                    Edit
+                                </a>
+
+                                <a
+                                    href="{% url 'delete_service' service.slug %}"
+                                    class="my-service-action my-service-action-delete"
+                                >
+                                    Delete
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </section>
+
+
+            {% if page_obj.has_other_pages %}
+
+                <nav
+                    class="my-services-pagination"
+                    aria-label="Service listings pagination"
+                >
+
+                    {% if page_obj.has_previous %}
+
+                        <a
+                            href="?page=1"
+                            aria-label="Go to first page"
+                        >
+                            First
+                        </a>
+
+                        <a
+                            href="?page={{ page_obj.previous_page_number }}"
+                            aria-label="Go to previous page"
+                        >
+                            Previous
+                        </a>
+
+                    {% endif %}
+
+
+                    <span
+                        class="current-page"
+                        aria-current="page"
+                    >
+                        {{ page_obj.number }}
+                    </span>
+
+
+                    {% if page_obj.has_next %}
+
+                        <a
+                            href="?page={{ page_obj.next_page_number }}"
+                            aria-label="Go to next page"
+                        >
+                            Next
+                        </a>
+
+                        <a
+                            href="?page={{ page_obj.paginator.num_pages }}"
+                            aria-label="Go to last page"
+                        >
+                            Last
+                        </a>
+
+                    {% endif %}
+
+                </nav>
+
+            {% endif %}
+
+        {% else %}
+
+            <section class="my-services-empty">
+
+                <div
+                    class="my-services-empty-icon"
+                    aria-hidden="true"
+                >
+                    🔧
+                </div>
+
+                <h2>
+                    No Service Listings Yet
+                </h2>
+
+                <p>
+                    You have not listed any car services.
+                    Create your first listing to advertise
+                    your business on MyCarMarket Australia.
+                </p>
+
+                <a
+                    href="{% url 'create_service' %}"
+                    class="my-services-add-button"
+                >
+                    List Your First Service
+                </a>
+
+            </section>
+
+        {% endif %}
+
+        {% comment %}
+        ==========================================
+        SECTION 4 END
+        Service Listings
+        ==========================================
+        {% endcomment %}
+
+    </main>
+
+{% endblock %}

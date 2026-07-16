@@ -1,0 +1,989 @@
+<!-- ==========================================
+MyCarMarket Australia
+Version: v2.2.8
+File: services/templates/services/service_detail.html
+Location: services/templates/services/service_detail.html
+Description:
+Car Service detail page
+- Extends the shared base.html template
+- Uses the global advertisement system
+- Displays service information and pricing
+- Removes the public business website
+- Displays a secure customer enquiry form
+- Hides the Website honeypot spam field
+- Includes an editable pre-filled enquiry message
+- Preserves submitted values and validation errors
+- Displays related car services
+- Supports owner preview and moderation badges
+- Uses external service_detail.css styling
+Last Updated: 17 Jul 2026
+========================================== -->
+
+
+{% extends "base.html" %}
+{% load humanize %}
+{% load static %}
+
+
+{% comment %}
+==========================================
+SECTION 01 START
+Page Title
+==========================================
+{% endcomment %}
+
+{% block title %}
+    {{ service.title }} | MyCarMarket Australia
+{% endblock %}
+
+{% comment %}
+==========================================
+SECTION 01 END
+==========================================
+{% endcomment %}
+
+{# --------------------------------------------- #}
+
+
+{% comment %}
+==========================================
+SECTION 02 START
+Page-Specific CSS
+==========================================
+{% endcomment %}
+
+{% block extra_css %}
+
+    <link
+        rel="stylesheet"
+        href="{% static 'services/css/service_detail.css' %}?v=228"
+    >
+
+{% endblock %}
+
+{% comment %}
+==========================================
+SECTION 02 END
+==========================================
+{% endcomment %}
+
+{# --------------------------------------------- #}
+
+
+{% block content %}
+
+
+    {% comment %}
+    ==========================================
+    SECTION 03 START
+    Global Navigation
+    ==========================================
+    {% endcomment %}
+
+    {% include "includes/navbar.html" %}
+
+    {% comment %}
+    ==========================================
+    SECTION 03 END
+    ==========================================
+    {% endcomment %}
+
+    {# --------------------------------------------- #}
+
+
+    <main class="service-detail-page">
+
+
+        {% comment %}
+        ==========================================
+        SECTION 04 START
+        Breadcrumb Navigation
+        ==========================================
+        {% endcomment %}
+
+        <nav
+            class="service-detail-breadcrumb"
+            aria-label="Breadcrumb"
+        >
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+            <span aria-hidden="true">
+                /
+            </span>
+
+            <a href="{% url 'service_list' %}">
+                Car Services
+            </a>
+
+            <span aria-hidden="true">
+                /
+            </span>
+
+            <span aria-current="page">
+                {{ service.title }}
+            </span>
+
+        </nav>
+
+        {% comment %}
+        ==========================================
+        SECTION 04 END
+        ==========================================
+        {% endcomment %}
+
+        {# --------------------------------------------- #}
+
+
+        {% comment %}
+        ==========================================
+        SECTION 05 START
+        Banner Advertisement
+        ==========================================
+        {% endcomment %}
+
+        <div class="service-detail-banner">
+
+            {% include "core/home_parts/banner_ad.html" %}
+
+        </div>
+
+        {% comment %}
+        ==========================================
+        SECTION 05 END
+        ==========================================
+        {% endcomment %}
+
+        {# --------------------------------------------- #}
+
+
+        {% comment %}
+        ==========================================
+        SECTION 06 START
+        Owner Preview Notice
+        ==========================================
+        {% endcomment %}
+
+        {% if owner_preview %}
+
+            <div class="service-owner-notice">
+
+                You are viewing the owner preview of this
+                service listing.
+
+                Current status:
+                {{ service.get_moderation_status_display }}.
+
+            </div>
+
+        {% endif %}
+
+        {% comment %}
+        ==========================================
+        SECTION 06 END
+        ==========================================
+        {% endcomment %}
+
+        {# --------------------------------------------- #}
+
+
+        {% comment %}
+        ==========================================
+        SECTION 07 START
+        Service Header
+        ==========================================
+        {% endcomment %}
+
+        <header class="service-detail-header">
+
+            <div class="service-detail-heading">
+
+                <h1>
+                    {{ service.title }}
+                </h1>
+
+                <p class="service-detail-business">
+                    {{ service.business_name }}
+                </p>
+
+                <p class="service-detail-location">
+                    {{ service.location }}
+                </p>
+
+
+                <div class="service-detail-badges">
+
+                    {% if service.mobile_service %}
+
+                        <span
+                            class="service-detail-badge service-detail-badge-mobile"
+                        >
+                            Mobile Service
+                        </span>
+
+                    {% endif %}
+
+
+                    {% if owner_preview %}
+
+                        {% if service.moderation_status == "approved" %}
+
+                            <span
+                                class="service-detail-badge service-detail-badge-approved"
+                            >
+                                Approved
+                            </span>
+
+                        {% elif service.moderation_status == "rejected" %}
+
+                            <span
+                                class="service-detail-badge service-detail-badge-rejected"
+                            >
+                                Rejected
+                            </span>
+
+                        {% else %}
+
+                            <span
+                                class="service-detail-badge service-detail-badge-pending"
+                            >
+                                Pending Approval
+                            </span>
+
+                        {% endif %}
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <div class="service-detail-price">
+
+                <span class="service-detail-price-label">
+                    Service Price
+                </span>
+
+                <strong>
+                    {{ service.display_price }}
+                </strong>
+
+            </div>
+
+        </header>
+
+        {% comment %}
+        ==========================================
+        SECTION 07 END
+        ==========================================
+        {% endcomment %}
+
+        {# --------------------------------------------- #}
+
+
+        {% comment %}
+        ==========================================
+        SECTION 08 START
+        Main Detail Layout
+        ==========================================
+        {% endcomment %}
+
+        <div class="service-detail-layout">
+
+
+            {% comment %}
+            ==========================================
+            SECTION 09 START
+            Main Service Content
+            ==========================================
+            {% endcomment %}
+
+            <div class="service-detail-main">
+
+
+                {% comment %}
+                ==========================================
+                SECTION 10 START
+                Main Service Image
+                ==========================================
+                {% endcomment %}
+
+                <div class="service-detail-image-wrap">
+
+                    {% if service.primary_image %}
+
+                        <img
+                            src="{{ service.primary_image.image.url }}"
+                            alt="{{ service.primary_image.alt_text|default:service.title }}"
+                            class="service-detail-main-image"
+                        >
+
+                    {% else %}
+
+                        <div class="service-detail-image-placeholder">
+
+                            No service image available
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+                {% comment %}
+                ==========================================
+                SECTION 10 END
+                ==========================================
+                {% endcomment %}
+
+                {# --------------------------------------------- #}
+
+
+                {% comment %}
+                ==========================================
+                SECTION 11 START
+                Service Description
+                ==========================================
+                {% endcomment %}
+
+                <section class="service-detail-section">
+
+                    <h2>
+                        About This Service
+                    </h2>
+
+                    <div class="service-detail-description">
+
+                        {{ service.description|linebreaks }}
+
+                    </div>
+
+                </section>
+
+                {% comment %}
+                ==========================================
+                SECTION 11 END
+                ==========================================
+                {% endcomment %}
+
+                {# --------------------------------------------- #}
+
+            </div>
+
+            {% comment %}
+            ==========================================
+            SECTION 09 END
+            ==========================================
+            {% endcomment %}
+
+            {# --------------------------------------------- #}
+
+
+            {% comment %}
+            ==========================================
+            SECTION 12 START
+            Service Sidebar
+            ==========================================
+            {% endcomment %}
+
+            <aside class="service-detail-sidebar">
+
+
+                {% comment %}
+                ==========================================
+                SECTION 13 START
+                Service Information
+                ==========================================
+                {% endcomment %}
+
+                <section class="service-sidebar-card">
+
+                    <h2>
+                        Service Information
+                    </h2>
+
+
+                    <div class="service-information-list">
+
+
+                        <div class="service-information-item">
+
+                            <span class="service-information-label">
+                                Category
+                            </span>
+
+                            <span class="service-information-value">
+                                {{ service.get_category_display }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="service-information-item">
+
+                            <span class="service-information-label">
+                                Location
+                            </span>
+
+                            <span class="service-information-value">
+                                {{ service.location }}
+                            </span>
+
+                        </div>
+
+
+                        {% if service.service_area %}
+
+                            <div class="service-information-item">
+
+                                <span class="service-information-label">
+                                    Service Area
+                                </span>
+
+                                <span class="service-information-value">
+                                    {{ service.service_area }}
+                                </span>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <div class="service-information-item">
+
+                            <span class="service-information-label">
+                                Service Type
+                            </span>
+
+                            <span class="service-information-value">
+
+                                {% if service.mobile_service %}
+                                    Mobile Service
+                                {% else %}
+                                    Fixed Location
+                                {% endif %}
+
+                            </span>
+
+                        </div>
+
+
+                        <div class="service-information-item">
+
+                            <span class="service-information-label">
+                                Starting Price
+                            </span>
+
+                            <span class="service-information-value">
+                                {{ service.display_price }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="service-information-item">
+
+                            <span class="service-information-label">
+                                Listing Views
+                            </span>
+
+                            <span class="service-information-value">
+                                {{ service.views|intcomma }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+                {% comment %}
+                ==========================================
+                SECTION 13 END
+                ==========================================
+                {% endcomment %}
+
+                {# --------------------------------------------- #}
+
+
+                {% comment %}
+                ==========================================
+                SECTION 14 START
+                Customer Enquiry Form
+                ==========================================
+                {% endcomment %}
+
+                {% if not owner_preview %}
+
+                    <section
+                        class="service-sidebar-card"
+                        id="service-enquiry"
+                    >
+
+                        <h2>
+                            Send an Enquiry
+                        </h2>
+
+
+                        <form
+                            method="POST"
+                            action="{% url 'submit_service_enquiry' service.slug %}"
+                            class="service-enquiry-form"
+                            novalidate
+                        >
+
+                            {% csrf_token %}
+
+
+                            {% comment %}
+                            ==========================================
+                            SECTION 15 START
+                            Non-Field Form Errors
+                            ==========================================
+                            {% endcomment %}
+
+                            {% if enquiry_form.non_field_errors %}
+
+                                <ul
+                                    class="errorlist"
+                                    role="alert"
+                                >
+
+                                    {% for error in enquiry_form.non_field_errors %}
+
+                                        <li>
+                                            {{ error }}
+                                        </li>
+
+                                    {% endfor %}
+
+                                </ul>
+
+                            {% endif %}
+
+                            {% comment %}
+                            ==========================================
+                            SECTION 15 END
+                            ==========================================
+                            {% endcomment %}
+
+                            {# --------------------------------------------- #}
+
+
+                            {% comment %}
+                            ==========================================
+                            SECTION 16 START
+                            Customer Name Field
+                            ==========================================
+                            {% endcomment %}
+
+                            <p>
+
+                                <label
+                                    for="{{ enquiry_form.customer_name.id_for_label }}"
+                                >
+                                    {{ enquiry_form.customer_name.label }}
+                                </label>
+
+                                {{ enquiry_form.customer_name }}
+
+
+                                {% if enquiry_form.customer_name.errors %}
+
+                                    <ul
+                                        class="errorlist"
+                                        role="alert"
+                                    >
+
+                                        {% for error in enquiry_form.customer_name.errors %}
+
+                                            <li>
+                                                {{ error }}
+                                            </li>
+
+                                        {% endfor %}
+
+                                    </ul>
+
+                                {% endif %}
+
+                            </p>
+
+                            {% comment %}
+                            ==========================================
+                            SECTION 16 END
+                            ==========================================
+                            {% endcomment %}
+
+                            {# --------------------------------------------- #}
+
+
+                            {% comment %}
+                            ==========================================
+                            SECTION 17 START
+                            Customer Email Field
+                            ==========================================
+                            {% endcomment %}
+
+                            <p>
+
+                                <label
+                                    for="{{ enquiry_form.customer_email.id_for_label }}"
+                                >
+                                    {{ enquiry_form.customer_email.label }}
+                                </label>
+
+                                {{ enquiry_form.customer_email }}
+
+
+                                {% if enquiry_form.customer_email.errors %}
+
+                                    <ul
+                                        class="errorlist"
+                                        role="alert"
+                                    >
+
+                                        {% for error in enquiry_form.customer_email.errors %}
+
+                                            <li>
+                                                {{ error }}
+                                            </li>
+
+                                        {% endfor %}
+
+                                    </ul>
+
+                                {% endif %}
+
+                            </p>
+
+                            {% comment %}
+                            ==========================================
+                            SECTION 17 END
+                            ==========================================
+                            {% endcomment %}
+
+                            {# --------------------------------------------- #}
+
+
+                            {% comment %}
+                            ==========================================
+                            SECTION 18 START
+                            Customer Phone Field
+                            ==========================================
+                            {% endcomment %}
+
+                            <p>
+
+                                <label
+                                    for="{{ enquiry_form.customer_phone.id_for_label }}"
+                                >
+                                    {{ enquiry_form.customer_phone.label }}
+                                </label>
+
+                                {{ enquiry_form.customer_phone }}
+
+
+                                {% if enquiry_form.customer_phone.errors %}
+
+                                    <ul
+                                        class="errorlist"
+                                        role="alert"
+                                    >
+
+                                        {% for error in enquiry_form.customer_phone.errors %}
+
+                                            <li>
+                                                {{ error }}
+                                            </li>
+
+                                        {% endfor %}
+
+                                    </ul>
+
+                                {% endif %}
+
+                            </p>
+
+                            {% comment %}
+                            ==========================================
+                            SECTION 18 END
+                            ==========================================
+                            {% endcomment %}
+
+                            {# --------------------------------------------- #}
+
+
+                            {% comment %}
+                            ==========================================
+                            SECTION 19 START
+                            Editable Pre-Filled Message Field
+                            ==========================================
+                            {% endcomment %}
+
+                            <p>
+
+                                <label for="id_message">
+                                    {{ enquiry_form.message.label }}
+                                </label>
+
+                                <textarea
+                                    name="message"
+                                    id="id_message"
+                                    class="service-form-control service-form-textarea"
+                                    rows="8"
+                                    maxlength="2000"
+                                    required
+                                >{% if enquiry_form.message.value %}{{ enquiry_form.message.value }}{% else %}Hi {{ service.business_name }},
+
+I am interested in your service, “{{ service.title }}”.
+
+Could you please provide more information about:
+
+- Service availability
+- Total price
+- What is included
+- Estimated completion time
+- Available booking dates
+
+My preferred date:
+My location:
+Additional details:
+
+Thank you.{% endif %}</textarea>
+
+
+                                {% if enquiry_form.message.errors %}
+
+                                    <ul
+                                        class="errorlist"
+                                        role="alert"
+                                    >
+
+                                        {% for error in enquiry_form.message.errors %}
+
+                                            <li>
+                                                {{ error }}
+                                            </li>
+
+                                        {% endfor %}
+
+                                    </ul>
+
+                                {% endif %}
+
+                            </p>
+
+                            {% comment %}
+                            ==========================================
+                            SECTION 19 END
+                            ==========================================
+                            {% endcomment %}
+
+                            {# --------------------------------------------- #}
+
+
+                            {% comment %}
+                            ==========================================
+                            SECTION 20 START
+                            Hidden Website Honeypot Field
+                            ==========================================
+                            {% endcomment %}
+
+                            <div
+                                class="service-honeypot-field"
+                                aria-hidden="true"
+                            >
+
+                                <label
+                                    for="{{ enquiry_form.website.id_for_label }}"
+                                >
+                                    Leave this field empty
+                                </label>
+
+                                {{ enquiry_form.website }}
+
+                            </div>
+
+                            {% comment %}
+                            ==========================================
+                            SECTION 20 END
+                            ==========================================
+                            {% endcomment %}
+
+                            {# --------------------------------------------- #}
+
+
+                            {% comment %}
+                            ==========================================
+                            SECTION 21 START
+                            Enquiry Submit Button
+                            ==========================================
+                            {% endcomment %}
+
+                            <button
+                                type="submit"
+                                class="service-enquiry-button"
+                            >
+                                Send Enquiry
+                            </button>
+
+                            {% comment %}
+                            ==========================================
+                            SECTION 21 END
+                            ==========================================
+                            {% endcomment %}
+
+                            {# --------------------------------------------- #}
+
+                        </form>
+
+
+                        <p class="service-enquiry-note">
+
+                            Your enquiry is sent securely to
+                            the service provider. Their private
+                            email address and phone number are
+                            not displayed publicly.
+
+                        </p>
+
+                    </section>
+
+                {% endif %}
+
+                {% comment %}
+                ==========================================
+                SECTION 14 END
+                ==========================================
+                {% endcomment %}
+
+                {# --------------------------------------------- #}
+
+            </aside>
+
+            {% comment %}
+            ==========================================
+            SECTION 12 END
+            ==========================================
+            {% endcomment %}
+
+            {# --------------------------------------------- #}
+
+        </div>
+
+        {% comment %}
+        ==========================================
+        SECTION 08 END
+        ==========================================
+        {% endcomment %}
+
+        {# --------------------------------------------- #}
+
+
+        {% comment %}
+        ==========================================
+        SECTION 22 START
+        Related Car Services
+        ==========================================
+        {% endcomment %}
+
+        {% if related_services %}
+
+            <section class="service-related-section">
+
+                <h2>
+                    Related Car Services
+                </h2>
+
+
+                <div class="service-related-grid">
+
+                    {% for item in related_services %}
+
+                        <article class="service-related-card">
+
+
+                            <a
+                                href="{{ item.get_absolute_url }}"
+                                aria-label="View {{ item.title }}"
+                            >
+
+                                {% if item.primary_image %}
+
+                                    <img
+                                        src="{{ item.primary_image.image.url }}"
+                                        alt="{{ item.primary_image.alt_text|default:item.title }}"
+                                        class="service-related-image"
+                                        loading="lazy"
+                                    >
+
+                                {% else %}
+
+                                    <div class="service-related-placeholder">
+                                        No image available
+                                    </div>
+
+                                {% endif %}
+
+                            </a>
+
+
+                            <div class="service-related-content">
+
+                                <h3>
+
+                                    <a href="{{ item.get_absolute_url }}">
+                                        {{ item.title }}
+                                    </a>
+
+                                </h3>
+
+                                <p>
+                                    {{ item.business_name }}
+                                </p>
+
+                                <p>
+                                    {{ item.location }}
+                                </p>
+
+                                <span class="service-related-price">
+                                    {{ item.display_price }}
+                                </span>
+
+                            </div>
+
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+
+            </section>
+
+        {% endif %}
+
+        {% comment %}
+        ==========================================
+        SECTION 22 END
+        ==========================================
+        {% endcomment %}
+
+        {# --------------------------------------------- #}
+
+    </main>
+     <!-- ==========================================
+    SECTION 8 START
+    Global Footer
+    ========================================== -->
+
+    {% include "includes/footer.html" %}
+
+    <!-- ==========================================
+    SECTION 8 END
+    ========================================== -->
+
+{% endblock %}

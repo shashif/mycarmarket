@@ -1,0 +1,133 @@
+/* ==========================================
+MyCarMarket Australia
+File: services/static/services/css/create_service.css
+========================================== */
+
+.create-service-page{
+    max-width:1100px;
+    margin:20px auto 60px;
+    padding:0 24px;
+}
+
+.create-service-card{
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+    padding:28px;
+    margin-top:24px;
+}
+
+.create-service-header{
+    margin-bottom:24px;
+}
+
+.create-service-header h1{
+    margin:0 0 10px;
+    font-size:34px;
+}
+
+.create-service-header p{
+    color:#6b7280;
+}
+
+.form-section{
+    margin-bottom:32px;
+}
+
+.form-section h2{
+    margin-bottom:16px;
+    padding-bottom:8px;
+    border-bottom:1px solid #e5e7eb;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:18px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-group-full{
+    grid-column:1/-1;
+}
+
+.form-group label{
+    margin-bottom:8px;
+    font-weight:700;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width:100%;
+    padding:12px 14px;
+    border:1px solid #d1d5db;
+    border-radius:10px;
+    box-sizing:border-box;
+    font:inherit;
+}
+
+.form-group textarea{
+    min-height:180px;
+    resize:vertical;
+}
+
+.checkbox-row{
+    flex-direction:row;
+    align-items:center;
+    gap:10px;
+}
+
+.form-error{
+    color:#dc2626;
+    margin-top:6px;
+    font-size:13px;
+}
+
+.form-help{
+    color:#6b7280;
+    margin-top:6px;
+    font-size:13px;
+}
+
+.form-submit-row{
+    margin-top:24px;
+}
+
+.form-submit-row .btn{
+    padding:14px 28px;
+    border:none;
+    border-radius:10px;
+    background:#dc2626;
+    color:#fff;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.form-submit-row .btn:hover{
+    background:#b91c1c;
+}
+
+.form-privacy-note{
+    margin-top:14px;
+    color:#6b7280;
+}
+
+@media(max-width:768px){
+    .create-service-page{
+        padding:0 16px;
+    }
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+    .create-service-card{
+        padding:20px;
+    }
+    .create-service-header h1{
+        font-size:28px;
+    }
+}

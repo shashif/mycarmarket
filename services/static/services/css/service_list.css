@@ -1,0 +1,1019 @@
+/* ==========================================
+MyCarMarket Australia
+Version: v2.2.10
+File: services/static/services/css/service_list.css
+Location: services/static/services/css/service_list.css
+Description:
+Car Services listing page styled to match
+the existing Rentals marketplace design.
+Includes:
+- Dark page header with protected flex layout
+- Prevents header text from collapsing
+- Keeps action button at its natural width
+- Red primary actions
+- Search and filter panel
+- Four-column fully clickable service cards
+- Removed separate View Service button
+- Featured and service-type badges
+- Empty state
+- Pagination
+- Tablet and mobile responsiveness
+Last Updated: 17 Jul 2026
+========================================== */
+
+
+/* ==========================================
+SECTION 1 START
+Page Layout
+========================================== */
+
+.service-page {
+    width: 100%;
+    max-width: 1500px;
+    margin: 24px auto 60px;
+    padding: 0 24px;
+    box-sizing: border-box;
+}
+
+.service-page *,
+.service-page *::before,
+.service-page *::after {
+    box-sizing: border-box;
+}
+
+/* ==========================================
+SECTION 1 END
+Page Layout
+========================================== */
+
+/* ------------------------------------------ */
+
+
+/* ==========================================
+SECTION 2 START
+Breadcrumb
+========================================== */
+
+.service-page .breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 18px;
+    color: #6b7280;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.service-page .breadcrumb a {
+    color: #6b7280;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.service-page .breadcrumb a:hover,
+.service-page .breadcrumb a:focus-visible {
+    color: #dc2626;
+    outline: none;
+}
+
+.service-page .breadcrumb span:last-child {
+    color: #374151;
+    font-weight: 700;
+}
+
+/* ==========================================
+SECTION 2 END
+Breadcrumb
+========================================== */
+
+/* ------------------------------------------ */
+
+
+/* ==========================================
+SECTION 3 START
+Banner Advertisement
+========================================== */
+
+.service-banner {
+    width: 100%;
+    margin-bottom: 22px;
+}
+
+.service-banner > * {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/* ==========================================
+SECTION 3 END
+Banner Advertisement
+========================================== */
+
+/* ------------------------------------------ */
+
+
+/* ==========================================
+SECTION 4 START
+Page Header
+========================================== */
+
+.service-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin: 0 0 22px;
+    padding: 30px;
+    background: #111827;
+    border: 0;
+    border-radius: 18px;
+    color: #ffffff;
+    box-shadow: none;
+}
+
+.service-header-content {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+    max-width: calc(100% - 240px);
+}
+
+.service-header h1 {
+    margin: 0 0 8px;
+    color: #ffffff;
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+
+.service-header p {
+    max-width: 720px;
+    margin: 0;
+    color: #d1d5db;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.service-header .btn {
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 190px;
+    max-width: 240px;
+    min-height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 20px;
+    border: 0;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.service-header .btn-primary {
+    background: #dc2626;
+    color: #ffffff;
+}
+
+.service-header .btn-primary:hover,
+.service-header .btn-primary:focus-visible {
+    background: #b91c1c;
+    color: #ffffff;
+    outline: none;
+    transform: translateY(-1px);
+}
+
+.service-header .btn-primary:active {
+    transform: translateY(0);
+}
+
+
+.service-header > .btn,
+.service-header > .btn-primary {
+    align-self: center;
+}
+
+
+/* ==========================================
+SECTION 4 END
+Page Header
+========================================== */
+
+/* ------------------------------------------ */
+
+
+/* ==========================================
+SECTION 5 START
+Search and Filter Section
+========================================== */
+
+.service-filter-section {
+    margin-bottom: 26px;
+    padding: 22px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+}
+
+.service-filters {
+    display: grid;
+    grid-template-columns:
+        minmax(230px, 2fr)
+        minmax(155px, 1fr)
+        minmax(145px, 1fr)
+        minmax(145px, 1fr)
+        minmax(165px, 1fr)
+        minmax(165px, 1fr);
+    gap: 16px;
+    align-items: end;
+}
+
+.service-filter-group {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.service-filter-label {
+    color: #374151;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.service-filters input,
+.service-filters select {
+    width: 100%;
+    min-height: 46px;
+    padding: 11px 13px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #111827;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.3;
+    outline: none;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.service-filters input::placeholder {
+    color: #9ca3af;
+    opacity: 1;
+}
+
+.service-filters select {
+    cursor: pointer;
+}
+
+.service-filters input:hover,
+.service-filters select:hover {
+    border-color: #9ca3af;
+}
+
+.service-filters input:focus,
+.service-filters select:focus {
+    border-color: #dc2626;
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.11);
+}
+
+.service-filter-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 9px;
+    padding-top: 2px;
+}
+
+.service-filter-submit,
+.service-filter-reset {
+    min-height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 17px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.service-filter-submit {
+    border: 0;
+    background: #dc2626;
+    color: #ffffff;
+}
+
+.service-filter-submit:hover,
+.service-filter-submit:focus-visible {
+    background: #b91c1c;
+    outline: none;
+}
+
+.service-filter-reset {
+    border: 1px solid #d1d5db;
+    background: #ffffff;
+    color: #374151;
+}
+
+.service-filter-reset:hover,
+.service-filter-reset:focus-visible {
+    border-color: #9ca3af;
+    background: #f9fafb;
+    color: #111827;
+    outline: none;
+}
+
+/* ==========================================
+SECTION 5 END
+Search and Filter Section
+========================================== */
+
+/* ------------------------------------------ */
+
+
+/* ==========================================
+SECTION 6 START
+Results Summary
+========================================== */
+
+.service-results-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.service-results-summary p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.service-results-summary strong {
+    color: #111827;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+/* ==========================================
+SECTION 6 END
+Results Summary
+========================================== */
+
+/* ------------------------------------------ */
+
+
+/* ==========================================
+SECTION 7 START
+Service Card Grid and Clickable Card Wrapper
+========================================== */
+
+.service-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.service-card-link {
+    display: block;
+    min-width: 0;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+    border-radius: 15px;
+}
+
+.service-card-link:hover {
+    color: inherit;
+    text-decoration: none;
+}
+
+.service-card-link:focus-visible {
+    outline: 3px solid rgba(220, 38, 38, 0.22);
+    outline-offset: 4px;
+}
+
+.service-card {
+    min-width: 0;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 15px;
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.service-card-link:hover .service-card {
+    border-color: #d1d5db;
+    box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
+    transform: translateY(-3px);
+}
+
+.service-card-link:active .service-card {
+    transform: translateY(-1px);
+}
+
+/* ==========================================
+SECTION 7 END
+Service Card Grid and Clickable Card Wrapper
+========================================== */
+
+/* ------------------------------------------ */
+
+
+/* ==========================================
+SECTION 8 START
+Service Card Image
+========================================== */
+
+.service-card-image-link {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    width: 100%;
+    height: 210px;
+    background: #f3f4f6;
+    text-decoration: none;
+}
+
+.service-card-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.service-card-link:hover .service-card-image {
+    transform: scale(1.025);
+}
+
+.service-card-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: #f3f4f6;
+    color: #9ca3af;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.service-featured-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: #dc2626;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+/* ==========================================
+SECTION 8 END
+Service Card Image
+========================================== */
+
+/* ------------------------------------------ */
+
+
+/* ==========================================
+SECTION 9 START
+Service Card Content
+========================================== */
+
+.service-card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 17px;
+}
+
+.service-card-body h2 {
+    margin: 0 0 10px;
+    color: #111827;
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+.service-business-name {
+    margin: 0 0 8px;
+    color: #6b7280;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.45;
+}
+
+.service-card-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 14px;
+}
+
+.service-card-details p {
+    margin: 0;
+    padding: 5px 8px;
+    border-radius: 6px;
+    background: #f3f4f6;
+    color: #4b5563;
+    font-size: 11px;
+    line-height: 1.35;
+}
+
+.service-card-details strong {
+    display: none;
+}
+
+.service-card-price {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    margin-top: auto;
+    margin-bottom: 10px;
+    color: #dc2626;
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.service-card-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 14px;
+}
+
+.service-card .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.service-card .badge-mobile {
+    background: #15803d;
+    color: #ffffff;
+}
+
+.service-card .badge-location {
+    background: #374151;
+    color: #ffffff;
+}
+
+/* ==========================================
+SECTION 9 END
+Service Card Content
+========================================== */
+
+/* ------------------------------------------ */
+
+
+/* ==========================================
+SECTION 10 START
+Empty State
+========================================== */
+
+.service-empty-state {
+    padding: 65px 20px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    text-align: center;
+}
+
+.service-empty-icon {
+    margin-bottom: 14px;
+    font-size: 48px;
+    line-height: 1;
+}
+
+.service-empty-state h2 {
+    margin: 0 0 9px;
+    color: #111827;
+    font-size: 23px;
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+.service-empty-state p {
+    max-width: 580px;
+    margin: 0 auto 20px;
+    color: #6b7280;
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+.service-empty-state .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 12px 18px;
+    border: 0;
+    border-radius: 9px;
+    background: #dc2626;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+.service-empty-state .btn:hover,
+.service-empty-state .btn:focus-visible {
+    background: #b91c1c;
+    outline: none;
+}
+
+/* ==========================================
+SECTION 10 END
+Empty State
+========================================== */
+
+/* ------------------------------------------ */
+
+
+/* ==========================================
+SECTION 11 START
+Pagination
+========================================== */
+
+.service-page .pagination {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 32px;
+}
+
+.service-page .pagination a,
+.service-page .pagination span {
+    min-width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 11px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #374151;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.service-page .pagination a:hover,
+.service-page .pagination a:focus-visible {
+    border-color: #dc2626;
+    color: #dc2626;
+    outline: none;
+}
+
+.service-page .pagination .pagination-current {
+    border-color: #dc2626;
+    background: #dc2626;
+    color: #ffffff;
+}
+
+/* ==========================================
+SECTION 11 END
+Pagination
+========================================== */
+
+/* ------------------------------------------ */
+
+
+/* ==========================================
+SECTION 12 START
+Large Tablet Responsive
+========================================== */
+
+@media (max-width: 1150px) {
+
+    .service-filters {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+
+    .service-grid {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+
+}
+
+/* ==========================================
+SECTION 12 END
+Large Tablet Responsive
+========================================== */
+
+/* ------------------------------------------ */
+
+
+/* ==========================================
+SECTION 13 START
+Tablet Responsive
+========================================== */
+
+@media (max-width: 800px) {
+
+    .service-header {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .service-header-content {
+        width: 100%;
+        max-width: none;
+    }
+
+    .service-header .btn {
+        width: 100%;
+        max-width: none;
+    }
+
+    .service-filters {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .service-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .service-filter-actions {
+        grid-column: 1 / -1;
+    }
+
+}
+
+/* ==========================================
+SECTION 13 END
+Tablet Responsive
+========================================== */
+
+/* ------------------------------------------ */
+
+
+/* ==========================================
+SECTION 14 START
+Mobile Responsive
+========================================== */
+
+@media (max-width: 560px) {
+
+    .service-page {
+        margin-top: 16px;
+        padding: 0 12px;
+    }
+
+    .service-page .breadcrumb {
+        margin-bottom: 14px;
+        font-size: 13px;
+    }
+
+    .service-banner {
+        margin-bottom: 18px;
+    }
+
+    .service-header {
+        gap: 18px;
+        margin-bottom: 18px;
+        padding: 22px 18px;
+        border-radius: 15px;
+    }
+
+    .service-header h1 {
+        font-size: 27px;
+    }
+
+    .service-header p {
+        font-size: 14px;
+    }
+
+    .service-header > .btn,
+    .service-header > .btn-primary {
+        align-self: stretch;
+    }
+
+    .service-header .btn {
+        min-height: 46px;
+    }
+
+    .service-filter-section {
+        margin-bottom: 22px;
+        padding: 16px;
+        border-radius: 14px;
+    }
+
+    .service-filters {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .service-filters input,
+    .service-filters select {
+        min-height: 48px;
+        font-size: 16px;
+    }
+
+    .service-filter-actions {
+        grid-column: auto;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .service-filter-submit,
+    .service-filter-reset {
+        width: 100%;
+        min-height: 47px;
+    }
+
+    .service-results-summary {
+        margin-bottom: 14px;
+    }
+
+    .service-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .service-card {
+        border-radius: 14px;
+    }
+
+    .service-card-link:hover .service-card {
+        transform: none;
+    }
+
+    .service-card-image-link {
+        height: 225px;
+    }
+
+    .service-card-body {
+        padding: 17px;
+    }
+
+    .service-card-body h2 {
+        font-size: 18px;
+    }
+
+    .service-card-price {
+        font-size: 21px;
+    }
+
+    .service-empty-state {
+        padding: 48px 18px;
+    }
+
+    .service-empty-state .btn {
+        width: 100%;
+    }
+
+    .service-page .pagination {
+        gap: 6px;
+        margin-top: 26px;
+    }
+
+    .service-page .pagination a,
+    .service-page .pagination span {
+        min-width: 38px;
+        height: 38px;
+        padding: 0 9px;
+        font-size: 13px;
+    }
+
+}
+
+/* ==========================================
+SECTION 14 END
+Mobile Responsive
+========================================== */
+
+/* ------------------------------------------ */
+
+
+/* ==========================================
+SECTION 15 START
+Small Mobile Responsive
+========================================== */
+
+@media (max-width: 390px) {
+
+    .service-page {
+        padding: 0 10px;
+    }
+
+    .service-header {
+        padding: 20px 15px;
+    }
+
+    .service-header h1 {
+        font-size: 25px;
+    }
+
+    .service-filter-section {
+        padding: 14px;
+    }
+
+    .service-card-image-link {
+        height: 210px;
+    }
+
+    .service-card-body {
+        padding: 15px;
+    }
+
+    .service-card-details {
+        gap: 6px;
+    }
+
+    .service-card-details p {
+        font-size: 10.5px;
+    }
+
+}
+
+/* ==========================================
+SECTION 15 END
+Small Mobile Responsive
+========================================== */
+
+/* ------------------------------------------ */
+
+
+/* ==========================================
+SECTION 16 START
+Reduced Motion Accessibility
+========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .service-page *,
+    .service-page *::before,
+    .service-page *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+
+}
+
+/* ==========================================
+SECTION 16 END
+Reduced Motion Accessibility
+========================================== */

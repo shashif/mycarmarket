@@ -1,15 +1,22 @@
 # ==========================================
-# MyCarMarket
-# Version: v2.0.0
+# MyCarMarket Australia
+# Version: v2.2.0
 # File: config/urls.py
 # Description:
-# Sitemap + Robots + Static Media + Custom Error Pages
-# Added Amazon Accessories Store URLs
-# Added Rental System URLs
+# Project URL Configuration
+# - Core
+# - Vehicles
+# - Rentals
+# - Services
+# - Reviews
+# - Amazon Accessories
+# - Sitemap
+# - Robots
+# - Static & Media
 # ==========================================
 
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
@@ -21,11 +28,19 @@ from reviews.sitemaps import ReviewSitemap
 from core.views_robots import robots_txt
 
 
+# ==========================================
+# Sitemaps
+# ==========================================
+
 sitemaps = {
     "cars": CarSitemap,
     "reviews": ReviewSitemap,
 }
 
+
+# ==========================================
+# URL Patterns
+# ==========================================
 
 urlpatterns = [
 
@@ -51,30 +66,63 @@ urlpatterns = [
         admin.site.urls,
     ),
 
+    # ==========================================
+    # Core
+    # ==========================================
+
     path(
         "",
         include("core.urls"),
     ),
+
+    # ==========================================
+    # Amazon Accessories
+    # ==========================================
 
     path(
         "",
         include("amazon_affiliate.urls"),
     ),
 
+    # ==========================================
+    # Vehicle Marketplace
+    # ==========================================
+
     path(
         "cars/",
         include("vehicles.urls"),
     ),
+
+    # ==========================================
+    # Rentals
+    # ==========================================
 
     path(
         "rentals/",
         include("rentals.urls"),
     ),
 
+    # ==========================================
+    # Car Services
+    # ==========================================
+
+    path(
+        "services/",
+        include("services.urls"),
+    ),
+
+    # ==========================================
+    # Reviews
+    # ==========================================
+
     path(
         "reviews/",
         include("reviews.urls"),
     ),
+
+    # ==========================================
+    # Accounts
+    # ==========================================
 
     path(
         "accounts/",
@@ -86,6 +134,10 @@ urlpatterns = [
         include("django.contrib.auth.urls"),
     ),
 
+    # ==========================================
+    # Sitemap
+    # ==========================================
+
     path(
         "sitemap.xml",
         sitemap,
@@ -94,6 +146,10 @@ urlpatterns = [
         },
         name="django.contrib.sitemaps.views.sitemap",
     ),
+
+    # ==========================================
+    # Robots
+    # ==========================================
 
     path(
         "robots.txt",
@@ -104,7 +160,7 @@ urlpatterns = [
 
 
 # ==========================================
-# CUSTOM ERROR PAGES
+# Custom Error Pages
 # ==========================================
 
 handler403 = "core.views.custom_403"
@@ -115,7 +171,7 @@ handler500 = "core.views.custom_500"
 
 
 # ==========================================
-# LOCAL DEVELOPMENT MEDIA / STATIC
+# Local Development
 # ==========================================
 
 if settings.DEBUG:

@@ -1,0 +1,1372 @@
+<!-- ==========================================
+MyCarMarket Australia
+Version: v2.2.7
+File: services/templates/services/create_service.html
+Location: services/templates/services/create_service.html
+Description:
+Create and edit Car Service listing page
+- Extends the shared base.html template
+- Uses the global banner advertisement system
+- Follows the admin Custom or Google ad selection
+- Includes the shared navigation bar
+- Supports new service listing creation
+- Supports service listing editing
+- Displays field-level validation errors
+- Displays existing service image during editing
+- Includes provider privacy messaging
+- Responsive two-column form layout
+- Mobile and tablet optimisation
+Last Updated: 17 Jul 2026
+========================================== -->
+
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title %}
+
+    {% if is_editing %}
+        Edit Car Service
+    {% else %}
+        List Your Car Service
+    {% endif %}
+    | MyCarMarket Australia
+
+{% endblock %}
+
+
+{% block extra_css %}
+
+    <style>
+
+        /* ==========================================
+        SECTION 1 START
+        Page Wrapper
+        ========================================== */
+
+        .service-create-page {
+            width: 100%;
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 24px 24px 70px;
+            box-sizing: border-box;
+        }
+
+        /* ==========================================
+        SECTION 1 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 2 START
+        Breadcrumb
+        ========================================== */
+
+        .service-breadcrumb {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 7px;
+            margin: 0 0 20px;
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .service-breadcrumb a {
+            color: #2563eb;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .service-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .service-breadcrumb a:focus-visible {
+            outline: 3px solid rgba(37, 99, 235, 0.22);
+            outline-offset: 3px;
+            border-radius: 4px;
+        }
+
+        /* ==========================================
+        SECTION 2 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 3 START
+        Banner Advertisement
+        ========================================== */
+
+        .service-banner-area {
+            width: 100%;
+            margin: 0 0 26px;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .service-banner-area .ad-banner {
+            width: 100%;
+            margin-top: 0;
+        }
+
+        /* ==========================================
+        SECTION 3 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 4 START
+        Form Card
+        ========================================== */
+
+        .service-create-card {
+            width: 100%;
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 30px;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(15, 23, 42, 0.05);
+            box-sizing: border-box;
+        }
+
+        /* ==========================================
+        SECTION 4 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 5 START
+        Form Header
+        ========================================== */
+
+        .service-create-header {
+            margin: 0 0 28px;
+        }
+
+        .service-create-header h1 {
+            margin: 0 0 10px;
+            color: #111827;
+            font-size: 30px;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .service-create-header p {
+            margin: 0;
+            color: #64748b;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* ==========================================
+        SECTION 5 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 6 START
+        Form Sections
+        ========================================== */
+
+        .service-form-section {
+            margin: 30px 0 0;
+        }
+
+        .service-form-section:first-of-type {
+            margin-top: 0;
+        }
+
+        .service-section-title {
+            margin: 0 0 18px;
+            padding: 0 0 10px;
+            border-bottom: 1px solid #e5e7eb;
+            color: #111827;
+            font-size: 21px;
+            font-weight: 800;
+            line-height: 1.3;
+        }
+
+        /* ==========================================
+        SECTION 6 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 7 START
+        Form Grid
+        ========================================== */
+
+        .service-form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .service-form-group {
+            min-width: 0;
+        }
+
+        .service-form-group-full {
+            grid-column: 1 / -1;
+        }
+
+        .service-form-group label {
+            display: block;
+            margin: 0 0 8px;
+            color: #111827;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        /* ==========================================
+        SECTION 7 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 8 START
+        Form Controls
+        ========================================== */
+
+        .service-form-control {
+            display: block;
+            width: 100%;
+            min-width: 0;
+            min-height: 48px;
+            padding: 12px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            background: #ffffff;
+            color: #111827;
+            font-family: inherit;
+            font-size: 14px;
+            line-height: 1.5;
+            outline: none;
+            box-sizing: border-box;
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .service-form-control:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+        .service-form-control::placeholder {
+            color: #94a3b8;
+        }
+
+        .service-form-textarea {
+            min-height: 170px;
+            resize: vertical;
+        }
+
+        .service-form-file {
+            padding: 9px 12px;
+        }
+
+        .service-form-file::file-selector-button {
+            margin-right: 12px;
+            padding: 9px 14px;
+            border: 0;
+            border-radius: 7px;
+            background: #e5e7eb;
+            color: #111827;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .service-form-file::file-selector-button:hover {
+            background: #d1d5db;
+        }
+
+        /* ==========================================
+        SECTION 8 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 9 START
+        Help Text and Errors
+        ========================================== */
+
+        .service-form-help {
+            margin: 7px 0 0;
+            color: #64748b;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .service-field-errors {
+            margin: 7px 0 0;
+            padding: 0;
+            list-style: none;
+            color: #dc2626;
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.5;
+        }
+
+        .service-field-errors li {
+            margin: 0 0 4px;
+        }
+
+        .service-field-errors li:last-child {
+            margin-bottom: 0;
+        }
+
+        .service-form-alert {
+            margin: 0 0 24px;
+            padding: 14px 16px;
+            border-radius: 9px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .service-form-alert-error {
+            border: 1px solid #fecaca;
+            background: #fef2f2;
+            color: #991b1b;
+        }
+
+        /* ==========================================
+        SECTION 9 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 10 START
+        Checkbox Controls
+        ========================================== */
+
+        .service-checkbox-wrapper {
+            display: flex;
+            align-items: flex-start;
+            gap: 11px;
+            min-height: 48px;
+            padding: 13px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            background: #f8fafc;
+            box-sizing: border-box;
+        }
+
+        .service-checkbox-wrapper input {
+            flex: 0 0 auto;
+            width: 18px;
+            height: 18px;
+            margin: 1px 0 0;
+            cursor: pointer;
+        }
+
+        .service-checkbox-wrapper label {
+            margin: 0;
+            color: #334155;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.5;
+            cursor: pointer;
+        }
+
+        /* ==========================================
+        SECTION 10 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 11 START
+        Existing Image Preview
+        ========================================== */
+
+        .service-image-preview {
+            margin: 0 0 15px;
+        }
+
+        .service-image-preview img {
+            display: block;
+            width: 100%;
+            max-width: 450px;
+            height: 250px;
+            object-fit: cover;
+            object-position: center;
+            border: 1px solid #d1d5db;
+            border-radius: 12px;
+            box-sizing: border-box;
+        }
+
+        /* ==========================================
+        SECTION 11 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 12 START
+        Submit Area
+        ========================================== */
+
+        .service-submit-area {
+            margin: 32px 0 0;
+            padding: 24px 0 0;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .service-submit-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-height: 50px;
+            padding: 13px 20px;
+            border: 0;
+            border-radius: 9px;
+            background: #e52329;
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 800;
+            line-height: 1.3;
+            text-align: center;
+            cursor: pointer;
+            box-sizing: border-box;
+            transition:
+                background-color 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .service-submit-button:hover {
+            background: #c91d22;
+        }
+
+        .service-submit-button:active {
+            transform: translateY(1px);
+        }
+
+        .service-submit-button:focus-visible {
+            outline: 3px solid rgba(229, 35, 41, 0.25);
+            outline-offset: 3px;
+        }
+
+        .service-privacy-note {
+            margin: 12px 0 0;
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .service-cancel-link {
+            display: block;
+            margin: 14px 0 0;
+            color: #475569;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.5;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .service-cancel-link:hover {
+            color: #111827;
+            text-decoration: underline;
+        }
+
+        /* ==========================================
+        SECTION 12 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 13 START
+        Tablet Responsive
+        ========================================== */
+
+        @media (max-width: 800px) {
+
+            .service-create-page {
+                padding: 18px 14px 50px;
+            }
+
+            .service-create-card {
+                padding: 22px 18px;
+                border-radius: 13px;
+            }
+
+            .service-create-header h1 {
+                font-size: 25px;
+            }
+
+            .service-form-grid {
+                grid-template-columns: 1fr;
+                gap: 17px;
+            }
+
+            .service-form-group-full {
+                grid-column: auto;
+            }
+
+        }
+
+        /* ==========================================
+        SECTION 13 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 14 START
+        Mobile Responsive
+        ========================================== */
+
+        @media (max-width: 480px) {
+
+            .service-create-page {
+                padding: 14px 10px 40px;
+            }
+
+            .service-breadcrumb {
+                gap: 5px;
+                margin-bottom: 14px;
+                font-size: 12px;
+            }
+
+            .service-banner-area {
+                margin-bottom: 18px;
+            }
+
+            .service-create-card {
+                padding: 19px 14px;
+                border-radius: 12px;
+            }
+
+            .service-create-header {
+                margin-bottom: 24px;
+            }
+
+            .service-create-header h1 {
+                font-size: 23px;
+            }
+
+            .service-create-header p {
+                font-size: 14px;
+            }
+
+            .service-section-title {
+                font-size: 19px;
+            }
+
+            .service-form-control {
+                min-height: 50px;
+                padding: 12px 13px;
+                font-size: 16px;
+            }
+
+            .service-form-textarea {
+                min-height: 155px;
+            }
+
+            .service-submit-button {
+                min-height: 52px;
+                font-size: 15px;
+            }
+
+        }
+
+        /* ==========================================
+        SECTION 14 END
+        ========================================== */
+
+
+        /* ==========================================
+        SECTION 15 START
+        Reduced Motion
+        ========================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .service-form-control,
+            .service-submit-button {
+                transition: none;
+            }
+
+        }
+
+        /* ==========================================
+        SECTION 15 END
+        ========================================== */
+
+    </style>
+
+{% endblock %}
+
+
+{% block content %}
+
+    {% include "includes/navbar.html" %}
+
+
+    <main class="service-create-page">
+
+
+        {% comment %}
+        ==========================================
+        SECTION 1 START
+        Breadcrumb
+        ==========================================
+        {% endcomment %}
+
+        <nav
+            class="service-breadcrumb"
+            aria-label="Breadcrumb"
+        >
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+            <span aria-hidden="true">
+                /
+            </span>
+
+            <a href="{% url 'service_list' %}">
+                Car Services
+            </a>
+
+            <span aria-hidden="true">
+                /
+            </span>
+
+            <span aria-current="page">
+
+                {% if is_editing %}
+                    Edit Service
+                {% else %}
+                    List Your Service
+                {% endif %}
+
+            </span>
+
+        </nav>
+
+        {% comment %}
+        ==========================================
+        SECTION 1 END
+        Breadcrumb
+        ==========================================
+        {% endcomment %}
+
+
+        {% comment %}
+        ==========================================
+        SECTION 2 START
+        Banner Advertisement
+        ==========================================
+        {% endcomment %}
+
+        <div class="service-banner-area">
+
+            {% include "core/home_parts/banner_ad.html" %}
+
+        </div>
+
+        {% comment %}
+        ==========================================
+        SECTION 2 END
+        Banner Advertisement
+        ==========================================
+        {% endcomment %}
+
+
+        {% comment %}
+        ==========================================
+        SECTION 3 START
+        Service Form Card
+        ==========================================
+        {% endcomment %}
+
+        <section class="service-create-card">
+
+            <header class="service-create-header">
+
+                <h1>
+
+                    {% if is_editing %}
+                        Edit Your Car Service
+                    {% else %}
+                        List Your Car Service
+                    {% endif %}
+
+                </h1>
+
+                <p>
+
+                    {% if is_editing %}
+
+                        Update your service information.
+                        Updated listings return to pending
+                        approval before becoming public.
+
+                    {% else %}
+
+                        Advertise your car-related service
+                        on MyCarMarket Australia. Every
+                        listing is reviewed before it
+                        becomes publicly available.
+
+                    {% endif %}
+
+                </p>
+
+            </header>
+
+
+            {% if form.non_field_errors %}
+
+                <div
+                    class="service-form-alert service-form-alert-error"
+                    role="alert"
+                >
+                    {{ form.non_field_errors }}
+                </div>
+
+            {% endif %}
+
+
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+                novalidate
+            >
+
+                {% csrf_token %}
+
+
+                {% comment %}
+                ==========================================
+                SECTION 4 START
+                Service Details
+                ==========================================
+                {% endcomment %}
+
+                <section class="service-form-section">
+
+                    <h2 class="service-section-title">
+                        Service Details
+                    </h2>
+
+                    <div class="service-form-grid">
+
+
+                        <div class="service-form-group service-form-group-full">
+
+                            <label for="{{ form.title.id_for_label }}">
+                                {{ form.title.label }}
+                            </label>
+
+                            {{ form.title }}
+
+                            {% if form.title.help_text %}
+                                <p class="service-form-help">
+                                    {{ form.title.help_text }}
+                                </p>
+                            {% endif %}
+
+                            {% if form.title.errors %}
+
+                                <ul class="service-field-errors">
+
+                                    {% for error in form.title.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+
+                                </ul>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="service-form-group">
+
+                            <label for="{{ form.business_name.id_for_label }}">
+                                {{ form.business_name.label }}
+                            </label>
+
+                            {{ form.business_name }}
+
+                            {% if form.business_name.errors %}
+
+                                <ul class="service-field-errors">
+
+                                    {% for error in form.business_name.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+
+                                </ul>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="service-form-group">
+
+                            <label for="{{ form.category.id_for_label }}">
+                                {{ form.category.label }}
+                            </label>
+
+                            {{ form.category }}
+
+                            {% if form.category.errors %}
+
+                                <ul class="service-field-errors">
+
+                                    {% for error in form.category.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+
+                                </ul>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="service-form-group service-form-group-full">
+
+                            <label for="{{ form.description.id_for_label }}">
+                                {{ form.description.label }}
+                            </label>
+
+                            {{ form.description }}
+
+                            {% if form.description.help_text %}
+                                <p class="service-form-help">
+                                    {{ form.description.help_text }}
+                                </p>
+                            {% endif %}
+
+                            {% if form.description.errors %}
+
+                                <ul class="service-field-errors">
+
+                                    {% for error in form.description.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+
+                                </ul>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+                {% comment %}
+                ==========================================
+                SECTION 4 END
+                Service Details
+                ==========================================
+                {% endcomment %}
+
+
+                {% comment %}
+                ==========================================
+                SECTION 5 START
+                Location
+                ==========================================
+                {% endcomment %}
+
+                <section class="service-form-section">
+
+                    <h2 class="service-section-title">
+                        Location
+                    </h2>
+
+                    <div class="service-form-grid">
+
+
+                        <div class="service-form-group">
+
+                            <label for="{{ form.state.id_for_label }}">
+                                {{ form.state.label }}
+                            </label>
+
+                            {{ form.state }}
+
+                            {% if form.state.errors %}
+
+                                <ul class="service-field-errors">
+
+                                    {% for error in form.state.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+
+                                </ul>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="service-form-group">
+
+                            <label for="{{ form.suburb.id_for_label }}">
+                                {{ form.suburb.label }}
+                            </label>
+
+                            {{ form.suburb }}
+
+                            {% if form.suburb.errors %}
+
+                                <ul class="service-field-errors">
+
+                                    {% for error in form.suburb.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+
+                                </ul>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="service-form-group">
+
+                            <label for="{{ form.postcode.id_for_label }}">
+                                {{ form.postcode.label }}
+                            </label>
+
+                            {{ form.postcode }}
+
+                            {% if form.postcode.errors %}
+
+                                <ul class="service-field-errors">
+
+                                    {% for error in form.postcode.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+
+                                </ul>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="service-form-group">
+
+                            <label for="{{ form.service_area.id_for_label }}">
+                                {{ form.service_area.label }}
+                            </label>
+
+                            {{ form.service_area }}
+
+                            {% if form.service_area.help_text %}
+                                <p class="service-form-help">
+                                    {{ form.service_area.help_text }}
+                                </p>
+                            {% endif %}
+
+                            {% if form.service_area.errors %}
+
+                                <ul class="service-field-errors">
+
+                                    {% for error in form.service_area.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+
+                                </ul>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="service-form-group service-form-group-full">
+
+                            <div class="service-checkbox-wrapper">
+
+                                {{ form.mobile_service }}
+
+                                <label for="{{ form.mobile_service.id_for_label }}">
+                                    {{ form.mobile_service.label }}
+                                </label>
+
+                            </div>
+
+                            {% if form.mobile_service.help_text %}
+                                <p class="service-form-help">
+                                    {{ form.mobile_service.help_text }}
+                                </p>
+                            {% endif %}
+
+                            {% if form.mobile_service.errors %}
+
+                                <ul class="service-field-errors">
+
+                                    {% for error in form.mobile_service.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+
+                                </ul>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+                {% comment %}
+                ==========================================
+                SECTION 5 END
+                Location
+                ==========================================
+                {% endcomment %}
+
+
+                {% comment %}
+                ==========================================
+                SECTION 6 START
+                Pricing and Website
+                ==========================================
+                {% endcomment %}
+
+                <section class="service-form-section">
+
+                    <h2 class="service-section-title">
+                        Pricing &amp; Website
+                    </h2>
+
+                    <div class="service-form-grid">
+
+
+                        <div class="service-form-group">
+
+                            <label for="{{ form.starting_price.id_for_label }}">
+                                {{ form.starting_price.label }}
+                            </label>
+
+                            {{ form.starting_price }}
+
+                            {% if form.starting_price.help_text %}
+                                <p class="service-form-help">
+                                    {{ form.starting_price.help_text }}
+                                </p>
+                            {% endif %}
+
+                            {% if form.starting_price.errors %}
+
+                                <ul class="service-field-errors">
+
+                                    {% for error in form.starting_price.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+
+                                </ul>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="service-form-group">
+
+                            <label for="{{ form.website.id_for_label }}">
+                                {{ form.website.label }}
+                            </label>
+
+                            {{ form.website }}
+
+                            {% if form.website.help_text %}
+                                <p class="service-form-help">
+                                    {{ form.website.help_text }}
+                                </p>
+                            {% endif %}
+
+                            {% if form.website.errors %}
+
+                                <ul class="service-field-errors">
+
+                                    {% for error in form.website.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+
+                                </ul>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+                {% comment %}
+                ==========================================
+                SECTION 6 END
+                Pricing and Website
+                ==========================================
+                {% endcomment %}
+
+
+                {% comment %}
+                ==========================================
+                SECTION 7 START
+                Contact Details and Image
+                ==========================================
+                {% endcomment %}
+
+                <section class="service-form-section">
+
+                    <h2 class="service-section-title">
+                        Contact Details
+                    </h2>
+
+                    <div class="service-form-grid">
+
+
+                        <div class="service-form-group">
+
+                            <label for="{{ form.provider_name.id_for_label }}">
+                                {{ form.provider_name.label }}
+                            </label>
+
+                            {{ form.provider_name }}
+
+                            {% if form.provider_name.errors %}
+
+                                <ul class="service-field-errors">
+
+                                    {% for error in form.provider_name.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+
+                                </ul>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="service-form-group">
+
+                            <label for="{{ form.provider_email.id_for_label }}">
+                                {{ form.provider_email.label }}
+                            </label>
+
+                            {{ form.provider_email }}
+
+                            {% if form.provider_email.help_text %}
+                                <p class="service-form-help">
+                                    {{ form.provider_email.help_text }}
+                                </p>
+                            {% endif %}
+
+                            {% if form.provider_email.errors %}
+
+                                <ul class="service-field-errors">
+
+                                    {% for error in form.provider_email.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+
+                                </ul>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="service-form-group">
+
+                            <label for="{{ form.provider_phone.id_for_label }}">
+                                {{ form.provider_phone.label }}
+                            </label>
+
+                            {{ form.provider_phone }}
+
+                            {% if form.provider_phone.help_text %}
+                                <p class="service-form-help">
+                                    {{ form.provider_phone.help_text }}
+                                </p>
+                            {% endif %}
+
+                            {% if form.provider_phone.errors %}
+
+                                <ul class="service-field-errors">
+
+                                    {% for error in form.provider_phone.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+
+                                </ul>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="service-form-group">
+
+                            <label for="{{ form.service_image.id_for_label }}">
+                                {{ form.service_image.label }}
+                            </label>
+
+                            {% if is_editing and service.primary_image %}
+
+                                <div class="service-image-preview">
+
+                                    <img
+                                        src="{{ service.primary_image.image.url }}"
+                                        alt="{{ service.primary_image.alt_text|default:service.title }}"
+                                    >
+
+                                </div>
+
+                            {% endif %}
+
+                            {{ form.service_image }}
+
+                            {% if form.service_image.help_text %}
+                                <p class="service-form-help">
+                                    {{ form.service_image.help_text }}
+                                </p>
+                            {% endif %}
+
+                            {% if form.service_image.errors %}
+
+                                <ul class="service-field-errors">
+
+                                    {% for error in form.service_image.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+
+                                </ul>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+                {% comment %}
+                ==========================================
+                SECTION 7 END
+                Contact Details and Image
+                ==========================================
+                {% endcomment %}
+
+
+                {% comment %}
+                ==========================================
+                SECTION 8 START
+                Confirmation and Submit
+                ==========================================
+                {% endcomment %}
+
+                <section class="service-form-section">
+
+                    <div class="service-checkbox-wrapper">
+
+                        {{ form.terms_confirmed }}
+
+                        <label for="{{ form.terms_confirmed.id_for_label }}">
+                            {{ form.terms_confirmed.label }}
+                        </label>
+
+                    </div>
+
+                    {% if form.terms_confirmed.errors %}
+
+                        <ul class="service-field-errors">
+
+                            {% for error in form.terms_confirmed.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+
+                        </ul>
+
+                    {% endif %}
+
+
+                    <div class="service-submit-area">
+
+                        <button
+                            type="submit"
+                            class="service-submit-button"
+                        >
+
+                            {% if is_editing %}
+                                Update Service Listing
+                            {% else %}
+                                Submit Service Listing
+                            {% endif %}
+
+                        </button>
+
+                        <p class="service-privacy-note">
+
+                            Your phone number and email
+                            address are never shown publicly.
+                            Customers contact you securely
+                            through the enquiry form.
+
+                        </p>
+
+                        {% if is_editing %}
+
+                            <a
+                                href="{% url 'my_service_listings' %}"
+                                class="service-cancel-link"
+                            >
+                                Cancel and return to my listings
+                            </a>
+
+                        {% else %}
+
+                            <a
+                                href="{% url 'service_list' %}"
+                                class="service-cancel-link"
+                            >
+                                Cancel and return to car services
+                            </a>
+
+                        {% endif %}
+
+                    </div>
+
+                </section>
+
+                {% comment %}
+                ==========================================
+                SECTION 8 END
+                Confirmation and Submit
+                ==========================================
+                {% endcomment %}
+
+            </form>
+
+        </section>
+
+        {% comment %}
+        ==========================================
+        SECTION 3 END
+        Service Form Card
+        ==========================================
+        {% endcomment %}
+
+    </main>
+
+{% endblock %}
