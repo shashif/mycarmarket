@@ -1,6 +1,6 @@
 # ==========================================
 # MyCarMarket Australia
-# Version: v2.2.0
+# Version: v2.2.11
 # File: services/models.py
 # Description:
 # Car-related service marketplace with:
@@ -9,6 +9,7 @@
 # - Admin moderation
 # - Secure customer enquiries
 # - Private provider email and phone
+# - Window Tinting service category
 # ==========================================
 
 
@@ -308,6 +309,10 @@ class CarService(models.Model):
         (
             "windscreen_repair",
             "Windscreen Repair",
+        ),
+        (
+            "window_tinting",
+            "Window Tinting",
         ),
         (
             "accessories_installation",
