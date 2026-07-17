@@ -1,6 +1,6 @@
 # ==========================================
 # MyCarMarket Australia
-# Version: v2.2.11
+# Version: v2.2.12
 # File: services/models.py
 # Description:
 # Car-related service marketplace with:
@@ -9,7 +9,7 @@
 # - Admin moderation
 # - Secure customer enquiries
 # - Private provider email and phone
-# - Window Tinting service category
+# - Expanded to 25 automotive service categories
 # ==========================================
 
 
@@ -262,70 +262,31 @@ class CarService(models.Model):
     ]
 
     CATEGORY_CHOICES = [
-        (
-            "mechanic",
-            "Mechanic",
-        ),
-        (
-            "driving_lessons",
-            "Driving Lessons",
-        ),
-        (
-            "car_detailing",
-            "Car Detailing",
-        ),
-        (
-            "car_wash",
-            "Car Wash",
-        ),
-        (
-            "tyres_wheels",
-            "Tyres & Wheels",
-        ),
-        (
-            "battery_service",
-            "Battery Service",
-        ),
-        (
-            "auto_electrician",
-            "Auto Electrician",
-        ),
-        (
-            "roadworthy_inspection",
-            "Roadworthy Inspection",
-        ),
-        (
-            "car_inspection",
-            "Car Inspection",
-        ),
-        (
-            "towing",
-            "Towing",
-        ),
-        (
-            "panel_beating_paint",
-            "Panel Beating & Paint",
-        ),
-        (
-            "windscreen_repair",
-            "Windscreen Repair",
-        ),
-        (
-            "window_tinting",
-            "Window Tinting",
-        ),
-        (
-            "accessories_installation",
-            "Car Accessories Installation",
-        ),
-        (
-            "vehicle_transport",
-            "Vehicle Transport",
-        ),
-        (
-            "other",
-            "Other Car Services",
-        ),
+        ("car_service", "Car Service"),
+        ("logbook_servicing", "Logbook Servicing"),
+        ("mechanic", "Mechanic"),
+        ("car_detailing", "Car Detailing"),
+        ("car_wash", "Car Wash"),
+        ("tyres_wheels", "Tyres & Wheels"),
+        ("battery_service", "Battery Service"),
+        ("auto_electrician", "Auto Electrician"),
+        ("roadworthy_inspection", "Roadworthy Inspection"),
+        ("car_inspection", "Car Inspection"),
+        ("towing", "Towing"),
+        ("panel_beating_paint", "Panel Beating & Paint"),
+        ("windscreen_repair", "Windscreen Repair"),
+        ("headlight_restoration", "Headlight Restoration"),
+        ("window_tinting", "Window Tinting"),
+        ("air_conditioning_service", "Air Conditioning Service"),
+        ("brake_clutch_repairs", "Brake & Clutch Repairs"),
+        ("suspension_steering", "Suspension & Steering"),
+        ("car_audio_multimedia", "Car Audio & Multimedia"),
+        ("dash_cam_installation", "Dash Cam Installation"),
+        ("accessories_installation", "Car Accessories Installation"),
+        ("vehicle_transport", "Vehicle Transport"),
+        ("driving_lessons", "Driving Lessons"),
+        ("ev_service", "EV (Electric Vehicle) Service"),
+        ("other", "Other Car Services"),
     ]
 
     STATE_CHOICES = [
