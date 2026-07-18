@@ -1,0 +1,210 @@
+<!-- =========================================
+MyCarMarket Australia
+Version: v2.2.13
+File: core/templates/core/home_parts/latest_services.html
+Location: core/templates/core/home_parts/latest_services.html
+Description:
+Homepage Latest Car Services Section
+Displays up to five approved and active service listings.
+Uses the same card design as the Latest Car Reviews section.
+Last Updated: 18 Jul 2026
+========================================= -->
+
+{% load static %}
+
+<!-- =========================================
+SECTION 01 START
+LATEST CAR SERVICES
+========================================= -->
+
+<section class="home-reviews-section home-services-section">
+
+    <!-- =========================================
+    SECTION HEADER START
+    ========================================== -->
+
+    <div class="home-section-header">
+
+        <div>
+
+            <h2 class="section-title">
+                Latest Car Services
+            </h2>
+
+            <p class="section-subtitle">
+                Find trusted automotive service providers across Australia.
+            </p>
+
+        </div>
+
+        <a
+            href="{% url 'service_list' %}"
+            class="section-view-all"
+        >
+            Browse All Services →
+        </a>
+
+    </div>
+
+    <!-- =========================================
+    SECTION HEADER END
+    ========================================== -->
+
+
+    <!-- =========================================
+    SERVICE LISTINGS START
+    ========================================== -->
+
+    {% if latest_services %}
+
+        <div class="premium-review-grid">
+
+            {% for service in latest_services %}
+
+                <article
+                    class="
+                        premium-review-card
+                        service-home-card
+                        {% if service.is_featured %}
+                            featured-review-home-card
+                        {% endif %}
+                    "
+                >
+
+                    <!-- =========================================
+                    SERVICE IMAGE START
+                    ========================================== -->
+
+                    <a
+                        href="{{ service.get_absolute_url }}"
+                        class="premium-review-image-wrap"
+                        aria-label="View {{ service.title }}"
+                    >
+
+                        {% if service.primary_image %}
+
+                            <img
+                                src="{{ service.primary_image.image.url }}"
+                                alt="{{ service.primary_image.alt_text|default:service.title }}"
+                                loading="lazy"
+                            >
+
+                        {% else %}
+
+                            <img
+                                src="{% static 'images/default-service.jpg' %}"
+                                alt="{{ service.title }}"
+                                loading="lazy"
+                            >
+
+                        {% endif %}
+
+
+                        {% if service.is_featured %}
+
+                            <span class="review-featured-badge">
+                                Featured Service
+                            </span>
+
+                        {% endif %}
+
+
+                        <span class="review-rating-badge">
+                            🔧 {{ service.get_category_display }}
+                        </span>
+
+                    </a>
+
+                    <!-- =========================================
+                    SERVICE IMAGE END
+                    ========================================== -->
+
+
+                    <!-- =========================================
+                    SERVICE INFORMATION START
+                    ========================================== -->
+
+                    <div class="premium-review-info">
+
+                        <a
+                            href="{{ service.get_absolute_url }}"
+                            class="review-title-link"
+                        >
+                            <h3>
+                                {{ service.title }}
+                            </h3>
+                        </a>
+
+
+                        <p class="review-summary">
+                            {{ service.description|striptags|truncatechars:115 }}
+                        </p>
+
+
+                        <div class="review-meta-row">
+
+                            <span>
+                                📍 {{ service.suburb }}, {{ service.state }}
+                            </span>
+
+                            {% if service.mobile_service %}
+
+                                <span>
+                                    🚐 Mobile Service
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        {% if service.starting_price is not None %}
+
+                            <div class="review-meta-row">
+
+                                <span>
+                                    💲 {{ service.display_price }}
+                                </span>
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                    <!-- =========================================
+                    SERVICE INFORMATION END
+                    ========================================== -->
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-home-section">
+
+            <h3>
+                No car services yet
+            </h3>
+
+            <p>
+                Approved automotive service listings will appear here soon.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+    <!-- =========================================
+    SERVICE LISTINGS END
+    ========================================== -->
+
+</section>
+
+<!-- =========================================
+SECTION 01 END
+LATEST CAR SERVICES
+========================================= -->
