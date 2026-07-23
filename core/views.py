@@ -1,18 +1,24 @@
 # ==========================================
 # MyCarMarket Australia
-# Version: v2.2.13
+# Version: v2.3.0
 # File: core/views.py
 # Location: core/views.py
 # Description:
-# Homepage and custom error page views.
-# Displays featured vehicles, latest vehicles,
-# latest car reviews and latest approved car services.
-# Featured and latest homepage sections show
-# a maximum of 5 records each.
-# Last Updated: 18 Jul 2026
+# - Homepage and custom error page views
+# - Unified staff-only moderation center
+# - Pending Cars, Rentals and Services
+# - One-click approve and reject actions
+# - Preserves vehicle approval/rejection emails
+# - No database migration required
+# Last Updated: 24 Jul 2026
 # ==========================================
 
-from django.shortcuts import render
+from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
+from django.http import Http404
+from django.shortcuts import get_object_or_404, redirect, render
+from django.utils import timezone
+from django.views.decorators.http import require_POST
 
 from core.models import SiteSettings
 
@@ -21,8 +27,13 @@ from vehicles.models import (
     FavouriteCar,
 )
 
-from reviews.models import CarReview
+from vehicles.utils.email_notifications import (
+    send_listing_approved_email,
+    send_listing_rejected_email,
+)
 
+from rentals.models import RentalCar
+from reviews.models import CarReview
 from services.models import CarService
 
 
@@ -200,6 +211,148 @@ def contact_us(request):
 
 # ==========================================
 # SECTION 07 START
+# UNIFIED MODERATION CENTER
+# ==========================================
+
+@staff_member_required
+def moderation_center(request):
+
+    pending_cars = Car.objects.filter(
+        moderation_status='pending',
+    ).order_by(
+        '-created_at',
+    )
+
+    pending_rentals = RentalCar.objects.filter(
+        moderation_status='pending',
+    ).order_by(
+        '-created_at',
+    )
+
+    pending_services = CarService.objects.filter(
+        moderation_status='pending',
+    ).order_by(
+        '-created_at',
+    )
+
+    car_count = pending_cars.count()
+    rental_count = pending_rentals.count()
+    service_count = pending_services.count()
+
+    return render(
+        request,
+        'core/moderation_center.html',
+        {
+            'pending_cars': pending_cars,
+            'pending_rentals': pending_rentals,
+            'pending_services': pending_services,
+            'car_count': car_count,
+            'rental_count': rental_count,
+            'service_count': service_count,
+            'total_pending_count': (
+                car_count
+                + rental_count
+                + service_count
+            ),
+        },
+    )
+
+
+@staff_member_required
+@require_POST
+def moderation_action(request, listing_type, object_id, action):
+
+    model_map = {
+        'car': Car,
+        'rental': RentalCar,
+        'service': CarService,
+    }
+
+    model = model_map.get(listing_type)
+
+    if model is None:
+        raise Http404('Invalid listing type.')
+
+    listing = get_object_or_404(
+        model,
+        pk=object_id,
+    )
+
+    if action == 'approve':
+
+        old_status = listing.moderation_status
+
+        listing.moderation_status = 'approved'
+        listing.is_approved = True
+        listing.is_active = True
+
+        update_fields = [
+            'moderation_status',
+            'is_approved',
+            'is_active',
+        ]
+
+        if isinstance(listing, Car):
+            listing.approved_by = request.user
+            listing.approved_at = timezone.now()
+
+            update_fields.extend([
+                'approved_by',
+                'approved_at',
+            ])
+
+        listing.save(
+            update_fields=update_fields,
+        )
+
+        if isinstance(listing, Car) and old_status != 'approved':
+            send_listing_approved_email(listing)
+
+        messages.success(
+            request,
+            f'{listing.title} approved successfully.',
+        )
+
+    elif action == 'reject':
+
+        old_status = listing.moderation_status
+
+        listing.moderation_status = 'rejected'
+        listing.is_approved = False
+        listing.is_active = False
+
+        listing.save(
+            update_fields=[
+                'moderation_status',
+                'is_approved',
+                'is_active',
+            ],
+        )
+
+        if isinstance(listing, Car) and old_status != 'rejected':
+            send_listing_rejected_email(listing)
+
+        messages.warning(
+            request,
+            f'{listing.title} rejected successfully.',
+        )
+
+    else:
+        raise Http404('Invalid moderation action.')
+
+    return redirect(
+        'moderation_center',
+    )
+
+
+# ==========================================
+# SECTION 07 END
+# UNIFIED MODERATION CENTER
+# ==========================================
+
+
+# ==========================================
+# SECTION 08 START
 # CUSTOM ERROR PAGES
 # ==========================================
 
@@ -231,7 +384,7 @@ def custom_500(request):
 
 
 # ==========================================
-# SECTION 07 END
+# SECTION 08 END
 # CUSTOM ERROR PAGES
 # ==========================================
 

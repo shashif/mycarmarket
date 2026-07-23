@@ -19,10 +19,19 @@
         </h1>
 
         <div style="font-size:12px; color:#bfdbfe; margin-top:3px;">
-            Version v1.6.0
+            Version v1.6.1
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block nav-global %}
+<a
+    href="{% url 'admin:vehicles_moderationdashboard_changelist' %}"
+    class="moderation-menu-link"
+>
+    ★ Moderation Center
+</a>
 {% endblock %}
 
 {% block extrastyle %}
@@ -45,6 +54,32 @@
 
     #user-tools a{
         color:#bfdbfe;
+    }
+
+    #nav-global{
+        display:flex;
+        align-items:center;
+        margin-left:24px;
+    }
+
+    .moderation-menu-link{
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        padding:10px 16px;
+        background:#dc2626;
+        color:#ffffff !important;
+        border-radius:8px;
+        font-size:13px;
+        font-weight:800;
+        text-decoration:none;
+        white-space:nowrap;
+        transition:background 0.2s ease;
+    }
+
+    .moderation-menu-link:hover{
+        background:#b91c1c;
+        color:#ffffff !important;
     }
 
     .module h2,
@@ -90,6 +125,23 @@
     input[type=submit].default,
     .submit-row input.default{
         background:#111827;
+    }
+
+    @media (max-width: 767px){
+        #header{
+            height:auto;
+            padding:12px 16px;
+        }
+
+        #nav-global{
+            width:100%;
+            margin:12px 0 0;
+        }
+
+        .moderation-menu-link{
+            width:100%;
+            box-sizing:border-box;
+        }
     }
 </style>
 {% endblock %}

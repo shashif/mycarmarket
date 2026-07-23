@@ -21,3 +21,7 @@ from .stripe_settings_admin import StripeSettingsAdmin
 # ==========================================
 
 from .pending_listing_admin import *
+
+# Global Moderation Dashboard
+from .moderation_dashboard import *
+
